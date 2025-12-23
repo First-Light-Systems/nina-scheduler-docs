@@ -77,6 +77,24 @@ Automatic coordinate resolution from professional astronomical databases:
 - **Live status**: See observation progress in real-time
 - **Automatic reconnection**: Handles network interruptions gracefully
 
+### REST API
+
+The Science Scheduler Server provides a REST API for programmatic access:
+
+- **Create observations**: Submit observation requests from external applications
+- **Query status**: Check observation and queue status
+- **Manage targets**: Create and retrieve saved targets
+- **Download data**: Access FITS files and metadata
+- **Integration**: Connect custom tools, scripts, or applications
+
+External applications can authenticate using API keys to interact with the server directly, enabling integration with:
+- Custom observation planning tools
+- Automated pipelines
+- Data analysis workflows
+- Institutional management systems
+
+Contact your system administrator for API documentation and access credentials.
+
 ## How It Works
 
 ### For Users Submitting Observations
