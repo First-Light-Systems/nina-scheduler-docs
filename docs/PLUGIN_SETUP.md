@@ -169,6 +169,9 @@ When the sequence runs, the Science Scheduler container:
 
 ### Integration with Safety Systems
 
+!!! warning "Equipment Safety Responsibility"
+    **You are responsible for developing sequences that protect your equipment.** The Science Scheduler executes observations but does not implement observatory safety logic. You must ensure your sequence includes appropriate safety checks, weather monitoring, horizon limits, and equipment protection. First Light Observatory Systems LLC is not responsible for any damage to observatory equipment resulting from improperly configured sequences.
+
 The Science Scheduler works alongside NINA's safety features:
 
 - **Weather Safety**: NINA's safety triggers take precedence
