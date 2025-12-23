@@ -1,6 +1,6 @@
 # Science Scheduler - Practical User Guide
 
-**Version 1.0 - October 2025**
+**Version 1.0 - December 2025**
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -650,5 +650,5 @@ The system displays times in both UTC (Universal Coordinated Time) and your obse
 ---
 
 **Document Version**: 1.0
-**Last Updated**: October 2025
+**Last Updated**: December 2025
 **For**: Science Scheduler v2.21.25.0
