@@ -193,6 +193,65 @@ Shutdown (your standard shutdown sequence)
 
 ---
 
+## Testing with ASCOM Simulators
+
+Before running sequences on your real observatory equipment, we strongly recommend testing with ASCOM simulators. This allows you to verify your sequence works correctly without risk to equipment or wasted observing time.
+
+### Why Test with Simulators?
+
+- **No equipment risk**: Test complex sequences without moving real hardware
+- **Daytime testing**: Develop and debug sequences during the day
+- **Faster iteration**: Simulators run quickly without real slew/exposure times
+- **Verify logic**: Confirm your sequence flows correctly before a real session
+
+### Installing ASCOM Simulators
+
+1. **Download ASCOM Platform**
+   - Get the ASCOM Platform and simulators from: https://ascom-standards.org/Downloads/DevTools.htm
+   - Install the full platform (includes simulators)
+
+2. **Available Simulators**
+   - **Telescope Simulator**: Simulates mount movement and tracking
+   - **Camera Simulator**: Generates test images with configurable properties
+   - **Focuser Simulator**: Simulates focus position changes
+   - **Filter Wheel Simulator**: Simulates filter changes
+   - **Dome Simulator**: Simulates dome rotation and shutter
+
+### Configuring NINA for Simulator Testing
+
+1. Open NINA **Options** > **Equipment**
+2. For each device type, select the ASCOM Simulator:
+   - Telescope: "ASCOM Telescope Simulator"
+   - Camera: "ASCOM Camera Simulator"
+   - Focuser: "ASCOM Focuser Simulator"
+   - Filter Wheel: "ASCOM FilterWheel Simulator"
+
+3. Connect to simulators and verify they respond
+
+### Testing Your Sequence
+
+1. **Create a test observation** in the web interface with a visible target
+2. **Build your sequence** with the Science Scheduler container
+3. **Run the sequence** with simulators connected
+4. **Verify**:
+   - Plugin connects to server
+   - Observation is assigned
+   - Simulated slew occurs
+   - Exposures are taken (simulated)
+   - Files are uploaded to server
+   - Observation completes successfully
+
+### Tips for Effective Testing
+
+- Use short exposure times (1-5 seconds) for faster testing
+- Create test observations with targets currently above the horizon
+- Test your startup and shutdown sequences too
+- Verify error handling by intentionally causing failures
+
+Once your sequence works reliably with simulators, you can switch to real equipment with confidence.
+
+---
+
 ## Database Management
 
 ### Local State Database
