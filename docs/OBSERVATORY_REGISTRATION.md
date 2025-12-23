@@ -15,7 +15,7 @@ The Science Scheduler uses a secure registration process to:
 
 ### Scenario 1: New Observatory (First-Time Registration)
 
-If your observatory has never connected to this scheduler server:
+If your observatory has never connected to the Science Scheduler Server:
 
 1. **Fill in plugin settings** (see [Plugin Setup](PLUGIN_SETUP.md)):
    - Server URL
