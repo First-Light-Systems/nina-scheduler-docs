@@ -279,8 +279,6 @@ These applications can open Rice-compressed FITS files directly:
 - **PixInsight** - Full support
 - **Siril** - Full support
 - **DS9** (SAOImage) - Full support
-- **MaxIm DL** - Full support
-- **TheSkyX** - Full support
 
 ---
 
