@@ -207,8 +207,8 @@ Before running sequences on your real observatory equipment, we strongly recomme
 ### Installing ASCOM Simulators
 
 1. **Download ASCOM Platform**
-   - Get the ASCOM Platform and simulators from: https://ascom-standards.org/Downloads/DevTools.htm
-   - Install the full platform (includes simulators)
+   - Get the ASCOM Platform from: https://ascom-standards.org/
+   - Get the simulators from: https://ascom-standards.org/Downloads/DevTools.htm
 
 2. **Available Simulators**
    - **Telescope Simulator**: Simulates mount movement and tracking
