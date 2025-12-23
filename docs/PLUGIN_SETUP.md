@@ -1,5 +1,24 @@
 # NINA Plugin Setup Guide
 
+## ⚠️ IMPORTANT: Safety and Responsibility
+
+**YOU ARE SOLELY RESPONSIBLE FOR THE SAFETY OF YOUR EQUIPMENT.**
+
+The Science Scheduler executes observations but does not implement observatory safety logic. You must ensure your sequences include appropriate safety checks, weather monitoring, horizon limits, and equipment protection.
+
+**First Light Observatory Systems LLC accepts no responsibility for any damage to observatory equipment.**
+
+Before using with real equipment:
+
+- Implement safety checks in your sequences (horizon limits, weather, equipment protection)
+- Test thoroughly with ASCOM simulators first (see [Testing with Simulators](#testing-with-ascom-simulators))
+- Configure NINA's safety features (weather triggers, dawn safety, equipment limits)
+- Supervise initial automated sessions to verify correct behavior
+
+The Science Scheduler does **not**: check if it's safe to open your observatory, monitor weather, know your horizon limits, manage dome/roof operations, or implement emergency shutdowns. These are your responsibility.
+
+---
+
 Complete guide for installing and configuring the Science Scheduler plugin for NINA.
 
 ## Prerequisites
@@ -168,9 +187,6 @@ When the sequence runs, the Science Scheduler container:
 7. **Repeats** until queue is empty or operations are paused
 
 ### Integration with Safety Systems
-
-!!! warning "Equipment Safety Responsibility"
-    **You are solely responsible for developing sequences that protect your equipment.** The Science Scheduler executes observations but does not implement observatory safety logic. You must ensure your sequence includes appropriate safety checks, weather monitoring, horizon limits, and equipment protection. First Light Observatory Systems LLC accepts no responsibility for any damage to observatory equipment.
 
 The Science Scheduler works alongside NINA's safety features:
 
