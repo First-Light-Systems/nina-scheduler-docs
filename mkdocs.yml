@@ -1,7 +1,7 @@
 site_name: Science Scheduler Documentation
 site_description: User documentation for the Nina Science Scheduler
 site_author: First Light Observatory Systems LLC
-site_url: https://geofstone.github.io/nina-scheduler-docs/
+site_url: https://first-light-systems.github.io/nina-scheduler-docs/
 
 # Theme configuration
 theme:

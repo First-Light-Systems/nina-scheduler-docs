@@ -2,7 +2,7 @@
 
 User documentation for the Nina Science Scheduler system.
 
-**View the documentation:** https://geofstone.github.io/nina-scheduler-docs/
+**View the documentation:** https://first-light-systems.github.io/nina-scheduler-docs/
 
 ## About
 
