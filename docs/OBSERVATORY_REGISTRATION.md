@@ -2,11 +2,11 @@
 
 **Document Version**: 1.0 | **Last Updated**: December 2025
 
-This guide explains how new observatories register with the Science Scheduler and how API keys work.
+This guide explains how observatories register with the Science Scheduler Server and how API keys work.
 
 ## Overview
 
-The Science Scheduler uses a secure registration process to:
+The Science Scheduler Server uses a secure registration process to:
 - **Identify observatories** using hardware fingerprints
 - **Authenticate connections** using API keys
 - **Protect the system** from unauthorized access
