@@ -1,5 +1,7 @@
 # NINA Plugin Setup Guide
 
+**Document Version**: 1.0 | **Last Updated**: December 2025
+
 ## ⚠️ IMPORTANT: Safety and Responsibility
 
 **YOU ARE SOLELY RESPONSIBLE FOR THE SAFETY OF YOUR EQUIPMENT.**

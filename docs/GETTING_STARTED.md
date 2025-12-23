@@ -1,5 +1,7 @@
 # Getting Started with Science Scheduler
 
+**Document Version**: 1.0 | **Last Updated**: December 2025
+
 This guide helps you get from installation to your first observation in under 15 minutes.
 
 ## What You Need

@@ -1,6 +1,6 @@
 # Science Scheduler - Practical User Guide
 
-**Version 1.0 - December 2025**
+**Document Version**: 1.0 | **Last Updated**: December 2025
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -646,9 +646,3 @@ The system displays times in both UTC (Universal Coordinated Time) and your obse
 **SNR**: Signal-to-Noise Ratio - quality metric for astronomical data
 
 **UTC**: Universal Coordinated Time - standard time reference for astronomy
-
----
-
-**Document Version**: 1.0
-**Last Updated**: December 2025
-**For**: Science Scheduler v2.21.25.0

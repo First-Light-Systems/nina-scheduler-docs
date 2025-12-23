@@ -1,5 +1,7 @@
 # Observatory Registration and API Key Management
 
+**Document Version**: 1.0 | **Last Updated**: December 2025
+
 This guide explains how new observatories register with the Science Scheduler and how API keys work.
 
 ## Overview

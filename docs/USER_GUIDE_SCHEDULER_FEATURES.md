@@ -1,61 +1,176 @@
 # Scheduler Features
 
+**Document Version**: 1.0
+**Last Updated**: December 2025
+
 ## Overview
 
 This guide explains how the Science Scheduler makes decisions about when and where to execute your observations.
 
 ## Priority System
 
-Science Scheduler uses a 3-level priority system:
+The Science Scheduler uses a **1-10 numeric priority scale**:
 
-| Priority | Use For | Buffer Time |
-|----------|---------|-------------|
-| **HIGH** | Time-critical observations (transits, occultations, ToO) | 30 minutes |
-| **MEDIUM** | Standard science observations (default) | 20 minutes |
-| **LOW** | Fill-time work (surveys, calibration) | 10 minutes |
+| Priority | Meaning |
+|----------|---------|
+| **10** | Highest priority - runs first |
+| **5** | Default priority |
+| **1** | Lowest priority - runs when nothing else is available |
 
-**Buffer time** is how long before a fixed-time event your observation will be stopped to ensure the fixed-time event starts on schedule.
+Higher numbers = higher priority = scheduled first.
 
-For shared observatories, optional fairness settings ensure equal access regardless of priority choices.
+When multiple observations are eligible to run, the scheduler selects the one with the highest priority number. Observations with the same priority are scheduled by creation date (oldest first).
+
+### Choosing a Priority
+
+- **8-10**: Time-critical observations (transits, occultations, ToO events)
+- **5-7**: Standard science observations
+- **1-4**: Fill-time work, surveys, calibration
 
 ## Observation Types
 
-### Standard Observations
+The Science Scheduler supports five observation types:
 
-- Fixed number of exposures
-- Runs continuously until complete
-- Cannot be interrupted
-- Best for: deep-sky imaging, specific exposure sequences
+### 1. Flexible (Default)
 
-### Flexible Observations
+**Best for**: Most observations, especially when timing is not critical.
 
-Flexible observations can adapt to available time:
+- Can run partially if time is limited
+- Can be interrupted by higher priority work
+- Can fill gaps in the schedule
+- Resumes where it left off (if configured)
 
-- **Partial completion**: Can run with less than full time if that's what's available
-- **Interruptible**: Higher priority work can pause them
-- **Resumable**: Can continue later if interrupted (optional)
+**Configuration**:
+- Set `minimum_observing_time_minutes` for the shortest useful observation
+- Set `desired_observing_time_minutes` for your preferred duration
 
-**Configuration options:**
-- Desired duration: How long you'd like to observe
-- Minimum duration: Shortest useful observation time
-- Resumable: Whether to continue after interruption
+**Example**: Variable star monitoring where any data is useful.
 
-**Example use cases:**
+---
 
-| Target | Desired | Minimum | Resumable | Result |
-|--------|---------|---------|-----------|--------|
-| Variable star | 3 hours | 30 min | Yes | Runs when possible, accumulates data |
-| Asteroid lightcurve | 3 hours | 90 min | No | Only runs if 90+ min gap available |
+### 2. Fixed-Time
 
-### Fixed-Time Observations
+**Best for**: Events that must happen at specific times - exoplanet transits, occultations, asteroid lightcurves with known timing.
 
-For events that must happen at specific times:
+- Must start and complete within a specific time window
+- Protected from interruption once started
+- Requires both start and end times
 
-- **Hard start and end times**: Must observe during specified window
-- **Protected buffers**: Based on priority level (30/20/10 minutes)
-- **Cannot be interrupted**: Once started, runs to completion or end time
+**Configuration**:
+- Set `fixed_time_start`: When the observation window opens
+- Set `fixed_time_end`: When the observation must complete
 
-Best for: exoplanet transits, occultations, time-critical events
+**Example**: Exoplanet transit from 22:00-01:00 UTC with 30-minute baselines before and after.
+
+---
+
+### 3. Time-Based
+
+**Best for**: Observations that need a specific duration but flexible start time.
+
+- Runs for an allocated time duration
+- Can optionally use "fill time" mode for continuous exposures
+- Calculates end time when observation starts
+
+**Configuration**:
+- Set `allocated_minutes` or `estimated_duration_minutes`
+- Enable `fill_time: true` for continuous exposures until time expires
+
+**Example**: 3-hour photometry session that can start anytime the target is visible.
+
+---
+
+### 4. Monitoring
+
+**Best for**: Repeating observations at regular intervals - variable stars, supernovae follow-up, asteroid rotation periods.
+
+- Executes at a defined cadence (e.g., every 2 days)
+- Tracks when next observation is eligible
+- Can limit total number of observations in the series
+
+**Configuration**:
+- Set `cadence_days`: Days between observations
+- Set `cadence_start_date` and `cadence_end_date`: Active period
+- Set `cadence_max_observations`: Maximum total observations (optional)
+
+**Example**: Supernova follow-up every 3 days for 2 months.
+
+---
+
+### 5. Rise-to-Set
+
+**Best for**: Full visibility window observations - comprehensive lightcurves, extended monitoring.
+
+- Observes target from rise to set (full visibility window)
+- Automatically calculates timing based on target coordinates
+- Uses fill-time mode for continuous exposures
+
+**Example**: Complete asteroid rotation lightcurve over a full night.
+
+---
+
+## Creating Observations - Examples
+
+### Example 1: Standard Deep-Sky Imaging
+
+**Type**: Flexible (default)
+**Priority**: 5
+**Target**: M31
+**Exposures**: 20 x 300s Luminance, 10 x 300s each RGB
+
+This observation will run when M31 is visible and nothing higher priority needs the telescope. If interrupted, it can resume later.
+
+---
+
+### Example 2: Exoplanet Transit
+
+**Type**: Fixed-Time
+**Priority**: 9
+**Target**: WASP-12b
+**Fixed Time Start**: 2025-03-15 21:30 UTC
+**Fixed Time End**: 2025-03-16 02:45 UTC
+**Exposures**: Continuous 60s exposures in R filter
+
+The high priority (9) and fixed-time type ensure this observation runs during the transit window and won't be interrupted.
+
+---
+
+### Example 3: Variable Star Monitoring Campaign
+
+**Type**: Monitoring
+**Priority**: 6
+**Target**: RR Lyrae
+**Cadence**: Every 2 days
+**Duration**: 90 minutes per session
+**Campaign Length**: 3 months
+
+The scheduler will automatically make this target eligible every 2 days. Each session runs for 90 minutes when conditions allow.
+
+---
+
+### Example 4: Asteroid Lightcurve (Full Night)
+
+**Type**: Rise-to-Set
+**Priority**: 7
+**Target**: 433 Eros
+**Filter**: Clear
+**Exposure**: 30s continuous
+
+This will observe Eros for its entire visibility window to capture a complete rotation lightcurve.
+
+---
+
+### Example 5: Survey Field (Fill Time)
+
+**Type**: Flexible
+**Priority**: 3
+**Target**: Survey Field 47
+**Minimum Duration**: 30 minutes
+**Desired Duration**: 4 hours
+
+Low priority means this runs when nothing else needs the telescope. The flexible type with 30-minute minimum means even short gaps are useful.
+
+---
 
 ## How Scheduling Works
 
@@ -63,140 +178,53 @@ Best for: exoplanet transits, occultations, time-critical events
 
 The scheduler makes just-in-time decisions based on current conditions:
 
-1. Looks at what's visible now
-2. Considers priority and constraints
-3. Assigns the best observation
-4. Repeats when observation completes
+1. Checks which observations are eligible (visible, constraints met)
+2. Sorts eligible observations by priority (highest first)
+3. Assigns the top observation to the requesting observatory
+4. Repeats when the observation completes
 
 This approach responds to real-time conditions like weather or equipment status.
 
-### Gap Detection
+### Constraint Checking
 
-The scheduler identifies gaps before fixed-time events and finds flexible observations that fit:
+Before an observation can run, the scheduler verifies:
 
-1. Detects upcoming fixed-time events
-2. Calculates available gap (accounting for buffer)
-3. Finds flexible observations that fit
-4. Maximizes telescope utilization
+- Target is above minimum altitude
+- Target meets airmass requirements
+- Moon distance is acceptable (if configured)
+- Time window is valid (for fixed-time observations)
+- Cadence requirements are met (for monitoring observations)
 
-### Multi-User Fairness
+### Multi-Observatory Coordination
 
-For shared observatories:
+When multiple observatories are connected:
 
-- Priority normalization prevents any user from monopolizing time
-- Equitable distribution across users
-- User quotas and time allocation management
-- Transparent scheduling decisions
-
-## Real-World Scenarios
-
-### Variable Star Observer
-*"I want to monitor RR Lyrae all night, except during the exoplanet transit at 23:00"*
-
-**Solution**: Create a flexible observation for RR Lyrae with resumable=yes. It will:
-- Run continuously from sunset
-- Automatically pause before the transit (with priority-based buffer)
-- Resume after the transit completes
-- Continue until dawn or another priority observation
-
-### Asteroid Researcher
-*"I need 3-hour lightcurves but often have only 2-hour gaps"*
-
-**Solution**: Mark your lightcurve observations as flexible with 90-minute minimum:
-- Scheduler will use any gap of 90+ minutes
-- You'll get partial lightcurves instead of none
-- Complete curves when full time is available
-
-### Educational Program
-*"Students need guaranteed time slots while researchers use remaining time"*
-
-**Solution**: Combined fixed-time and flexible scheduling:
-- Students get fixed-time slots that are protected
-- Research observations run flexibly around them
-- No idle time between student sessions
-
-## Creating Observations
-
-### Step 1: Choose Your Observation Type
-
-| Type | When to Use |
-|------|-------------|
-| **STANDARD** | Fixed exposure count, must complete fully |
-| **FLEXIBLE** | Can run partially and/or be interrupted |
-| **FIXED-TIME** | Must start within a specific time window |
-
-### Step 2: Set Priority Level
-
-| Priority | When to Use |
-|----------|-------------|
-| **HIGH** | Time-critical, can't be rescheduled |
-| **MEDIUM** | Standard science (recommended default) |
-| **LOW** | Fill-time, can run anytime |
-
-### Step 3: Configure Flexible Options
-
-If using FLEXIBLE type:
-- Set minimum useful duration
-- Decide if resumable after interruption
-
-## Configuration Examples
-
-### Variable Star Monitoring
-```
-Target: RR Lyrae
-Type: FLEXIBLE
-Priority: MEDIUM
-Desired Duration: 180 minutes
-Minimum Duration: 30 minutes
-Resumable: Yes
-```
-
-### Asteroid Lightcurve
-```
-Target: 433 Eros
-Type: FLEXIBLE
-Priority: MEDIUM
-Desired Duration: 180 minutes
-Minimum Duration: 90 minutes
-Resumable: No (need continuous data)
-```
-
-### Exoplanet Transit
-```
-Target: HAT-P-7b
-Type: FIXED-TIME
-Priority: HIGH
-Start Window: 2025-03-15 22:45-23:15 UTC
-Duration: 120 minutes
-Buffer: 30 minutes (automatic for HIGH)
-```
+- Each observatory requests observations independently
+- The scheduler assigns based on visibility from each location
+- The same observation won't be assigned to multiple observatories simultaneously
 
 ## Best Practices
 
-1. **Start simple**: Begin with standard observations, add flexible options as you get comfortable
+1. **Use appropriate priorities**: Reserve 8-10 for truly time-critical work. Most observations should be 5-7.
 
-2. **Keep priorities simple**:
-   - HIGH: Only for truly time-critical work
-   - MEDIUM: Your default choice
-   - LOW: When you're happy to use idle time
+2. **Set realistic constraints**: Overly tight constraints (very high minimum altitude, very low airmass) reduce scheduling flexibility.
 
-3. **Set realistic minimums**: For flexible observations, ensure minimum time gives useful data
+3. **Use monitoring type for repeating observations**: Don't create multiple separate observations - use the monitoring type with cadence settings.
 
-4. **Monitor and adjust**: Review what ran and adjust settings based on results
-
-5. **Communicate**: For shared facilities, discuss priority usage with other users
+4. **Set minimum duration for flexible observations**: This ensures partial observations still produce useful data.
 
 ## Troubleshooting
 
 **Why didn't my observation run?**
-- Check for conflicts with higher priority observations
-- Verify time windows and constraints were met
-- Fixed-time buffer zones may have blocked it
+- Check if higher priority observations were scheduled
+- Verify constraints were met (altitude, airmass, moon distance)
+- For fixed-time: confirm the time window was correct
+- For monitoring: check if cadence requirements were satisfied
 
-**Can I force an observation to run now?**
-- Yes, use manual override (affects fairness metrics for shared facilities)
-- Better: Adjust priorities for future nights
+**Can I change priority after submission?**
+- Yes, pending observations can be edited
+- Assigned or in-progress observations cannot be modified
 
-**How do I know if data is partial?**
-- Metadata marks partial datasets
-- Summary reports show completion percentage
+**How do I know when my monitoring observation will next run?**
+- Check the `cadence_next_eligible` field in observation details
+- The scheduler calculates this after each execution

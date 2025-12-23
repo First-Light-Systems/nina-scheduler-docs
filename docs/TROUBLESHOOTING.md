@@ -1,5 +1,7 @@
 # Troubleshooting Guide
 
+**Document Version**: 1.0 | **Last Updated**: December 2025
+
 Solutions for common problems with the Science Scheduler system.
 
 ## Plugin Issues

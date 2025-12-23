@@ -1,5 +1,7 @@
 # Creating and Managing Observations
 
+**Document Version**: 1.0 | **Last Updated**: December 2025
+
 This guide covers how to create, monitor, and manage observations in the Science Scheduler.
 
 ## Observation Types Overview
@@ -45,6 +47,34 @@ This guide covers how to create, monitor, and manage observations in the Science
 | **RA** | Right Ascension | 00h 42m 44s or 10.685 |
 | **Dec** | Declination | +41° 16' 09" or 41.269 |
 | **Epoch** | Coordinate epoch | J2000 (default) |
+
+#### Target Name Lookup
+
+Instead of entering coordinates manually, you can use the **target lookup** feature. Enter a target name and click the lookup button to automatically retrieve coordinates from astronomical databases.
+
+**Supported object types:**
+
+| Object Type | Examples | Database Used |
+|-------------|----------|---------------|
+| Deep-sky objects | M31, NGC 7000, IC 1396 | SIMBAD |
+| Stars | Vega, Betelgeuse, HD 209458 | SIMBAD |
+| Galaxies | NGC 4565, Andromeda | SIMBAD, NED |
+| Minor planets | 433 Eros, (1) Ceres, MP Vesta | JPL Horizons |
+| Comets | C/2020 F3, 1P/Halley | JPL Horizons |
+| Planets | Mars, Jupiter, Saturn | JPL Horizons |
+
+**How it works:**
+1. Enter the object name in the target field
+2. Click the **Lookup** button (or press Enter)
+3. The system queries SIMBAD, VizieR, NED, and JPL Horizons
+4. Coordinates are automatically filled in
+5. For solar system objects, orbital elements are stored for position calculation at observation time
+
+**Tips for successful lookups:**
+- Use standard catalog names (M31, NGC 224, HD numbers)
+- For asteroids, use the number and name (e.g., "433 Eros") or just the number
+- For comets, use the designation (e.g., "C/2020 F3" or "1P/Halley")
+- Planet names work directly (e.g., "Jupiter", "Mars")
 
 **Tip**: Use the target library to save frequently-used targets.
 

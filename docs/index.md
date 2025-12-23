@@ -1,5 +1,7 @@
 # Science Scheduler Documentation
 
+**Documentation Version**: 1.0 | **Last Updated**: December 2025
+
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
 ## Quick Start
