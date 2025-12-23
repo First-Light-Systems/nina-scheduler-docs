@@ -9,23 +9,23 @@ The Science Scheduler is a multi-observatory coordination system that automates 
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    SCIENCE SCHEDULER SYSTEM                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   ┌──────────────┐     ┌──────────────────────┐     ┌────────────┐  │
-│   │   Users      │     │  Science Scheduler   │     │Observatory │  │
-│   │              │────▶│      Server          │────▶│  (NINA +   │  │
-│   │ Web Interface│     │                      │     │  Plugin)   │  │
-│   └──────────────┘     │  • Queue Management  │     └────────────┘  │
-│                        │  • Scheduling Logic  │                      │
-│                        │  • Data Storage      │     ┌────────────┐  │
-│                        │  • File Management   │────▶│Observatory │  │
-│                        │                      │     │  (NINA +   │  │
-│                        └──────────────────────┘     │  Plugin)   │  │
-│                                                     └────────────┘  │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
++---------------------------------------------------------------------+
+|                     SCIENCE SCHEDULER SYSTEM                        |
++---------------------------------------------------------------------+
+|                                                                     |
+|  +--------------+      +--------------------+      +--------------+ |
+|  |    Users     |      | Science Scheduler  |      | Observatory  | |
+|  |              |----->|      Server        |----->| (NINA +      | |
+|  | Web Interface|      |                    |      |  Plugin)     | |
+|  +--------------+      | - Queue Management |      +--------------+ |
+|                        | - Scheduling Logic |                       |
+|                        | - Data Storage     |      +--------------+ |
+|                        | - File Management  |----->| Observatory  | |
+|                        |                    |      | (NINA +      | |
+|                        +--------------------+      |  Plugin)     | |
+|                                                    +--------------+ |
+|                                                                     |
++---------------------------------------------------------------------+
 ```
 
 ### Components
