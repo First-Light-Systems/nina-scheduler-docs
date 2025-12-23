@@ -51,6 +51,13 @@ The following topics will be documented in future updates:
 - Quota management
 - Invoice viewing
 
+## Transient & Alert Observing
+- Target of Opportunity (ToO) observations
+- Integration with transient alert brokers
+- Automatic observation interruption and resumption
+- Priority override for time-critical events
+- Equipment state preservation during interrupts
+
 ## System Administration
 - Database integrity tools
 - System health monitoring

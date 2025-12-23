@@ -2,7 +2,7 @@
 
 **Documentation Version**: 1.0 | **Last Updated**: December 2025
 
-Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for observatories using NINA.
+Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for observatories using NINA, with planned support for transient and target-of-opportunity observations.
 
 **New here?** Start with the [System Overview](OVERVIEW.md) to understand how the Science Scheduler works.
 
