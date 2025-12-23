@@ -29,6 +29,13 @@ If you're using the web interface to submit observation requests:
 2. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
 3. **[Practical Guide](USER_GUIDE_PRACTICAL.md)** - Detailed procedures
 
+## Feedback
+
+Found a bug or have an idea for improvement?
+
+- [Report a Bug](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=bug_report.md)
+- [Request a Feature](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=feature_request.md)
+
 ---
 
 *© 2025 First Light Observatory Systems LLC*

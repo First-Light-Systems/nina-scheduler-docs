@@ -333,7 +333,8 @@ Gather this information:
 
 - **Technical issues**: Contact your system administrator
 - **Account issues**: Contact your institution's scheduler admin
-- **Bug reports**: Provide logs and steps to reproduce
+- **Bug reports**: [Submit a bug report](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=bug_report.md)
+- **Feature requests**: [Request a feature](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=feature_request.md)
 - **NINA and advanced sequencing**: Join the [NINA Discord](https://discord.gg/nighttime-imaging-n-astronomy-244681146296762369) for community help with NINA features and building advanced sequences
 
 ---
