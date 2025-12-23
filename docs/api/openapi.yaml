@@ -1,0 +1,1694 @@
+openapi: 3.1.0
+info:
+  title: Science Scheduler API
+  description: |
+    REST API for the Science Scheduler Server - a multi-observatory coordination system
+    for automated astronomical observations.
+
+    ## Authentication
+
+    Most endpoints require JWT authentication. Include the token in the Authorization header:
+    ```
+    Authorization: Bearer <your-jwt-token>
+    ```
+
+    Obtain a token by calling POST `/api/v1/auth/login` with your credentials.
+
+    ## Rate Limiting
+
+    - General API: 100 requests per 15 minutes (production)
+    - Authentication endpoints: 10 requests per 15 minutes
+
+    ## Response Format
+
+    All responses follow a consistent format:
+    ```json
+    {
+      "success": true,
+      "data": { ... },
+      "timestamp": "2025-12-23T00:00:00.000Z",
+      "request_id": "uuid"
+    }
+    ```
+
+    Error responses:
+    ```json
+    {
+      "success": false,
+      "error": {
+        "code": "ERROR_CODE",
+        "message": "Human readable message"
+      },
+      "timestamp": "2025-12-23T00:00:00.000Z",
+      "request_id": "uuid"
+    }
+    ```
+  version: 3.2.0
+  contact:
+    name: First Light Observatory Systems
+    url: https://github.com/First-Light-Systems
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://your-server.com/api/v1
+    description: Production server
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+tags:
+  - name: Authentication
+    description: User authentication and session management
+  - name: Observations
+    description: Create and manage observation requests
+  - name: Observatories
+    description: Observatory registration and management
+  - name: Institutions
+    description: Institution management
+  - name: Queue
+    description: Observation queue management
+  - name: Coordinates
+    description: Target coordinate lookup
+  - name: Targets
+    description: Saved target library
+  - name: Health
+    description: System health monitoring
+
+paths:
+  # ==================== AUTHENTICATION ====================
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login
+      description: Authenticate with email and password to receive JWT tokens
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  example: your-password
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/me:
+    get:
+      tags:
+        - Authentication
+      summary: Get current user
+      description: Get the authenticated user's profile information
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh token
+      description: Exchange a refresh token for new access and refresh tokens
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refresh_token
+              properties:
+                refresh_token:
+                  type: string
+                  description: The refresh token from login
+      responses:
+        '200':
+          description: Tokens refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Logout
+      description: Invalidate the current session
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logged out successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  # ==================== OBSERVATIONS ====================
+  /observations:
+    get:
+      tags:
+        - Observations
+      summary: List observations
+      description: Get a paginated list of observations with optional filtering
+      operationId: listObservations
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - name: status
+          in: query
+          description: Filter by observation status
+          schema:
+            type: string
+            enum: [pending, assigned, in_progress, acquisition_complete, completed, failed, cancelled, suspended]
+        - name: observatory_id
+          in: query
+          description: Filter by observatory
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          description: Filter by user who created the observation
+          schema:
+            type: string
+        - name: priority_min
+          in: query
+          description: Minimum priority (1-10)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+        - name: priority_max
+          in: query
+          description: Maximum priority (1-10)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+        - name: limit
+          in: query
+          description: Number of results to return
+          schema:
+            type: integer
+            default: 50
+            maximum: 100
+        - name: offset
+          in: query
+          description: Number of results to skip
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of observations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationListResponse'
+
+    post:
+      tags:
+        - Observations
+      summary: Create observation
+      description: Create a new observation request
+      operationId: createObservation
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateObservationRequest'
+      responses:
+        '201':
+          description: Observation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /observations/{id}:
+    get:
+      tags:
+        - Observations
+      summary: Get observation
+      description: Get a single observation by ID
+      operationId: getObservation
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Observation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationResponse'
+        '404':
+          description: Observation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Observations
+      summary: Update observation
+      description: Update an existing observation (only pending observations can be modified)
+      operationId: updateObservation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateObservationRequest'
+      responses:
+        '200':
+          description: Observation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationResponse'
+        '400':
+          description: Cannot modify observation in current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Observations
+      summary: Delete observation
+      description: Delete an observation (only pending observations can be deleted)
+      operationId: deleteObservation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Observation deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Cannot delete observation in current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /observations/{id}/cancel:
+    post:
+      tags:
+        - Observations
+      summary: Cancel observation
+      description: Cancel a pending or in-progress observation
+      operationId: cancelObservation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: Reason for cancellation
+      responses:
+        '200':
+          description: Observation cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationResponse'
+
+  /observations/{id}/resubmit:
+    post:
+      tags:
+        - Observations
+      summary: Resubmit observation
+      description: Resubmit a failed or cancelled observation
+      operationId: resubmitObservation
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Observation resubmitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservationResponse'
+
+  /observations/{id}/download-all:
+    get:
+      tags:
+        - Observations
+      summary: Download all files
+      description: Download all FITS files for an observation as a ZIP archive
+      operationId: downloadObservationFiles
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ZIP archive of FITS files
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Observation not found or no files available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /observations/{id}/files/{fileId}/download:
+    get:
+      tags:
+        - Observations
+      summary: Download single file
+      description: Download a single FITS file from an observation
+      operationId: downloadObservationFile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observation UUID
+          schema:
+            type: string
+            format: uuid
+        - name: fileId
+          in: path
+          required: true
+          description: File ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: FITS file
+          content:
+            application/fits:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ==================== OBSERVATORIES ====================
+  /observatories:
+    get:
+      tags:
+        - Observatories
+      summary: List observatories
+      description: Get a list of registered observatories
+      operationId: listObservatories
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - name: status
+          in: query
+          description: Filter by observatory status
+          schema:
+            type: string
+            enum: [online, offline, busy, maintenance]
+        - name: institution_id
+          in: query
+          description: Filter by institution
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of observatories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservatoryListResponse'
+
+  /observatories/{id}:
+    get:
+      tags:
+        - Observatories
+      summary: Get observatory
+      description: Get details of a specific observatory
+      operationId: getObservatory
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Observatory ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Observatory details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservatoryResponse'
+        '404':
+          description: Observatory not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /observatories/register:
+    post:
+      tags:
+        - Observatories
+      summary: Register observatory
+      description: Register a new observatory with the server
+      operationId: registerObservatory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterObservatoryRequest'
+      responses:
+        '201':
+          description: Registration submitted (pending approval)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObservatoryRegistrationResponse'
+        '400':
+          description: Invalid registration data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ==================== INSTITUTIONS ====================
+  /institutions:
+    get:
+      tags:
+        - Institutions
+      summary: List institutions
+      description: Get a list of institutions
+      operationId: listInstitutions
+      responses:
+        '200':
+          description: List of institutions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstitutionListResponse'
+
+  /institutions/{id}:
+    get:
+      tags:
+        - Institutions
+      summary: Get institution
+      description: Get details of a specific institution
+      operationId: getInstitution
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Institution ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Institution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstitutionResponse'
+        '404':
+          description: Institution not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ==================== QUEUE ====================
+  /queue:
+    get:
+      tags:
+        - Queue
+      summary: Get queue
+      description: Get the current observation queue
+      operationId: getQueue
+      security:
+        - bearerAuth: []
+        - {}
+      parameters:
+        - name: observatory_id
+          in: query
+          description: Filter by observatory
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Queue status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueResponse'
+
+  # ==================== COORDINATES ====================
+  /coordinates/lookup:
+    get:
+      tags:
+        - Coordinates
+      summary: Lookup coordinates
+      description: |
+        Look up astronomical coordinates for a target name using professional databases:
+        - SIMBAD (stars, deep-sky objects)
+        - VizieR (catalog objects)
+        - NED (galaxies, extragalactic objects)
+        - JPL Horizons (asteroids, comets, planets)
+      operationId: lookupCoordinates
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: Target name to look up (e.g., "M31", "Vega", "NGC 7000")
+          schema:
+            type: string
+        - name: source
+          in: query
+          description: Preferred database source
+          schema:
+            type: string
+            enum: [simbad, vizier, ned, horizons]
+      responses:
+        '200':
+          description: Coordinates found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoordinateLookupResponse'
+        '404':
+          description: Target not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ==================== SAVED TARGETS ====================
+  /targets:
+    get:
+      tags:
+        - Targets
+      summary: List saved targets
+      description: Get a list of saved targets from the target library
+      operationId: listTargets
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: visibility
+          in: query
+          description: Filter by visibility
+          schema:
+            type: string
+            enum: [private, project, institution, public]
+        - name: project_id
+          in: query
+          description: Filter by project
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of saved targets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetListResponse'
+
+    post:
+      tags:
+        - Targets
+      summary: Create saved target
+      description: Save a target to the target library for reuse
+      operationId: createTarget
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTargetRequest'
+      responses:
+        '201':
+          description: Target saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetResponse'
+
+  /targets/{id}:
+    get:
+      tags:
+        - Targets
+      summary: Get saved target
+      description: Get a saved target by ID
+      operationId: getTarget
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Target ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Target details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetResponse'
+
+    put:
+      tags:
+        - Targets
+      summary: Update saved target
+      description: Update a saved target
+      operationId: updateTarget
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Target ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTargetRequest'
+      responses:
+        '200':
+          description: Target updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetResponse'
+
+    delete:
+      tags:
+        - Targets
+      summary: Delete saved target
+      description: Delete a saved target from the library
+      operationId: deleteTarget
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Target ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Target deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from /auth/login
+
+  schemas:
+    # ==================== Common Response Schemas ====================
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+        timestamp:
+          type: string
+          format: date-time
+        request_id:
+          type: string
+          format: uuid
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: NOT_FOUND
+            message:
+              type: string
+              example: Resource not found
+        timestamp:
+          type: string
+          format: date-time
+        request_id:
+          type: string
+          format: uuid
+
+    # ==================== Authentication Schemas ====================
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            access_token:
+              type: string
+              description: JWT access token (expires in 15 minutes)
+            refresh_token:
+              type: string
+              description: JWT refresh token (expires in 7 days)
+            token_type:
+              type: string
+              example: Bearer
+            expires_in:
+              type: integer
+              example: 900
+              description: Access token expiration in seconds
+            user:
+              $ref: '#/components/schemas/User'
+        timestamp:
+          type: string
+          format: date-time
+
+    UserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/User'
+        timestamp:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        full_name:
+          type: string
+        role:
+          type: string
+          enum: [user, observer, instructor, admin, server_admin]
+        institution_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    # ==================== Observation Schemas ====================
+    ObservationListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            observations:
+              type: array
+              items:
+                $ref: '#/components/schemas/Observation'
+            total:
+              type: integer
+            limit:
+              type: integer
+            offset:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    ObservationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Observation'
+        timestamp:
+          type: string
+          format: date-time
+
+    Observation:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: uuid
+          description: Observation UUID
+        name:
+          type: string
+          description: Human-readable name for the observation
+        status:
+          type: string
+          enum: [pending, assigned, in_progress, acquisition_complete, completed, failed, cancelled, suspended]
+        observation_type:
+          type: string
+          enum: [flexible, fixed_time, time_based, monitoring, rise_to_set]
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: Priority level (1=lowest, 10=highest)
+        target:
+          $ref: '#/components/schemas/Target'
+        user_id:
+          type: string
+        institution_id:
+          type: string
+        project_id:
+          type: string
+        assigned_observatory:
+          type: string
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileReference'
+        progress:
+          $ref: '#/components/schemas/ObservationProgress'
+        constraints:
+          $ref: '#/components/schemas/ObservationConstraints'
+        scheduling:
+          $ref: '#/components/schemas/SchedulingConfig'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+
+    CreateObservationRequest:
+      type: object
+      required:
+        - name
+        - target
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the observation
+          example: M31 LRGB Imaging
+        observation_type:
+          type: string
+          enum: [flexible, fixed_time, time_based, monitoring, rise_to_set]
+          default: flexible
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 5
+        target:
+          $ref: '#/components/schemas/CreateTargetInput'
+        project_id:
+          type: string
+          description: Optional project to associate with
+        constraints:
+          $ref: '#/components/schemas/ObservationConstraints'
+        scheduling:
+          $ref: '#/components/schemas/SchedulingConfig'
+        notes:
+          type: string
+          description: Optional notes about the observation
+
+    UpdateObservationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 10
+        target:
+          $ref: '#/components/schemas/CreateTargetInput'
+        constraints:
+          $ref: '#/components/schemas/ObservationConstraints'
+        scheduling:
+          $ref: '#/components/schemas/SchedulingConfig'
+        notes:
+          type: string
+
+    Target:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: M31
+        ra:
+          type: number
+          format: double
+          description: Right Ascension in degrees
+          example: 10.6847
+        dec:
+          type: number
+          format: double
+          description: Declination in degrees
+          example: 41.2689
+        epoch:
+          type: string
+          default: J2000
+        rotation:
+          type: number
+          description: Camera rotation angle in degrees
+        priority:
+          type: integer
+        exposure_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExposureConfig'
+
+    CreateTargetInput:
+      type: object
+      required:
+        - name
+        - ra
+        - dec
+        - exposure_configs
+      properties:
+        name:
+          type: string
+          example: M31
+        ra:
+          type: number
+          format: double
+          description: Right Ascension in degrees (0-360)
+          example: 10.6847
+        dec:
+          type: number
+          format: double
+          description: Declination in degrees (-90 to 90)
+          example: 41.2689
+        epoch:
+          type: string
+          default: J2000
+        rotation:
+          type: number
+          description: Camera rotation angle in degrees
+        exposure_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExposureConfig'
+          minItems: 1
+
+    ExposureConfig:
+      type: object
+      required:
+        - filter
+        - exposure_time
+        - exposure_count
+      properties:
+        filter:
+          type: string
+          description: Filter name
+          example: L
+        exposure_time:
+          type: number
+          description: Exposure time in seconds
+          example: 300
+        exposure_count:
+          type: integer
+          description: Number of exposures
+          example: 10
+        binning:
+          type: integer
+          default: 1
+          description: Binning mode (1x1, 2x2, etc.)
+        gain:
+          type: integer
+          description: Camera gain setting
+        offset:
+          type: integer
+          description: Camera offset setting
+
+    FileReference:
+      type: object
+      properties:
+        file_id:
+          type: string
+        file_name:
+          type: string
+        file_path:
+          type: string
+        file_size_bytes:
+          type: integer
+        file_type:
+          type: string
+          enum: [raw, calibrated, stacked, processed]
+        filter:
+          type: string
+        exposure_time:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        is_compressed:
+          type: boolean
+        compression_type:
+          type: string
+          enum: [none, rice, gzip]
+        preview_url:
+          type: string
+        thumbnail_url:
+          type: string
+
+    ObservationProgress:
+      type: object
+      properties:
+        current_exposure:
+          type: integer
+        total_exposures:
+          type: integer
+        current_filter:
+          type: string
+        completed_filters:
+          type: array
+          items:
+            type: string
+        elapsed_time_seconds:
+          type: integer
+        estimated_remaining_seconds:
+          type: integer
+        last_update:
+          type: string
+          format: date-time
+
+    ObservationConstraints:
+      type: object
+      properties:
+        minimum_altitude:
+          type: number
+          description: Minimum altitude in degrees
+          default: 30
+        maximum_airmass:
+          type: number
+          description: Maximum airmass
+          default: 2.0
+        moon_separation:
+          type: number
+          description: Minimum moon separation in degrees
+          default: 30
+        start_time:
+          type: string
+          format: date-time
+          description: Earliest start time (for fixed_time observations)
+        end_time:
+          type: string
+          format: date-time
+          description: Latest end time (for fixed_time observations)
+
+    SchedulingConfig:
+      type: object
+      properties:
+        preferred_observatory:
+          type: string
+          description: Preferred observatory ID
+        time_window_start:
+          type: string
+          format: date-time
+        time_window_end:
+          type: string
+          format: date-time
+        duration_minutes:
+          type: integer
+          description: For time_based observations
+        cadence_hours:
+          type: number
+          description: For monitoring observations
+        repeat_count:
+          type: integer
+          description: Number of times to repeat
+
+    # ==================== Observatory Schemas ====================
+    ObservatoryListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            observatories:
+              type: array
+              items:
+                $ref: '#/components/schemas/Observatory'
+            count:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    ObservatoryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Observatory'
+        timestamp:
+          type: string
+          format: date-time
+
+    Observatory:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [online, offline, busy, maintenance, connecting]
+        location:
+          $ref: '#/components/schemas/GeoLocation'
+        capabilities:
+          $ref: '#/components/schemas/EquipmentCapabilities'
+        institution_id:
+          type: string
+        dispatch_enabled:
+          type: boolean
+        last_heartbeat:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+
+    GeoLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          example: 34.0522
+        longitude:
+          type: number
+          format: double
+          example: -118.2437
+        altitude_meters:
+          type: number
+          example: 100
+        timezone:
+          type: string
+          example: America/Los_Angeles
+        city:
+          type: string
+        country:
+          type: string
+
+    EquipmentCapabilities:
+      type: object
+      properties:
+        imaging:
+          type: boolean
+        guiding:
+          type: boolean
+        auto_focus:
+          type: boolean
+        plate_solving:
+          type: boolean
+        filter_wheel:
+          type: boolean
+        rotator:
+          type: boolean
+        available_filters:
+          type: array
+          items:
+            type: string
+          example: [L, R, G, B, Ha, OIII, SII]
+        max_exposure_time_seconds:
+          type: integer
+        min_exposure_time_seconds:
+          type: number
+        binning_modes:
+          type: array
+          items:
+            type: integer
+          example: [1, 2, 4]
+        field_of_view_arcmin:
+          type: number
+        pixel_scale_arcsec_per_pixel:
+          type: number
+
+    RegisterObservatoryRequest:
+      type: object
+      required:
+        - code
+        - name
+        - contact_email
+      properties:
+        code:
+          type: string
+          description: Unique observatory code (3-20 alphanumeric characters)
+          pattern: ^[a-zA-Z0-9_-]{3,20}$
+          example: my-observatory
+        name:
+          type: string
+          description: Human-readable observatory name
+          example: My Backyard Observatory
+        contact_email:
+          type: string
+          format: email
+          description: Contact email for the observatory operator
+        description:
+          type: string
+        location:
+          $ref: '#/components/schemas/GeoLocation'
+        capabilities:
+          $ref: '#/components/schemas/EquipmentCapabilities'
+
+    ObservatoryRegistrationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            observatory_id:
+              type: string
+            status:
+              type: string
+              enum: [pending_approval, approved]
+            message:
+              type: string
+              example: Registration submitted. Waiting for administrator approval.
+        timestamp:
+          type: string
+          format: date-time
+
+    # ==================== Institution Schemas ====================
+    InstitutionListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            institutions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Institution'
+            count:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    InstitutionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/Institution'
+        timestamp:
+          type: string
+          format: date-time
+
+    Institution:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [university, college, high_school, research_institute, amateur_club, commercial, other]
+        description:
+          type: string
+        website:
+          type: string
+          format: uri
+        contact_email:
+          type: string
+          format: email
+        created_at:
+          type: string
+          format: date-time
+
+    # ==================== Queue Schemas ====================
+    QueueResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            queue:
+              type: array
+              items:
+                $ref: '#/components/schemas/QueueEntry'
+            statistics:
+              type: object
+              properties:
+                total_pending:
+                  type: integer
+                total_in_progress:
+                  type: integer
+                estimated_wait_time_minutes:
+                  type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    QueueEntry:
+      type: object
+      properties:
+        observation_id:
+          type: string
+        name:
+          type: string
+        target_name:
+          type: string
+        status:
+          type: string
+        priority:
+          type: integer
+        position:
+          type: integer
+        estimated_start:
+          type: string
+          format: date-time
+        estimated_duration_minutes:
+          type: integer
+
+    # ==================== Coordinate Lookup Schemas ====================
+    CoordinateLookupResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: M31
+            resolved_name:
+              type: string
+              example: Messier 31
+            ra:
+              type: number
+              format: double
+              description: Right Ascension in degrees
+              example: 10.6847
+            dec:
+              type: number
+              format: double
+              description: Declination in degrees
+              example: 41.2689
+            ra_sexagesimal:
+              type: string
+              example: "00h 42m 44.3s"
+            dec_sexagesimal:
+              type: string
+              example: "+41° 16' 8\""
+            source:
+              type: string
+              enum: [simbad, vizier, ned, horizons]
+            object_type:
+              type: string
+              example: Galaxy
+            magnitude:
+              type: number
+              description: Visual magnitude if available
+            aliases:
+              type: array
+              items:
+                type: string
+              example: [NGC 224, Andromeda Galaxy]
+        timestamp:
+          type: string
+          format: date-time
+
+    # ==================== Target Library Schemas ====================
+    TargetListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            targets:
+              type: array
+              items:
+                $ref: '#/components/schemas/SavedTarget'
+            count:
+              type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    TargetResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          $ref: '#/components/schemas/SavedTarget'
+        timestamp:
+          type: string
+          format: date-time
+
+    SavedTarget:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        ra:
+          type: number
+          format: double
+        dec:
+          type: number
+          format: double
+        epoch:
+          type: string
+        object_type:
+          type: string
+        exposure_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExposureConfig'
+        constraints:
+          $ref: '#/components/schemas/ObservationConstraints'
+        visibility:
+          type: string
+          enum: [private, project, institution, public]
+        usage_count:
+          type: integer
+        created_by:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    CreateTargetRequest:
+      type: object
+      required:
+        - name
+        - ra
+        - dec
+      properties:
+        name:
+          type: string
+        ra:
+          type: number
+          format: double
+        dec:
+          type: number
+          format: double
+        epoch:
+          type: string
+          default: J2000
+        object_type:
+          type: string
+        exposure_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExposureConfig'
+        constraints:
+          $ref: '#/components/schemas/ObservationConstraints'
+        visibility:
+          type: string
+          enum: [private, project, institution, public]
+          default: private
+        notes:
+          type: string
