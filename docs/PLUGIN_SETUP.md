@@ -276,10 +276,10 @@ fits.writeto('image.fits', data)
 #### Other Compatible Software
 
 These applications can open Rice-compressed FITS files directly:
-- **AstroImageJ** - Full support
-- **PixInsight** - Full support
-- **Siril** - Full support
-- **DS9** (SAOImage) - Full support
+- **[AstroImageJ](https://www.astro.louisville.edu/software/astroimagej/)** - Full support
+- **[PixInsight](https://pixinsight.com/)** - Full support
+- **[Siril](https://siril.org/)** - Full support
+- **[DS9](https://sites.google.com/cfa.harvard.edu/saoimageds9)** (SAOImage) - Full support
 
 ---
 
