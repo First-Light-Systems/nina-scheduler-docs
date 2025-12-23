@@ -49,24 +49,26 @@ Get the plugin files from your institution's administrator or the official distr
 
 1. Close NINA if it's running
 
-2. Navigate to the NINA plugins directory:
+2. Navigate to the NINA plugins directory. The path includes your NINA version number:
    ```
-   %LOCALAPPDATA%\NINA\Plugins\
+   %LOCALAPPDATA%\NINA\Plugins\<Major>.<Minor>.<Build>\
    ```
-   Or in full:
+   For example, for NINA 3.0.0:
    ```
-   C:\Users\<YourUsername>\AppData\Local\NINA\Plugins\
+   C:\Users\<YourUsername>\AppData\Local\NINA\Plugins\3.0.0\
    ```
 
-3. Create a folder named `ScienceScheduler` (if it doesn't exist)
+3. Create a folder named `ScienceScheduler` inside the version folder (if it doesn't exist)
 
 4. Copy all plugin files into this folder:
    ```
-   C:\Users\<YourUsername>\AppData\Local\NINA\Plugins\ScienceScheduler\
+   C:\Users\<YourUsername>\AppData\Local\NINA\Plugins\3.0.0\ScienceScheduler\
    ├── NINA.Plugin.ScienceScheduler.dll
    ├── Dapper.dll
    └── manifest.json
    ```
+
+   **Note:** Replace `3.0.0` with your actual NINA version number.
 
 5. Restart NINA
 
