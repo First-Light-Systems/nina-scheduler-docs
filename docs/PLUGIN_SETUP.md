@@ -27,9 +27,9 @@ Before installing the plugin, ensure you have:
 
 | Requirement | Details |
 |-------------|---------|
-| **NINA Version** | 3.0.0.2001 or later |
+| **NINA Version** | 3.0.0.2001 or later - [Download NINA](https://nighttime-imaging.eu/download/) |
 | **Operating System** | Windows 10 or Windows 11 |
-| **.NET Runtime** | .NET 8.0 Runtime |
+| **.NET Runtime** | .NET 8.0 Runtime - [Download .NET 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) |
 | **Network Access** | Connection to your scheduler server |
 
 ## Installation
