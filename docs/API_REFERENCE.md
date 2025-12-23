@@ -43,6 +43,10 @@ curl https://your-server.com/api/v1/observations \
 | Endpoint | Description |
 |----------|-------------|
 | `POST /auth/login` | Authenticate and get JWT tokens |
+| `GET /users` | List users (admin only) |
+| `POST /users` | Create new user |
+| `GET /users/profile` | Get current user's profile |
+| `PUT /users/profile` | Update current user's profile |
 | `GET /observations` | List observation requests |
 | `POST /observations` | Create new observation |
 | `GET /observations/{id}` | Get observation details |
