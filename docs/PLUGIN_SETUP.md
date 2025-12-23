@@ -214,6 +214,76 @@ Shutdown (your standard shutdown sequence)
 
 ---
 
+## Rice Compression for FITS Files
+
+The Science Scheduler supports Rice-compressed FITS files (`.fits.fz`), which can reduce file sizes by 50-70% while preserving all scientific data losslessly. This significantly reduces upload times and storage requirements.
+
+### Enabling Rice Compression in NINA
+
+1. Open NINA **Options** > **Imaging** > **Image File Settings**
+2. Find the **Compression** setting
+3. Select **Rice** from the dropdown
+4. Optionally adjust the **Quantization Level** (higher = more compression, slightly less precision for floating-point data)
+
+When enabled, NINA will save all FITS files with the `.fits.fz` extension.
+
+### Benefits of Rice Compression
+
+| Aspect | Benefit |
+|--------|---------|
+| **File size** | 50-70% smaller than uncompressed FITS |
+| **Upload speed** | Faster uploads to the server |
+| **Storage** | Reduced storage costs |
+| **Data integrity** | Lossless compression - no data loss |
+| **Compatibility** | Widely supported in astronomy software |
+
+### Decompressing .fz Files
+
+If you need to work with the original uncompressed FITS files, several tools can decompress `.fits.fz` files:
+
+#### AstroImageJ
+
+1. Download AstroImageJ from: https://www.astro.louisville.edu/software/astroimagej/
+2. Open the `.fits.fz` file directly - AstroImageJ handles decompression automatically
+3. To save uncompressed: **File** > **Save As** > **FITS**
+
+#### CFITSIO funpack (Command Line)
+
+The `funpack` utility from NASA's CFITSIO library is the standard tool:
+
+1. Download CFITSIO from: https://heasarc.gsfc.nasa.gov/fitsio/
+2. Decompress a single file:
+   ```
+   funpack image.fits.fz
+   ```
+3. Decompress multiple files:
+   ```
+   funpack *.fz
+   ```
+
+#### Python with Astropy
+
+```python
+from astropy.io import fits
+
+# Read compressed file (automatic decompression)
+data = fits.getdata('image.fits.fz')
+
+# Save as uncompressed FITS
+fits.writeto('image.fits', data)
+```
+
+#### Other Compatible Software
+
+These applications can open Rice-compressed FITS files directly:
+- **PixInsight** - Full support
+- **Siril** - Full support
+- **DS9** (SAOImage) - Full support
+- **MaxIm DL** - Full support
+- **TheSkyX** - Full support
+
+---
+
 ## Testing with ASCOM Simulators
 
 Before running sequences on your real observatory equipment, we strongly recommend testing with ASCOM simulators. This allows you to verify your sequence works correctly without risk to equipment or wasted observing time.
