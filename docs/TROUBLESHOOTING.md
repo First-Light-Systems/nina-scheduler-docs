@@ -332,6 +332,7 @@ Gather this information:
 - **Technical issues**: Contact your system administrator
 - **Account issues**: Contact your institution's scheduler admin
 - **Bug reports**: Provide logs and steps to reproduce
+- **NINA and advanced sequencing**: Join the [NINA Discord](https://discord.gg/nighttime-imaging-n-astronomy-244681146296762369) for community help with NINA features and building advanced sequences
 
 ---
 
