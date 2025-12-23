@@ -4,6 +4,8 @@
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
+**New here?** Start with the [System Overview](OVERVIEW.md) to understand how the Science Scheduler works.
+
 ## Quick Start
 
 | I want to... | Start here |

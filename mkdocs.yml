@@ -54,6 +54,7 @@ plugins:
 # Navigation
 nav:
   - Home: index.md
+  - Overview: OVERVIEW.md
   - Getting Started: GETTING_STARTED.md
   - Plugin Setup: PLUGIN_SETUP.md
   - Observatory Registration: OBSERVATORY_REGISTRATION.md
