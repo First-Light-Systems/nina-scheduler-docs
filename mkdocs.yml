@@ -1,0 +1,66 @@
+site_name: Science Scheduler Documentation
+site_description: User documentation for the Nina Science Scheduler
+site_author: First Light Observatory Systems LLC
+site_url: https://geofstone.github.io/nina-scheduler-docs/
+
+# Theme configuration
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  icon:
+    logo: material/telescope
+
+# Extensions
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search
+
+# Navigation
+nav:
+  - Home: index.md
+  - Getting Started: GETTING_STARTED.md
+  - Plugin Setup: PLUGIN_SETUP.md
+  - Observatory Registration: OBSERVATORY_REGISTRATION.md
+  - Creating Observations: CREATING_OBSERVATIONS.md
+  - Scheduler Features: USER_GUIDE_SCHEDULER_FEATURES.md
+  - Practical Guide: USER_GUIDE_PRACTICAL.md
+  - Troubleshooting: TROUBLESHOOTING.md
+
+# Copyright
+copyright: Copyright &copy; 2025 First Light Observatory Systems LLC
