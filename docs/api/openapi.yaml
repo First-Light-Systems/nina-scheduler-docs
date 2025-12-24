@@ -1398,6 +1398,7 @@ components:
           $ref: '#/components/schemas/Target'
         user_id:
           type: string
+          description: ID of the user who owns this observation
         institution_id:
           type: string
         project_id:
