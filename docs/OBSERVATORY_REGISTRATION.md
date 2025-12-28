@@ -27,19 +27,15 @@ If your observatory has never connected to the Science Scheduler Server:
 2. **Enable the plugin**
    - The plugin generates a hardware fingerprint
    - Sends registration request to server
-   - Server creates a pending registration
+   - Server creates the observatory record
 
-3. **Wait for administrator approval**
-   - Your registration appears in the admin panel
-   - Administrator reviews and approves
+3. **Receive API key automatically**
    - Server generates an API key for your observatory
-
-4. **Receive API key automatically**
-   - When approved, the server notifies your plugin via WebSocket
+   - API key is sent to your plugin via WebSocket
    - API key is automatically saved to your plugin settings
    - No restart required - plugin continues with the new key
 
-5. **Start observing**
+4. **Start observing**
    - Plugin status changes to "Ready"
    - Your observatory now receives observation assignments
 
@@ -149,33 +145,30 @@ Significant hardware changes (new motherboard, different computer) will generate
 ## Registration Flow Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    NEW OBSERVATORY REGISTRATION                  │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Plugin                          Server                  Admin  │
-│    │                               │                       │    │
-│    │  1. Registration Request      │                       │    │
-│    │  (fingerprint + info)         │                       │    │
-│    ├──────────────────────────────>│                       │    │
-│    │                               │                       │    │
-│    │                               │  2. Creates pending   │    │
-│    │                               │     registration      │    │
-│    │                               │                       │    │
-│    │                               │  3. Notifies admin    │    │
-│    │                               ├──────────────────────>│    │
-│    │                               │                       │    │
-│    │                               │  4. Admin reviews     │    │
-│    │                               │     and approves      │    │
-│    │                               │<──────────────────────┤    │
-│    │                               │                       │    │
-│    │  5. API Key Notification      │                       │    │
-│    │<──────────────────────────────┤                       │    │
-│    │                               │                       │    │
-│    │  6. Authenticated             │                       │    │
-│    │     Connection Ready          │                       │    │
-│    │                               │                       │    │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│              NEW OBSERVATORY REGISTRATION                │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  Plugin                              Server             │
+│    │                                   │                │
+│    │  1. Registration Request          │                │
+│    │  (fingerprint + info)             │                │
+│    ├──────────────────────────────────>│                │
+│    │                                   │                │
+│    │                                   │  2. Creates    │
+│    │                                   │     observatory│
+│    │                                   │     record     │
+│    │                                   │                │
+│    │                                   │  3. Generates  │
+│    │                                   │     API key    │
+│    │                                   │                │
+│    │  4. API Key Notification          │                │
+│    │<──────────────────────────────────┤                │
+│    │                                   │                │
+│    │  5. Authenticated                 │                │
+│    │     Connection Ready              │                │
+│    │                                   │                │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---

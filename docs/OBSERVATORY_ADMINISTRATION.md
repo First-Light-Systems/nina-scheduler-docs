@@ -178,20 +178,18 @@ Observatory members can also be managed via API. See the [API Reference](API_REF
 - `PUT /observatories/{id}/members/{userId}` - Update permissions
 - `DELETE /observatories/{id}/members/{userId}` - Remove member
 
-## Approving Observatory Registrations
+## New Observatory Registration
 
-When a new observatory registers via the NINA plugin, administrators must approve it:
+When an observatory registers via the NINA plugin:
 
-1. Go to **Admin** → **Pending Registrations**
-2. Review the registration details:
-   - Observatory name and code
-   - Contact email
-   - Hardware fingerprint
-   - Location (if provided)
-3. Click **Approve** to generate an API key, or **Reject** to deny
-4. The plugin automatically receives the API key via WebSocket
+1. The plugin sends registration details to the server
+2. An observatory record is created automatically
+3. An API key is generated and sent back to the plugin via WebSocket
+4. The observatory appears in the **Observatories** list
 
-See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for details on the registration process.
+Administrators can view new observatories in the observatory list and configure their settings, add members, or remove them if needed.
+
+See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for details on the plugin registration process.
 
 ---
 
