@@ -66,8 +66,8 @@ tags:
     description: Create and manage observation requests
   - name: Observatories
     description: Observatory registration and management
-  - name: Institutions
-    description: Institution management
+  - name: Organizations
+    description: Organization management
   - name: Queue
     description: Observation queue management
   - name: Coordinates
@@ -208,9 +208,9 @@ paths:
           schema:
             type: string
             enum: [user, observer, instructor, admin, server_admin]
-        - name: institution_id
+        - name: organization_id
           in: query
-          description: Filter by institution
+          description: Filter by organization
           schema:
             type: string
         - name: limit
@@ -798,9 +798,9 @@ paths:
           schema:
             type: string
             enum: [online, offline, busy, maintenance]
-        - name: institution_id
+        - name: organization_id
           in: query
-          description: Filter by institution
+          description: Filter by organization
           schema:
             type: string
       responses:
@@ -869,49 +869,253 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  # ==================== INSTITUTIONS ====================
-  /institutions:
+  # ==================== ORGANIZATIONS ====================
+  /organizations:
     get:
       tags:
-        - Institutions
-      summary: List institutions
-      description: Get a list of institutions
-      operationId: listInstitutions
+        - Organizations
+      summary: List organizations
+      description: Get a list of organizations
+      operationId: listOrganizations
       responses:
         '200':
-          description: List of institutions
+          description: List of organizations
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InstitutionListResponse'
+                $ref: '#/components/schemas/OrganizationListResponse'
+    post:
+      tags:
+        - Organizations
+      summary: Create organization
+      description: Create a new organization (creator becomes owner)
+      operationId: createOrganization
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationRequest'
+      responses:
+        '201':
+          description: Organization created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
 
-  /institutions/{id}:
+  /organizations/{id}:
     get:
       tags:
-        - Institutions
-      summary: Get institution
-      description: Get details of a specific institution
-      operationId: getInstitution
+        - Organizations
+      summary: Get organization
+      description: Get details of a specific organization
+      operationId: getOrganization
       parameters:
         - name: id
           in: path
           required: true
-          description: Institution ID
+          description: Organization ID
           schema:
             type: string
       responses:
         '200':
-          description: Institution details
+          description: Organization details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InstitutionResponse'
+                $ref: '#/components/schemas/OrganizationResponse'
         '404':
-          description: Institution not found
+          description: Organization not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - Organizations
+      summary: Update organization
+      description: Update organization settings (requires can_manage_members permission or owner)
+      operationId: updateOrganization
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationRequest'
+      responses:
+        '200':
+          description: Organization updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+
+  /organizations/{id}/members:
+    get:
+      tags:
+        - Organizations
+      summary: List organization members
+      description: Get list of members in an organization
+      operationId: listOrganizationMembers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of organization members
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMembersResponse'
+    post:
+      tags:
+        - Organizations
+      summary: Add organization member
+      description: Add a user to the organization (requires can_manage_members permission)
+      operationId: addOrganizationMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrganizationMemberRequest'
+      responses:
+        '200':
+          description: Member added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /organizations/{id}/members/{userId}:
+    put:
+      tags:
+        - Organizations
+      summary: Update member permissions
+      description: Update a member's permissions (requires can_manage_members permission)
+      operationId: updateOrganizationMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationMemberRequest'
+      responses:
+        '200':
+          description: Member permissions updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+    delete:
+      tags:
+        - Organizations
+      summary: Remove organization member
+      description: Remove a user from the organization (requires can_manage_members permission)
+      operationId: removeOrganizationMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /organizations/{id}/transfer-ownership:
+    post:
+      tags:
+        - Organizations
+      summary: Transfer ownership
+      description: Transfer organization ownership to another member (owner only)
+      operationId: transferOrganizationOwnership
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Organization ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - new_owner_id
+              properties:
+                new_owner_id:
+                  type: string
+                  description: User ID of new owner
+                reason:
+                  type: string
+                  description: Reason for transfer
+      responses:
+        '200':
+          description: Ownership transferred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
 
   # ==================== QUEUE ====================
   /queue:
@@ -996,7 +1200,7 @@ paths:
           description: Filter by visibility
           schema:
             type: string
-            enum: [private, project, institution, public]
+            enum: [private, project, organization, public]
         - name: project_id
           in: query
           description: Filter by project
@@ -1214,7 +1418,7 @@ components:
         role:
           type: string
           enum: [user, observer, instructor, admin, server_admin]
-        institution_id:
+        organization_id:
           type: string
         created_at:
           type: string
@@ -1269,9 +1473,9 @@ components:
           type: string
           enum: [user, observer, instructor, admin]
           default: user
-        institution_id:
+        organization_id:
           type: string
-          description: Institution to associate user with
+          description: Organization to associate user with
 
     UpdateUserRequest:
       type: object
@@ -1286,7 +1490,7 @@ components:
         role:
           type: string
           enum: [user, observer, instructor, admin]
-        institution_id:
+        organization_id:
           type: string
         is_active:
           type: boolean
@@ -1399,7 +1603,7 @@ components:
         user_id:
           type: string
           description: ID of the user who owns this observation
-        institution_id:
+        organization_id:
           type: string
         project_id:
           type: string
@@ -1720,7 +1924,7 @@ components:
           $ref: '#/components/schemas/GeoLocation'
         capabilities:
           $ref: '#/components/schemas/EquipmentCapabilities'
-        institution_id:
+        organization_id:
           type: string
         dispatch_enabled:
           type: boolean
@@ -1835,8 +2039,8 @@ components:
           type: string
           format: date-time
 
-    # ==================== Institution Schemas ====================
-    InstitutionListResponse:
+    # ==================== Organization Schemas ====================
+    OrganizationListResponse:
       type: object
       properties:
         success:
@@ -1845,49 +2049,148 @@ components:
         data:
           type: object
           properties:
-            institutions:
+            organizations:
               type: array
               items:
-                $ref: '#/components/schemas/Institution'
+                $ref: '#/components/schemas/Organization'
             count:
               type: integer
         timestamp:
           type: string
           format: date-time
 
-    InstitutionResponse:
+    OrganizationResponse:
       type: object
       properties:
         success:
           type: boolean
           example: true
         data:
-          $ref: '#/components/schemas/Institution'
+          $ref: '#/components/schemas/Organization'
         timestamp:
           type: string
           format: date-time
 
-    Institution:
+    Organization:
       type: object
       properties:
         _id:
           type: string
         name:
           type: string
+        short_name:
+          type: string
         type:
           type: string
-          enum: [university, college, high_school, research_institute, amateur_club, commercial, other]
+          enum: [university, college, research_institute, company, nonprofit, other]
         description:
           type: string
-        website:
-          type: string
-          format: uri
-        contact_email:
-          type: string
-          format: email
+        is_active:
+          type: boolean
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMember'
         created_at:
           type: string
           format: date-time
+
+    OrganizationMember:
+      type: object
+      properties:
+        user_id:
+          type: string
+        permissions:
+          $ref: '#/components/schemas/OrganizationPermissions'
+        is_owner:
+          type: boolean
+        added_at:
+          type: string
+          format: date-time
+        added_by:
+          type: string
+
+    OrganizationPermissions:
+      type: object
+      properties:
+        can_manage_members:
+          type: boolean
+          description: Can add/remove users and change their permissions
+        can_manage_observatories:
+          type: boolean
+          description: Can create/delete/configure organization observatories
+        can_manage_billing:
+          type: boolean
+          description: Can manage subscription, quotas, and billing settings
+        can_manage_projects:
+          type: boolean
+          description: Can create and manage projects
+
+    OrganizationMembersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMember'
+        timestamp:
+          type: string
+          format: date-time
+
+    CreateOrganizationRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Organization name
+        short_name:
+          type: string
+          description: Short identifier for the organization
+        type:
+          type: string
+          enum: [university, college, research_institute, company, nonprofit, other]
+        description:
+          type: string
+
+    UpdateOrganizationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        short_name:
+          type: string
+        type:
+          type: string
+          enum: [university, college, research_institute, company, nonprofit, other]
+        description:
+          type: string
+        is_active:
+          type: boolean
+
+    AddOrganizationMemberRequest:
+      type: object
+      required:
+        - user_id
+        - permissions
+      properties:
+        user_id:
+          type: string
+          description: User ID to add
+        permissions:
+          $ref: '#/components/schemas/OrganizationPermissions'
+
+    UpdateOrganizationMemberRequest:
+      type: object
+      required:
+        - permissions
+      properties:
+        permissions:
+          $ref: '#/components/schemas/OrganizationPermissions'
 
     # ==================== Queue Schemas ====================
     QueueResponse:
@@ -2044,7 +2347,7 @@ components:
           $ref: '#/components/schemas/ObservationConstraints'
         visibility:
           type: string
-          enum: [private, project, institution, public]
+          enum: [private, project, organization, public]
         usage_count:
           type: integer
         created_by:
@@ -2081,7 +2384,7 @@ components:
           $ref: '#/components/schemas/ObservationConstraints'
         visibility:
           type: string
-          enum: [private, project, institution, public]
+          enum: [private, project, organization, public]
           default: private
         notes:
           type: string

@@ -1,29 +1,31 @@
 # Coming Soon
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: December 2025
 
 The following topics will be documented in future updates:
 
 ## User & Access Management
 - Adding and managing users
-- User roles and permissions (admin, instructor, student, observer)
+- User roles and permissions (server_admin, user)
 - Email verification and account settings
 
-## Institution Administration
-- Creating and configuring institutions
-- Institution types (university, college, high school, research institute, etc.)
-- Institution-wide settings (user limits, default roles, approval requirements)
-- Managing users and observatories within an institution
+## Organization Administration
+- Creating and configuring organizations
+- Organization types (university, college, research institute, company, nonprofit, etc.)
+- Organization permissions (can_manage_members, can_manage_observatories, can_manage_billing, can_manage_projects)
+- Managing users and observatories within an organization
+- Users can belong to multiple organizations
 
 ## Project Collaboration
 - Creating and managing projects
 - Project types (research, education, outreach, personal)
 - Team collaboration and roles (owner, manager, contributor, viewer)
-- Project visibility settings (private, institution, public)
+- Project visibility settings (private, organization, public)
 - Scheduling preferences per project
 
 ## Advanced Observatory Management
 - Observatory membership and access control
+- Permission-based access (can_view, can_observe, can_operate, can_admin)
 - Equipment capabilities configuration
 - Maintenance mode
 - Ownership transfer

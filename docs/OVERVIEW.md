@@ -91,7 +91,7 @@ External applications can authenticate using API keys to interact with the serve
 - Custom observation planning tools
 - Automated pipelines
 - Data analysis workflows
-- Institutional management systems
+- Organization management systems
 
 Contact your system administrator for API documentation and access credentials.
 

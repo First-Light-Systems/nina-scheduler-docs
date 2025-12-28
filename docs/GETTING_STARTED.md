@@ -19,7 +19,7 @@ Before you begin, make sure you have:
 
 If you're submitting observation requests through the web interface:
 
-1. **Log in** to your institution's Science Scheduler URL
+1. **Log in** to your organization's Science Scheduler URL
 2. Navigate to **Dashboard** to see system status
 3. Click **New Observation** to submit your first request
 4. Fill in target coordinates, exposure settings, and constraints
@@ -48,7 +48,7 @@ If you're operating a telescope with the NINA plugin:
    - Restart NINA
 
 2. **Configure Plugin Settings** (in NINA Options > Plugins > Science Scheduler)
-   - Enter **Server URL** (e.g., `ws://scheduler.yourinstitution.edu:8080`)
+   - Enter **Server URL** (e.g., `ws://scheduler.yourorganization.edu:8080`)
    - Enter **API Key** if you have one, or leave blank for new registration
    - Fill in **Observatory Information**:
      - **ID/Code**: Short identifier (3-20 characters, letters/numbers/dashes only)
