@@ -43,10 +43,9 @@ Members with `can_observe` can do everything in `can_view`, plus:
 
 Members with `can_operate` can do everything in `can_observe`, plus:
 
-- Edit or cancel **any** observation in the queue
-- Reorder queue priorities
+- Edit or cancel **any** observation in the queue (not just their own)
+- Change observation priorities
 - Mark observations as complete or failed
-- Manage observation assignments
 - Put observatory in maintenance mode
 
 **Typical use**: Observatory operators, night assistants, or trusted senior members.
