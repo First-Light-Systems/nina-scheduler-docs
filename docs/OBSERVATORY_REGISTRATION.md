@@ -243,13 +243,14 @@ Significant hardware changes (new motherboard, different computer) will generate
 
 ## For Administrators
 
-For information on managing observatory registrations, see the [Admin Quick Start Guide](../admin/ADMIN_QUICK_START.md).
+For information on managing observatories and members, see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
 
 Key admin tasks:
-- Viewing pending registrations
-- Approving/rejecting observatories
+
+- Approving pending registrations
+- Managing observatory members and permissions
 - Generating and managing API keys
-- Revoking access when needed
+- Configuring observatory settings
 
 ---
 

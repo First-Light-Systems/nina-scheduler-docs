@@ -63,6 +63,7 @@ nav:
   - Practical Guide: USER_GUIDE_PRACTICAL.md
   - Administration:
     - Organizations: ORGANIZATIONS.md
+    - Observatory Administration: OBSERVATORY_ADMINISTRATION.md
   - API Reference: API_REFERENCE.md
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md
