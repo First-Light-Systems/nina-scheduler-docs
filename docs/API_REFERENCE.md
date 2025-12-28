@@ -1,6 +1,6 @@
 # API Reference
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: December 2025
 
 The Science Scheduler Server provides a REST API for programmatic access to all system functionality.
 
@@ -54,6 +54,12 @@ curl https://your-server.com/api/v1/observations \
 | `GET /queue` | View observation queue |
 | `GET /coordinates/lookup?name=M31` | Look up target coordinates |
 | `GET /targets` | List saved targets |
+| `GET /organizations` | List organizations you belong to |
+| `POST /organizations` | Create new organization |
+| `GET /organizations/{id}/members` | List organization members |
+| `POST /organizations/{id}/members` | Add member to organization |
+| `PUT /organizations/{id}/members/{userId}` | Update member permissions |
+| `POST /organizations/{id}/transfer-ownership` | Transfer organization ownership |
 
 ### Response Format
 

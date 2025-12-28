@@ -58,6 +58,7 @@ nav:
   - Getting Started: GETTING_STARTED.md
   - Plugin Setup: PLUGIN_SETUP.md
   - Observatory Registration: OBSERVATORY_REGISTRATION.md
+  - Organizations: ORGANIZATIONS.md
   - Creating Observations: CREATING_OBSERVATIONS.md
   - Scheduler Features: USER_GUIDE_SCHEDULER_FEATURES.md
   - Practical Guide: USER_GUIDE_PRACTICAL.md
