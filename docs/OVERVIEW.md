@@ -1,6 +1,6 @@
 # Science Scheduler Overview
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 ## What is the Science Scheduler?
 
@@ -91,7 +91,7 @@ External applications can authenticate using API keys to interact with the serve
 - Custom observation planning tools
 - Automated pipelines
 - Data analysis workflows
-- Organization management systems
+- Institutional management systems
 
 Contact your system administrator for API documentation and access credentials.
 

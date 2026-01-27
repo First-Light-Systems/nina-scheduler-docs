@@ -1,6 +1,6 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 ## ⚠️ IMPORTANT: Safety and Responsibility
 
@@ -38,7 +38,7 @@ Before installing the plugin, ensure you have:
 
 ### Step 1: Obtain the Plugin
 
-Get the plugin files from your organization's administrator or the official distribution channel.
+Get the plugin files from your institution's administrator or the official distribution channel.
 
 **Required Files:**
 - `NINA.Plugin.ScienceScheduler.dll` - Main plugin assembly
@@ -113,7 +113,7 @@ These fields identify your observatory to the scheduling system.
 | **Country** | No | Country location |
 | **Contact Name** | No | Primary contact person |
 | **Contact Email** | Yes | Required for registration and notifications |
-| **Association(s)** | No | Organization affiliation |
+| **Association(s)** | No | Educational institution or organization |
 
 #### Observatory ID/Code Rules
 

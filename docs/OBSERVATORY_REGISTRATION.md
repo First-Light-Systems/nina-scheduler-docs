@@ -1,6 +1,6 @@
 # Observatory Registration and API Key Management
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 This guide explains how observatories register with the Science Scheduler Server and how API keys work.
 
@@ -27,15 +27,19 @@ If your observatory has never connected to the Science Scheduler Server:
 2. **Enable the plugin**
    - The plugin generates a hardware fingerprint
    - Sends registration request to server
-   - Server creates the observatory record
+   - Server creates a pending registration
 
-3. **Receive API key automatically**
+3. **Wait for administrator approval**
+   - Your registration appears in the admin panel
+   - Administrator reviews and approves
    - Server generates an API key for your observatory
-   - API key is sent to your plugin via WebSocket
+
+4. **Receive API key automatically**
+   - When approved, the server notifies your plugin via WebSocket
    - API key is automatically saved to your plugin settings
    - No restart required - plugin continues with the new key
 
-4. **Start observing**
+5. **Start observing**
    - Plugin status changes to "Ready"
    - Your observatory now receives observation assignments
 
@@ -145,30 +149,33 @@ Significant hardware changes (new motherboard, different computer) will generate
 ## Registration Flow Diagram
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│              NEW OBSERVATORY REGISTRATION                │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  Plugin                              Server             │
-│    │                                   │                │
-│    │  1. Registration Request          │                │
-│    │  (fingerprint + info)             │                │
-│    ├──────────────────────────────────>│                │
-│    │                                   │                │
-│    │                                   │  2. Creates    │
-│    │                                   │     observatory│
-│    │                                   │     record     │
-│    │                                   │                │
-│    │                                   │  3. Generates  │
-│    │                                   │     API key    │
-│    │                                   │                │
-│    │  4. API Key Notification          │                │
-│    │<──────────────────────────────────┤                │
-│    │                                   │                │
-│    │  5. Authenticated                 │                │
-│    │     Connection Ready              │                │
-│    │                                   │                │
-└─────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    NEW OBSERVATORY REGISTRATION                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Plugin                          Server                  Admin  │
+│    │                               │                       │    │
+│    │  1. Registration Request      │                       │    │
+│    │  (fingerprint + info)         │                       │    │
+│    ├──────────────────────────────>│                       │    │
+│    │                               │                       │    │
+│    │                               │  2. Creates pending   │    │
+│    │                               │     registration      │    │
+│    │                               │                       │    │
+│    │                               │  3. Notifies admin    │    │
+│    │                               ├──────────────────────>│    │
+│    │                               │                       │    │
+│    │                               │  4. Admin reviews     │    │
+│    │                               │     and approves      │    │
+│    │                               │<──────────────────────┤    │
+│    │                               │                       │    │
+│    │  5. API Key Notification      │                       │    │
+│    │<──────────────────────────────┤                       │    │
+│    │                               │                       │    │
+│    │  6. Authenticated             │                       │    │
+│    │     Connection Ready          │                       │    │
+│    │                               │                       │    │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -236,14 +243,13 @@ Significant hardware changes (new motherboard, different computer) will generate
 
 ## For Administrators
 
-For information on managing observatories and members, see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
+For information on managing observatory registrations, see the [Admin Quick Start Guide](../admin/ADMIN_QUICK_START.md).
 
 Key admin tasks:
-
-- Approving pending registrations
-- Managing observatory members and permissions
+- Viewing pending registrations
+- Approving/rejecting observatories
 - Generating and managing API keys
-- Configuring observatory settings
+- Revoking access when needed
 
 ---
 
