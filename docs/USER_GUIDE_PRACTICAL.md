@@ -12,8 +12,9 @@ This guide provides step-by-step instructions for common tasks in the Science Sc
 4. [Understanding Observation Types](#understanding-observation-types)
 5. [Monitoring Your Observations](#monitoring-your-observations)
 6. [Accessing Files Through Projects](#accessing-files-through-projects)
-7. [Using the NINA Plugin](#using-the-nina-plugin)
-8. [Troubleshooting](#troubleshooting)
+7. [Managing Your Observatory](#managing-your-observatory)
+8. [Using the NINA Plugin](#using-the-nina-plugin)
+9. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -369,6 +370,58 @@ The project overview shows helpful information for managing your data:
 - End time is calculated based on start time + duration
 - May change if observation is rescheduled
 - Updates as observation progresses
+
+---
+
+## Managing Your Observatory
+
+If you are an observatory owner or administrator, you can manage your observatory's operational settings through the web interface.
+
+### Accessing My Observatories
+
+1. Log in to the web interface
+2. Look for **Observatory Administration** in the navigation menu
+3. Click **My Observatories**
+
+**Note**: The Observatory Administration menu only appears if you have admin privileges on at least one observatory.
+
+### Controlling Dispatching and Automation
+
+The My Observatories page shows all observatories where you have administrative privileges. For each observatory, you can control:
+
+| Setting | Description |
+|---------|-------------|
+| **Dispatching** | When enabled, the scheduler can assign observations to this observatory |
+| **Automation** | When enabled, automatic observation creation from your target library is active |
+
+**To toggle these settings:**
+1. Find your observatory in the list
+2. Use the toggle switches in the **Dispatching** or **Automation** columns
+3. Changes take effect immediately
+
+### When to Disable Dispatching
+
+You may want to temporarily disable dispatching when:
+- Performing maintenance on your equipment
+- Testing new configurations
+- Weather conditions are poor but you haven't closed the observatory
+- You need to run manual sequences without interruption
+
+### Observatory Status Information
+
+The My Observatories page also displays:
+- **Status**: Online, offline, busy, or maintenance
+- **Location**: Observatory coordinates
+- **Last Heartbeat**: When the plugin last communicated with the server
+- **API Key**: View or regenerate your observatory's API key
+
+### Who Has Access
+
+Observatory administrative access is granted to users who:
+- Are the **owner** of the observatory
+- Have the **can_admin** permission on the observatory membership
+
+Contact the observatory owner if you need administrative access.
 
 ---
 
