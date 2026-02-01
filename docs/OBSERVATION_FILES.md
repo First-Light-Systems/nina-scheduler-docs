@@ -58,10 +58,11 @@ Click on any file to open the metadata dialog, which displays:
 - **Object name** from FITS header
 - **Epoch** (typically J2000)
 
-### Quality Metrics
-- **HFR** (Half-Flux Radius) - star sharpness indicator
-- **Stars detected** count
-- **ADU statistics** (mean, median, min, max)
+### Image Quality Metrics (when available)
+- **Mean / Median / Std** - statistical measures of pixel values
+- **Signal-to-Noise Ratio** (SNR)
+- **Background Level**
+- **Min / Max Values**
 
 ### Capture Details
 - **Camera** name and settings

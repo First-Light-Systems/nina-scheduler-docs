@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- **Observation Files page**: New dedicated page for viewing, browsing, and downloading FITS files with metadata display, quality metrics, and batch downloads with parallel download support
+- **Observation Files page**: New dedicated page for viewing, browsing, and downloading FITS files with metadata display (coordinates, filter, exposure, airmass, telescope, instrument) and batch downloads with parallel download support
 - **Fast Mover designation**: Observations for fast-moving objects (NEOs, asteroids) use 5-minute scheduling resolution
 - **Weather and safety monitoring**: Safety event tracking, weather holds, automatic scheduling impact, observatory history logging
 - **Observatory history**: Automatic logging of online/offline transitions, equipment configuration changes, system info changes, and goodbye events
