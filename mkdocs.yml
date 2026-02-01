@@ -61,6 +61,7 @@ nav:
   - Creating Observations: CREATING_OBSERVATIONS.md
   - Scheduler Features: USER_GUIDE_SCHEDULER_FEATURES.md
   - Practical Guide: USER_GUIDE_PRACTICAL.md
+  - Observation Files: OBSERVATION_FILES.md
   - Administration:
     - Organizations: ORGANIZATIONS.md
     - Observatory Administration: OBSERVATORY_ADMINISTRATION.md
