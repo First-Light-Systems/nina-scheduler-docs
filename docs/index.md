@@ -1,6 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 1.1 | **Last Updated**: January 2026
+**Documentation Version**: 2.0 | **Last Updated**: February 2026
+**Server v3.3.2 | Plugin v3.2.5.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
@@ -13,15 +14,18 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Set up the NINA plugin | [Plugin Setup](PLUGIN_SETUP.md) |
 | Register my observatory | [Observatory Registration](OBSERVATORY_REGISTRATION.md) |
 | Create observations | [Creating Observations](CREATING_OBSERVATIONS.md) |
+| View my observation files | [Observation Files](OBSERVATION_FILES.md) |
+| Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
 
 ## For Observatory Operators
 
 If you're setting up an observatory to connect to the Science Scheduler:
 
-1. **[Plugin Setup](PLUGIN_SETUP.md)** - Install the NINA plugin
+1. **[Plugin Setup](PLUGIN_SETUP.md)** - Install and configure the NINA plugin
 2. **[Observatory Registration](OBSERVATORY_REGISTRATION.md)** - Register with the server
-3. **[Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)** - Understand how scheduling works
+3. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Manage members, dispatching, and automation
+4. **[Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)** - Understand how scheduling works
 
 ## For Users Submitting Observations
 
@@ -29,7 +33,28 @@ If you're using the web interface to submit observation requests:
 
 1. **[Getting Started](GETTING_STARTED.md)** - Quick orientation
 2. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
-3. **[Practical Guide](USER_GUIDE_PRACTICAL.md)** - Detailed procedures
+3. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
+4. **[Practical Guide](USER_GUIDE_PRACTICAL.md)** - Detailed procedures
+
+## For Administrators
+
+If you're managing organizations, users, or the system:
+
+1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
+2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
+
+## What's New (February 2026)
+
+- **Observation Files page** with FITS metadata display and batch downloads
+- **Fast Mover scheduling** for NEOs and asteroids (5-minute resolution)
+- **Weather and safety event monitoring** with automatic scheduling impact
+- **Observatory history logging** (online/offline, equipment changes)
+- **Operations and Dispatch controls** for observatory management
+- **Contact Support** page for submitting help requests
+- **Docker log viewer** with regex search (administrators)
+- **Telemetry improvements** with better lifecycle management
+
+See the [Changelog](CHANGELOG.md) for full details.
 
 ## Feedback
 
@@ -37,6 +62,7 @@ Found a bug or have an idea for improvement?
 
 - [Report a Bug](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=bug_report.md)
 - [Request a Feature](https://github.com/First-Light-Systems/nina-scheduler-docs/issues/new?template=feature_request.md)
+- Use the **Contact Support** page in the web interface
 
 ---
 

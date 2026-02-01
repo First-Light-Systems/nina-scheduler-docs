@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.0] - 2026-02-01
+
+### Added
+
+- **Observation Files page**: New dedicated page for viewing, browsing, and downloading FITS files with metadata display, quality metrics, and batch downloads with parallel download support
+- **Fast Mover designation**: Observations for fast-moving objects (NEOs, asteroids) use 5-minute scheduling resolution
+- **Weather and safety monitoring**: Safety event tracking, weather holds, automatic scheduling impact, observatory history logging
+- **Observatory history**: Automatic logging of online/offline transitions, equipment configuration changes, system info changes, and goodbye events
+- **Operations and Dispatch controls**: Observatory administrators can enable/disable dispatching and operations with real-time status indicators
+- **NINA Equipment Options display**: View connected observatory equipment configuration (telescope, camera, mount, dome, autofocus, plate solving settings)
+- **Contact Support page**: In-app support request submission with categorized tickets
+- **Docker log viewer**: Admin log viewer with regex search capability for server diagnostics
+- **Telemetry and equipment reporting**: Plugin reports equipment configuration, system info, and safety device status to server
+- **Reporting and analytics**: Target observation reports, observatory utilization, project usage, user usage reports with CSV export
+
+### Changed
+
+- **Plugin version**: Updated to v3.2.5.0 with improved telemetry collector lifecycle, duplicate connection prevention, and lightweight CPU/memory monitoring
+- **Server version**: Updated to v3.3.2 with security fixes and performance improvements
+- **User roles**: `serverAdmin` and `organizationAdmin` roles with scoped permissions
+- **Coming Soon page**: Moved implemented features (Reporting, Roles, Observatory Management, Observation Files) to Recently Implemented section
+
+### Fixed
+
+- Telemetry collector zombie process after sequence reload
+- Duplicate connections from multiple NINA container instances
+- WMI query performance issues replaced with lightweight monitoring
+
+---
+
 ## [1.1] - 2025-12-28
 
 ### Changed
@@ -67,7 +97,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Server Compatibility
 
-| Docs Version | Server Version | Notes |
-|--------------|----------------|-------|
-| 1.1 | 3.3.0+ | Organizations, multi-org membership, permission-based access |
-| 1.0 | 3.0.0 - 3.2.x | Institutions, single membership, role-based access |
+| Docs Version | Server Version | Plugin Version | Notes |
+|--------------|----------------|----------------|-------|
+| 2.0 | 3.3.2 | 3.2.5.0 | Observation files, safety events, reporting, dispatch controls |
+| 1.1 | 3.3.0+ | 3.1.x - 3.2.x | Organizations, multi-org membership, permission-based access |
+| 1.0 | 3.0.0 - 3.2.x | 3.0.x - 3.1.x | Institutions, single membership, role-based access |

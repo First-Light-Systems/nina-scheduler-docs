@@ -1,6 +1,6 @@
 # Science Scheduler Overview
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 2.0 | **Last Updated**: February 2026
 
 ## What is the Science Scheduler?
 
@@ -70,6 +70,20 @@ Automatic coordinate resolution from professional astronomical databases:
 - **Rice compression support**: 50-70% smaller files with lossless compression
 - **Metadata extraction**: FITS headers parsed and stored
 - **Organized storage**: Files organized by observation and date
+
+### Weather and Safety Monitoring
+
+- **Safety event tracking**: Automatic detection and logging of observatory safety status changes
+- **Weather holds**: Observations suspended when unsafe conditions detected
+- **Observatory history**: Full audit trail of online/offline transitions, equipment changes, and safety events
+- **Automatic recovery**: Scheduling resumes when safe conditions restored
+
+### Reporting and Analytics
+
+- **Target observation reports**: Search and filter observations by target
+- **Observatory utilization**: Track usage, success rates, and idle time across observatories
+- **Project usage reports**: Monitor observation activity by project with owner details
+- **Data export**: Download reports as CSV for offline analysis
 
 ### Real-Time Communication
 
@@ -143,7 +157,8 @@ Contact your system administrator for API documentation and access credentials.
 - **Hardware fingerprinting**: Each observatory identified by unique hardware signature
 - **API key authentication**: Secure keys for all connections
 - **Encrypted communication**: WebSocket connections over TLS
-- **Role-based access**: Different permissions for users, observers, and administrators
+- **Permission-based access**: Granular permissions for viewing, observing, operating, and administering
+- **Role-based system access**: Server admins and organization admins with scoped permissions
 
 ## Getting Started
 

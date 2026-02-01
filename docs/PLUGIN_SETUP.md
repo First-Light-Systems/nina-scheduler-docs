@@ -1,10 +1,10 @@
 # NINA Plugin Setup Guide
 
 **Document Version**: 1.2 | **Last Updated**: February 2026
-**Plugin Version**: v3.2.4.0
+**Plugin Version**: v3.2.5.0
 
 > **What's New in v1.2** (February 2026):
-> - Plugin version updated to v3.2.4.0
+> - Plugin version updated to v3.2.5.0
 > - Telemetry collector lifecycle improvements (cleaner start/stop)
 > - Equipment and safety device reporting documentation
 
@@ -204,7 +204,7 @@ The plugin automatically reports telemetry data to the server, including:
 - **System information**: Computer name, OS version, NINA version
 - **Safety device status**: Reports from connected weather/safety monitors
 
-The telemetry collector has been improved in v3.2.4.0 with better lifecycle management - it starts and stops cleanly with the plugin connection, reducing resource usage when the plugin is idle.
+The telemetry collector has been improved in v3.2.5.0 with better lifecycle management - it starts and stops cleanly with the plugin connection, reducing resource usage when the plugin is idle.
 
 ### Integration with Safety Systems
 

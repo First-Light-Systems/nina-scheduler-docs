@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.1 | **Last Updated**: December 2025
+**Document Version**: 1.2 | **Last Updated**: February 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 

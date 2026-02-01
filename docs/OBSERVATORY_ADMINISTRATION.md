@@ -1,8 +1,14 @@
 # Observatory Administration
 
-**Document Version**: 1.1 | **Last Updated**: December 2025
+**Document Version**: 2.0 | **Last Updated**: February 2026
 
-This guide covers how to manage observatory members and their permissions.
+> **What's New in v2.0** (February 2026):
+> - Operations and Dispatch controls for observatory management
+> - Observatory history with event logging
+> - NINA Equipment Options display
+> - Weather and safety event monitoring
+
+This guide covers how to manage observatory members, permissions, and operational controls.
 
 ## Overview
 
@@ -168,6 +174,72 @@ A hosting provider managing customer access:
 | Provider admin | can_admin | System administration |
 | Customer | can_observe | Full access to their telescope time |
 | Customer's collaborator | can_view | View results only |
+
+## Operations and Dispatch Controls
+
+Observatory administrators can control observatory operations through the **My Observatories** page:
+
+### Dispatching Control
+
+| Setting | Effect |
+|---------|--------|
+| **Dispatching ON** | Scheduler can assign new observations to this observatory |
+| **Dispatching OFF** | No new observations assigned; current observation may complete |
+
+Disable dispatching during maintenance, testing, or when you need to run manual sequences.
+
+### Operations Control
+
+| Setting | Effect |
+|---------|--------|
+| **Operations ON** | Observatory accepts and executes observations normally |
+| **Operations OFF** | Observatory stays connected but pauses execution |
+
+Useful during weather holds or equipment issues when you want to maintain the connection but not execute observations.
+
+Both controls take effect immediately and their status is visible to all users viewing the observatory.
+
+## Observatory History
+
+The system automatically logs observatory lifecycle events:
+
+| Event Type | Description |
+|-----------|-------------|
+| `online` | Observatory connected to server |
+| `offline` | Observatory disconnected |
+| `system_info_changed` | System information updated (OS, hardware, NINA version) |
+| `equipment_configuration_changed` | Equipment setup changed (camera, mount, filters) |
+| `goodbye` | Observatory sent graceful disconnect message |
+| `safety_event` | Safety device status changed (safe/unsafe) |
+
+View history from the observatory detail page under the **History** tab.
+
+## NINA Equipment Options
+
+When connected, the NINA plugin reports detailed equipment configuration to the server. Administrators can view these settings on the observatory detail page:
+
+- **Telescope**: Name, focal length, focal ratio
+- **Camera**: Model, pixel size, sensor info
+- **Mount**: Type, sync settings, settle time
+- **Dome**: Type, sync enabled
+- **Autofocus**: Enabled, step size, tolerance
+- **Plate Solving**: Solver type, configuration
+
+These are read-only in the web interface and reflect the actual NINA configuration at the observatory.
+
+## Weather and Safety Monitoring
+
+The system monitors safety device status from connected observatories:
+
+- **Safe**: Observatory is operating normally and eligible for observations
+- **Unsafe**: Observatory safety device reports unsafe conditions
+
+When an observatory becomes unsafe:
+- No new observations are dispatched
+- Active observations may be suspended
+- The event is logged in observatory history
+
+Administrators can review safety events in the observatory history to diagnose weather-related issues.
 
 ## API Access
 
