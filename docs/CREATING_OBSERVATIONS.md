@@ -1,6 +1,11 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 1.2 | **Last Updated**: February 2026
+
+> **What's New in v1.2** (February 2026):
+> - Fast Mover designation for near-Earth objects and asteroids
+> - Updated download section with Observation Files page reference
+> - FITS metadata quality metrics
 
 This guide covers how to create, monitor, and manage observations in the Science Scheduler.
 
@@ -103,6 +108,12 @@ B filter:   5 x 180s (1x1 binning)
 | **Max Airmass** | Maximum airmass | 2.0 |
 | **Moon Distance** | Minimum degrees from moon | 30° |
 | **Twilight** | Latest twilight type | Astronomical |
+
+### Fast Mover Designation
+
+When creating observations for fast-moving objects (near-Earth objects, asteroids, comets), enable the **Fast Mover** option. This tells the scheduler to use fine-grained 5-minute scheduling resolution instead of the standard resolution, ensuring the object is observed at the correct position.
+
+Fast Mover observations display a special chip indicator on the observation detail page.
 
 ### Step 5: Choose Priority
 
@@ -235,12 +246,12 @@ The **Projects** page is the primary way to view and download your observation f
 1. Navigate to **Projects** in the main menu
 2. Expand your project to see targets and observations
 3. Look for the **folder icon** in the Files column
-4. Click the folder icon to open the **Observation Files** page
+4. Click the folder icon to open the **[Observation Files](OBSERVATION_FILES.md)** page
 5. From there you can:
    - View file thumbnails and previews
    - See file metadata (filter, exposure time, capture date)
    - Download individual files
-   - Download all files
+   - Use **Download All** for batch download with parallel downloads
 
 **Tip**: The Projects page shows observation progress and file counts, making it easy to track which observations have data ready for download.
 
@@ -250,8 +261,10 @@ You can also access files from the observation detail page:
 
 1. Go to **My Observations** or find the observation in **Projects**
 2. Click on the observation to open details
-3. Navigate to the **Files** section
-4. Download individual files or the entire set
+3. Click **View Files** to open the [Observation Files](OBSERVATION_FILES.md) page
+4. Download individual files or use batch download
+
+For detailed information on the Observation Files page, see [Observation Files](OBSERVATION_FILES.md).
 
 ### File Information
 
@@ -261,6 +274,7 @@ Each FITS file includes:
 - Capture timestamp
 - File size
 - FITS headers with full metadata
+- Quality metrics (HFR, star count, ADU statistics)
 
 ---
 

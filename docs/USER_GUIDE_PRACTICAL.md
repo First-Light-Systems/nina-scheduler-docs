@@ -1,6 +1,13 @@
 # Science Scheduler - Practical User Guide
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 2.0 | **Last Updated**: February 2026
+
+> **What's New in v2.0** (February 2026):
+> - Fast Mover indicator on observations for near-Earth objects and asteroids
+> - Operations/Dispatch disabled indicators when system controls are active
+> - Weather hold and safety event information
+> - Contact Support page reference
+> - Observation Files page with FITS metadata and batch downloads
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -289,6 +296,11 @@ The **My Observations** page shows all your observations:
 - **Failed**: Encountered an error
 - **Suspended**: Paused (weather, equipment issues)
 
+**Special Indicators**:
+- **Fast Mover** chip: Displayed on observations marked as fast-moving objects (NEOs, asteroids). These use fine-grained 5-minute scheduling resolution for accurate tracking.
+- **Operations Disabled**: If an observatory has operations disabled, a banner indicates observations are paused.
+- **Dispatch Disabled**: If dispatch is disabled system-wide, a banner indicates no new assignments are being made.
+
 ### Observation Details
 
 For each observation, you can see:
@@ -306,6 +318,7 @@ For each observation, you can see:
 
 **Actions Available**:
 - **View Details**: See complete observation information
+- **View Files**: Access the [Observation Files](OBSERVATION_FILES.md) page for completed observations
 - **Delete**: Remove observation (if not in progress)
 - **Edit**: Modify observation parameters (if queued)
 
@@ -625,6 +638,27 @@ Science Scheduler Container
 - Refer to this guide
 - Contact your institution's Science Scheduler administrator
 - Check for updated documentation at your institution's website
+
+---
+
+## Weather Holds and Safety Events
+
+The Science Scheduler monitors safety device status reported by each observatory. When a safety event occurs:
+
+- **Unsafe condition detected**: The observatory stops receiving new observation assignments. Any in-progress observation may be suspended depending on the observatory's configuration.
+- **Safe condition restored**: The observatory resumes normal operation and becomes eligible for new assignments.
+
+Weather holds and safety events are logged in the observatory history and visible on the observatory detail page. If your observation was affected by a safety event, you'll see this reflected in the observation status and history.
+
+---
+
+## Getting Help
+
+If you need assistance:
+
+1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md) for common issues
+2. Use the **Contact Support** page in the web interface to submit a support request
+3. Contact your institution's Science Scheduler administrator
 
 ---
 

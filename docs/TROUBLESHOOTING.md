@@ -1,6 +1,12 @@
 # Troubleshooting Guide
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 1.2 | **Last Updated**: February 2026
+
+> **What's New in v1.2** (February 2026):
+> - Weather and safety event troubleshooting
+> - Equipment configuration changed event guidance
+> - Docker log search for advanced troubleshooting (administrators)
+> - Contact Support page reference
 
 Solutions for common problems with the Science Scheduler system.
 
@@ -293,7 +299,68 @@ Check all required fields in plugin settings:
 
 ---
 
+## Weather and Safety Issues
+
+### Observatory Marked Unsafe
+
+**Symptoms:**
+- Observatory not receiving observations
+- Safety status shows "unsafe" in admin interface
+
+**Solutions:**
+
+1. **Check safety device**
+   - Verify your weather/safety device is connected and reporting
+   - Check NINA's safety monitor shows correct status
+
+2. **Review safety events**
+   - Check observatory history for safety event timestamps
+   - Compare with actual weather conditions
+
+3. **Manual override** (administrators only)
+   - If the safety device is reporting incorrectly, contact your administrator
+   - Administrators can review safety events in the observatory history
+
+### Equipment Configuration Changed Events
+
+**Symptoms:**
+- Observatory history shows "equipment_configuration_changed" events
+- May indicate unexpected equipment changes
+
+**Causes:**
+- Changed camera, mount, or filter wheel in NINA
+- Reconnected with different equipment profile
+- Updated NINA equipment settings
+
+**Solution**: These events are informational. Review the history to confirm the change was intentional. If unexpected, check your NINA equipment profile.
+
+---
+
+## Advanced Troubleshooting
+
+### Using Docker Log Search (Administrators)
+
+For server-side issues, administrators can use the built-in log viewer:
+
+1. Navigate to **System** → **Log Viewer** in the admin interface
+2. Select the relevant container (e.g., `nina-scheduler-api`)
+3. Use **regex search** to find specific error patterns
+4. Common search patterns:
+   - `error|Error|ERROR` - Find all errors
+   - `observatory_id.*YOUR_CODE` - Find events for a specific observatory
+   - `WebSocket.*close` - Find connection closures
+
+---
+
 ## Getting Help
+
+### Contact Support
+
+Use the **Contact Support** page in the web interface to submit a support request:
+1. Navigate to **Contact Support** from the menu
+2. Select a category (bug report, feature request, account issue, etc.)
+3. Describe the issue with as much detail as possible
+4. Submit the request - you'll receive a confirmation with a ticket number
 
 ### Before Contacting Support
 
@@ -350,3 +417,5 @@ Gather this information:
 | Stuck observation | Clear local database |
 | Upload failing | Check network, clear queue |
 | Can't log in | Clear browser cache |
+| Safety/weather issue | Check safety device, review history |
+| Equipment changed | Review observatory history events |

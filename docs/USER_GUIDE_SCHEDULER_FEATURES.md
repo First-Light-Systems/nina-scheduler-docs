@@ -1,7 +1,11 @@
 # Scheduler Features
 
-**Document Version**: 1.1
-**Last Updated**: January 2026
+**Document Version**: 1.2
+**Last Updated**: February 2026
+
+> **What's New in v1.2** (February 2026):
+> - Weather and safety event impact on scheduling decisions
+> - Fast Mover scheduling with 5-minute resolution
 
 ## Overview
 
@@ -202,6 +206,22 @@ When multiple observatories are connected:
 - Each observatory requests observations independently
 - The scheduler assigns based on visibility from each location
 - The same observation won't be assigned to multiple observatories simultaneously
+
+## Weather and Safety Impact on Scheduling
+
+The scheduler respects observatory safety status when making decisions:
+
+- **Unsafe observatory**: Will not receive new observation assignments until safety is restored
+- **Weather holds**: Observations may be suspended during unsafe conditions and resumed when conditions improve
+- **Safety events**: Logged in observatory history for post-session review
+
+These conditions affect scheduling in real-time - the dispatcher checks observatory safety status before every assignment.
+
+### Fast Mover Scheduling
+
+Observations marked as **Fast Mover** (for NEOs, asteroids, and other fast-moving objects) use 5-minute scheduling resolution instead of the standard resolution. This ensures the object's rapidly changing position is accurately tracked during the observation window.
+
+---
 
 ## Best Practices
 
