@@ -1,6 +1,10 @@
 # Observatory Registration and API Key Management
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 1.1 | **Last Updated**: February 2026
+
+> **What's New in v1.1** (February 2026):
+> - Observatory History events (online/offline, equipment changes)
+> - Role-based registration management (serverAdmin, organizationAdmin)
 
 This guide explains how observatories register with the Science Scheduler Server and how API keys work.
 
@@ -241,6 +245,18 @@ Significant hardware changes (new motherboard, different computer) will generate
 
 ---
 
+## Observatory History and Events
+
+Once registered, your observatory's lifecycle events are automatically logged:
+
+- **Online/Offline transitions**: When your plugin connects or disconnects
+- **Equipment configuration changes**: When your NINA equipment setup changes (camera, mount, filters)
+- **System info changes**: When your computer's hardware or OS information changes
+
+This history is visible to administrators and helps diagnose connectivity or configuration issues.
+
+---
+
 ## For Administrators
 
 For information on managing observatory registrations, see the [Admin Quick Start Guide](../admin/ADMIN_QUICK_START.md).
@@ -250,6 +266,10 @@ Key admin tasks:
 - Approving/rejecting observatories
 - Generating and managing API keys
 - Revoking access when needed
+
+**Role-based registration management**:
+- **Server admins** can approve registrations for any organization
+- **Organization admins** can approve registrations for observatories in their organization
 
 ---
 

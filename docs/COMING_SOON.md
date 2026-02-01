@@ -1,13 +1,19 @@
 # Coming Soon
 
-**Document Version**: 1.1 | **Last Updated**: January 2026
+**Document Version**: 1.1 | **Last Updated**: February 2026
 
 The following topics will be documented in future updates:
 
-## User & Access Management
-- Adding and managing users
-- User roles and permissions (admin, instructor, student, observer)
-- Email verification and account settings
+## Recently Implemented
+
+The following features have been implemented and are now documented:
+
+- **User roles and permissions** - See [Admin Quick Start](../admin/ADMIN_QUICK_START.md#user-roles) for serverAdmin, organizationAdmin, observer, and user roles
+- **Reporting & Analytics** - See [Reporting](../admin/REPORTING.md) for target reports, observatory utilization, project usage, and data export
+- **Advanced Observatory Management** - See [Admin Quick Start](../admin/ADMIN_QUICK_START.md#nina-equipment-options) for equipment options, observatory history, and operations controls
+- **Observation Files** - See [Observation Files](OBSERVATION_FILES.md) for FITS file viewing, metadata display, and batch downloads
+
+---
 
 ## Institution Administration
 - Creating and configuring institutions
@@ -15,11 +21,12 @@ The following topics will be documented in future updates:
 - Institution-wide settings (user limits, default roles, approval requirements)
 - Managing users and observatories within an institution
 
-## Advanced Observatory Management
-- Observatory membership and access control
-- Equipment capabilities configuration
-- Maintenance mode
-- Ownership transfer
+## Project Collaboration
+- Creating and managing projects
+- Project types (research, education, outreach, personal)
+- Team collaboration and roles (owner, manager, contributor, viewer)
+- Project visibility settings (private, institution, public)
+- Scheduling preferences per project
 
 ## Saved Target Library
 - Creating and managing saved targets
@@ -33,11 +40,6 @@ The following topics will be documented in future updates:
 - Reprocessing failed images
 - Processing job management
 
-## Reporting & Analytics
-- Usage reports by user, project, and observatory
-- Observation success rates and statistics
-- Data export (CSV)
-
 ## Billing & Quotas
 - Pricing tiers and plans
 - Usage-based billing (wall clock time, shutter time, storage)
@@ -46,23 +48,8 @@ The following topics will be documented in future updates:
 
 ## System Administration
 - Database integrity tools
-- System health monitoring
-- Performance metrics
-
----
-
-## Recently Implemented
-
-The following features have been implemented and are documented elsewhere:
-
-### Project Collaboration (January 2026)
-- Creating and managing projects
-- Project types (research, education, outreach, personal)
-- **Multi-ownership with permissions** (view, edit, manage members, delete)
-- Member management and ownership transfer
-- Project-based file access and downloads
-
-See [Creating Observations - Projects](CREATING_OBSERVATIONS.md#projects) for documentation.
+- Advanced system health monitoring
+- Performance metrics and dashboards
 
 ---
 
