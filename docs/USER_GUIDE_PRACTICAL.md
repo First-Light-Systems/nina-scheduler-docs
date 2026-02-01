@@ -1,13 +1,6 @@
 # Science Scheduler - Practical User Guide
 
-**Document Version**: 2.0 | **Last Updated**: February 2026
-
-> **What's New in v2.0** (February 2026):
-> - ObservationFiles page for viewing, browsing, and downloading FITS files
-> - Fast Mover indicator on observations for near-Earth objects and asteroids
-> - Operations/Dispatch disabled indicators when system controls are active
-> - Weather hold and safety event information
-> - Contact Support page reference
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -18,8 +11,10 @@ This guide provides step-by-step instructions for common tasks in the Science Sc
 3. [Managing Observatory Configuration](#managing-observatory-configuration)
 4. [Understanding Observation Types](#understanding-observation-types)
 5. [Monitoring Your Observations](#monitoring-your-observations)
-6. [Using the NINA Plugin](#using-the-nina-plugin)
-7. [Troubleshooting](#troubleshooting)
+6. [Accessing Files Through Projects](#accessing-files-through-projects)
+7. [Managing Your Observatory](#managing-your-observatory)
+8. [Using the NINA Plugin](#using-the-nina-plugin)
+9. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -294,11 +289,6 @@ The **My Observations** page shows all your observations:
 - **Failed**: Encountered an error
 - **Suspended**: Paused (weather, equipment issues)
 
-**Special Indicators**:
-- **Fast Mover** chip: Displayed on observations marked as fast-moving objects (NEOs, asteroids). These use fine-grained 5-minute scheduling resolution for accurate tracking.
-- **Operations Disabled**: If an observatory has operations disabled, a banner indicates observations are paused.
-- **Dispatch Disabled**: If dispatch is disabled system-wide, a banner indicates no new assignments are being made.
-
 ### Observation Details
 
 For each observation, you can see:
@@ -316,7 +306,6 @@ For each observation, you can see:
 
 **Actions Available**:
 - **View Details**: See complete observation information
-- **View Files**: Access the [ObservationFiles page](OBSERVATION_FILES.md) for completed observations
 - **Delete**: Remove observation (if not in progress)
 - **Edit**: Modify observation parameters (if queued)
 
@@ -330,6 +319,46 @@ The interface updates automatically when:
 
 **No refresh needed** - the page updates via WebSocket connection.
 
+---
+
+## Accessing Files Through Projects
+
+The **Projects** page is the recommended way to view and download observation files.
+
+### Navigating to Your Files
+
+1. Go to **Projects** from the main menu
+2. Click on a project to expand it
+3. Expand a target to see its observations
+4. Look for the **folder icon** in the **Files** column
+5. Click the folder icon to open the **Observation Files** page
+
+### Observation Files Page
+
+The Observation Files page displays:
+
+- **File thumbnails** - Preview images for your FITS files (when available)
+- **File metadata** - Filter, exposure time, capture timestamp, file size
+- **File type badges** - FITS or preview indicators
+
+**Actions available:**
+- Click a thumbnail to **preview** the full image
+- Click **Info** to see detailed file metadata
+- Click **Download** to download individual files
+- Click **Download All** to get the complete file set
+
+### Project Overview Features
+
+The project overview shows helpful information for managing your data:
+
+| Column | Description |
+|--------|-------------|
+| **Duration** | Total exposure time for the observation |
+| **Status** | Current observation status (pending, running, completed, etc.) |
+| **Progress** | Exposure progress or image count |
+| **Files** | Folder icon when files are available (click to view/download) |
+| **Priority** | Observation priority level |
+
 ### Understanding End Times
 
 **For Fixed-Time Observations**:
@@ -341,6 +370,58 @@ The interface updates automatically when:
 - End time is calculated based on start time + duration
 - May change if observation is rescheduled
 - Updates as observation progresses
+
+---
+
+## Managing Your Observatory
+
+If you are an observatory owner or administrator, you can manage your observatory's operational settings through the web interface.
+
+### Accessing My Observatories
+
+1. Log in to the web interface
+2. Look for **Observatory Administration** in the navigation menu
+3. Click **My Observatories**
+
+**Note**: The Observatory Administration menu only appears if you have admin privileges on at least one observatory.
+
+### Controlling Dispatching and Automation
+
+The My Observatories page shows all observatories where you have administrative privileges. For each observatory, you can control:
+
+| Setting | Description |
+|---------|-------------|
+| **Dispatching** | When enabled, the scheduler can assign observations to this observatory |
+| **Automation** | When enabled, automatic observation creation from your target library is active |
+
+**To toggle these settings:**
+1. Find your observatory in the list
+2. Use the toggle switches in the **Dispatching** or **Automation** columns
+3. Changes take effect immediately
+
+### When to Disable Dispatching
+
+You may want to temporarily disable dispatching when:
+- Performing maintenance on your equipment
+- Testing new configurations
+- Weather conditions are poor but you haven't closed the observatory
+- You need to run manual sequences without interruption
+
+### Observatory Status Information
+
+The My Observatories page also displays:
+- **Status**: Online, offline, busy, or maintenance
+- **Location**: Observatory coordinates
+- **Last Heartbeat**: When the plugin last communicated with the server
+- **API Key**: View or regenerate your observatory's API key
+
+### Who Has Access
+
+Observatory administrative access is granted to users who:
+- Are the **owner** of the observatory
+- Have the **can_admin** permission on the observatory membership
+
+Contact the observatory owner if you need administrative access.
 
 ---
 
@@ -544,27 +625,6 @@ Science Scheduler Container
 - Refer to this guide
 - Contact your institution's Science Scheduler administrator
 - Check for updated documentation at your institution's website
-
----
-
-## Weather Holds and Safety Events
-
-The Science Scheduler monitors safety device status reported by each observatory. When a safety event occurs:
-
-- **Unsafe condition detected**: The observatory stops receiving new observation assignments. Any in-progress observation may be suspended depending on the observatory's configuration.
-- **Safe condition restored**: The observatory resumes normal operation and becomes eligible for new assignments.
-
-Weather holds and safety events are logged in the observatory history and visible on the observatory detail page. If your observation was affected by a safety event, you'll see this reflected in the observation status and history.
-
----
-
-## Getting Help
-
-If you need assistance:
-
-1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md) for common issues
-2. Use the **Contact Support** page in the web interface to submit a support request
-3. Contact your institution's Science Scheduler administrator
 
 ---
 

@@ -1,6 +1,6 @@
 # Science Scheduler Overview
 
-**Document Version**: 1.0 | **Last Updated**: December 2025
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 ## What is the Science Scheduler?
 

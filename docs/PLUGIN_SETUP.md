@@ -1,12 +1,6 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.1 | **Last Updated**: February 2026
-**Plugin Version**: v3.2.4.0
-
-> **What's New in v1.1** (February 2026):
-> - Plugin version updated to v3.2.4.0
-> - Telemetry collector lifecycle improvements (cleaner start/stop)
-> - Equipment and safety device reporting documentation
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 ## ⚠️ IMPORTANT: Safety and Responsibility
 
@@ -195,16 +189,6 @@ When the sequence runs, the Science Scheduler container:
 5. **Reports** completion status
 6. **Requests** the next observation
 7. **Repeats** until queue is empty or operations are paused
-
-### Telemetry and Equipment Reporting
-
-The plugin automatically reports telemetry data to the server, including:
-
-- **Equipment configuration**: Camera, mount, filter wheel, and focuser details
-- **System information**: Computer name, OS version, NINA version
-- **Safety device status**: Reports from connected weather/safety monitors
-
-The telemetry collector has been improved in v3.2.4.0 with better lifecycle management - it starts and stops cleanly with the plugin connection, reducing resource usage when the plugin is idle.
 
 ### Integration with Safety Systems
 

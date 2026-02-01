@@ -1,11 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.1 | **Last Updated**: February 2026
-
-> **What's New in v1.1** (February 2026):
-> - Fast Mover designation for near-Earth objects and asteroids
-> - Updated download section with ObservationFiles page reference
-> - FITS metadata quality metrics (HFR, star count, ADU statistics)
+**Document Version**: 1.1 | **Last Updated**: January 2026
 
 This guide covers how to create, monitor, and manage observations in the Science Scheduler.
 
@@ -108,12 +103,6 @@ B filter:   5 x 180s (1x1 binning)
 | **Max Airmass** | Maximum airmass | 2.0 |
 | **Moon Distance** | Minimum degrees from moon | 30° |
 | **Twilight** | Latest twilight type | Astronomical |
-
-### Fast Mover Designation
-
-When creating observations for fast-moving objects (near-Earth objects, asteroids, comets), enable the **Fast Mover** option. This tells the scheduler to use fine-grained 5-minute scheduling resolution instead of the standard resolution, ensuring the object is observed at the correct position.
-
-Fast Mover observations display a special chip indicator on the observation detail page.
 
 ### Step 5: Choose Priority
 
@@ -239,14 +228,30 @@ Pending → Assigned → In Progress → Completed
 
 ## Downloading Results
 
-### Accessing FITS Files
+### Accessing FITS Files via Projects (Recommended)
 
-1. Go to observation details (completed observation)
-2. Click **View Files** to open the [ObservationFiles page](OBSERVATION_FILES.md)
-3. Browse files with thumbnails and metadata
-4. Download individual files or use **Download All** for batch download with parallel downloads
+The **Projects** page is the primary way to view and download your observation files:
 
-For detailed information on the ObservationFiles page, see [Observation Files](OBSERVATION_FILES.md).
+1. Navigate to **Projects** in the main menu
+2. Expand your project to see targets and observations
+3. Look for the **folder icon** in the Files column
+4. Click the folder icon to open the **Observation Files** page
+5. From there you can:
+   - View file thumbnails and previews
+   - See file metadata (filter, exposure time, capture date)
+   - Download individual files
+   - Download all files
+
+**Tip**: The Projects page shows observation progress and file counts, making it easy to track which observations have data ready for download.
+
+### Accessing Files via Observation Details
+
+You can also access files from the observation detail page:
+
+1. Go to **My Observations** or find the observation in **Projects**
+2. Click on the observation to open details
+3. Navigate to the **Files** section
+4. Download individual files or the entire set
 
 ### File Information
 
@@ -254,12 +259,14 @@ Each FITS file includes:
 - Filter used
 - Exposure time
 - Capture timestamp
+- File size
 - FITS headers with full metadata
-- Quality metrics (HFR, star count, ADU statistics)
 
 ---
 
 ## Projects
+
+Projects are the primary way to organize, track, and access your observation data.
 
 ### Creating a Project
 
@@ -267,21 +274,48 @@ Organize related observations into projects:
 
 1. Go to **Projects**
 2. Click **New Project**
-3. Enter name and description
-4. Save
+3. Enter name, code, and description
+4. Choose project type (research, education, outreach, personal)
+5. Save
 
 ### Assigning Observations to Projects
 
 When creating or editing an observation:
 1. Find the **Project** field
 2. Select from your projects
-3. Or create new project inline
+3. Or create a new project inline
+
+### Project Overview
+
+The Projects page shows all your projects with the **Overview** tab displaying:
+
+- **Project summaries** with observation counts by status (active, pending, complete, failed)
+- **Targets** within each project, grouped with their observations
+- **Progress tracking** showing exposure progress and file counts
+- **Quick file access** via the folder icon in each observation row
+
+### Sharing Projects with Team Members
+
+Projects support **multi-user collaboration** with permission-based access:
+
+1. Open your project
+2. Navigate to the **Management** tab
+3. Click **Manage Members**
+4. Add team members and set their permissions:
+   - **Can View**: See project and observations (default for all members)
+   - **Can Edit**: Modify observations and project settings
+   - **Can Manage Members**: Add/remove other team members
+   - **Can Delete**: Delete observations
+
+**Note**: Only project owners can transfer ownership or delete the project.
 
 ### Project Benefits
 
-- Group related observations together
-- Track progress across multiple targets
-- Generate usage reports per project
+- **Organize** related observations together
+- **Track progress** across multiple targets in one view
+- **Collaborate** with team members with appropriate permissions
+- **Access files** quickly through the project hierarchy
+- **Generate reports** per project for usage tracking
 
 ---
 
