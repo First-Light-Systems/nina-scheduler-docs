@@ -34,7 +34,6 @@ Members can be granted specific permissions within an organization:
 |------------|-------------|
 | `can_manage_members` | Add/remove users and change their permissions |
 | `can_manage_observatories` | Create, configure, and delete organization observatories |
-| `can_manage_billing` | Manage subscription, quotas, and billing settings |
 | `can_manage_projects` | Create and manage organization projects |
 
 !!! note "Owner Permissions"

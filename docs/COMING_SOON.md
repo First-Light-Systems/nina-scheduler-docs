@@ -1,43 +1,48 @@
 # Coming Soon
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: February 2026
 
 The following topics will be documented in future updates:
 
-## Institution Administration
-- Creating and configuring institutions
-- Institution types (university, college, high school, research institute, etc.)
-- Institution-wide settings (user limits, default roles, approval requirements)
-- Managing users and observatories within an institution
-
-## Saved Target Library
-- Creating and managing saved targets
-- Target sharing and visibility
-- Importing target lists
-
-## Image Processing Pipeline
-- Automatic processing of FITS files
-- Preview generation
-- Plate solving
-- Reprocessing failed images
-- Processing job management
-
-## Billing & Quotas
-- Pricing tiers and plans
-- Usage-based billing (wall clock time, shutter time, storage)
-- Quota management
-- Invoice viewing
-
-## System Administration
-- Database integrity tools
-- System health monitoring
-- Performance metrics
+*No major features are currently pending documentation. Check back for updates!*
 
 ---
 
 ## Recently Implemented
 
 The following features have been implemented and are documented elsewhere:
+
+### Institution/Organization Administration (February 2026)
+- Creating and configuring organizations (formerly institutions)
+- Organization types (university, college, high school, research institute, etc.)
+- Organization-wide settings (user limits, default roles, approval requirements)
+- Managing users and observatories within an organization
+
+See [Organizations](ORGANIZATIONS.md) for documentation.
+
+### Saved Target Library (February 2026)
+- Creating and managing saved targets
+- Target sharing and visibility
+- Importing target lists
+- Monitoring cadence and automation support
+
+See [Creating Observations](CREATING_OBSERVATIONS.md) for documentation.
+
+### Image Processing Pipeline (February 2026)
+- Automatic processing of FITS files
+- Preview generation
+- Plate solving via ASTAP
+- Quality analysis (FWHM, star count, SNR)
+- Reprocessing failed images
+- Processing job management
+
+See [Observation Files](OBSERVATION_FILES.md) for documentation.
+
+### System Administration (February 2026)
+- Database integrity tools with automated repair
+- System health monitoring
+- Performance metrics and analytics
+- Docker log viewer with regex search
 
 ### Reporting & Analytics (February 2026)
 - Target observation reports with search

@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Python Scheduler version**: Updated to v3.0.1
 - **User GUI version**: Updated to v3.2.1
 - **Priority consistency**: Standardized priority direction across all components (10=highest, 1=lowest)
+- **Coming Soon page**: Moved Saved Target Library, Image Processing Pipeline, System Administration, and Institution Administration to Recently Implemented section; removed Billing & Quotas (not planned); removed `can_manage_billing` permission references
 
 ### Fixed
 
@@ -77,7 +78,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Organization Permissions**: New granular permission system for organization members:
   - `can_manage_members` - Add/remove users and change their permissions
   - `can_manage_observatories` - Create/delete/configure organization observatories
-  - `can_manage_billing` - Manage subscription, quotas, and billing settings
   - `can_manage_projects` - Create and manage projects
 
 - **Observatory Permissions**: New permission-based access for observatory members:
