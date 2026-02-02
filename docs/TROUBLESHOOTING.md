@@ -1,12 +1,10 @@
 # Troubleshooting Guide
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: February 2026
 
-> **What's New in v1.2** (February 2026):
-> - Weather and safety event troubleshooting
-> - Equipment configuration changed event guidance
-> - Docker log search for advanced troubleshooting (administrators)
-> - Contact Support page reference
+> **What's New in v1.3** (February 2026):
+> - Updated connection troubleshooting for single-owner communications model
+> - Automatic reconnection behavior documentation
 
 Solutions for common problems with the Science Scheduler system.
 
@@ -69,6 +67,8 @@ Solutions for common problems with the Science Scheduler system.
 5. **Server status**
    - Confirm with administrator that server is running
    - Check if other observatories are connecting
+
+**Note:** The plugin uses automatic reconnection with exponential backoff. If the connection drops, it will retry automatically (starting at 1 second, up to 60 seconds between attempts). You should see "Reconnecting..." status during this process. If it never reconnects, check the above items.
 
 ---
 

@@ -6,11 +6,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.1] - 2026-02-02
+
+### Added
+
+- **FITS quality headers**: Quality metrics (FWHM, star count, SNR, background level, pixel scale) are now embedded directly in FITS file headers, so downloaded files include quality data without needing the web interface
+- **Time remaining display**: Plugin shows remaining time during observation execution in NINA, preventing new exposures from starting if they can't complete before the observation window ends
+- **Weather history**: Continuous weather data collection with configurable sampling intervals, retention periods, and per-observatory omit lists; weather snapshots captured on weather-hold transitions
+- **Singleton communications engine**: Single-owner WebSocket model ensures one connection per observatory with automatic reconnection and clean sequence reload without duplicate connections
+
+### Changed
+
+- **Plugin version**: Updated to v3.2.9.0
+- **Server version**: Updated to v3.3.4
+- **Python Scheduler version**: Updated to v3.0.1
+- **User GUI version**: Updated to v3.2.1
+- **Priority consistency**: Standardized priority direction across all components (10=highest, 1=lowest)
+
+### Fixed
+
+- Fixed-time observations now correctly compute duration from the actual fixed-time window instead of using client-provided estimates
+- Fixed-time observations always use `fixed_time_end` as the authoritative end time, not timeline-computed values
+- Fixed-time observations always respect scheduled start time, even when `bypass_darkness` is enabled
+- Removed 5-minute early start tolerance that could cause premature dispatch of fixed-time observations
+- Clean sequence reload without duplicate WebSocket connections from multiple NINA container instances
+
+---
+
 ## [2.0] - 2026-02-01
 
 ### Added
 
-- **Observation Files page**: New dedicated page for viewing, browsing, and downloading FITS files with metadata display (coordinates, filter, exposure, airmass, telescope, instrument) and batch downloads with parallel download support
+- **Observation Files page**: New dedicated page for viewing, browsing, and downloading FITS files with metadata display, quality metrics, and batch downloads with parallel download support
 - **Fast Mover designation**: Observations for fast-moving objects (NEOs, asteroids) use 5-minute scheduling resolution
 - **Weather and safety monitoring**: Safety event tracking, weather holds, automatic scheduling impact, observatory history logging
 - **Observatory history**: Automatic logging of online/offline transitions, equipment configuration changes, system info changes, and goodbye events
@@ -99,6 +126,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.1 | 3.3.4 | 3.2.9.0 | FITS quality headers, time remaining display, weather history, connection reliability |
 | 2.0 | 3.3.2 | 3.2.5.0 | Observation files, safety events, reporting, dispatch controls |
 | 1.1 | 3.3.0+ | 3.1.x - 3.2.x | Organizations, multi-org membership, permission-based access |
 | 1.0 | 3.0.0 - 3.2.x | 3.0.x - 3.1.x | Institutions, single membership, role-based access |

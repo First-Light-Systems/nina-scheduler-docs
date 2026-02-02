@@ -1,6 +1,6 @@
 # Observation Files
 
-**Document Version**: 1.0 | **Last Updated**: February 2026
+**Document Version**: 1.1 | **Last Updated**: February 2026
 
 This guide explains how to view, browse, and download observation files (FITS images) from the Science Scheduler.
 
@@ -58,11 +58,28 @@ Click on any file to open the metadata dialog, which displays:
 - **Object name** from FITS header
 - **Epoch** (typically J2000)
 
-### Image Quality Metrics (when available)
-- **Mean / Median / Std** - statistical measures of pixel values
-- **Signal-to-Noise Ratio** (SNR)
-- **Background Level**
-- **Min / Max Values**
+### Quality Metrics
+- **HFR** (Half-Flux Radius) - star sharpness indicator
+- **Stars detected** count
+- **ADU statistics** (mean, median, min, max)
+
+### Embedded Quality Headers
+
+Quality metrics are automatically embedded in FITS file headers during server-side processing. When you download a FITS file, the following headers are included (when available):
+
+| FITS Keyword | Description |
+|-------------|-------------|
+| `FWHM` | Median FWHM in pixels |
+| `FWHMARC` | Median FWHM in arcseconds |
+| `NSTARS` | Number of stars detected |
+| `IMGSNR` | Image signal-to-noise ratio |
+| `BGLEVEL` | Background level (ADU) |
+| `BGNOISE` | Background noise RMS (ADU) |
+| `IMGMEAN` | Image mean value (ADU) |
+| `IMGMED` | Image median value (ADU) |
+| `PXSCALE` | Pixel scale (arcsec/pixel) |
+
+These headers allow you to assess image quality directly in any FITS viewer without needing the web interface.
 
 ### Capture Details
 - **Camera** name and settings

@@ -5,7 +5,7 @@
 > **What's New in v1.2** (February 2026):
 > - Fast Mover designation for near-Earth objects and asteroids
 > - Updated download section with Observation Files page reference
-> - FITS metadata and image quality metrics
+> - FITS metadata quality metrics
 
 This guide covers how to create, monitor, and manage observations in the Science Scheduler.
 
@@ -274,7 +274,7 @@ Each FITS file includes:
 - Capture timestamp
 - File size
 - FITS headers with full metadata
-- Image quality metrics (SNR, mean/median, background level) when available
+- Quality metrics (HFR, star count, ADU statistics)
 
 ---
 

@@ -1,13 +1,11 @@
 # Science Scheduler - Practical User Guide
 
-**Document Version**: 2.0 | **Last Updated**: February 2026
+**Document Version**: 2.1 | **Last Updated**: February 2026
 
-> **What's New in v2.0** (February 2026):
-> - Fast Mover indicator on observations for near-Earth objects and asteroids
-> - Operations/Dispatch disabled indicators when system controls are active
-> - Weather hold and safety event information
-> - Contact Support page reference
-> - Observation Files page with FITS metadata and batch downloads
+> **What's New in v2.1** (February 2026):
+> - Time remaining countdown displayed during observation execution in NINA
+> - Fixed-time observation timing improvements
+> - Plugin version updated to v3.2.9.0
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -237,11 +235,12 @@ The Science Scheduler supports three observation types:
 - Satellite passes
 
 **How It Works**:
-1. Observation assigned to plugin before `fixed_time_start`
-2. Plugin waits until start time
+1. Observation dispatched at (not before) `fixed_time_start`
+2. Plugin slews to target and begins exposures
 3. Takes continuous exposures until `fixed_time_end`
-4. Stops automatically at end time
-5. Uploads files and marks complete
+4. Time remaining condition prevents starting exposures that can't complete before end time
+5. Stops automatically at end time
+6. Uploads files and marks complete
 
 ### Time-Based Observations
 
@@ -541,7 +540,7 @@ Science Scheduler Container
 **Current Activity**:
 - Target name and coordinates
 - Exposure progress (N of M)
-- Time remaining
+- **Time remaining** countdown — shows remaining time in the observation window (e.g., "2h 15m 30s") and prevents starting new exposures that can't complete before the window ends
 - Upload queue status
 
 **Logs**:

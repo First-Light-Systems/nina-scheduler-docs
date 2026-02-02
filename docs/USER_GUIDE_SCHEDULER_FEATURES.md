@@ -1,11 +1,11 @@
 # Scheduler Features
 
-**Document Version**: 1.2
+**Document Version**: 1.3
 **Last Updated**: February 2026
 
-> **What's New in v1.2** (February 2026):
-> - Weather and safety event impact on scheduling decisions
-> - Fast Mover scheduling with 5-minute resolution
+> **What's New in v1.3** (February 2026):
+> - Fixed-time observation timing fixes (correct duration, end time, and start time handling)
+> - Priority consistency: standardized on 10=highest, 1=lowest
 
 ## Overview
 
@@ -59,6 +59,9 @@ The Science Scheduler supports five observation types:
 - Must start and complete within a specific time window
 - Protected from interruption once started
 - Requires both start and end times
+- Duration is automatically calculated from the time window
+- `fixed_time_end` is the authoritative end time — the observation always stops at this time
+- The scheduled start time is always respected, even when bypass_darkness is enabled for testing
 
 **Configuration**:
 - Set `fixed_time_start`: When the observation window opens

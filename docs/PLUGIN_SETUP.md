@@ -1,12 +1,14 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
-**Plugin Version**: v3.2.5.0
+**Document Version**: 1.3 | **Last Updated**: February 2026
+**Plugin Version**: v3.2.9.0
 
-> **What's New in v1.2** (February 2026):
-> - Plugin version updated to v3.2.5.0
-> - Telemetry collector lifecycle improvements (cleaner start/stop)
-> - Equipment and safety device reporting documentation
+> **What's New in v1.3** (February 2026):
+> - Plugin version updated to v3.2.9.0
+> - Single-owner communications model — one WebSocket connection per observatory with automatic reconnection
+> - Time remaining display during observation execution prevents incomplete exposures
+> - Priority consistency fix: 10=highest, 1=lowest across all components
+> - Clean sequence reload without duplicate connections
 
 ## ⚠️ IMPORTANT: Safety and Responsibility
 
@@ -204,7 +206,20 @@ The plugin automatically reports telemetry data to the server, including:
 - **System information**: Computer name, OS version, NINA version
 - **Safety device status**: Reports from connected weather/safety monitors
 
-The telemetry collector has been improved in v3.2.5.0 with better lifecycle management - it starts and stops cleanly with the plugin connection, reducing resource usage when the plugin is idle.
+The telemetry collector starts and stops cleanly with the plugin connection, reducing resource usage when the plugin is idle.
+
+### Connection Model
+
+The plugin uses a **single-owner communications model** — only one WebSocket connection is maintained per observatory, regardless of how many NINA container instances exist. This means:
+
+- **No duplicate connections**: NINA creates multiple container instances internally, but only one owns the WebSocket connection
+- **Automatic reconnection**: If the connection drops, the plugin reconnects automatically with exponential backoff
+- **Clean sequence reload**: When you load a new sequence, the plugin detects the stale owner and seamlessly transfers ownership without creating duplicate connections
+- **Shared resources**: All container instances share the same connection, ensuring messages route correctly
+
+### Time Remaining Display
+
+During observation execution, the plugin displays a **time remaining countdown** in the NINA sequencer. This shows how much time is left in the current observation window and prevents new exposures from starting if they can't complete before the window ends (with a 15-second overhead buffer for image download and processing).
 
 ### Integration with Safety Systems
 

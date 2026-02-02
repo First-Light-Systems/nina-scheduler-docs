@@ -1,12 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.0 | **Last Updated**: February 2026
+**Document Version**: 2.1 | **Last Updated**: February 2026
 
-> **What's New in v2.0** (February 2026):
-> - Operations and Dispatch controls for observatory management
-> - Observatory history with event logging
-> - NINA Equipment Options display
-> - Weather and safety event monitoring
+> **What's New in v2.1** (February 2026):
+> - Weather history collection with configurable intervals and retention
+> - Weather history settings UI with observatory omit list
 
 This guide covers how to manage observatory members, permissions, and operational controls.
 
@@ -240,6 +238,38 @@ When an observatory becomes unsafe:
 - The event is logged in observatory history
 
 Administrators can review safety events in the observatory history to diagnose weather-related issues.
+
+## Weather History
+
+The system supports continuous weather history collection for trend analysis and diagnostics.
+
+### Enabling Weather History
+
+Server administrators can enable weather history from **System Settings**:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Enable Weather History** | Master toggle for continuous logging | Off |
+| **Sampling Interval** | How often to capture weather snapshots | 60 seconds |
+| **Retention Period** | How long to keep history data | 30 days |
+| **Omit Observatories** | Exclude specific observatories from logging | None |
+
+### What Gets Recorded
+
+Each weather snapshot captures:
+- Temperature, humidity, dew point, pressure
+- Wind speed, direction, and gusts
+- Cloud cover, sky temperature, rain rate
+- Safety device status (safe/unsafe)
+- Weather and safety device connection status
+
+### Observatory Omit List
+
+Administrators can exclude observatories from weather logging (e.g., observatories without weather stations or test installations). When adding or removing an observatory from the omit list, the system prompts for a reason and records the change in the observatory's history for auditing.
+
+### Weather Snapshots on State Transitions
+
+When an observatory enters a **weather hold**, a weather snapshot is automatically captured and included in the observatory history event. This provides a record of conditions at the time the hold was triggered.
 
 ## API Access
 
