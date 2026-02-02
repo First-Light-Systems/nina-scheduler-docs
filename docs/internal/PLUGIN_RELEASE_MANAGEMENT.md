@@ -1,12 +1,14 @@
-# Plugin Release Management
+# Plugin Release Management — Server Admin Guide
 
 **Document Version**: 1.0 | **Last Updated**: February 2026
 
-This guide covers how administrators package, upload, and manage plugin releases for distribution to observatory plugins.
+> **Internal documentation** — not published to the public docs site.
+
+This guide covers how server administrators build, package, upload, and manage plugin releases.
 
 ## Overview
 
-The Science Scheduler server includes a built-in plugin distribution system. Administrators upload plugin ZIP files to the server, and connected plugins automatically detect and offer updates to users. No external download servers or manual file distribution required.
+The Science Scheduler server includes a built-in plugin distribution system. Server administrators upload plugin ZIP files, and connected plugins automatically detect and offer updates to users. No external download servers or manual file distribution required.
 
 ## Building a Plugin Release
 
@@ -33,8 +35,14 @@ The Science Scheduler server includes a built-in plugin distribution system. Adm
    - `Dapper.dll` — required dependency
    - `manifest.json` — plugin metadata
 
-!!! tip "Version Number"
-    The version in the ZIP filename comes from `Properties/AssemblyInfo.cs` and `manifest.json`. Both must be updated together when bumping the version.
+### Version Bumping
+
+The version must be updated in two files before building:
+
+- `packages/plugin/Properties/AssemblyInfo.cs` — four version attributes
+- `packages/plugin/manifest.json` — `Version` field
+
+Both must match. The ZIP filename and assembly version are derived from `AssemblyInfo.cs`.
 
 ## Uploading a Release
 
@@ -103,7 +111,7 @@ Click the notes icon next to any release to view its release notes in a dialog.
 
 ## Enforcing Minimum Plugin Version
 
-Administrators can require all plugins to be at or above a specific version. Plugins below the minimum:
+Server administrators can require all plugins to be at or above a specific version. Plugins below the minimum:
 
 - See a red "UPDATE REQUIRED" banner in their settings
 - Cannot execute observations until updated
@@ -169,8 +177,7 @@ All endpoints require authentication. Admin endpoints require a Bearer token wit
 | `GET` | `/api/v1/plugin-releases/settings` | Bearer (admin) | Get min version setting |
 | `PUT` | `/api/v1/plugin-releases/settings` | Bearer (admin) | Set min version setting |
 
-!!! note "Admin vs Plugin Access"
-    API key authentication returns only active releases. Admin Bearer token authentication returns all releases including inactive ones.
+**Admin vs Plugin Access**: API key authentication returns only active releases. Admin Bearer token authentication returns all releases including inactive ones.
 
 ## Troubleshooting
 
