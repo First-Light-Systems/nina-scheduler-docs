@@ -65,6 +65,7 @@ nav:
   - Administration:
     - Organizations: ORGANIZATIONS.md
     - Observatory Administration: OBSERVATORY_ADMINISTRATION.md
+    - Plugin Release Management: PLUGIN_RELEASE_MANAGEMENT.md
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md
   - Changelog: CHANGELOG.md

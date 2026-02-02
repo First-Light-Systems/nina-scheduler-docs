@@ -1,14 +1,14 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.3 | **Last Updated**: February 2026
-**Plugin Version**: v3.2.9.0
+**Document Version**: 1.4 | **Last Updated**: February 2026
+**Plugin Version**: v3.2.14.0
 
-> **What's New in v1.3** (February 2026):
-> - Plugin version updated to v3.2.9.0
-> - Single-owner communications model — one WebSocket connection per observatory with automatic reconnection
-> - Time remaining display during observation execution prevents incomplete exposures
-> - Priority consistency fix: 10=highest, 1=lowest across all components
-> - Clean sequence reload without duplicate connections
+> **What's New in v1.4** (February 2026):
+> - Plugin version updated to v3.2.14.0
+> - **Automatic update checking** — plugin checks for updates at startup and every 4 hours
+> - **In-app plugin updates** — download and install new versions directly from the plugin settings
+> - **Check for Updates button** in plugin settings for manual update checks
+> - Admins can enforce minimum plugin versions via the server
 
 ## ⚠️ IMPORTANT: Safety and Responsibility
 
@@ -88,6 +88,50 @@ Get the plugin files from your institution's administrator or the official distr
 4. Confirm it shows as loaded (green checkmark)
 
 If the plugin doesn't appear, see [Troubleshooting](TROUBLESHOOTING.md#plugin-not-loading-in-nina).
+
+---
+
+## Plugin Updates
+
+Once installed and configured, the plugin can update itself directly from within NINA.
+
+### Automatic Update Checks
+
+The plugin automatically checks for new versions:
+
+- **At startup** — a few seconds after NINA loads
+- **Every 4 hours** — periodic background checks while NINA is running
+- **On server connection** — when the plugin connects via WebSocket
+
+If an update is available, a green banner appears in the plugin settings showing the new version and release notes.
+
+### Checking Manually
+
+1. Go to **Options** > **Plugins** > **Science Scheduler**
+2. In the **Plugin Updates** section, click **Check for Updates**
+3. The plugin contacts the server and reports whether a new version is available
+
+### Installing an Update
+
+1. When an update is available, the version selector shows all available versions
+2. Select the version you want to install (the latest is pre-selected)
+3. Click **Install Selected Version**
+4. Wait for the download and installation to complete
+5. Click **Restart NINA** when prompted, or restart NINA manually
+
+!!! note "Downgrading"
+    You can also select an older version from the dropdown to downgrade if needed.
+
+!!! warning "Restart Required"
+    After installing an update, NINA must be restarted for the new version to take effect. The old plugin files are cleaned up automatically on restart.
+
+### Required Updates
+
+Your administrator may set a minimum plugin version. If your plugin is below the minimum:
+
+- A red **UPDATE REQUIRED** banner appears in the plugin settings
+- The plugin will not execute observations until updated
+- Install the update and restart NINA to resume operations
 
 ---
 

@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.2] - 2026-02-02
+
+### Added
+
+- **Plugin auto-update**: Plugin checks for updates at startup and every 4 hours, with in-app download and installation directly from the plugin settings page
+- **Check for Updates button**: Manual update check in plugin settings without needing a WebSocket connection
+- **Plugin Release Management admin page**: Upload, manage, activate/deactivate, and permanently delete plugin releases from the admin GUI
+- **Minimum plugin version enforcement**: Administrators can require all plugins to be at or above a specific version; plugins below the minimum cannot execute observations until updated
+- **Automatic ZIP packaging**: Release builds automatically produce a distributable ZIP with the plugin DLL, Dapper.dll, and manifest.json
+- **Plugin Release Management documentation**: New admin guide covering packaging, uploading, and managing plugin releases
+
+### Changed
+
+- **Plugin version**: Updated to v3.2.14.0
+- **Plugin install path**: Now uses NINA's `Constants.UserExtensionsFolder` for correct version-specific directory resolution
+- **File cleanup**: Plugin updates use NINA's DeletionFolder pattern for safe replacement of locked DLLs
+- **Loose file cleanup**: Updates automatically remove manually-installed plugin files from the base plugins directory
+
+---
+
 ## [2.1] - 2026-02-02
 
 ### Added
