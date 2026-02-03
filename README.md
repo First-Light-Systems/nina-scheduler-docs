@@ -19,4 +19,4 @@ Then open http://localhost:8000
 
 ## License
 
-Copyright 2025 First Light Observatory Systems LLC
+Copyright 2025-2026 First Light Observatory Systems LLC
