@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.1 | **Last Updated**: February 2026
-**Server v3.3.4 | Plugin v3.2.9.0**
+**Documentation Version**: 2.3 | **Last Updated**: February 2026
+**Server v3.4.0 | Plugin v3.2.19.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
@@ -45,12 +45,11 @@ If you're managing organizations, users, or the system:
 
 ## What's New (February 2026)
 
+- **[Target Library](TARGET_LIBRARY.md)** — Saved targets, reusable observing templates, CSV bulk import, and automated cadence scheduling
 - **FITS quality headers** — FWHM, star count, SNR, and background level embedded in downloaded FITS files
 - **Time remaining display** — Plugin shows countdown during observations, prevents incomplete exposures
 - **Weather history collection** — Continuous weather logging with configurable intervals and retention
 - **Connection reliability** — Single-owner WebSocket model with automatic reconnection
-- **Fixed-time observation fixes** — Correct duration, end time, and start time handling
-- **Priority consistency** — Standardized 10=highest, 1=lowest across all components
 
 See the [Changelog](CHANGELOG.md) for full details.
 
