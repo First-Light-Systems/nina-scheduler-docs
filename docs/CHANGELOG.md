@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Updated Observatory Administration with plugin update management section
 - Updated Coming Soon page to link to new Target Library documentation
 - Updated Creating Observations page with Target Library cross-references
 

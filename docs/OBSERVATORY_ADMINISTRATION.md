@@ -1,7 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.1 | **Last Updated**: February 2026
+**Document Version**: 2.2 | **Last Updated**: February 2026
 
+> **What's New in v2.2** (February 2026):
+> - Plugin update management section for observatory administrators
+>
 > **What's New in v2.1** (February 2026):
 > - Weather history collection with configurable intervals and retention
 > - Weather history settings UI with observatory omit list
@@ -224,6 +227,49 @@ When connected, the NINA plugin reports detailed equipment configuration to the 
 - **Plate Solving**: Solver type, configuration
 
 These are read-only in the web interface and reflect the actual NINA configuration at the observatory.
+
+## Plugin Updates
+
+Keeping the NINA plugin up to date ensures observatories have the latest features and bug fixes. The plugin includes a built-in update system that observatory administrators should be aware of.
+
+### How Update Checks Work
+
+The plugin automatically checks for new versions:
+
+- **At startup** when NINA launches
+- **Every 4 hours** while NINA is running
+- **On WebSocket connection** when the plugin connects to the scheduler server
+
+No action is required from the user for these checks — they happen silently in the background.
+
+### Update Notifications
+
+When a new version is available, a **green banner** appears at the top of the plugin settings page showing the available version. The banner includes a dropdown to select which version to install and an **Install** button.
+
+### Installing Updates
+
+1. Open the plugin settings page in NINA
+2. Select the desired version from the dropdown (defaults to the latest)
+3. Click **Install**
+4. Restart NINA to complete the update
+
+The plugin can install any available version, including older versions if a downgrade is needed.
+
+### Required Updates
+
+Server administrators can enforce a **minimum plugin version**. When a plugin is below the required version:
+
+- A **red "UPDATE REQUIRED" banner** appears in the plugin settings
+- The plugin **will not execute observations** until updated
+- The banner shows which version is required
+
+This ensures all observatories run a compatible plugin version and is typically used when a server update introduces breaking protocol changes.
+
+### Manual Update Check
+
+The **Check for Updates** button in plugin settings triggers an immediate check. This works even without an active WebSocket connection — it queries the server's REST API directly.
+
+> **See also**: [Plugin Setup — Plugin Updates](PLUGIN_SETUP.md#plugin-updates) for the full installation walkthrough including first-time setup.
 
 ## Weather and Safety Monitoring
 
