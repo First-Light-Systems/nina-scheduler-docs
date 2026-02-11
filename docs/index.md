@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.3 | **Last Updated**: February 2026
-**Server v3.4.0 | Plugin v3.2.19.0**
+**Documentation Version**: 2.4 | **Last Updated**: February 2026
+**Server v3.4.1 | Plugin v3.2.19.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
@@ -43,13 +43,12 @@ If you're managing organizations, users, or the system:
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 
-## What's New (February 2026)
+## What's New in v2.4 (February 2026)
 
-- **[Target Library](TARGET_LIBRARY.md)** — Saved targets, reusable observing templates, CSV bulk import, and automated cadence scheduling
-- **FITS quality headers** — FWHM, star count, SNR, and background level embedded in downloaded FITS files
-- **Time remaining display** — Plugin shows countdown during observations, prevents incomplete exposures
-- **Weather history collection** — Continuous weather logging with configurable intervals and retention
-- **Connection reliability** — Single-owner WebSocket model with automatic reconnection
+- **Observatory memory** — System remembers your last-selected observatory across all pages
+- **Exoplanet transit filter persistence** — Search filters, telescope config, and observation settings saved to your profile
+- **Observation window columns** — Transit table now shows full observation start/end times including baseline
+- **Three-phase altitude checking** — Minimum altitude verified at ingress, midpoint, and egress for transits
 
 See the [Changelog](CHANGELOG.md) for full details.
 
