@@ -1,11 +1,12 @@
 # Science Scheduler - Practical User Guide
 
-**Document Version**: 2.1 | **Last Updated**: February 2026
+**Document Version**: 2.4 | **Last Updated**: February 2026
 
-> **What's New in v2.1** (February 2026):
-> - Time remaining countdown displayed during observation execution in NINA
-> - Fixed-time observation timing improvements
-> - Plugin version updated to v3.2.9.0
+> **What's New in v2.4** (February 2026):
+> - Observatory selection is now remembered across all pages — select once, and it's pre-selected everywhere
+> - Exoplanet transit search filters (hours, depth, magnitude, altitude, moon filter, telescope settings) persist across sessions
+> - Transit list shows ingress/egress times and full observation window start/end columns
+> - Minimum altitude verified at ingress, midpoint, and egress with per-phase altitude display
 
 This guide provides step-by-step instructions for common tasks in the Science Scheduler system.
 
@@ -29,7 +30,7 @@ This guide provides step-by-step instructions for common tasks in the Science Sc
 
 1. **Access the web interface** at your institution's Science Scheduler URL
 2. **Log in** with credentials provided by your observatory administrator
-3. **Select your observatory** from the dropdown in the top navigation
+3. **Select your observatory** from the dropdown in the top navigation — this selection is remembered and will be pre-selected on all pages going forward
 4. **Configure telescope settings** (one-time setup per observatory)
 
 ### Dashboard Overview

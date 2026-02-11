@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.4] - 2026-02-11
+
+### Added
+
+- **Remember last observatory**: The system now remembers your last-selected observatory and pre-selects it on every page with an observatory dropdown — Exoplanet Transits, Submit Observation, Observation Search, Observation List, Template Form, and Library
+- **Exoplanet transit filter persistence**: Search filters (hours, depth, magnitude, altitude, moon filter, binning, exposure, selected filter) are saved to your profile and restored automatically on your next visit
+- **Transit table observation windows**: The transit list now shows ingress/egress times and full observation window start/end (including baseline) for better planning
+- **Three-phase altitude checking**: Minimum altitude is now verified at ingress, midpoint, and egress — transits that dip below the minimum at any phase are flagged with per-phase altitude details
+
+### Changed
+
+- Updated Practical User Guide with observatory memory, filter persistence, and new transit table columns
+- Updated Creating Observations with observatory pre-selection note
+- Updated Target Library with observatory pre-selection for templates
+
+---
+
 ## [2.3] - 2026-02-10
 
 ### Added
@@ -160,6 +177,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.4 | 3.4.1 | 3.2.19.0 | Observatory memory, transit filter persistence, observation windows, altitude checks |
 | 2.3 | 3.4.0 | 3.2.19.0 | Target Library documentation, cadence with minute-level intervals |
 | 2.1 | 3.3.4 | 3.2.9.0 | FITS quality headers, time remaining display, weather history, connection reliability |
 | 2.0 | 3.3.2 | 3.2.5.0 | Observation files, safety events, reporting, dispatch controls |
