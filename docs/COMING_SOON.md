@@ -1,6 +1,6 @@
 # Coming Soon
 
-**Document Version**: 1.3 | **Last Updated**: February 2026
+**Document Version**: 1.4 | **Last Updated**: February 2026
 
 The following topics will be documented in future updates:
 
@@ -26,7 +26,7 @@ See [Organizations](ORGANIZATIONS.md) for documentation.
 - Importing target lists
 - Monitoring cadence and automation support
 
-See [Creating Observations](CREATING_OBSERVATIONS.md) for documentation.
+See [Target Library](TARGET_LIBRARY.md) for documentation.
 
 ### Image Processing Pipeline (February 2026)
 - Automatic processing of FITS files

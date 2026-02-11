@@ -81,7 +81,7 @@ Instead of entering coordinates manually, you can use the **target lookup** feat
 - For comets, use the designation (e.g., "C/2020 F3" or "1P/Halley")
 - Planet names work directly (e.g., "Jupiter", "Mars")
 
-**Tip**: Use the target library to save frequently-used targets.
+**Tip**: See [Target Library](TARGET_LIBRARY.md) for managing saved targets, templates, CSV import, and automation.
 
 ### Step 3: Configure Exposures
 
@@ -355,9 +355,7 @@ Projects support **multi-user collaboration** with permission-based access:
 
 ### Use the Target Library
 
-- Save frequently-used targets
-- Ensures consistent coordinates
-- Speeds up observation creation
+See [Target Library](TARGET_LIBRARY.md) for managing saved targets, reusable observing templates, CSV bulk import, and automated cadence scheduling.
 
 ---
 

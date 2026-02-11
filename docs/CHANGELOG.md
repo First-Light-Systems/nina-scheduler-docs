@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.3] - 2026-02-10
+
+### Added
+
+- **Target Library documentation** (TARGET_LIBRARY.md) — library targets, observing templates, CSV import, automation/cadence with minute-level intervals, gain/offset support, and zero-value cadence fix
+
+### Changed
+
+- Updated Coming Soon page to link to new Target Library documentation
+- Updated Creating Observations page with Target Library cross-references
+
+---
+
 ## [2.2] - 2026-02-02
 
 ### Added
@@ -146,6 +159,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.3 | 3.4.0 | 3.2.5.0 | Target Library documentation, cadence with minute-level intervals |
 | 2.1 | 3.3.4 | 3.2.9.0 | FITS quality headers, time remaining display, weather history, connection reliability |
 | 2.0 | 3.3.2 | 3.2.5.0 | Observation files, safety events, reporting, dispatch controls |
 | 1.1 | 3.3.0+ | 3.1.x - 3.2.x | Organizations, multi-org membership, permission-based access |
