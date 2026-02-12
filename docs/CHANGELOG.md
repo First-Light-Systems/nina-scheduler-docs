@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.5] - 2026-02-12
+
+### Added
+
+- **Custom Observatory Page documentation** — page customization for observatory owners and admins covering section visibility (per-role toggles for Owner/Admin/User), section ordering, page behavior settings, branding (logo upload and rich-text description), Clear Sky Chart integration, and live feed embedding
+
+### Changed
+
+- Updated Observatory Administration (v2.2 → v2.3) with Custom Observatory Page section
+
+---
+
 ## [2.4] - 2026-02-11
 
 ### Added
@@ -177,6 +189,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.5 | 3.4.1 | 3.2.19.0 | Custom Observatory Page documentation |
 | 2.4 | 3.4.1 | 3.2.19.0 | Observatory memory, transit filter persistence, observation windows, altitude checks |
 | 2.3 | 3.4.0 | 3.2.19.0 | Target Library documentation, cadence with minute-level intervals |
 | 2.1 | 3.3.4 | 3.2.9.0 | FITS quality headers, time remaining display, weather history, connection reliability |
