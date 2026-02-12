@@ -1,7 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.2 | **Last Updated**: February 2026
+**Document Version**: 2.3 | **Last Updated**: February 2026
 
+> **What's New in v2.3** (February 2026):
+> - Custom Observatory Page section covering page customization by owners and admins
+>
 > **What's New in v2.2** (February 2026):
 > - Plugin update management section for observatory administrators
 >
@@ -316,6 +319,124 @@ Administrators can exclude observatories from weather logging (e.g., observatori
 ### Weather Snapshots on State Transitions
 
 When an observatory enters a **weather hold**, a weather snapshot is automatically captured and included in the observatory history event. This provides a record of conditions at the time the hold was triggered.
+
+## Custom Observatory Page
+
+Observatory owners and admins can customize how their observatory detail page looks and what information is shown to different user roles. To access these settings, click the **Customize** button on the observatory detail page.
+
+!!! note "Permissions"
+    Only observatory owners, admin members, and server administrators can access page customization. Regular users see the page as configured by the owner/admin.
+
+The customization dialog has seven tabs:
+
+### Section Visibility
+
+Control which sections of the observatory detail page are visible to each role. Every section has independent toggles for three roles:
+
+| Role | Description |
+|------|-------------|
+| **Owner** | The observatory owner |
+| **Admin** | Members with `can_admin` permission |
+| **User** | All other members |
+
+**Available sections:**
+
+| Section | Default Visibility | Description |
+|---------|-------------------|-------------|
+| Alerts | All roles | Alert notifications |
+| Location | All roles | Observatory location information |
+| Current Observation | All roles | Currently executing observation |
+| Latest Image | All roles | Most recent captured image |
+| Compact Status | All roles | Condensed status overview |
+| NINA Options | Owner and Admin only | NINA configuration options |
+| System Status | All roles | System health and metrics |
+| Observatory History | All roles | Event history log |
+| Clear Sky Chart | All roles | Weather forecast chart |
+| Navigation Buttons | All roles | Quick navigation links |
+| Branding | All roles | Observatory description and logo |
+| Live Feeds | All roles | Embedded live camera feed |
+| Custom Links | All roles | Custom navigation links |
+
+**Equipment visibility** can be controlled at the device level. Each equipment type has its own per-role toggles:
+
+- Mount, Camera, Filter Wheel, Focuser, Rotator, Dome, Weather Station, Safety Monitor, Guider, Switch Hub, Flat Device
+
+Use the **Select All** toggle to quickly show or hide all equipment for a given role.
+
+Click **Reset to Defaults** to restore all visibility settings to their defaults.
+
+### Section Order
+
+Reorder the major sections on the observatory detail page using the up/down arrow buttons. The default order is:
+
+1. Observatory Description (branding)
+2. Compact Status
+3. Equipment Status
+4. System Status
+5. Observatory History
+6. Clear Sky Chart
+7. Latest Image
+8. Live Observatory Feed
+9. Navigation Buttons
+
+Click **Reset to Default Order** to restore the original ordering.
+
+### Page Behavior
+
+Configure how the page displays certain content.
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Hide Disconnected Equipment** | Hide equipment cards for devices that are not connected. Configured per role (Owner, Admin, User). | Off for all roles |
+| **Latest Image Preview Height** | Height of the latest captured image preview, in pixels. Range: 100–800px. | 200px |
+
+### Branding
+
+#### Logo
+
+Upload an observatory logo that appears on your detail page.
+
+| Setting | Details |
+|---------|---------|
+| **Supported formats** | JPEG, PNG, WebP, SVG |
+| **Maximum file size** | 5 MB |
+| **Display size** | Small (56px), Medium (80px), Large (120px), Extra Large (160px), Huge (200px) |
+| **Link URL** | Optional — clicking the logo opens this URL in a new tab |
+
+Use the **Remove Logo** button to delete the current logo.
+
+#### Description
+
+Add a rich-text description for your observatory using HTML. The description supports common HTML tags such as `<b>`, `<i>`, `<a>`, `<br>`, and `<img>`.
+
+- Maximum length: 5,000 characters
+- Switch between **Edit** and **Preview** modes to see how your description will render
+- Use the **Validate HTML** button to check for issues like unclosed tags or missing attributes
+
+### Clear Sky Chart
+
+Link your observatory to a [Clear Dark Sky](https://www.cleardarksky.com/csk/) weather forecast chart.
+
+| Field | Description |
+|-------|-------------|
+| **Chart Link URL** | The URL of your Clear Dark Sky forecast page (e.g., `https://www.cleardarksky.com/c/YourLocationkey.html`) |
+| **Chart Image URL** | The URL of the forecast chart image (e.g., `https://www.cleardarksky.com/c/YourLocationcsk.gif`) |
+
+!!! tip "Paste embed code directly"
+    You can paste the full embed code from Clear Dark Sky and the URLs will be extracted automatically.
+
+To find your chart: visit [cleardarksky.com](https://www.cleardarksky.com/csk/), search for the location closest to your observatory, and copy the link URL and image URL from the embed code provided.
+
+### Live Feed
+
+Embed a live camera feed, YouTube stream, or other embeddable content on your observatory detail page.
+
+| Setting | Details |
+|---------|---------|
+| **Feed URL** | The embed URL (e.g., `https://www.youtube.com/embed/your-stream-id`). Displayed in an iframe. |
+| **Feed Height** | Height of the embedded feed in pixels. Range: 100–2,000px. Default: 480px. |
+
+A live preview of the feed is shown in the dialog after entering a URL.
 
 ## API Access
 
