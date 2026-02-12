@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- **Custom Observatory Page**: The system now allows customization of Observatory Details page by Observatory owners and admins.  The customization covers section visibility (per-role toggles for Owner/Admin/User), section ordering, page behavior, branding (logo upload and rich-text description), Clear Sky Chart integration, and image embedding
+- **Custom Observatory Dialog**: The system now suports customization of the Observatory Details page by Observatory owners and admins.  The customization covers section visibility (per-role toggles for Owner/Admin/User), section ordering, page behavior, branding (logo upload and rich-text description), Clear Sky Chart integration, and image embedding
 
 ### Changed
 
