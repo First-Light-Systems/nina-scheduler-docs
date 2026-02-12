@@ -403,7 +403,7 @@ Upload an observatory logo that appears on your detail page.
 | **Display size** | Small (56px), Medium (80px), Large (120px), Extra Large (160px), Huge (200px) |
 | **Link URL** | Optional — clicking the logo opens this URL in a new tab |
 
-Use the **Remove Logo** button to delete the current logo.
+Use the **Remove Logo** button to delete the current logo. Clearing out the **Link URL** will remove the link associated with the logo.
 
 #### Description
 
