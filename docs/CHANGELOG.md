@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.7] - 2026-02-24
+
+### Added
+
+- **External Storage Guide** (EXTERNAL_STORAGE.md) — comprehensive documentation for automatic FITS file transfer to cloud providers including:
+    - Setup guides for Dropbox, Google Drive, and Google Cloud Storage with OAuth and credential configuration
+    - Storage configuration scopes (personal, organization, project) with permission details
+    - File organization modes (flat, by target, by project and target) with examples
+    - Step-by-step observation workflow for selecting storage destinations
+    - Transfer monitoring with status tracking and automatic retry behavior
+    - Real-world examples for research and educational institution workflows
+    - Troubleshooting guide for OAuth, connection, and transfer issues
+    - Technical reference for transfer lifecycle, credential security, and file size handling
+
+### Changed
+
+- Updated index page to v2.7 with external storage highlights, quick start entry, and What's New section
+- Added External Storage to site navigation
+
+---
+
 ## [2.6] - 2026-02-24
 
 ### Added

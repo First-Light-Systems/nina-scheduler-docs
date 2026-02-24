@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.6 | **Last Updated**: February 2026
+**Documentation Version**: 2.7 | **Last Updated**: February 2026
 **Server v3.5.0 | Plugin v3.4.1.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
@@ -16,6 +16,7 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Create observations | [Creating Observations](CREATING_OBSERVATIONS.md) |
 | Configure autofocus | [Autofocus Guide](AUTOFOCUS_GUIDE.md) |
 | View my observation files | [Observation Files](OBSERVATION_FILES.md) |
+| Set up cloud storage | [External Storage](EXTERNAL_STORAGE.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
 
@@ -44,8 +45,9 @@ If you're managing organizations, users, or the system:
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 
-## What's New in v2.6 (February 2026)
+## What's New in v2.7 (February 2026)
 
+- **External storage guide** — Complete documentation for automatic FITS file transfer to Dropbox, Google Drive, and Google Cloud Storage. See the [External Storage Guide](EXTERNAL_STORAGE.md).
 - **Comprehensive autofocus management** — Five trigger types (time, temperature, HFR, filter change, after exposures) with observatory defaults and per-observation overrides. See the [Autofocus Guide](AUTOFOCUS_GUIDE.md).
 - **External autofocus mode** — Disable plugin-managed AF to manage autofocus via NINA's Advanced Sequencer
 - **Autofocus event logging** — Initial and periodic autofocus events recorded in the observation log

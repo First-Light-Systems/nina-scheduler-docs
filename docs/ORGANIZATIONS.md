@@ -111,6 +111,12 @@ Members of an organization observatory have separate permissions that control wh
 
 See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for more details.
 
+## External Storage
+
+Organizations can configure shared external storage destinations (Dropbox, Google Drive, Google Cloud Storage) that are available to all members when creating observations. This is managed from the organization's edit dialog under the **External Storage** tab.
+
+For setup instructions and configuration details, see the **[External Storage Guide](EXTERNAL_STORAGE.md)**.
+
 ## Transferring Ownership
 
 Only the current owner can transfer ownership:

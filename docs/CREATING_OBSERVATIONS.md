@@ -288,6 +288,10 @@ Each FITS file includes:
 - FITS headers with full metadata
 - Quality metrics (HFR, star count, ADU statistics)
 
+### Automatic Cloud Storage Transfer
+
+If you selected external storage destinations during observation creation, FITS files are automatically copied to your cloud storage after processing completes. See the **[External Storage Guide](EXTERNAL_STORAGE.md)** for setup instructions and details.
+
 ---
 
 ## Projects
