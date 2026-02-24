@@ -371,4 +371,4 @@ These are NINA's own built-in trigger classes with full safety checks and proven
 
 ---
 
-*See also: [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) | [Creating Observations](CREATING_OBSERVATIONS.md) | [Troubleshooting](TROUBLESHOOTING.md)*
+*See also: [Guiding Guide](GUIDING_GUIDE.md) | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) | [Creating Observations](CREATING_OBSERVATIONS.md) | [Troubleshooting](TROUBLESHOOTING.md)*

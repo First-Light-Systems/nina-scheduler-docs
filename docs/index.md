@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.7 | **Last Updated**: February 2026
+**Documentation Version**: 2.9 | **Last Updated**: February 2026
 **Server v3.5.0 | Plugin v3.4.1.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
@@ -15,9 +15,11 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Register my observatory | [Observatory Registration](OBSERVATORY_REGISTRATION.md) |
 | Create observations | [Creating Observations](CREATING_OBSERVATIONS.md) |
 | Configure autofocus | [Autofocus Guide](AUTOFOCUS_GUIDE.md) |
+| Configure guiding | [Guiding Guide](GUIDING_GUIDE.md) |
 | View my observation files | [Observation Files](OBSERVATION_FILES.md) |
 | Set up cloud storage | [External Storage](EXTERNAL_STORAGE.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
+| View reports | [Reporting Guide](REPORTING_GUIDE.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
 
 ## For Observatory Operators
@@ -45,13 +47,15 @@ If you're managing organizations, users, or the system:
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 
-## What's New in v2.7 (February 2026)
+## What's New in v2.9 (February 2026)
 
-- **External storage guide** — Complete documentation for automatic FITS file transfer to Dropbox, Google Drive, and Google Cloud Storage. See the [External Storage Guide](EXTERNAL_STORAGE.md).
-- **Comprehensive autofocus management** — Five trigger types (time, temperature, HFR, filter change, after exposures) with observatory defaults and per-observation overrides. See the [Autofocus Guide](AUTOFOCUS_GUIDE.md).
-- **External autofocus mode** — Disable plugin-managed AF to manage autofocus via NINA's Advanced Sequencer
-- **Autofocus event logging** — Initial and periodic autofocus events recorded in the observation log
-- **Observation resubmit preserves settings** — Autofocus and guiding settings carried forward when resubmitting
+- **Guiding and dithering guide** — New guide covering autoguiding and dithering configuration, inheritance, and when to use each setting. See the [Guiding Guide](GUIDING_GUIDE.md).
+- **Reporting and analytics guide** — Complete documentation for usage dashboards, utilization reports, billing summaries, and data export. See the [Reporting Guide](REPORTING_GUIDE.md).
+- **Quality metrics explained** — Detailed guide to interpreting FWHM, SNR, star counts, ADU statistics, and background levels in your observation files. See [Observation Files](OBSERVATION_FILES.md).
+- **Observation search and filtering** — Documentation for the Search Observations page with 7 filter criteria. See [Creating Observations](CREATING_OBSERVATIONS.md#searching-observations).
+- **Execution logs and event tracking** — Guide to reading the observation event log, timing summaries, and troubleshooting with logs. See [Creating Observations](CREATING_OBSERVATIONS.md#execution-log).
+- **Constraint violation troubleshooting** — New section explaining why observations may not run and how to fix common constraint issues. See [Troubleshooting](TROUBLESHOOTING.md#why-isnt-my-observation-running).
+- **Expanded contact support** — Detailed guide to submitting support requests with categories, ticket tracking, and response expectations
 
 See the [Changelog](CHANGELOG.md) for full details.
 

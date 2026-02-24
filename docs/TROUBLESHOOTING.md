@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-**Document Version**: 1.3 | **Last Updated**: February 2026
+**Document Version**: 1.4 | **Last Updated**: February 2026
 
 > **What's New in v1.3** (February 2026):
 > - Updated connection troubleshooting for single-owner communications model
@@ -234,6 +234,63 @@ Check all required fields in plugin settings:
    - Both local and server storage
    - Full storage can prevent uploads
 
+---
+
+## Why Isn't My Observation Running?
+
+If your observation is stuck in "Pending" or "Assigned" and never starts, it's usually because one or more scheduling constraints aren't being met.
+
+### Constraints Checked by the Scheduler
+
+The scheduler evaluates these constraints before dispatching an observation:
+
+| Constraint | What It Checks |
+|------------|---------------|
+| **Altitude** | Target must be above the minimum altitude setting |
+| **Airmass** | Target's airmass must be below the maximum airmass setting |
+| **Moon Separation** | Target must be at least the configured degrees away from the moon |
+| **Twilight** | Sky must be dark enough (astronomical, nautical, or civil twilight) |
+| **Weather Safety** | Observatory safety device must report "safe" conditions |
+
+If any constraint is violated, the observation cannot start.
+
+### Viewing Constraint Violations
+
+The observation detail page shows which constraints are currently preventing execution. Look for the **Constraint Violations** section, which lists each violated constraint with its current value vs. the required value.
+
+### Common Violations and Fixes
+
+**Target altitude too low:**
+
+- The target hasn't risen high enough yet, or has already set too low
+- **Fix**: Wait for the target to reach higher altitude, or lower the minimum altitude constraint (with the understanding that lower altitude means more atmospheric distortion)
+
+**Moon too close:**
+
+- The target is within the configured moon separation distance
+- **Fix**: Reduce the moon separation constraint if the observation can tolerate more moonlight, or wait for the moon to move. The moon moves ~13° per day
+
+**Airmass too high:**
+
+- The target is too close to the horizon, resulting in excessive atmospheric path length
+- **Fix**: Increase the maximum airmass constraint (e.g., from 1.5 to 2.0), or wait for the target to transit higher
+
+**Weather unsafe:**
+
+- The observatory safety device is reporting unsafe conditions
+- **Fix**: Wait for conditions to improve. Weather holds are automatic — the scheduler will dispatch the observation once safety clears
+
+**Twilight too bright:**
+
+- The sky is not dark enough for the configured twilight requirement
+- **Fix**: Wait for deeper darkness, or change the twilight constraint if your observation can tolerate brighter sky
+
+### Partial Completion
+
+Sometimes an observation starts but stops partway through because conditions change (e.g., target sets below minimum altitude, weather turns unsafe). The scheduler tracks this as a **partial completion** when at least 10% of exposures were captured.
+
+Partially completed observations show what percentage was achieved and why execution stopped. You can resubmit the observation to capture the remaining exposures.
+
 ### Autofocus Problems
 
 For autofocus-specific troubleshooting (unexpected AF behavior, triggers not firing, initial AF failures, missing log entries), see the dedicated **[Autofocus Guide — Troubleshooting](AUTOFOCUS_GUIDE.md#troubleshooting)** section.
@@ -360,11 +417,28 @@ For server-side issues, administrators can use the built-in log viewer:
 
 ### Contact Support
 
-Use the **Contact Support** page in the web interface to submit a support request:
-1. Navigate to **Contact Support** from the menu
-2. Select a category (bug report, feature request, account issue, etc.)
-3. Describe the issue with as much detail as possible
-4. Submit the request - you'll receive a confirmation with a ticket number
+Use the **Contact Support** page in the web interface to submit a support request.
+
+**How to submit a request:**
+
+1. Navigate to **Contact Support** from the main menu
+2. Select a **category**:
+   - Bug Report — something isn't working as expected
+   - Feature Request — suggest a new feature or improvement
+   - Account Issue — login problems, permissions, profile issues
+   - Observation Issue — problems with a specific observation
+   - General Question — usage questions, how-to inquiries
+   - Other — anything that doesn't fit the above categories
+3. Enter a **subject** (5–200 characters) summarizing your issue
+4. Provide a **detailed description** (20–5,000 characters) with as much context as possible
+5. Your email is auto-populated from your account
+6. Click **Submit**
+
+You'll receive a confirmation with a **ticket number** in the format `SUP-YYYY-NNNNN` (e.g., `SUP-2026-00042`). Expected response time is 24–48 hours.
+
+**Viewing past requests:**
+
+Navigate to **Contact Support** and click **My Requests** to see your submission history, including current status and any responses.
 
 ### Before Contacting Support
 
@@ -421,5 +495,6 @@ Gather this information:
 | Stuck observation | Clear local database |
 | Upload failing | Check network, clear queue |
 | Can't log in | Clear browser cache |
+| Observation won't start | Check constraint violations on detail page |
 | Safety/weather issue | Check safety device, review history |
 | Equipment changed | Review observatory history events |

@@ -1,6 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.3 | **Last Updated**: February 2026
+**Document Version**: 1.4 | **Last Updated**: February 2026
 
 > **What's New in v1.3** (February 2026):
 > - Autofocus settings step added to observation creation workflow
@@ -194,9 +194,96 @@ When connected via WebSocket, the interface updates automatically:
 
 Click on any observation to see:
 - Full configuration details
-- Execution history
+- Execution history and event log
 - Captured FITS files (for completed observations)
 - Error messages (for failed observations)
+- Constraint violations (if the observation couldn't run)
+
+#### Execution Log
+
+The observation detail page includes a chronological **event log** that records everything that happened during execution. Events are organized by category:
+
+| Category | Example Events |
+|----------|---------------|
+| **Lifecycle** | Observation started, completed, failed, aborted |
+| **Progress** | Exposure started, exposure completed, filter changed |
+| **Files** | FITS file captured, file uploaded, plate solve completed |
+| **Equipment** | Slew started, slew completed, settle completed |
+| **Weather** | Weather hold started, weather hold ended |
+| **Autofocus** | AF started, AF completed, AF failed |
+| **User** | User note added, observation canceled |
+| **Time** | Observation window opened, window closing |
+
+Each event includes a **severity level** (DEBUG, INFO, WARNING, ERROR, or CRITICAL). The timeline view on the detail page shows important events (INFO and above), filtering out DEBUG-level entries for readability.
+
+#### Timing Summary
+
+For completed observations, the detail page shows a timing summary:
+
+- **Total duration** — wall-clock time from start to finish
+- **Exposure time** — cumulative shutter-open time
+- **Overhead** — percentage of time spent on non-imaging activities (slewing, autofocus, settling, etc.)
+
+#### Adding Notes
+
+You can add notes to the observation log for record-keeping. Click **Add Note** on the observation detail page to append a timestamped entry to the event log. This is useful for recording observing conditions, equipment issues, or other context that may help when reviewing the data later.
+
+#### Using Logs for Troubleshooting
+
+When an observation fails, the event log is the first place to look:
+
+1. Find the **ERROR** or **CRITICAL** severity events
+2. Check the events immediately before the failure for context
+3. Look for weather events (weather holds that didn't clear)
+4. Check for equipment events (slew failures, settle timeouts)
+5. Review autofocus events (repeated AF failures may indicate equipment issues)
+
+---
+
+## Searching Observations
+
+The **Search Observations** page provides powerful filtering to find specific observations across your history.
+
+### Accessing Search
+
+Navigate to **Search Observations** from the main menu, or use the search option within the My Observations page.
+
+### Filter Criteria
+
+| Filter | Description |
+|--------|-------------|
+| **Target Name** | Search by target name (minimum 2 characters). The search is case-insensitive and supports partial matching. |
+| **Status** | Filter by observation status. Seven options available, each color-coded: Pending, Assigned, In Progress, Completed, Failed, Aborted, Expired |
+| **Observatory** | Filter by the observatory that executed (or will execute) the observation |
+| **Project** | Filter by the project the observation belongs to |
+| **Date Range** | Filter by creation date or completion date |
+
+### Search Behavior
+
+- Text search uses a **400ms debounce** — the system waits briefly after you stop typing before searching, to avoid excessive queries
+- Target name search is **case-insensitive** and supports **regex matching** for advanced searches
+- Your **last-selected observatory** is remembered across sessions
+
+### Results
+
+The results table shows:
+
+| Column | Description |
+|--------|-------------|
+| **Target** | Target name |
+| **Observation** | Observation name or ID |
+| **Status** | Color-coded status chip |
+| **Observatory** | Assigned observatory |
+| **Created** | When the observation was submitted |
+| **Completed** | When the observation finished (if applicable) |
+
+Click any row to open the observation detail page.
+
+### Access Control
+
+- **Regular users** see only their own observations
+- **Observatory administrators** see all observations for their observatories
+- **Server administrators** see all observations system-wide
 
 ---
 
@@ -225,6 +312,28 @@ For observations in progress:
 1. Click **Cancel** on the observation
 2. Current exposure will complete
 3. Status changes to "Aborted"
+
+### Resubmitting an Observation
+
+You can resubmit a completed or failed observation to repeat it:
+
+1. Open the observation detail page
+2. Click **Resubmit**
+3. A new observation is created with the same settings
+4. Review and submit
+
+**What's preserved** when resubmitting:
+
+- Target name and coordinates
+- Exposure plan (filters, times, counts, binning)
+- Constraints (altitude, airmass, moon separation, twilight)
+- Priority level
+- Autofocus settings (observatory defaults or custom overrides)
+- Guiding and dithering settings
+- External storage destinations
+
+!!! note "Older Observations"
+    Observations created before v3.5.0 (when autofocus and guiding configuration was added) will use observatory defaults for those settings when resubmitted, which is the safe default behavior.
 
 ---
 
@@ -378,6 +487,7 @@ See [Target Library](TARGET_LIBRARY.md) for managing saved targets, reusable obs
 ## Next Steps
 
 - **Configure autofocus?** See [Autofocus Guide](AUTOFOCUS_GUIDE.md)
+- **Configure guiding?** See [Guiding Guide](GUIDING_GUIDE.md)
 - **Need detailed procedures?** See [Practical User Guide](USER_GUIDE_PRACTICAL.md)
 - **Understand scheduling?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
 - **Having problems?** See [Troubleshooting](TROUBLESHOOTING.md)

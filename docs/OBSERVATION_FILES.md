@@ -1,6 +1,6 @@
 # Observation Files
 
-**Document Version**: 1.1 | **Last Updated**: February 2026
+**Document Version**: 1.2 | **Last Updated**: February 2026
 
 This guide explains how to view, browse, and download observation files (FITS images) from the Science Scheduler.
 
@@ -80,6 +80,72 @@ Quality metrics are automatically embedded in FITS file headers during server-si
 | `PXSCALE` | Pixel scale (arcsec/pixel) |
 
 These headers allow you to assess image quality directly in any FITS viewer without needing the web interface.
+
+### Understanding Quality Metrics
+
+Quality analysis runs automatically after each FITS file is plate-solved successfully. If plate solving fails or quality analysis encounters an error, the file is still saved — quality analysis is non-fatal and never blocks processing.
+
+Here's what each metric tells you and how to interpret it:
+
+#### FWHM (Full Width at Half Maximum)
+
+FWHM measures star sharpness — how spread out the star profiles are. Reported in both **pixels** and **arcseconds**.
+
+| FWHM (arcsec) | Interpretation |
+|----------------|---------------|
+| < 2.0" | Excellent seeing, sharp stars |
+| 2.0" – 3.5" | Good conditions, typical for most sites |
+| 3.5" – 5.0" | Mediocre seeing, consider reviewing focus and conditions |
+| > 5.0" | Poor seeing or focus problem — check autofocus logs |
+
+!!! tip
+    FWHM in pixels depends on your pixel scale. A 2.0" FWHM at 1.0 arcsec/pixel is 2 pixels, but at 0.5 arcsec/pixel it's 4 pixels. Arcsecond values are more comparable across different equipment.
+
+#### SNR (Signal-to-Noise Ratio)
+
+SNR is an overall image quality indicator. Higher values mean the signal (your target) is stronger relative to background noise.
+
+| SNR | Interpretation |
+|-----|---------------|
+| > 20 | Strong signal, excellent data |
+| 10 – 20 | Good data, usable for most science |
+| 5 – 10 | Marginal — may need more integration time |
+| < 5 | Weak signal — check exposure time and conditions |
+
+#### Star Count
+
+Two star counts are reported:
+
+- **Stars detected** — total objects found by the detection algorithm
+- **Stars measured** — objects that passed quality filters (not saturated, not too faint, well-formed)
+
+A significant drop in star count compared to previous frames of the same target may indicate cloud cover, fog, or dew forming on the optics.
+
+#### ADU Statistics
+
+ADU (Analog-to-Digital Unit) statistics describe the brightness distribution of the image:
+
+| Statistic | What It Shows |
+|-----------|--------------|
+| **Mean** | Average pixel brightness across the image |
+| **Median** | Middle value — less affected by bright stars than the mean |
+| **Std Dev** | Spread of pixel values — higher means more contrast |
+| **Min / Max** | Darkest and brightest pixel values |
+
+For a well-exposed image, the **median** should be above the noise floor but well below saturation. If the median is very high, the sky background is bright (twilight, moon, light pollution). If the max is at the camera's bit depth (e.g., 65535 for 16-bit), some pixels are saturated.
+
+#### Background Level and Noise
+
+- **Background level** — the average brightness of the sky background in ADU
+- **Background noise** — the RMS noise in the background (excludes stars and the target)
+
+Together these indicate sky conditions. A rising background level over the night may indicate increasing light pollution, twilight, or thin clouds scattering moonlight.
+
+#### Pixel Scale
+
+Pixel scale is the angular size of each pixel in arcseconds per pixel. This is calculated from the focal length and camera pixel size and is used to convert FWHM from pixels to arcseconds.
+
+---
 
 ### Capture Details
 - **Camera** name and settings

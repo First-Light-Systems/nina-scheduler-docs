@@ -6,6 +6,64 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.9] - 2026-02-24
+
+### Added
+
+- **Guiding and Dithering Guide** (GUIDING_GUIDE.md) — new standalone guide covering:
+    - Autoguiding and dithering configuration with simple on/off toggles
+    - Settings inheritance from library targets through templates to observations
+    - When to disable guiding (short exposures, unguided setups, calibration)
+    - When to enable dithering (long sessions, walking noise, narrowband)
+    - Interaction with autofocus (guiding pauses during AF runs)
+
+- **Reporting and Analytics Guide** (REPORTING_GUIDE.md) — comprehensive documentation including:
+    - Three-tier access model (server admin, observatory admin, regular user)
+    - Six report types: Usage Dashboard, User Usage, Project Usage, Observatory Utilization, Usage Explorer, Billing Summary
+    - Key metrics explained: wall-clock time vs shutter-open time, efficiency, success rate
+    - CSV and PDF export options
+    - Date range filtering with configurable presets
+
+- **Quality Metrics documentation** — expanded Observation Files guide (v1.2) with:
+    - Detailed explanation of FWHM, SNR, star count, ADU statistics, background level/noise, pixel scale
+    - Interpretation guidelines with value ranges for each metric
+    - When quality analysis runs and its non-fatal behavior
+
+- **Observation Search & Filtering** — expanded Creating Observations guide (v1.4) with:
+    - Search Observations page with 7 filter criteria
+    - Search behavior (debounce, case-insensitive, regex)
+    - Access control (users see own, admins see all)
+
+- **Observation Execution Logs** — expanded Creating Observations guide with:
+    - Event log with 8 categories of events and severity levels
+    - Timing summary (total duration, exposure time, overhead)
+    - User notes for record-keeping
+    - Troubleshooting with logs
+
+- **Observation Resubmission** — expanded Creating Observations guide with:
+    - What settings are preserved on resubmit
+    - Behavior for older observations (pre-v3.5.0)
+
+- **Constraint Violations troubleshooting** — expanded Troubleshooting guide (v1.4) with:
+    - Five constraint types checked by the scheduler
+    - Common violations and fixes for each
+    - Partial completion tracking and resubmission
+
+- **Expanded Contact Support** — expanded Troubleshooting guide with:
+    - Six support request categories
+    - Subject/description requirements
+    - Ticket number format and response expectations
+    - Viewing past requests
+
+### Changed
+
+- Updated index page to v2.9 with guiding, reporting, and feature documentation highlights
+- Added Guiding Guide and Reporting Guide to site navigation
+- Added guiding cross-reference to Autofocus Guide and Creating Observations next steps
+- Fixed broken API_REFERENCE.md link in Organizations page
+
+---
+
 ## [2.8] - 2026-02-24
 
 ### Changed
@@ -247,6 +305,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.9 | 3.5.0 | 3.4.1.0 | Guiding guide, reporting guide, quality metrics, search, logs, constraints |
 | 2.5 | 3.4.1 | 3.2.19.0 | Custom Observatory Page documentation |
 | 2.4 | 3.4.1 | 3.2.19.0 | Observatory memory, transit filter persistence, observation windows, altitude checks |
 | 2.3 | 3.4.0 | 3.2.19.0 | Target Library documentation, cadence with minute-level intervals |

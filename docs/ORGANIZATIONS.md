@@ -142,7 +142,7 @@ Each organization membership has its own set of permissions, allowing different 
 
 ## API Access
 
-Organizations can be managed programmatically via the API. See the [API Reference](API_REFERENCE.md) for details on:
+Organizations can be managed programmatically via the API. The following endpoints are available:
 
 - `GET /organizations` - List your organizations
 - `POST /organizations` - Create a new organization
