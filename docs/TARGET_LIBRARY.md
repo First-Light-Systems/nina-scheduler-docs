@@ -1,6 +1,12 @@
 # Target Library
 
-**Document Version**: 1.0 | **Last Updated**: February 2026
+**Document Version**: 1.1 | **Last Updated**: February 2026
+
+> **What's New in v1.1** (February 2026):
+> - Observation type and timing fields for templates (Time-Based, Rise to Set)
+> - Autofocus and guiding settings carried through from templates
+> - External storage destinations inherited when activating templates
+> - CSV import clarifications for template creation via Observatory column
 
 The Target Library is your central hub for managing saved astronomical targets, creating reusable observing templates, importing target lists via CSV, and setting up automated cadence scheduling. Instead of re-entering coordinates and exposure plans every time you submit an observation, you can save them once and reuse them whenever you need.
 
@@ -89,6 +95,31 @@ Observing templates are reusable observation blueprints. They combine one or mor
 | **Sharing** | No | Private, Observatory, or Organization visibility |
 | **Description** | No | Free-text description of the observing plan |
 
+### Observation Type and Timing
+
+Templates support four observation types. Depending on the type selected, additional timing fields appear:
+
+| Type | Timing Fields | Description |
+|------|---------------|-------------|
+| **Flexible** | None | Runs when time permits, can be interrupted and resumed |
+| **Time-Based** | Min Time, Desired Time, Fill Time | Runs for a specified duration |
+| **Fixed Time** | Fixed Start, Fixed End | Must execute within an exact time window |
+| **Rise to Set** | Safety Margin | Observes from target rise to set with configurable margin |
+
+#### Time-Based Timing Fields
+
+| Field | Description |
+|-------|-------------|
+| **Min Time (minutes)** | Minimum useful observation time — shorter sessions won't be scheduled |
+| **Desired Time (minutes)** | Target observation duration |
+| **Fill Time** | When enabled, the observation fills all available time rather than stopping at the desired duration |
+
+#### Rise to Set Timing Fields
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| **Safety Margin (minutes)** | 15 | Buffer time after rise and before set to avoid low-altitude imaging |
+
 ### Adding Targets to a Template
 
 Templates can contain one or more targets. For each target you add:
@@ -114,12 +145,27 @@ Once you select an observatory, the available filters appear automatically. For 
 !!! note
     Gain and Offset are optional. Leave them blank to use the observatory's default camera settings.
 
+### Autofocus and Guiding
+
+Templates store default autofocus and guiding settings that are applied when you activate the template:
+
+- **Autofocus** — Initial autofocus (enabled by default) and interval (30 minutes by default). When you activate a template via **Edit & Submit**, you can customize these further in the observation form's autofocus step — including selecting from the full set of trigger types. See the [Autofocus Guide](AUTOFOCUS_GUIDE.md) for details.
+- **Guiding** — Guiding enabled (on by default) and dithering (off by default).
+
+When using **Quick Submit**, observations use observatory defaults for autofocus. When using **Edit & Submit**, you can customize all autofocus and guiding settings before submitting.
+
+### External Storage
+
+If you or your organization/project have configured external storage destinations (Dropbox, Google Drive, Google Cloud Storage), these are available when activating a template via **Edit & Submit**. You can select which destinations should receive the observation's FITS files in the observation form's project step.
+
+See the [External Storage Guide](EXTERNAL_STORAGE.md) for setup instructions.
+
 ### Activating a Template
 
 To create an observation from a template:
 
-- **Quick Submit** — Click the play icon on the template row to instantly create an observation with the template's settings
-- **Edit & Submit** — Click the edit-and-submit icon to open the observation form pre-filled with the template data, allowing you to make adjustments before submitting
+- **Quick Submit** — Click the play icon on the template row to instantly create an observation with the template's settings (uses observatory defaults for autofocus)
+- **Edit & Submit** — Click the edit-and-submit icon to open the observation form pre-filled with the template data, allowing you to customize autofocus, guiding, external storage, and other settings before submitting
 
 ---
 
@@ -193,7 +239,7 @@ The CSV import wizard lets you bulk-import targets — and optionally create tem
 The import follows a 4-step process:
 
 1. **Upload** — Select or drag-and-drop a CSV file (.csv or .txt, up to 10 MB)
-2. **Preview** — Review parsed targets, detected columns, and any warnings or errors
+2. **Preview** — Review parsed targets, detected columns, and any warnings or errors. The preview shows which columns were recognized, how many targets were detected, and highlights any rows with missing required fields or coordinate parsing issues.
 3. **Configure** — Set project, default target type, tags, and template options
 4. **Results** — See how many targets and templates were created, skipped, or failed
 
@@ -280,9 +326,14 @@ This creates **one** library target (M13) with **four** exposure configurations.
 
 ### Template Creation from CSV
 
-When your CSV includes an **Observatory** column, the importer automatically creates observing templates grouped by observatory code. During the Configure step, you provide a template name — the system appends observatory and cadence suffixes as needed.
+The **Observatory** column is the key that controls whether templates are created:
 
-Targets with different cadence settings are placed into separate templates, even if they share the same observatory.
+- **Rows without an Observatory value** create library targets only (no template)
+- **Rows with an Observatory code** create both a library target and add it to a template for that observatory
+
+When an Observatory column is present, the importer automatically creates observing templates grouped by observatory code. During the Configure step, you provide a template name — the system appends observatory and cadence suffixes as needed.
+
+Targets with different cadence settings are placed into separate templates, even if they share the same observatory. This means a single CSV file can create multiple templates if targets have different automation schedules.
 
 ### Example CSV
 
@@ -316,6 +367,8 @@ This creates:
 ## Next Steps
 
 - **New to observations?** See [Creating Observations](CREATING_OBSERVATIONS.md)
+- **Configure autofocus?** See [Autofocus Guide](AUTOFOCUS_GUIDE.md)
+- **Set up cloud storage?** See [External Storage Guide](EXTERNAL_STORAGE.md)
 - **Need scheduling details?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
 - **Managing projects?** See [Creating Observations - Projects](CREATING_OBSERVATIONS.md#projects)
 - **Having problems?** See [Troubleshooting](TROUBLESHOOTING.md)

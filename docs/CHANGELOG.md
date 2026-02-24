@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.8] - 2026-02-24
+
+### Changed
+
+- Updated Target Library (v1.1) with:
+    - Observation type and timing fields for templates (Time-Based with min/desired time and fill time, Rise to Set with safety margin)
+    - Autofocus and guiding settings section explaining how templates carry these through to observations
+    - External storage section with cross-references to the External Storage Guide
+    - Clarified CSV import Observatory column behavior (rows with vs without observatory code)
+    - Expanded Preview step description in CSV import wizard
+    - Added cross-references to Autofocus Guide and External Storage Guide
+
+---
+
 ## [2.7] - 2026-02-24
 
 ### Added
