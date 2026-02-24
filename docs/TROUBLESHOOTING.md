@@ -399,6 +399,10 @@ For autofocus-specific troubleshooting (unexpected AF behavior, triggers not fir
 
 ## Advanced Troubleshooting
 
+### AI Log Analysis (Administrators)
+
+For complex issues, administrators can use AI-powered log analysis. The system automatically collects NINA plugin logs and can submit them to Claude for comprehensive diagnostic reports. See the **[Log Analysis Guide](LOG_ANALYSIS_GUIDE.md)** for full details.
+
 ### Using Docker Log Search (Administrators)
 
 For server-side issues, administrators can use the built-in log viewer:

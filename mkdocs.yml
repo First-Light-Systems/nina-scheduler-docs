@@ -73,6 +73,7 @@ nav:
   - Administration:
     - Organizations: ORGANIZATIONS.md
     - Observatory Administration: OBSERVATORY_ADMINISTRATION.md
+    - Log Analysis: LOG_ANALYSIS_GUIDE.md
   - Reporting: REPORTING_GUIDE.md
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md

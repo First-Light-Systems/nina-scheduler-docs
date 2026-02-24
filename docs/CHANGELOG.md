@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.10] - 2026-02-24
+
+### Added
+
+- **AI Log Analysis Guide** (LOG_ANALYSIS_GUIDE.md) — standalone admin guide covering:
+    - Automatic plugin log collection with incremental uploads and sensitive data scrubbing
+    - Pattern-based error detection across 6 categories (equipment, connection, plugin, observation, system errors)
+    - On-demand Claude AI analysis with model selection (Haiku, Sonnet, Opus)
+    - Five pre-filtering options for token reduction (95–98% typical savings)
+    - Structured diagnostic reports: host info, session summary, equipment health, error analysis, timeline, recommendations
+    - HTML and Markdown output formats with email delivery
+    - Log retention configuration and storage monitoring
+    - Access control (server admin and observatory admin tiers)
+    - Audit trail for all log access operations
+    - Cost management guidance
+
+### Changed
+
+- Updated index page to v2.10 with log analysis highlights and admin section link
+- Added Log Analysis Guide to site navigation under Administration
+- Added AI log analysis cross-reference to Troubleshooting advanced section
+
+---
+
 ## [2.9] - 2026-02-24
 
 ### Added
@@ -305,6 +329,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.10 | 3.5.0 | 3.4.1.0 | AI log analysis guide |
 | 2.9 | 3.5.0 | 3.4.1.0 | Guiding guide, reporting guide, quality metrics, search, logs, constraints |
 | 2.5 | 3.4.1 | 3.2.19.0 | Custom Observatory Page documentation |
 | 2.4 | 3.4.1 | 3.2.19.0 | Observatory memory, transit filter persistence, observation windows, altitude checks |

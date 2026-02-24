@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.9 | **Last Updated**: February 2026
+**Documentation Version**: 2.10 | **Last Updated**: February 2026
 **Server v3.5.0 | Plugin v3.4.1.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
@@ -46,16 +46,11 @@ If you're managing organizations, users, or the system:
 
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
+3. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
 
-## What's New in v2.9 (February 2026)
+## What's New in v2.10 (February 2026)
 
-- **Guiding and dithering guide** — New guide covering autoguiding and dithering configuration, inheritance, and when to use each setting. See the [Guiding Guide](GUIDING_GUIDE.md).
-- **Reporting and analytics guide** — Complete documentation for usage dashboards, utilization reports, billing summaries, and data export. See the [Reporting Guide](REPORTING_GUIDE.md).
-- **Quality metrics explained** — Detailed guide to interpreting FWHM, SNR, star counts, ADU statistics, and background levels in your observation files. See [Observation Files](OBSERVATION_FILES.md).
-- **Observation search and filtering** — Documentation for the Search Observations page with 7 filter criteria. See [Creating Observations](CREATING_OBSERVATIONS.md#searching-observations).
-- **Execution logs and event tracking** — Guide to reading the observation event log, timing summaries, and troubleshooting with logs. See [Creating Observations](CREATING_OBSERVATIONS.md#execution-log).
-- **Constraint violation troubleshooting** — New section explaining why observations may not run and how to fix common constraint issues. See [Troubleshooting](TROUBLESHOOTING.md#why-isnt-my-observation-running).
-- **Expanded contact support** — Detailed guide to submitting support requests with categories, ticket tracking, and response expectations
+- **AI Log Analysis guide** — Complete documentation for the log analysis system, including automatic pattern-based error detection and on-demand Claude AI analysis with pre-filtering, model selection, and email delivery. See the [Log Analysis Guide](LOG_ANALYSIS_GUIDE.md).
 
 See the [Changelog](CHANGELOG.md) for full details.
 
