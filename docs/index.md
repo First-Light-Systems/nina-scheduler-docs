@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.4 | **Last Updated**: February 2026
-**Server v3.4.1 | Plugin v3.2.19.0**
+**Documentation Version**: 2.6 | **Last Updated**: February 2026
+**Server v3.5.0 | Plugin v3.4.1.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
@@ -14,6 +14,7 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Set up the NINA plugin | [Plugin Setup](PLUGIN_SETUP.md) |
 | Register my observatory | [Observatory Registration](OBSERVATORY_REGISTRATION.md) |
 | Create observations | [Creating Observations](CREATING_OBSERVATIONS.md) |
+| Configure autofocus | [Autofocus Guide](AUTOFOCUS_GUIDE.md) |
 | View my observation files | [Observation Files](OBSERVATION_FILES.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
@@ -43,12 +44,12 @@ If you're managing organizations, users, or the system:
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 
-## What's New in v2.4 (February 2026)
+## What's New in v2.6 (February 2026)
 
-- **Observatory memory** — System remembers your last-selected observatory across all pages
-- **Exoplanet transit filter persistence** — Search filters, telescope config, and observation settings saved to your profile
-- **Observation window columns** — Transit table now shows full observation start/end times including baseline
-- **Three-phase altitude checking** — Minimum altitude verified at ingress, midpoint, and egress for transits
+- **Comprehensive autofocus management** — Five trigger types (time, temperature, HFR, filter change, after exposures) with observatory defaults and per-observation overrides. See the [Autofocus Guide](AUTOFOCUS_GUIDE.md).
+- **External autofocus mode** — Disable plugin-managed AF to manage autofocus via NINA's Advanced Sequencer
+- **Autofocus event logging** — Initial and periodic autofocus events recorded in the observation log
+- **Observation resubmit preserves settings** — Autofocus and guiding settings carried forward when resubmitting
 
 See the [Changelog](CHANGELOG.md) for full details.
 

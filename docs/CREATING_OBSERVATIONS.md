@@ -1,7 +1,10 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: February 2026
 
+> **What's New in v1.3** (February 2026):
+> - Autofocus settings step added to observation creation workflow
+>
 > **What's New in v1.2** (February 2026):
 > - Fast Mover designation for near-Earth objects and asteroids
 > - Updated download section with Observation Files page reference
@@ -115,7 +118,16 @@ When creating observations for fast-moving objects (near-Earth objects, asteroid
 
 Fast Mover observations display a special chip indicator on the observation detail page.
 
-### Step 5: Choose Priority
+### Step 5: Autofocus Settings
+
+Configure how autofocus behaves during this observation:
+
+- **Use observatory defaults** (recommended) — inherits the autofocus configuration set by the observatory administrator
+- **Custom settings** — override triggers, intervals, and thresholds for this specific observation
+
+For detailed information on all autofocus options, trigger types, and recommended configurations, see the **[Autofocus Guide](AUTOFOCUS_GUIDE.md)**.
+
+### Step 6: Choose Priority
 
 | Priority | Use For | Buffer Time |
 |----------|---------|-------------|
@@ -125,7 +137,7 @@ Fast Mover observations display a special chip indicator on the observation deta
 
 **Note**: Buffer time is how long before a fixed-time event your observation will be stopped.
 
-### Step 6: Submit
+### Step 7: Submit
 
 1. Review your settings in the summary
 2. Click **Submit Observation**
@@ -361,6 +373,7 @@ See [Target Library](TARGET_LIBRARY.md) for managing saved targets, reusable obs
 
 ## Next Steps
 
+- **Configure autofocus?** See [Autofocus Guide](AUTOFOCUS_GUIDE.md)
 - **Need detailed procedures?** See [Practical User Guide](USER_GUIDE_PRACTICAL.md)
 - **Understand scheduling?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
 - **Having problems?** See [Troubleshooting](TROUBLESHOOTING.md)

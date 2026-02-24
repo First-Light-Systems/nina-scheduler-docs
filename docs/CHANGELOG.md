@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.6] - 2026-02-24
+
+### Added
+
+- **Autofocus Guide** (AUTOFOCUS_GUIDE.md) — comprehensive documentation for the new autofocus configuration system including:
+    - Plugin-managed vs external autofocus modes
+    - Five trigger types: time-based, temperature-based, HFR-based, filter change, and after N exposures
+    - Observatory-level default configuration with detailed parameter reference
+    - Per-observation autofocus overrides
+    - Recommended configurations for common observatory setups
+    - Autofocus event logging in observation logs
+    - Troubleshooting guide for autofocus issues
+    - Technical reference with configuration hierarchy and NINA trigger class mapping
+
+### Changed
+
+- Updated index page to v2.6 with autofocus feature highlights and Server v3.5.0 / Plugin v3.4.1.0 versions
+- Updated Observatory Administration (v2.4) with autofocus configuration section and link to guide
+- Updated Creating Observations (v1.3) with autofocus settings step in observation workflow
+- Added autofocus cross-references to navigation, quick start table, and next steps sections
+
+---
+
 ## [2.5] - 2026-02-12
 
 ### Added

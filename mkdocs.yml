@@ -63,6 +63,7 @@ nav:
   - Plugin Setup: PLUGIN_SETUP.md
   - Observatory Registration: OBSERVATORY_REGISTRATION.md
   - Creating Observations: CREATING_OBSERVATIONS.md
+  - Autofocus Guide: AUTOFOCUS_GUIDE.md
   - Target Library: TARGET_LIBRARY.md
   - Scheduler Features: USER_GUIDE_SCHEDULER_FEATURES.md
   - Practical Guide: USER_GUIDE_PRACTICAL.md

@@ -1,7 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.3 | **Last Updated**: February 2026
+**Document Version**: 2.4 | **Last Updated**: February 2026
 
+> **What's New in v2.4** (February 2026):
+> - Autofocus configuration section with link to dedicated guide
+>
 > **What's New in v2.3** (February 2026):
 > - Custom Observatory Page section covering page customization by owners and admins
 >
@@ -230,6 +233,18 @@ When connected, the NINA plugin reports detailed equipment configuration to the 
 - **Plate Solving**: Solver type, configuration
 
 These are read-only in the web interface and reflect the actual NINA configuration at the observatory.
+
+## Autofocus Configuration
+
+Observatory administrators can configure autofocus behavior that applies to all observations at the observatory. The configuration includes:
+
+- **Plugin-managed vs external mode** — Choose whether the scheduler controls autofocus or you manage it through NINA's Advanced Sequencer
+- **Initial autofocus** — One-shot autofocus at the start of each observation
+- **Five trigger types** — Time-based, temperature-based, HFR-based, filter change, and after N exposures
+
+Users can override these defaults on a per-observation basis when submitting observations.
+
+For complete configuration details, examples, and troubleshooting, see the **[Autofocus Guide](AUTOFOCUS_GUIDE.md)**.
 
 ## Plugin Updates
 

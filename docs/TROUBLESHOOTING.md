@@ -234,6 +234,10 @@ Check all required fields in plugin settings:
    - Both local and server storage
    - Full storage can prevent uploads
 
+### Autofocus Problems
+
+For autofocus-specific troubleshooting (unexpected AF behavior, triggers not firing, initial AF failures, missing log entries), see the dedicated **[Autofocus Guide — Troubleshooting](AUTOFOCUS_GUIDE.md#troubleshooting)** section.
+
 ---
 
 ## Web Interface Issues
