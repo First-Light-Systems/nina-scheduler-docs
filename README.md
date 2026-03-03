@@ -17,7 +17,7 @@ mkdocs serve
 
 Then open `http://localhost:8000`.
 
-To access from another desktop on your Tailscale VPN use the command `mkdocs serve -a 0.0.0.0:8000` then open `http://tailscale-ip-addr:8000` where tailscale-ip-addr is the IP of the node that mkdics was executed on.
+To access from another desktop on your Tailscale VPN use the command `mkdocs serve -a 0.0.0.0:8000` then open `http://tailscale-ip-addr:8000` where tailscale-ip-addr is the IP of the node that mkdocs was executed on.
 
 ## License
 
