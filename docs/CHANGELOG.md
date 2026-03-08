@@ -6,6 +6,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.11] - 2026-03-08
+
+### Added
+
+- **Calibration Guide** (CALIBRATION_GUIDE.md) — user-facing guide covering:
+    - Overview of image calibration (darks, bias, flats) and why it matters
+    - How the Science Scheduler automates calibration frame capture and master creation
+    - Flat frame capture modes: panel (trained settings, auto-brightness), sky (twilight), and fallback
+    - Incremental accumulation — partial sessions resume where they left off
+    - Master frame creation process with temperature grouping and dark subtraction
+    - Automatic calibration application to light images (CMOS and CCD formulas)
+    - Calibration Library walkthrough (Masters, Individual Frames, and Needs tabs)
+    - Troubleshooting tips for common calibration issues
+
+- **Calibration Administration** (CALIBRATION_ADMINISTRATION.md) — admin guide covering:
+    - Role-based access for calibration management (observatory admin vs server admin)
+    - Calibration settings configuration: frame thresholds, stacking method, temperature tolerance, expiry/retention, rotation matching
+    - Manual master creation and force-stacking below threshold
+    - Master supersession behavior and frame lifecycle
+    - Auto-stacking mechanisms (registration trigger and periodic sweep)
+    - Flat stacking prerequisites (matching master dark required)
+    - Monitoring calibration health via the Needs assessment
+    - Common issues diagnosis table
+    - Full API reference for calibration endpoints with query parameters
+
+### Changed
+
+- Updated index page to v2.11 with calibration system highlights
+- Added Calibration Guide to main navigation
+- Added Calibration Administration to Administration navigation section
+- Updated server version reference to v3.6.0, plugin to v3.6.0.0
+
+---
+
 ## [2.10] - 2026-02-24
 
 ### Added

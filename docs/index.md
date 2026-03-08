@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.10 | **Last Updated**: February 2026
-**Server v3.5.0 | Plugin v3.4.1.0**
+**Documentation Version**: 2.11 | **Last Updated**: March 2026
+**Server v3.6.0 | Plugin v3.6.0.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
 
@@ -16,6 +16,7 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Create observations | [Creating Observations](CREATING_OBSERVATIONS.md) |
 | Configure autofocus | [Autofocus Guide](AUTOFOCUS_GUIDE.md) |
 | Configure guiding | [Guiding Guide](GUIDING_GUIDE.md) |
+| Manage calibration frames | [Calibration Guide](CALIBRATION_GUIDE.md) |
 | View my observation files | [Observation Files](OBSERVATION_FILES.md) |
 | Set up cloud storage | [External Storage](EXTERNAL_STORAGE.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
@@ -46,11 +47,12 @@ If you're managing organizations, users, or the system:
 
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
-3. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
+4. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
 
-## What's New in v2.10 (February 2026)
+## What's New in v2.11 (March 2026)
 
-- **AI Log Analysis guide** — Complete documentation for the log analysis system, including automatic pattern-based error detection and on-demand Claude AI analysis with pre-filtering, model selection, and email delivery. See the [Log Analysis Guide](LOG_ANALYSIS_GUIDE.md).
+- **Image Calibration system** — Complete documentation for the calibration frame management system, including automated flat capture, master frame creation, and calibration library. See the [Calibration Guide](CALIBRATION_GUIDE.md) and [Calibration Administration](CALIBRATION_ADMINISTRATION.md).
 
 See the [Changelog](CHANGELOG.md) for full details.
 

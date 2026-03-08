@@ -1,6 +1,6 @@
 # Coming Soon
 
-**Document Version**: 1.4 | **Last Updated**: February 2026
+**Document Version**: 1.5 | **Last Updated**: March 2026
 
 The following topics will be documented in future updates:
 
@@ -11,6 +11,16 @@ The following topics will be documented in future updates:
 ## Recently Implemented
 
 The following features have been implemented and are documented elsewhere:
+
+### Image Calibration System (March 2026)
+- Automated flat, dark, and bias frame capture and management
+- Master frame creation with sigma-clipped stacking
+- Calibration library with real-time needs tracking
+- Plugin-based flat capture with trained exposures and auto-brightness
+- Automatic calibration application to light images
+- Observatory-level calibration settings (thresholds, expiry, temperature tolerance)
+
+See [Calibration Guide](CALIBRATION_GUIDE.md) and [Calibration Administration](CALIBRATION_ADMINISTRATION.md) for documentation.
 
 ### Institution/Organization Administration (February 2026)
 - Creating and configuring organizations (formerly institutions)
