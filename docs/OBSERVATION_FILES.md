@@ -114,6 +114,8 @@ SNR is an overall image quality indicator. Higher values mean the signal (your t
 | 3 – 10 | Weak — object detected but data quality is low; consider longer exposures or more frames |
 | < 3 | Below detection threshold — signal is indistinguishable from noise |
 
+These thresholds are based on standard astronomical practice. For further reading, see [ESO Signal, Noise and Detection](https://www.eso.org/~ohainaut/ccd/sn.html) and [STScI SNR Estimation](https://www.stsci.edu/instruments/wfpc2/Wfpc2_hand_current/ch6_exposuretime6.html).
+
 #### Star Count
 
 Two star counts are reported:
