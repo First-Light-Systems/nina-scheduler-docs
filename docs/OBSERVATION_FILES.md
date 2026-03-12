@@ -103,14 +103,16 @@ FWHM measures star sharpness — how spread out the star profiles are. Reported 
 
 #### SNR (Signal-to-Noise Ratio)
 
-SNR is an overall image quality indicator. Higher values mean the signal (your target) is stronger relative to background noise.
+SNR is an overall image quality indicator. Higher values mean the signal (your target) is stronger relative to background noise. These values are for **individual frames** — stacking N frames improves SNR by a factor of sqrt(N).
 
 | SNR | Interpretation |
 |-----|---------------|
-| > 20 | Strong signal, excellent data |
-| 10 – 20 | Good data, usable for most science |
-| 5 – 10 | Marginal — may need more integration time |
-| < 5 | Weak signal — check exposure time and conditions |
+| > 100 | Excellent — sub-1% photometric precision, publication-quality data |
+| 50 – 100 | Good — reliable photometry with a few percent precision |
+| 20 – 50 | Adequate for most science; photometric error ~5–10% |
+| 10 – 20 | Marginal — detection is solid but photometric accuracy is limited (~10%+) |
+| 3 – 10 | Weak — object detected but data quality is low; consider longer exposures or more frames |
+| < 3 | Below detection threshold — signal is indistinguishable from noise |
 
 #### Star Count
 
