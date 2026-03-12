@@ -9,15 +9,12 @@ Items that require code changes (GUI features or server fixes). Documentation ha
 
 ## Outstanding — Code Fixes Needed
 
-### Calibration Permission Checks (audit #24a)
+### ~~Calibration Permission Checks (audit #24a)~~ - FIXED 3/12/2026
 
 **Type**: Server bug
 **File**: `packages/server/src/routes/calibrationRoutes.ts`
 
-Two routes have "Admin only" comments but no permission enforcement:
-- `POST /batch-recalibrate` — only uses `requireAuth`, any authenticated user can trigger
-- `POST /calibrate/:fileId` — only uses `requireAuth`, any authenticated user can trigger
-- **Fix**: Add `checkObservatoryAdmin()` to match other admin calibration routes
+Two routes had "Admin only" comments but no permission enforcement. Added `checkObservatoryAdmin()` to both `POST /batch-recalibrate` and `POST /calibrate/:fileId`.
 
 ### Organization Types Missing from GUI (audit #38) - FIXED 3/12/2026 BJK
 
