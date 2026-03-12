@@ -297,7 +297,7 @@ Key admin tasks:
 
 ### Resetting a Hardware Fingerprint
 
-When an observatory operator reports a hardware change or fingerprint mismatch error:
+**Server admin only.** When an observatory operator reports a hardware change or fingerprint mismatch error:
 
 1. Go to **Observatory Management** in the admin interface
 2. Locate the observatory in the list
@@ -311,8 +311,8 @@ The reset:
 - Logs a `fingerprint_reset` security event in the observatory's history with your admin email
 
 **Role-based registration management**:
-- **Server admins** can approve registrations and reset fingerprints for any organization
-- **Organization admins** can approve registrations and reset fingerprints for observatories in their organization
+- **Server admins** can approve registrations for any organization and reset hardware fingerprints
+- **Organization admins** can approve registrations for observatories in their organization
 
 ---
 
