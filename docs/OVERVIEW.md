@@ -71,6 +71,16 @@ Automatic coordinate resolution from professional astronomical databases:
 - **Progress tracking**: Automatic statistics for completion rate, exposure time, and file counts
 - **Flexible ownership**: Projects can be owned by users, observatories, or organizations
 
+### Image Processing Pipeline
+
+Captured FITS files are automatically processed server-side:
+
+- **Plate solving**: Astrometric solution via ASTAP to determine precise sky coordinates
+- **Quality analysis**: Automatic measurement of FWHM, star count, SNR, background level, and pixel scale
+- **Image calibration**: Automated dark, bias, and flat frame management with master frame creation and automatic application to light images
+- **Preview generation**: Thumbnail and preview images for web browsing
+- **Quality headers**: Metrics embedded directly into FITS headers for use in any FITS viewer
+
 ### Data Management
 
 - **Automatic file upload**: FITS files uploaded to server after capture
@@ -91,6 +101,17 @@ Automatic coordinate resolution from professional astronomical databases:
 - **Observatory utilization**: Track usage, success rates, and idle time across observatories
 - **Project usage reports**: Monitor observation activity by project with owner details
 - **Data export**: Download reports as CSV for offline analysis
+
+### Transient Alert Follow-Up (Coming Soon)
+
+A transient alert system is under development to enable automated follow-up of astronomical transients:
+
+- **Multi-broker ingestion**: Alerts from Rubin Observatory via ALeRCE, Fink, Lasair, ANTARES, and TNS
+- **Multimessenger events**: NASA GCN integration for gamma-ray bursts and gravitational wave counterparts
+- **Intelligent scoring**: Three-axis evaluation combining science value, urgency, and observability
+- **Automated follow-up**: Planned integration with the scheduler for coordinated multi-observatory response
+
+See [Coming Soon](COMING_SOON.md) for details.
 
 ### Real-Time Communication
 
