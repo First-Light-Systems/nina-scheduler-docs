@@ -21,7 +21,9 @@ When creating an organization, you can specify its type:
 |------|-------------|
 | University | Academic institution with astronomy programs |
 | College | Smaller academic institution |
+| High School | Secondary education institution |
 | Research Institute | Dedicated research organization |
+| Observatory | Observatory organization |
 | Company | Commercial astronomy business |
 | Nonprofit | Amateur astronomy clubs, outreach organizations |
 | Other | Any other type of organization |
