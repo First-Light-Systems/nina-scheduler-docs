@@ -22,7 +22,7 @@ By default, captured FITS files are stored on the Science Scheduler server (in M
 
 - Files transfer automatically after observation processing completes
 - Multiple destinations per observation (e.g., copy to both Dropbox and Google Drive)
-- Configurable folder organization (flat, by target, or by project and target)
+- Configurable folder organization using a freeform path template with $USER, $PROJECT, and $TARGET variables
 - Optional server cleanup after successful transfer
 - Automatic retry with exponential backoff on failure
 - Configurations can be shared across an organization or project
@@ -115,16 +115,27 @@ Select **Dropbox**, **Google Drive**, or **Google Cloud Storage**. The provider 
 | **File Organization** | How files are organized in subfolders | See below |
 | **Comment** | Optional notes about this configuration | "Shared team archive for 2026 season" |
 
-#### File Organization Options
+#### Storage Path Template
 
-| Mode | Structure | Example Path |
-|------|-----------|-------------|
-| **By Target** (recommended) | `destination/target_name/file.fits` | `/fits-data/M31/image_001.fits` |
-| **By Project and Target** | `destination/project_name/target_name/file.fits` | `/fits-data/Galaxy_Survey/M31/image_001.fits` |
-| **Flat** | `destination/file.fits` | `/fits-data/image_001.fits` |
+The **Storage Path Template** field is a freeform text field that defines how files are organized within the destination path. You can use the following variables:
+
+| Variable | Expands To |
+|----------|-----------|
+| `$USER` | The username of the observation owner |
+| `$PROJECT` | The project name |
+| `$TARGET` | The target name |
+
+**Example templates and resulting paths:**
+
+| Template | Example Result |
+|----------|---------------|
+| `$TARGET` | `/fits-data/M31/image_001.fits` |
+| `$PROJECT/$TARGET` | `/fits-data/Galaxy_Survey/M31/image_001.fits` |
+| `$USER/$PROJECT/$TARGET` | `/fits-data/jsmith/Galaxy_Survey/M31/image_001.fits` |
+| *(empty — no template)* | `/fits-data/image_001.fits` |
 
 !!! tip "Recommendation"
-    **By Target** is the recommended organization mode for most users. It keeps files grouped by astronomical object, making it easy to find all data for a specific target. Use **By Project and Target** if you work on multiple projects that may observe the same targets.
+    Using `$TARGET` as the template is recommended for most users. It keeps files grouped by astronomical object, making it easy to find all data for a specific target. Use `$PROJECT/$TARGET` if you work on multiple projects that may observe the same targets.
 
 #### Step 4: Advanced Options
 
@@ -313,7 +324,7 @@ When you resubmit a completed or failed observation, the external storage destin
 **Check**:
 
 1. **Wrong folder** — Verify the destination path in the configuration matches where you're looking.
-2. **File organization** — If using "by target" or "by project and target", files are in subfolders named after the target and/or project.
+2. **File organization** — If the storage path template includes `$TARGET` or `$PROJECT`, files are in subfolders named after the target and/or project.
 3. **Different account** — Ensure you're checking the same account that was authorized in the configuration.
 
 ### Server Files Deleted Unexpectedly

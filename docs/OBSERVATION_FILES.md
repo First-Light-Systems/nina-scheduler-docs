@@ -59,9 +59,12 @@ Click on any file to open the metadata dialog, which displays:
 - **Epoch** (typically J2000)
 
 ### Quality Metrics
-- **HFR** (Half-Flux Radius) - star sharpness indicator
-- **Stars detected** count
-- **ADU statistics** (mean, median, min, max)
+- **ADU statistics** (mean, median, standard deviation, min, max)
+- **SNR** (Signal-to-Noise Ratio)
+- **Background level** and background noise
+
+!!! note
+    HFR, FWHM, and star count values are available in FITS file headers (see [Embedded Quality Headers](#embedded-quality-headers) below) but are not displayed as named metrics on the Observation Files page.
 
 ### Embedded Quality Headers
 

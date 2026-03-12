@@ -39,16 +39,19 @@ The project type is informational — it helps organize projects in listings and
 
 ### Optional Fields
 
-| Field | Description |
-|-------|-------------|
-| **Type** | Project type (research, education, outreach, personal, testing). Default: research |
-| **Scientific Goals** | Detailed objectives for the project (up to 2,000 characters) |
-| **Target List** | Pre-defined list of target names for the project |
-| **Required Filters** | Filters needed for the project's observations |
-| **Start Date** | When the project begins (defaults to today) |
-| **End Date** | When the project ends |
-| **Deadline** | Hard deadline for completing all observations |
-| **Tags** | Freeform tags for categorization |
+| Field | Description | Availability |
+|-------|-------------|--------------|
+| **Type** | Project type (research, education, outreach, personal, testing). Default: research | Web interface |
+| **Scientific Goals** | Detailed objectives for the project (up to 2,000 characters) | API only |
+| **Target List** | Pre-defined list of target names for the project | API only |
+| **Required Filters** | Filters needed for the project's observations | API only |
+| **Start Date** | When the project begins (defaults to today) | API only |
+| **End Date** | When the project ends | API only |
+| **Deadline** | Hard deadline for completing all observations | API only |
+| **Tags** | Freeform tags for categorization | API only |
+
+!!! note "API-Only Fields"
+    Fields marked "API only" are supported by the server model and API but are not yet available in the web interface create/edit forms.
 
 ### How to Create
 
@@ -93,7 +96,7 @@ Control who can see your project:
 | **Public** | All users on the system |
 
 !!! note
-    Visibility controls who can *see* the project. To *edit* observations or manage settings, users need explicit member permissions (see below).
+    Visibility is supported by the API but is not yet configurable in the web interface. Visibility controls who can *see* the project. To *edit* observations or manage settings, users need explicit member permissions (see below).
 
 ## Member Management
 
@@ -136,24 +139,15 @@ Each project has configurable settings that affect its observations:
 
 Set a default priority (1–10) for new observations created in this project. Individual observations can override this value. Default: 5.
 
-### Notification Preferences
+### Notification Preferences (Planned)
 
-Configure which events trigger notifications:
+!!! info "Not Yet Available"
+    Notification preferences are planned for a future release and are not currently available in the web interface.
 
-| Setting | Description |
-|---------|-------------|
-| **On observation complete** | Notify when an observation finishes successfully |
-| **On observation failed** | Notify when an observation fails |
-| **On project update** | Notify when project settings or membership changes |
-| **Email notifications** | Send notifications via email in addition to in-app |
+### Scheduling Preferences (Planned)
 
-### Scheduling Preferences
-
-Optionally set observatory and constraint preferences for the project:
-
-- **Preferred observatories** — observations default to these observatories
-- **Time constraints** — earliest start and latest end times
-- **Weather constraints** — minimum transparency, maximum cloud cover, maximum wind speed
+!!! info "Not Yet Available"
+    Project-level scheduling preferences (preferred observatories, time constraints, weather constraints) are planned for a future release and are not currently available in the web interface.
 
 ## Project Status
 
@@ -183,7 +177,7 @@ The project overview automatically tracks:
 | **Total Files** | Number of captured FITS files |
 | **Last Observation** | Date of the most recent completed observation |
 
-Statistics update automatically as observations complete. You can also force a statistics refresh from the project management tab.
+Statistics update automatically as observations complete.
 
 ## Deleting a Project
 
@@ -191,11 +185,10 @@ Projects with observations cannot be deleted unless you use **force delete**, wh
 
 - The project itself
 - All observations in the project
-- All captured files associated with those observations
 - All membership records
 
 !!! warning
-    Force delete is irreversible. All observation data, including FITS files, will be permanently removed. Consider archiving instead if you want to preserve the data.
+    Force delete is irreversible. Note that force delete removes observation and membership records from the database but does **not** automatically delete uploaded FITS files from MinIO storage. If you need to reclaim storage, FITS files must be cleaned up separately. Consider archiving instead if you want to preserve the data.
 
 To delete a project:
 

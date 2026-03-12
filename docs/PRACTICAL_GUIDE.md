@@ -36,10 +36,10 @@ This guide provides step-by-step instructions for common tasks in the Science Sc
 ### Dashboard Overview
 
 The main dashboard shows:
-- **Upcoming observations** for your selected observatory
-- **Current observation status** if one is running
-- **Recent activity** and completion statistics
-- **Quick actions** to create new observations
+- **Stat cards**: Total, Completed, In Progress, Pending, and Failed/Aborted observation counts
+- **Recent Observations**: The last 5 observations with status and details
+- **Recently Used Observatories**: Quick access to observatories you've worked with
+- **Submit New Observation** button for creating observations directly from the dashboard
 
 ---
 
@@ -94,10 +94,14 @@ After selecting a transit, configure the observation details:
 - Total: 4 hours of observing
 
 #### Priority and Scheduling
-- **Priority**: Choose observation priority (1-10)
-  - **9-10**: High priority (30-minute protective buffer)
-  - **5**: Medium priority (20-minute protective buffer) - **recommended**
-  - **1-3**: Low priority (10-minute protective buffer)
+- **Priority**: Choose observation priority (1-10, where 10 is highest)
+  - Priority affects scheduling order, not buffer time
+  - Use 9-10 for critical/rare events, 5-7 for most observations, 1-3 for low importance
+
+**Overhead Buffers**: The scheduler adds duration-based overhead buffers to account for slewing, centering, and focusing:
+  - Short observations (under 30 min): 20-minute buffer
+  - Medium observations (30-89 min): 25-minute buffer
+  - Long observations (90+ min): 30-minute buffer
 
 #### Camera Settings
 - **Binning**: Camera binning mode (1x1, 2x2, 3x3, or 4x4)
@@ -219,7 +223,7 @@ The Science Scheduler supports three observation types:
 - Continuous exposures until end time
 - Cannot be interrupted or suspended
 - Highest scheduling priority
-- Protected by buffer zones based on priority level
+- Protected by duration-based overhead buffers (for slewing/centering/focusing)
 
 **Example Use Cases**:
 - Exoplanet transits (as created through Exoplanet Transits page)
@@ -257,7 +261,7 @@ The Science Scheduler supports three observation types:
 3. Stops when duration reached
 4. Can be interrupted by higher priority observations
 
-### Standard Observations
+### Flexible Observations
 
 **Best for**: Traditional observations with specific exposure counts
 
@@ -265,7 +269,7 @@ The Science Scheduler supports three observation types:
 - Fixed number of exposures
 - No time-based looping
 - Completes when all exposures taken
-- Standard sequencing
+- Flexible scheduling within constraints
 
 **Example Use Cases**:
 - Photometry series (e.g., "take 50 × 120s exposures")
@@ -281,17 +285,18 @@ The Science Scheduler supports three observation types:
 The **My Observations** page shows all your observations:
 
 **Status Indicators**:
-- **Queued**: Waiting to be scheduled
+- **Pending**: Waiting to be scheduled
 - **Assigned**: Sent to observatory plugin
 - **In Progress**: Currently being executed
+- **Acquisition Complete**: Data acquisition finished, finalizing
+- **Suspended**: Paused (weather, equipment issues)
 - **Completed**: Successfully finished
 - **Failed**: Encountered an error
-- **Suspended**: Paused (weather, equipment issues)
+- **Aborted**: Manually stopped or cancelled
 
 **Special Indicators**:
 - **Fast Mover** chip: Displayed on observations marked as fast-moving objects (NEOs, asteroids). These use fine-grained 5-minute scheduling resolution for accurate tracking.
-- **Operations Disabled**: If an observatory has operations disabled, a banner indicates observations are paused.
-- **Dispatch Disabled**: If dispatch is disabled system-wide, a banner indicates no new assignments are being made.
+- **Operations Disabled** / **Dispatch Disabled**: These appear as status chips on observatory rows in the **My Observatories** page, indicating when an observatory has dispatching or automation disabled.
 
 ### Observation Details
 
@@ -312,7 +317,7 @@ For each observation, you can see:
 - **View Details**: See complete observation information
 - **View Files**: Access the [Observation Files](OBSERVATION_FILES.md) page for completed observations
 - **Delete**: Remove observation (if not in progress)
-- **Edit**: Modify observation parameters (if queued)
+- **Edit**: Modify observation parameters (if pending)
 
 ### Real-Time Updates
 
@@ -446,19 +451,18 @@ Contact the observatory owner if you need administrative access.
    C:\Users\<YourName>\AppData\Local\NINA\Plugins\
    ```
 3. Restart NINA
-4. Verify plugin appears in **Tools → Options → Plugins**
+4. Verify plugin appears in **Options > Plugins** (gear icon)
 
 ### Plugin Configuration
 
-1. In NINA, go to **Tools → Options → Plugins**
+1. In NINA, go to **Options > Plugins** (gear icon)
 2. Find **Science Scheduler** in the list
-3. Click **Configure**
-4. Enter connection settings:
+3. Enter connection settings:
    - **Server URL**: Provided by your institution (e.g., `http://scheduler.yourobs.edu`)
    - **API Key**: Generated by admin for your observatory
    - **Observatory ID**: Your observatory identifier
-5. Click **Test Connection** to verify
-6. Click **Save**
+
+Settings are saved automatically and the plugin connects automatically when enabled.
 
 ### Using the Science Scheduler Container
 
@@ -617,7 +621,7 @@ Science Scheduler Container
 ### Getting Help
 
 **For technical issues**:
-1. Check NINA plugin logs (Tools → Logs)
+1. Check NINA plugin logs (Options > Log, or via the log file)
 2. Check web interface browser console (F12 → Console)
 3. Contact your observatory administrator
 4. Provide:

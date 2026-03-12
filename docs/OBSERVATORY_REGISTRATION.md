@@ -161,7 +161,7 @@ After reset, the plugin's next connection will be accepted and the new fingerpri
 
 - **Duration**: 12 months
 - **Use case**: Normal operation for approved observatories
-- **Renewal**: Automatic notification before expiration
+- **Expiry**: Enforced at validation time — expired keys are rejected. Contact an administrator for a new key before expiry.
 
 ### Temporary API Key
 

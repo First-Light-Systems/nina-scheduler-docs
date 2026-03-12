@@ -14,15 +14,19 @@ This guide covers how administrators manage the calibration system — configuri
 
 Calibration administration is available to users with observatory admin (`can_admin`) or server admin permissions.
 
-| Capability | Observatory Admin | Server Admin |
-|-----------|-------------------|--------------|
+| Capability | Observatory Admin (`can_admin`) | Server Admin |
+|-----------|--------------------------------|--------------|
 | View calibration library | Yes (own observatories) | Yes (all) |
 | Download frames | Yes | Yes |
-| Delete frames | Yes (own observatories) | Yes (all) |
 | Upload master frames | Yes (own observatories) | Yes (all) |
-| Trigger manual stacking | Yes (own observatories) | Yes (all) |
-| Configure calibration settings | Yes (own observatories) | Yes (all) |
-| Run maintenance tasks | No | Yes |
+| Create masters (trigger stacking) | Yes (own observatories) | Yes (all) |
+| Delete frames | Yes (own observatories) | Yes (all) |
+| Configure calibration policy | Yes (own observatories) | Yes (all) |
+| View and retry stacking jobs | Yes (own observatories) | Yes (all) |
+| Cache management | No | Yes |
+| Maintenance and cleanup | No | Yes |
+| Health checks | No | Yes |
+| Delete failed jobs | No | Yes |
 
 ## Admin Calibration Library
 

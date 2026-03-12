@@ -10,28 +10,19 @@ This guide explains the complete lifecycle of an observation — every status it
 stateDiagram-v2
     [*] --> pending: Created
     pending --> assigned: Scheduler assigns to observatory
-    pending --> cancelled: User cancels
 
     assigned --> in_progress: Plugin starts execution
     assigned --> pending: Timeout / reassignment
     assigned --> failed: Assignment error
-    assigned --> cancelled: User cancels
     assigned --> aborted: User aborts
 
     in_progress --> acquisition_complete: All exposures captured
     in_progress --> failed: Execution error
     in_progress --> aborted: User terminates
-    in_progress --> paused: User pauses
     in_progress --> suspended: Weather / safety
-    in_progress --> partially_completed: Stopped by constraints
-
-    paused --> in_progress: User resumes
-    paused --> cancelled: User cancels
-    paused --> aborted: User aborts
 
     suspended --> in_progress: Conditions restored
     suspended --> acquisition_complete: Enough data captured
-    suspended --> cancelled: User cancels
     suspended --> aborted: User aborts
 
     acquisition_complete --> completed: Files uploaded
@@ -39,9 +30,7 @@ stateDiagram-v2
 
     completed --> [*]
     failed --> [*]
-    cancelled --> [*]
     aborted --> [*]
-    partially_completed --> [*]
 ```
 
 ## All Statuses Explained
@@ -54,7 +43,6 @@ stateDiagram-v2
 | **Assigned** | An observatory has been selected to execute this observation. The plugin has been notified and will begin when ready. |
 | **In Progress** | The plugin is actively executing — slewing, centering, and capturing exposures. |
 | **Acquisition Complete** | All planned exposures have been captured. The system is waiting for file uploads to finish. |
-| **Paused** | Execution was temporarily paused by the user. Can be resumed. |
 | **Suspended** | Execution was interrupted by weather or a safety event. Will resume automatically when conditions improve. |
 
 ### Terminal Statuses
@@ -65,12 +53,7 @@ Once an observation reaches a terminal status, it cannot transition further.
 |--------|---------|
 | **Completed** | All exposures captured and all files uploaded successfully. |
 | **Failed** | An error prevented the observation from completing (equipment failure, upload error, etc.). |
-| **Cancelled** | The user cancelled the observation before or during execution. |
-| **Aborted** | The user (or system) terminated the observation during execution. Differs from cancelled in that some work may have been done. |
-| **Partially Completed** | The observation captured some exposures but was stopped by constraints (target set below minimum altitude, time window ended, etc.). |
-
-!!! tip "Completed vs Partially Completed"
-    **Completed** means the full exposure plan finished. **Partially completed** means the observation did useful work but couldn't finish — for example, the target set below minimum altitude after 60% of exposures were captured. You can resubmit partially completed observations to capture the remaining data.
+| **Aborted** | The user (or system) terminated the observation during execution. Some exposures may have been captured and uploaded. |
 
 ## Who Causes Transitions
 
@@ -80,7 +63,7 @@ Different actors in the system trigger different status changes:
 |-------|-------------|--------------------|
 | **Scheduler** | The scheduling engine that assigns observations to observatories | pending → assigned |
 | **Plugin** | The NINA plugin executing at the observatory | assigned → in_progress, in_progress → acquisition_complete |
-| **User** | A user action through the web interface | pending → cancelled, in_progress → aborted, paused → in_progress |
+| **User** | A user action through the web interface | in_progress → aborted |
 | **System** | Automated monitors and background services | assigned → pending (timeout), in_progress → suspended (weather) |
 
 ## Automated Monitors
@@ -97,12 +80,13 @@ The server expects regular heartbeat messages from connected plugins. If a plugi
 
 ### Stale Observation Monitor
 
-Detects observations stuck in a status longer than expected:
+Detects observations stuck in a status longer than expected. A warning is issued at 1 hour, and the observation is flagged as stale at 2 hours:
 
-| Condition | Threshold | Action |
-|-----------|-----------|--------|
-| Stuck in **assigned** | 48 hours | Flagged for review; may be returned to pending |
-| Stuck in **in_progress** | 24 hours | Flagged for review; may be marked as failed |
+| Condition | Warning | Stale Threshold | Action |
+|-----------|---------|-----------------|--------|
+| Stuck in **assigned** | 1 hour | 2 hours | Flagged for review; may be returned to pending |
+| Stuck in **in_progress** | 1 hour | 2 hours | Flagged for review; may be marked as failed |
+| Stuck in **suspended** | 1 hour | 2 hours | Flagged for review; may be marked as failed |
 
 ### Time Limit Monitor
 
@@ -150,17 +134,7 @@ The observatory was assigned the observation but hasn't started executing:
 - **Observatory busy** — finishing another observation before starting yours
 - **Plugin disconnected** — network issue between plugin and server
 
-**What to do**: If stuck for more than a few hours, contact the observatory operator. The stale observation monitor will eventually return it to pending if it remains stuck for 48 hours.
-
-### "What does Partially Completed mean?"
-
-The observation started and captured some exposures, but stopped before completing the full plan. The detail page shows:
-
-- How many exposures were completed vs. planned
-- The completion percentage
-- The reason execution stopped (e.g., "Target below minimum altitude", "Observation window ended")
-
-**What to do**: Review the captured data — it may still be scientifically useful. Resubmit the observation if you need the remaining exposures.
+**What to do**: If stuck for more than a few minutes, contact the observatory operator. The stale observation monitor will flag it after 1 hour and mark it as stale after 2 hours, at which point it may be returned to pending.
 
 ### "Why was my observation Suspended?"
 
@@ -170,13 +144,6 @@ A weather or safety event occurred at the observatory during execution:
 - **Safety event** — equipment or environmental safety trigger
 
 Suspended observations resume automatically when safe conditions return. If conditions don't improve before the observation window closes, the observation may transition to partially completed or failed.
-
-### "What's the difference between Cancelled and Aborted?"
-
-- **Cancelled** — you stopped the observation before meaningful execution. No exposures were captured, or the observation hadn't started yet.
-- **Aborted** — the observation was terminated during execution. Some exposures may have been captured and uploaded.
-
-Both are terminal states, but aborted observations may have useful partial data.
 
 ### "Can I restart a failed observation?"
 

@@ -1,24 +1,28 @@
 # Reporting and Analytics Guide
 
-**Document Version**: 1.0 | **Last Updated**: February 2026
+**Document Version**: 1.1 | **Last Updated**: March 2026
 
-This guide covers the Science Scheduler's reporting and analytics features, including usage dashboards, utilization reports, and billing summaries.
+This guide covers the Science Scheduler's reporting and analytics features, including usage dashboards, utilization reports, and target observation reports.
 
 ## Overview
 
-The reporting system provides insight into how your observatory time is being used. Reports cover observation metrics, user activity, project progress, observatory utilization, and billing — all accessible from the **Reports** section of the web interface.
+The reporting system provides insight into how your observatory time is being used. Reports are accessible from the **Reports** section of the web interface.
 
 ### Access Tiers
 
-Report visibility depends on your role. The system uses a three-tier access model:
+Report access depends on your role:
 
-| Tier | Role | What You See |
-|------|------|-------------|
-| **Server Admin** | System administrator | All data across all observatories and organizations |
-| **Observatory Admin** | Observatory administrator | Data for observatories you administer |
-| **Regular User** | Standard user | Your own observations and projects only |
+| Report | Who Can Access | Route |
+|--------|---------------|-------|
+| **My Usage** | All users | `/my-usage` |
+| **Target Observation Report** | All users | `/reports/targets` |
+| **Usage Dashboard** | Admins only | `/reports/usage` |
+| **Usage Explorer** | Admins only | `/reports/explorer` |
+| **User Usage Report** | Admins only | `/reports/users` |
+| **Project Usage Report** | Admins only | `/reports/projects` |
+| **Observatory Utilization Report** | Admins only | `/reports/observatories` |
 
-Each report respects these boundaries automatically — you only see data you're authorized to access.
+Regular users can view their own usage via **My Usage** and access the **Target Observation Report**. The admin reports (Usage Dashboard, Usage Explorer, User/Project/Observatory reports) are restricted to observatory administrators and server administrators.
 
 ---
 
@@ -28,13 +32,12 @@ The **Usage Dashboard** provides a high-level summary of activity through a set 
 
 ### Summary Cards
 
-The dashboard displays key metrics at a glance:
+The dashboard displays four summary cards:
 
-- **Total Observations** — count of observations in the selected period
-- **Success Rate** — percentage of observations that completed successfully
-- **Total Shutter-Open Time** — cumulative exposure time across all observations
-- **Total Wall-Clock Time** — total elapsed time from observation start to finish
-- **Data Volume** — total size of captured FITS files
+- **Total Observations** — count of observations in the selected period, with success rate shown as a subtitle
+- **Active Users** — number of users with activity in the period, with project count shown as a subtitle
+- **Telescope Time** — cumulative telescope time, with shutter-open time shown as a subtitle
+- **Data Stored** — total size of captured FITS files, with file count shown as a subtitle
 
 ### Date Range
 
@@ -42,10 +45,10 @@ Use the date range selector to view different time periods:
 
 | Preset | Period |
 |--------|--------|
+| **Last 7 days** | One-week window |
 | **Last 30 days** | Default view |
-| **Last 60 days** | Two-month window |
 | **Last 90 days** | Quarterly view |
-| **Custom** | Select specific start and end dates |
+| **Last year** | 365-day window |
 
 ---
 
@@ -69,10 +72,7 @@ The **User Usage Report** shows activity broken down by individual user. This re
 
 ### Filtering
 
-Filter the report by:
-
-- **Date range** — select the period to analyze
-- **Observatory** — limit to a specific observatory
+Filter the report by **date range** to select the period to analyze.
 
 ---
 
@@ -122,43 +122,28 @@ This report helps administrators identify underutilized observatories, plan capa
 
 The **Usage Explorer** provides event-level drill-down into individual observation activity. While the other reports show aggregated metrics, the Usage Explorer shows each event.
 
-### Event Types
+### Event Type Filter
 
-| Event | Description |
-|-------|-------------|
-| **Started** | Observation began executing |
+The event type dropdown controls which events are shown:
+
+| Option | Description |
+|--------|-------------|
+| **Final Events** | Default — shows the terminal event for each observation |
+| **All Events** | Every event in the observation lifecycle |
+| **Assigned** | Observation was assigned to an observatory |
 | **Completed** | Observation finished successfully |
 | **Failed** | Observation encountered an error |
-| **Aborted** | Observation was manually canceled or safety-stopped |
+| **Rejected** | Observation was rejected by the observatory |
+| **Terminated** | Observation was terminated (e.g., safety stop or manual cancel) |
 
 ### Using the Explorer
 
 1. Select a **date range** to define the window
-2. Optionally filter by **observatory**, **user**, or **status**
+2. Optionally filter by **event type** using the dropdown
 3. Browse the event list chronologically
 4. Click any event to view the full observation details
 
 The Usage Explorer is particularly useful for investigating specific incidents or reviewing what happened on a particular night.
-
----
-
-## Billing Summary
-
-The **Billing Summary** provides an invoice-style overview of usage aggregated by organization and project. This report is designed for administrators who need to track resource consumption for cost allocation or institutional reporting.
-
-!!! note "Usage Tracking Only"
-    The Billing Summary is a usage reporting tool — it shows how observatory time has been consumed. The Science Scheduler does not include a billing or invoicing system. Use the data from this report to feed your institution's own cost allocation or chargeback processes.
-
-### Report Contents
-
-- **Organization breakdown** — usage totals per organization
-- **Project breakdown** — usage per project within each organization
-- **Time metrics** — wall-clock hours and shutter-open hours
-- **Data volume** — total FITS data generated
-
-### Default Period
-
-The Billing Summary defaults to a **90-day** window, suitable for quarterly billing cycles. You can adjust the date range as needed.
 
 ---
 
@@ -196,19 +181,14 @@ Attempted observations include completed, failed, and aborted observations. Pend
 
 ## Exporting Reports
 
-Reports can be exported for offline analysis or record-keeping:
+Most reports support **CSV export** for offline analysis or record-keeping. Click the **Export** button at the top of the report to download a CSV file suitable for spreadsheets and data analysis.
 
-| Format | Description |
-|--------|-------------|
-| **CSV** | Comma-separated values, suitable for spreadsheets and data analysis |
-| **PDF** | Formatted document, suitable for archiving and sharing |
-
-To export, click the **Export** button at the top of any report and select the desired format.
+The **Target Observation Report** additionally supports **PDF export**, which generates a formatted document server-side suitable for archiving and sharing.
 
 ---
 
 ## Related Documentation
 
 - **[Creating Observations](CREATING_OBSERVATIONS.md)** — Submit observations that appear in reports
-- **[Organizations](ORGANIZATIONS.md)** — Manage organizations referenced in billing
+- **[Organizations](ORGANIZATIONS.md)** — Manage organizations referenced in reports
 - **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** — Configure observatories that generate utilization data

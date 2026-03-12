@@ -2,7 +2,7 @@
 
 **Document Version**: 1.0 | **Last Updated**: March 2026
 
-This guide covers server-level administration tools for maintaining the Science Scheduler system — database integrity, backups, error tracking, and system analytics.
+This guide covers server-level administration tools for maintaining the Science Scheduler system — database integrity, backups, and system analytics.
 
 !!! note "Access Required"
     All features in this guide require **server administrator** access. Observatory administrators should see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for observatory-level management.
@@ -98,17 +98,13 @@ Some issues can be repaired automatically:
 !!! warning
     Always review issues before repairing. Auto-repair handles common cases, but unusual situations may require manual intervention.
 
-### Exporting Reports
-
-Click **Export Report** to generate a comprehensive integrity report in JSON format. Useful for record-keeping or sharing with support.
-
 ---
 
 ## Backup Management
 
 ### Creating Backups
 
-Navigate to **System** → **Backups** to manage database backups.
+Navigate to **Backup Management** in the admin interface to manage database backups.
 
 To create a backup:
 
@@ -134,13 +130,12 @@ To restore from a backup:
 !!! warning
     Restoring a backup replaces current data. Create a new backup before restoring if you want to preserve the current state.
 
-### Cleanup Policies
+### Cleaning Up Old Backups
 
-Backups accumulate over time. Configure retention policies to automatically remove old backups:
+Backups accumulate over time. Use the **Cleanup Old Backups** dialog to remove outdated backups:
 
-- Set maximum backup age
-- Set maximum number of backups to retain
-- Older backups beyond the retention limit are automatically deleted
+- Specify the number of **days to keep** — backups older than this are deleted
+- Click **Cleanup** to remove the old backups
 
 ### Backup Before Cleanup
 
@@ -165,36 +160,6 @@ These metrics help you monitor growth, identify capacity issues, and track overa
 
 ---
 
-## Error Tracking
-
-The error tracking system captures and categorizes server errors for diagnosis.
-
-### Viewing Errors
-
-Navigate to **System** → **Errors** to see recent errors with:
-
-- Error message and stack trace
-- Timestamp
-- Affected component or endpoint
-- Frequency (how many times the error has occurred)
-
-### Acknowledging Errors
-
-Reviewed errors can be acknowledged to track what has been investigated:
-
-- **Individual acknowledgment** — mark a single error as reviewed
-- **Bulk acknowledgment** — mark multiple errors as reviewed at once
-
-### Error Summaries
-
-The error summary view groups errors by type and frequency, helping you identify:
-
-- The most common errors
-- New errors that appeared recently
-- Error trends over time
-
----
-
 ## Observation Data Cleanup
 
 For test environments or when starting fresh, the cleanup tool removes all observation data while preserving system configuration.
@@ -214,7 +179,7 @@ For test environments or when starting fresh, the cleanup tool removes all obser
 
 ### How to Use
 
-1. Navigate to **System** → **Cleanup**
+1. Navigate to the **Database Integrity** page and use the cleanup controls
 2. Optionally enable **Dry Run** to preview what will be deleted without actually deleting
 3. Optionally enable **Create Backup** to automatically backup before deletion
 4. Click **Run Cleanup**
@@ -239,7 +204,7 @@ The system health endpoint (`/api/health`) reports:
 ### Monitoring Recommendations
 
 - Check the integrity scanner weekly (quick scan) and monthly (full scan with MinIO check)
-- Monitor error tracking for new error patterns after deployments
+- Review server logs for error patterns after deployments
 - Review backup list to ensure recent backups exist
 - Watch storage usage trends to plan capacity
 

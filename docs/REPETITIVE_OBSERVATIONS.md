@@ -106,23 +106,16 @@ To resume:
 !!! note
     Pausing does not cancel any execution currently in progress. It only prevents future executions from being scheduled.
 
-## Updating Configuration Mid-Series
+### Updating Configuration Mid-Series (Planned)
 
-You can modify the repetition configuration while a series is active:
-
-- Changing the interval adjusts the timing of future executions
-- Changing the end date extends or shortens the series
-- Changing max executions updates the series limit
-- Changes do not affect already-completed executions
+!!! info "Not Yet Available"
+    Editing repetition configuration while a series is active is planned for a future release and is not currently available in the web interface.
 
 ## Viewing Upcoming Executions
 
-The observation detail page shows upcoming execution windows:
+The observation detail page shows the next scheduled execution:
 
 - **Next execution** — when the next iteration is scheduled
-- **Upcoming windows** — a list of planned execution times (default: next 7 days)
-
-You can also filter by observatory to see which upcoming executions are relevant to a specific site.
 
 ## Execution History
 
