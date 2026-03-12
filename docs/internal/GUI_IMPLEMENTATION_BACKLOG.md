@@ -37,9 +37,9 @@ The `/system/analytics` API returns user count, organization count, and storage 
 
 ---
 
-## Future Enhancements — Documented as Planned
+## Future Enhancements — Not in User-Facing Docs
 
-These are server model fields that exist but have no GUI. Docs have been updated to note them as "API only" or "planned". Implement when prioritized.
+These are server model fields that exist but have no GUI. Removed from published docs to avoid documenting unimplemented features. Implement when prioritized.
 
 ### Project Fields (audit #25-28)
 
@@ -77,5 +77,5 @@ HFR, FWHM, and star count available in FITS headers and admin UsageExplorer but 
 ## Notes
 
 - Items in "Outstanding" section should be addressed soon (bugs or small gaps).
-- Items in "Future Enhancements" are documented as planned/API-only in the published docs.
+- Items in "Future Enhancements" have been removed from published docs — add docs when implemented.
 - Main audit doc tracks all 45 items with full resolution status.

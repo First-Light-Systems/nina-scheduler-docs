@@ -106,11 +106,6 @@ To resume:
 !!! note
     Pausing does not cancel any execution currently in progress. It only prevents future executions from being scheduled.
 
-### Updating Configuration Mid-Series (Planned)
-
-!!! info "Not Yet Available"
-    Editing repetition configuration while a series is active is planned for a future release and is not currently available in the web interface.
-
 ## Viewing Upcoming Executions
 
 The observation detail page shows the next scheduled execution:

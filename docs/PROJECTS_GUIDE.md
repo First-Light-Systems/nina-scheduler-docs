@@ -39,19 +39,9 @@ The project type is informational — it helps organize projects in listings and
 
 ### Optional Fields
 
-| Field | Description | Availability |
-|-------|-------------|--------------|
-| **Type** | Project type (research, education, outreach, personal, testing). Default: research | Web interface |
-| **Scientific Goals** | Detailed objectives for the project (up to 2,000 characters) | API only |
-| **Target List** | Pre-defined list of target names for the project | API only |
-| **Required Filters** | Filters needed for the project's observations | API only |
-| **Start Date** | When the project begins (defaults to today) | API only |
-| **End Date** | When the project ends | API only |
-| **Deadline** | Hard deadline for completing all observations | API only |
-| **Tags** | Freeform tags for categorization | API only |
-
-!!! note "API-Only Fields"
-    Fields marked "API only" are supported by the server model and API but are not yet available in the web interface create/edit forms.
+| Field | Description |
+|-------|-------------|
+| **Type** | Project type (research, education, outreach, personal, testing). Default: research |
 
 ### How to Create
 
@@ -84,19 +74,6 @@ Project ownership can be transferred to a different user, observatory, or organi
 5. Confirm the transfer
 
 All transfers are recorded in an audit trail for accountability. The previous owner retains member access unless explicitly removed.
-
-## Visibility
-
-Control who can see your project:
-
-| Level | Who Can See |
-|-------|------------|
-| **Private** | Only the owner and explicitly added members |
-| **Institution** | All members of the owning organization |
-| **Public** | All users on the system |
-
-!!! note
-    Visibility is supported by the API but is not yet configurable in the web interface. Visibility controls who can *see* the project. To *edit* observations or manage settings, users need explicit member permissions (see below).
 
 ## Member Management
 
@@ -138,16 +115,6 @@ Each project has configurable settings that affect its observations:
 ### Default Priority
 
 Set a default priority (1–10) for new observations created in this project. Individual observations can override this value. Default: 5.
-
-### Notification Preferences (Planned)
-
-!!! info "Not Yet Available"
-    Notification preferences are planned for a future release and are not currently available in the web interface.
-
-### Scheduling Preferences (Planned)
-
-!!! info "Not Yet Available"
-    Project-level scheduling preferences (preferred observatories, time constraints, weather constraints) are planned for a future release and are not currently available in the web interface.
 
 ## Project Status
 
