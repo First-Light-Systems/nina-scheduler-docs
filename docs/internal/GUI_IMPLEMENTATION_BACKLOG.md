@@ -19,13 +19,13 @@ Two routes have "Admin only" comments but no permission enforcement:
 - `POST /calibrate/:fileId` — only uses `requireAuth`, any authenticated user can trigger
 - **Fix**: Add `checkObservatoryAdmin()` to match other admin calibration routes
 
-### Organization Types Missing from GUI (audit #38)
+### Organization Types Missing from GUI (audit #38) - FIXED 3/12/2026 BJK
 
 **Type**: GUI enhancement
 **File**: `packages/user-gui/src/pages/admin/OrganizationManagement.js`
 
 Server model supports `high_school` and `observatory` org types but GUI dropdown only shows: university, college, research_institute, company, nonprofit, other.
-- **Fix**: Add the two missing types to the dropdown - **Fixed 3/12/2026 BJK**
+- **Fix**: Add the two missing types to the dropdown
 
 ### Analytics Page Missing Metrics (audit #45)
 
