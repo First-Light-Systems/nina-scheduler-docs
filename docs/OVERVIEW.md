@@ -56,6 +56,15 @@ The Science Scheduler is a multi-observatory coordination system that automates 
 | **Monitoring** | Repeats at regular intervals (cadence-based) |
 | **Rise-to-Set** | Observes target for entire visibility window |
 
+### Exoplanet Transit Planning
+
+Built-in tools for planning and executing exoplanet transit observations:
+
+- **Transit search**: Query upcoming transits by date range, filtered by magnitude, depth, altitude, and moon separation
+- **Automatic timing**: Ingress, egress, and baseline times calculated automatically with three-phase altitude verification
+- **Exposure calculator**: Recommended exposure time and count based on target magnitude and telescope specifications
+- **Fixed-time scheduling**: Transits are created as protected fixed-time observations that run continuously through the transit window
+
 ### Target Lookup
 
 Automatic coordinate resolution from professional astronomical databases:
