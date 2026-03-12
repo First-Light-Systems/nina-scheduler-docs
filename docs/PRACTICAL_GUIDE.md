@@ -106,19 +106,11 @@ After selecting a transit, configure the observation details:
 - **Filter**: Select your filter (V, R, I, or Clear)
 
 #### Exposure Settings
-The system calculates exposure time automatically based on:
-- Target magnitude
-- Telescope specifications
-- Desired SNR (Signal-to-Noise Ratio)
 
-**Exposure Time Formula**:
-```
-Exposure = ((V_mag - V_limit) × 10) + min_exposure
-```
+The system provides a default exposure time as a starting point, but **you should set the exposure time based on your knowledge of your telescope and camera system**. The default does not account for your specific equipment capabilities, sky conditions, or scientific requirements.
 
-Where V_limit is calculated from your telescope aperture.
-
-You can override the calculated exposure time if needed.
+!!! tip "Planned Feature"
+    A future update will calculate recommended exposure times based on telescope aperture, camera sensitivity, target magnitude, and desired SNR. For now, set exposure time manually based on your experience with your equipment.
 
 **Exposure Count**: Automatically calculated based on:
 - Total observation duration
