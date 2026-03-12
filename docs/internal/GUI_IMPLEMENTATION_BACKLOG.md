@@ -1,109 +1,81 @@
-# GUI Implementation Backlog
+# GUI / Code Implementation Backlog
 
-**Date**: 2026-03-12
+**Date**: 2026-03-12 | **Updated**: 2026-03-12
 **Source**: [Documentation Accuracy Audit](DOC_AUDIT_2026_03_12.md)
 
-Features that exist in the server model/API but have no GUI exposure. These should be implemented in the user-gui rather than removed from docs.
+Items that require code changes (GUI features or server fixes). Documentation has been updated to reflect current state — these are enhancements to implement.
 
 ---
 
-## Projects
+## Outstanding — Code Fixes Needed
 
-**Source**: PROJECTS_GUIDE.md, audit items #25-28
+### Calibration Permission Checks (audit #24a)
 
-Server model fields with no create/edit form UI:
+**Type**: Server bug
+**File**: `packages/server/src/routes/calibrationRoutes.ts`
 
-| Field | Model Location | Current GUI State |
-|-------|---------------|-------------------|
-| `scientific_goals` | `Project.ts` | Read-only display on ObservationDetail only |
-| `target_list` | `Project.ts` | Not shown anywhere |
-| `required_filters` | `Project.ts` | Not shown anywhere |
-| `start_date` | `Project.ts` | Not in project forms (used in templates/reports) |
-| `end_date` | `Project.ts` | Not in project forms (used in templates/reports) |
-| `deadline` | `Project.ts` | Read-only chip on ProjectStep only |
-| `tags` | `Project.ts` | Not shown anywhere |
-| `visibility` | `Project.ts` | Not in project forms (exists for targets/templates) |
-| `notification_preferences` | `Project.ts` | Not shown anywhere |
-| `scheduling_preferences` | `Project.ts` | Not shown anywhere |
+Two routes have "Admin only" comments but no permission enforcement:
+- `POST /batch-recalibrate` — only uses `requireAuth`, any authenticated user can trigger
+- `POST /calibrate/:fileId` — only uses `requireAuth`, any authenticated user can trigger
+- **Fix**: Add `checkObservatoryAdmin()` to match other admin calibration routes
 
-**Project stats refresh**: Stats are calculated across multiple views but there is no "force refresh" button matching the API endpoint `POST /api/v1/projects/:id/update-stats`.
+### Organization Types Missing from GUI (audit #38)
 
-**Force delete file cleanup** (audit #31): Server deletes observations but not UserFile records or MinIO objects. Either implement cascading file cleanup or update docs.
+**Type**: GUI enhancement
+**File**: `packages/user-gui/src/pages/admin/OrganizationManagement.js`
 
----
+Server model supports `high_school` and `observatory` org types but GUI dropdown only shows: university, college, research_institute, company, nonprofit, other.
+- **Fix**: Add the two missing types to the dropdown
 
-## Repetitive Observations
+### Analytics Page Missing Metrics (audit #45)
 
-**Source**: REPETITIVE_OBSERVATIONS.md, audit items #35-36
+**Type**: GUI enhancement
+**File**: `packages/user-gui/src/pages/admin/Analytics.js`
 
-| Feature | API Status | GUI State |
-|---------|-----------|-----------|
-| Upcoming windows list | `getUpcomingRepetitive()` API exists | Only shows single next_execution |
-| Edit config mid-series | Server accepts updates | ObservationEdit.js has no repetition fields; ExecutionHistory shows read-only |
+The `/system/analytics` API returns user count, organization count, and storage usage, but the Analytics page doesn't display them.
+- **Fix**: Add these metrics to the Analytics page
 
 ---
 
-## System Administration
+## Future Enhancements — Documented as Planned
 
-**Source**: SYSTEM_ADMINISTRATION.md, audit items #20, #22
+These are server model fields that exist but have no GUI. Docs have been updated to note them as "API only" or "planned". Implement when prioritized.
 
-| Feature | API Status | GUI State |
-|---------|-----------|-----------|
-| Error tracking / acknowledgment | `LogErrorEntry` model + `LogErrorAnalysisService` exist | No errors page or UI at all |
-| Integrity report export | Scan results available via API | No export button on DatabaseIntegrity page |
+### Project Fields (audit #25-28)
 
----
+Fields in `Project.ts` model with no GUI forms:
+- `scientific_goals`, `target_list`, `required_filters` — not shown anywhere
+- `start_date`, `end_date`, `deadline` — partial read-only display only
+- `tags`, `visibility` — not shown anywhere
+- `notification_preferences`, `scheduling_preferences` — not shown anywhere
 
-## Reporting
+### Project Force Delete File Cleanup (audit #31)
 
-**Source**: REPORTING_GUIDE.md, audit items #15, #44, #45
+Server `deleteMany()` removes observations and memberships but NOT UserFile records or MinIO objects. Either implement cascading cleanup or accept current behavior.
 
-| Feature | API Status | GUI State |
-|---------|-----------|-----------|
-| Billing Summary page | `BillingSummary.js` component exists | No route in App.js, no nav link — orphaned |
-| Usage Explorer observatory/user filters | API supports filtering | Only date range + event type in UI |
-| Analytics: user count, org count, storage | `/system/analytics` returns them | Analytics page doesn't display them |
+### Repetitive Observation Enhancements (audit #35-36)
 
----
+- **Upcoming windows list**: API exists (`getUpcomingRepetitive()`) but only next_execution shown in GUI
+- **Edit config mid-series**: Server accepts updates but no edit UI exists
 
-## Organizations
+### System Administration (audit #20, #22)
 
-**Source**: ORGANIZATIONS.md, audit item #38
+- **Error tracking UI**: `LogErrorEntry` model exists, no GUI page
+- **Integrity report export**: Scan results available via API, no export button
 
-| Feature | Server Status | GUI State |
-|---------|--------------|-----------|
-| `high_school` org type | In model enum | Not in GUI dropdown |
-| `observatory` org type | In model enum | Not in GUI dropdown |
+### Reporting Enhancements (audit #15, #44)
 
----
+- **Billing Summary**: Component exists (`BillingSummary.js`) but orphaned — no route or nav link
+- **Usage Explorer filters**: API supports observatory/user filtering, GUI only has date range + event type
 
-## Observation Files
+### Observation File Quality Metrics (audit #42)
 
-**Source**: OBSERVATION_FILES.md, audit item #42
-
-| Feature | Server Status | GUI State |
-|---------|--------------|-----------|
-| HFR as file quality metric | Available in FITS headers | Not displayed on ObservationFiles page |
-| FWHM as file quality metric | Available in FITS headers | Only in admin UsageExplorer |
-| Star count as file quality metric | Available in FITS headers | Only in admin UsageExplorer |
-
----
-
-## Calibration Administration
-
-**Source**: CALIBRATION_ADMINISTRATION.md, audit item #24
-**Status**: RESOLVED (2026-03-12)
-
-Calibration routes updated. Observatory admins (`can_admin`) can now manage calibration for their observatories: upload/create masters, delete frames, manage policy, view/retry jobs. Server admin retains exclusive access to cache, maintenance, health, and failed job cleanup. Doc permission table needs minor update to reflect the two-tier model.
-
-**Missing permission checks** (code bug, not GUI):
-- `POST /batch-recalibrate` — comments say "Admin only" but only uses `requireAuth`. Any authenticated user can trigger batch recalibration.
-- `POST /calibrate/:fileId` — comments say "Admin only" but only uses `requireAuth`. Any authenticated user can trigger single-file calibration.
-- Both should add `checkObservatoryAdmin()` to match other admin calibration routes.
+HFR, FWHM, and star count available in FITS headers and admin UsageExplorer but not on user-facing ObservationFiles page.
 
 ---
 
 ## Notes
 
-- Items here are duplicated in the main audit doc — that doc tracks all discrepancies (doc fixes + GUI gaps). This doc is specifically for GUI implementation work.
-- Priority and sequencing TBD by user.
+- Items in "Outstanding" section should be addressed soon (bugs or small gaps).
+- Items in "Future Enhancements" are documented as planned/API-only in the published docs.
+- Main audit doc tracks all 45 items with full resolution status.
