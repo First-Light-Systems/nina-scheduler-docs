@@ -138,7 +138,7 @@ Set a default priority (1–10) for new observations created in this project. In
 
 ### Auto-Approve Observations
 
-When enabled, observations submitted to this project are automatically approved without requiring manual review. Useful for trusted teams with established workflows.
+A project-level setting that indicates observations in this project do not require review before scheduling. This setting is stored as a project preference for future use.
 
 ### Notification Preferences
 
