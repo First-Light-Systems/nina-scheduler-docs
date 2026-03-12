@@ -96,6 +96,11 @@ Server model fields with no create/edit form UI:
 
 Calibration routes updated. Observatory admins (`can_admin`) can now manage calibration for their observatories: upload/create masters, delete frames, manage policy, view/retry jobs. Server admin retains exclusive access to cache, maintenance, health, and failed job cleanup. Doc permission table needs minor update to reflect the two-tier model.
 
+**Missing permission checks** (code bug, not GUI):
+- `POST /batch-recalibrate` — comments say "Admin only" but only uses `requireAuth`. Any authenticated user can trigger batch recalibration.
+- `POST /calibrate/:fileId` — comments say "Admin only" but only uses `requireAuth`. Any authenticated user can trigger single-file calibration.
+- Both should add `checkObservatoryAdmin()` to match other admin calibration routes.
+
 ---
 
 ## Notes
