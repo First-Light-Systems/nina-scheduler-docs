@@ -1,7 +1,10 @@
 # Observatory Registration and API Key Management
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: March 2026
 
+> **What's New in v1.3** (March 2026):
+> - API fingerprint reset for hardware changes (admin feature)
+>
 > **What's New in v1.2** (February 2026):
 > - Observatory History events (online/offline, equipment changes)
 > - Role-based registration management (serverAdmin, organizationAdmin)
@@ -115,17 +118,40 @@ The hardware fingerprint:
 
 ### If Your Hardware Changes
 
-Significant hardware changes (new motherboard, different computer) will generate a new fingerprint.
+Significant hardware changes (new motherboard, different computer, Windows reinstall, VM recreation) will generate a new fingerprint.
 
 **What happens:**
-- Server sees an unknown fingerprint
-- Your previous API key won't work
-- You'll need to re-register as a new observatory
+1. Plugin generates a new fingerprint on startup
+2. Server detects a mismatch with the stored fingerprint
+3. Connection is rejected with a **"Fingerprint Mismatch"** error
 
-**To avoid issues:**
-- Contact your administrator before major hardware changes
-- Administrator can pre-approve the new fingerprint
-- Or you can re-register with a new observatory code
+**How to resolve:**
+1. Contact your administrator and let them know your hardware changed
+2. Administrator resets your fingerprint from the admin interface (see [Fingerprint Reset](#fingerprint-reset) below)
+3. Your plugin automatically re-enrolls the new fingerprint on the next connection attempt
+4. No re-registration or new API key is needed — your existing key continues to work
+
+**To minimize downtime:**
+- Contact your administrator *before* major hardware changes so they can reset the fingerprint as soon as you're ready to reconnect
+
+### Fingerprint Reset
+
+When an observatory's hardware changes, an administrator can reset the stored fingerprint so the plugin can re-enroll with its new hardware identity.
+
+**What the reset does:**
+- Clears the stored fingerprint from the server
+- The next plugin connection automatically enrolls the new fingerprint
+- The observatory's API key, settings, and history are preserved
+- A security audit event is logged for the reset
+
+**How it works (for administrators):**
+1. Navigate to **Observatory Management** in the admin interface
+2. Find the affected observatory in the list
+3. Click the **fingerprint icon** (orange) in the action buttons
+4. Confirm the reset in the dialog
+5. Notify the observatory operator that they can reconnect
+
+After reset, the plugin's next connection will be accepted and the new fingerprint enrolled automatically. No restart or reconfiguration is needed on the plugin side.
 
 ---
 
@@ -204,10 +230,13 @@ Significant hardware changes (new motherboard, different computer) will generate
 - Hardware was changed (new computer, motherboard)
 - Virtual machine was recreated
 - Windows was reinstalled
+- A different computer is attempting to use the observatory's API key
 
-**Solution**: Contact administrator to:
-- Clear the old fingerprint association
-- Re-approve your observatory with new fingerprint
+**Solution**:
+1. Contact your administrator
+2. Administrator clicks **Reset Hardware Fingerprint** in Observatory Management
+3. Reconnect your plugin — the new fingerprint enrolls automatically
+4. Your API key and all observatory settings are preserved
 
 ### "API Key Invalid" Error
 
@@ -259,17 +288,31 @@ This history is visible to administrators and helps diagnose connectivity or con
 
 ## For Administrators
 
-For information on managing observatory registrations, contact your system administrator.
-
 Key admin tasks:
 - Viewing pending registrations
 - Approving/rejecting observatories
 - Generating and managing API keys
+- **Resetting hardware fingerprints** when observatory hardware changes
 - Revoking access when needed
 
+### Resetting a Hardware Fingerprint
+
+When an observatory operator reports a hardware change or fingerprint mismatch error:
+
+1. Go to **Observatory Management** in the admin interface
+2. Locate the observatory in the list
+3. Click the **fingerprint icon** (orange button) in the observatory's action column
+4. Confirm the reset when prompted
+5. A success notification confirms: *"Hardware fingerprint reset. Plugin can now reconnect."*
+
+The reset:
+- Clears the stored fingerprint (the next plugin connection auto-enrolls the new one)
+- Preserves the observatory's API key, configuration, and observation history
+- Logs a `fingerprint_reset` security event in the observatory's history with your admin email
+
 **Role-based registration management**:
-- **Server admins** can approve registrations for any organization
-- **Organization admins** can approve registrations for observatories in their organization
+- **Server admins** can approve registrations and reset fingerprints for any organization
+- **Organization admins** can approve registrations and reset fingerprints for observatories in their organization
 
 ---
 
