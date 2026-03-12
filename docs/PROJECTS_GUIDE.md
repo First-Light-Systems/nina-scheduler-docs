@@ -136,10 +136,6 @@ Each project has configurable settings that affect its observations:
 
 Set a default priority (1–10) for new observations created in this project. Individual observations can override this value. Default: 5.
 
-### Auto-Approve Observations
-
-A project-level setting that indicates observations in this project do not require review before scheduling. This setting is stored as a project preference for future use.
-
 ### Notification Preferences
 
 Configure which events trigger notifications:
