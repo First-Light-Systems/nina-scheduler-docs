@@ -126,17 +126,17 @@ Significant hardware changes (new motherboard, different computer, Windows reins
 3. Connection is rejected with a **"Fingerprint Mismatch"** error
 
 **How to resolve:**
-1. Contact your administrator and let them know your hardware changed
-2. Administrator resets your fingerprint from the admin interface (see [Fingerprint Reset](#fingerprint-reset) below)
+1. Contact a **server administrator** and let them know your hardware changed
+2. The server admin resets your fingerprint from the admin interface (see [Fingerprint Reset](#fingerprint-reset) below)
 3. Your plugin automatically re-enrolls the new fingerprint on the next connection attempt
 4. No re-registration or new API key is needed — your existing key continues to work
 
 **To minimize downtime:**
-- Contact your administrator *before* major hardware changes so they can reset the fingerprint as soon as you're ready to reconnect
+- Contact a **server administrator** *before* major hardware changes so they can reset the fingerprint as soon as you're ready to reconnect
 
 ### Fingerprint Reset
 
-When an observatory's hardware changes, an administrator can reset the stored fingerprint so the plugin can re-enroll with its new hardware identity.
+When an observatory's hardware changes, a **server administrator** can reset the stored fingerprint so the plugin can re-enroll with its new hardware identity. Observatory admins cannot perform this action.
 
 **What the reset does:**
 - Clears the stored fingerprint from the server
@@ -144,7 +144,7 @@ When an observatory's hardware changes, an administrator can reset the stored fi
 - The observatory's API key, settings, and history are preserved
 - A security audit event is logged for the reset
 
-**How it works (for administrators):**
+**How it works (server admins only):**
 1. Navigate to **Observatory Management** in the admin interface
 2. Find the affected observatory in the list
 3. Click the **fingerprint icon** (orange) in the action buttons
@@ -233,8 +233,8 @@ After reset, the plugin's next connection will be accepted and the new fingerpri
 - A different computer is attempting to use the observatory's API key
 
 **Solution**:
-1. Contact your administrator
-2. Administrator clicks **Reset Hardware Fingerprint** in Observatory Management
+1. Contact a **server administrator**
+2. Server admin clicks **Reset Hardware Fingerprint** in Observatory Management
 3. Reconnect your plugin — the new fingerprint enrolls automatically
 4. Your API key and all observatory settings are preserved
 

@@ -110,7 +110,7 @@ Check all required fields in plugin settings:
 
 3. **Fingerprint mismatch**
    - Hardware changed since registration?
-   - Contact administrator to clear old association
+   - Contact a **server administrator** to reset your fingerprint
 
 ---
 
@@ -151,9 +151,9 @@ Check all required fields in plugin settings:
 
 **Solutions:**
 
-1. **Contact administrator** to:
-   - Clear old fingerprint association
-   - Approve new fingerprint
+1. **Contact a server administrator** to:
+   - Reset your hardware fingerprint (only server admins can do this)
+   - The plugin will auto-enroll the new fingerprint on next connection
 
 2. **Or re-register**
    - Use new observatory code
