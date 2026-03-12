@@ -25,7 +25,7 @@ Two routes have "Admin only" comments but no permission enforcement:
 **File**: `packages/user-gui/src/pages/admin/OrganizationManagement.js`
 
 Server model supports `high_school` and `observatory` org types but GUI dropdown only shows: university, college, research_institute, company, nonprofit, other.
-- **Fix**: Add the two missing types to the dropdown
+- **Fix**: Add the two missing types to the dropdown - **Fixed 3/12/2026 BJK**
 
 ### Analytics Page Missing Metrics (audit #45)
 
