@@ -371,6 +371,6 @@ This creates:
 - **New to observations?** See [Creating Observations](CREATING_OBSERVATIONS.md)
 - **Configure autofocus?** See [Autofocus Guide](AUTOFOCUS_GUIDE.md)
 - **Set up cloud storage?** See [External Storage Guide](EXTERNAL_STORAGE.md)
-- **Need scheduling details?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
-- **Managing projects?** See [Creating Observations - Projects](CREATING_OBSERVATIONS.md#projects)
+- **Need scheduling details?** See [Scheduler Features](SCHEDULER_FEATURES.md)
+- **Managing projects?** See [Projects Guide](PROJECTS_GUIDE.md)
 - **Having problems?** See [Troubleshooting](TROUBLESHOOTING.md)

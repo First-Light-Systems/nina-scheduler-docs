@@ -64,6 +64,13 @@ Automatic coordinate resolution from professional astronomical databases:
 - **NED** - Galaxies and extragalactic objects
 - **JPL Horizons** - Asteroids, comets, and planets
 
+### Project Organization
+
+- **Projects**: Group related observations by scientific goal, class, or campaign
+- **Collaboration**: Share projects with team members using granular permissions
+- **Progress tracking**: Automatic statistics for completion rate, exposure time, and file counts
+- **Flexible ownership**: Projects can be owned by users, observatories, or organizations
+
 ### Data Management
 
 - **Automatic file upload**: FITS files uploaded to server after capture

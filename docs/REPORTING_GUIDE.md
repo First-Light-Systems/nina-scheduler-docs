@@ -146,6 +146,9 @@ The Usage Explorer is particularly useful for investigating specific incidents o
 
 The **Billing Summary** provides an invoice-style overview of usage aggregated by organization and project. This report is designed for administrators who need to track resource consumption for cost allocation or institutional reporting.
 
+!!! note "Usage Tracking Only"
+    The Billing Summary is a usage reporting tool — it shows how observatory time has been consumed. The Science Scheduler does not include a billing or invoicing system. Use the data from this report to feed your institution's own cost allocation or chargeback processes.
+
 ### Report Contents
 
 - **Organization breakdown** — usage totals per organization

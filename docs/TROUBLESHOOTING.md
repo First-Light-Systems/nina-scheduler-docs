@@ -208,6 +208,10 @@ Check all required fields in plugin settings:
    - Stop and restart the NINA sequence
    - Plugin will reconnect and sync state
 
+4. **Understand the monitors**
+   - The server has automated monitors that detect stuck observations (24h for in_progress, 48h for assigned)
+   - See [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) for details on all statuses, transitions, and monitors
+
 ---
 
 ### FITS Files Not Uploading
@@ -398,6 +402,10 @@ For autofocus-specific troubleshooting (unexpected AF behavior, triggers not fir
 ---
 
 ## Advanced Troubleshooting
+
+### Database Integrity (Administrators)
+
+For data issues (orphaned references, stuck statuses, missing files), administrators can run integrity scans to detect and repair problems. See the **[System Administration](SYSTEM_ADMINISTRATION.md)** guide for full details.
 
 ### AI Log Analysis (Administrators)
 

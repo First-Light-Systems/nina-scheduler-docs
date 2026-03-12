@@ -21,11 +21,12 @@ If you're submitting observation requests through the web interface:
 
 1. **Log in** to your organization's Science Scheduler URL
 2. Navigate to **Dashboard** to see system status
-3. Click **New Observation** to submit your first request
-4. Fill in target coordinates, exposure settings, and constraints
-5. Submit and monitor progress in **My Observations**
+3. **Create a project** to organize your observations (see [Projects Guide](PROJECTS_GUIDE.md))
+4. Click **New Observation** to submit your first request
+5. Fill in target coordinates, exposure settings, and constraints
+6. Submit and monitor progress in **My Observations**
 
-**Next step**: See [Creating Observations](CREATING_OBSERVATIONS.md) for detailed instructions.
+**Next step**: See [Creating Observations](CREATING_OBSERVATIONS.md) for detailed instructions, and [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) to understand what each status means.
 
 ---
 
@@ -87,7 +88,7 @@ You can monitor everything in:
 
 - **Connection problems?** See [Troubleshooting](TROUBLESHOOTING.md)
 - **Registration not working?** Contact your administrator
-- **Questions about scheduling?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
+- **Questions about scheduling?** See [Scheduler Features](SCHEDULER_FEATURES.md)
 
 ---
 

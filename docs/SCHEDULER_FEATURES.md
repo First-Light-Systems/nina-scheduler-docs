@@ -251,3 +251,7 @@ Observations marked as **Fast Mover** (for NEOs, asteroids, and other fast-movin
 **How do I know when my monitoring observation will next run?**
 - Check the `cadence_next_eligible` field in observation details
 - The scheduler calculates this after each execution
+- For repetitive observation series, see [Repetitive Observations](REPETITIVE_OBSERVATIONS.md)
+
+**What do the different statuses mean?**
+- See [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) for a complete guide to all 11 statuses, transition rules, and automated monitors

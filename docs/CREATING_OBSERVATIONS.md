@@ -22,6 +22,8 @@ This guide covers how to create, monitor, and manage observations in the Science
 | **Standard** | Most observations | Fixed exposure count, runs to completion |
 | **Flexible** | Long monitoring programs | Can be interrupted, resumes later |
 | **Fixed-Time** | Transits, occultations | Protected time window, must start on time |
+| **Monitoring** | Repeat observations | Cadence-based scheduling at regular intervals |
+| **Repetitive** | Structured campaigns | Precise interval control with series management |
 
 ### Standard Observations
 
@@ -40,6 +42,10 @@ This guide covers how to create, monitor, and manage observations in the Science
 - Must begin at specific time (e.g., exoplanet transit)
 - Protected buffer prevents scheduling conflicts
 - See [Exoplanet Transits](#exoplanet-transit-observations) below
+
+### Repetitive and Recurring Observations
+
+For observations that need to repeat on a schedule, see [Repetitive Observations](REPETITIVE_OBSERVATIONS.md) for structured campaigns with precise intervals, execution history, and pause/resume control.
 
 ---
 
@@ -204,7 +210,7 @@ For time-critical transit observations, use the dedicated Exoplanet Transits pag
 ### Detailed Guide
 
 For complete instructions including telescope configuration and timing setup, see:
-**[Practical User Guide - Exoplanet Transits](USER_GUIDE_PRACTICAL.md#creating-exoplanet-transit-observations)**
+**[Practical User Guide - Exoplanet Transits](PRACTICAL_GUIDE.md#creating-exoplanet-transit-observations)**
 
 ---
 
@@ -399,6 +405,8 @@ Pending → Assigned → In Progress → Completed
 | **Failed** | Error occurred (weather, equipment, etc.) |
 | **Aborted** | Manually canceled or safety triggered |
 
+For the complete list of all 11 statuses, transition rules, automated monitors, and troubleshooting stuck observations, see the **[Observation Lifecycle](OBSERVATION_LIFECYCLE.md)** guide.
+
 ---
 
 ## Downloading Results
@@ -448,56 +456,11 @@ If you selected external storage destinations during observation creation, FITS 
 
 ## Projects
 
-Projects are the primary way to organize, track, and access your observation data.
+Every observation belongs to a project. Projects let you organize related observations, collaborate with team members, track progress, and access your data.
 
-### Creating a Project
+When creating an observation, select an existing project or click **+ Create New Project** to create one inline.
 
-Organize related observations into projects:
-
-1. Go to **Projects**
-2. Click **New Project**
-3. Enter name, code, and description
-4. Choose project type (research, education, outreach, personal)
-5. Save
-
-### Assigning Observations to Projects
-
-When creating or editing an observation:
-1. Find the **Project** field
-2. Select from your projects
-3. Or create a new project inline
-
-### Project Overview
-
-The Projects page shows all your projects with the **Overview** tab displaying:
-
-- **Project summaries** with observation counts by status (active, pending, complete, failed)
-- **Targets** within each project, grouped with their observations
-- **Progress tracking** showing exposure progress and file counts
-- **Quick file access** via the folder icon in each observation row
-
-### Sharing Projects with Team Members
-
-Projects support **multi-user collaboration** with permission-based access:
-
-1. Open your project
-2. Navigate to the **Management** tab
-3. Click **Manage Members**
-4. Add team members and set their permissions:
-   - **Can View**: See project and observations (default for all members)
-   - **Can Edit**: Modify observations and project settings
-   - **Can Manage Members**: Add/remove other team members
-   - **Can Delete**: Delete observations
-
-**Note**: Only project owners can transfer ownership or delete the project.
-
-### Project Benefits
-
-- **Organize** related observations together
-- **Track progress** across multiple targets in one view
-- **Collaborate** with team members with appropriate permissions
-- **Access files** quickly through the project hierarchy
-- **Generate reports** per project for usage tracking
+For complete documentation on project creation, types, membership, permissions, ownership, and settings, see the **[Projects Guide](PROJECTS_GUIDE.md)**.
 
 ---
 
@@ -531,6 +494,6 @@ See [Target Library](TARGET_LIBRARY.md) for managing saved targets, reusable obs
 
 - **Configure autofocus?** See [Autofocus Guide](AUTOFOCUS_GUIDE.md)
 - **Configure guiding?** See [Guiding Guide](GUIDING_GUIDE.md)
-- **Need detailed procedures?** See [Practical User Guide](USER_GUIDE_PRACTICAL.md)
-- **Understand scheduling?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
+- **Need detailed procedures?** See [Practical User Guide](PRACTICAL_GUIDE.md)
+- **Understand scheduling?** See [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Having problems?** See [Troubleshooting](TROUBLESHOOTING.md)

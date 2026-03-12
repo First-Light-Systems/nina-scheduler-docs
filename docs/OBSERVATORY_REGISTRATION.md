@@ -320,4 +320,4 @@ The reset:
 
 - **Setup complete?** See [Getting Started](GETTING_STARTED.md) for first observation
 - **Problems?** See [Troubleshooting](TROUBLESHOOTING.md)
-- **Questions about scheduling?** See [Scheduler Features](USER_GUIDE_SCHEDULER_FEATURES.md)
+- **Questions about scheduling?** See [Scheduler Features](SCHEDULER_FEATURES.md)

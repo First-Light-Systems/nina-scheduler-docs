@@ -1,6 +1,6 @@
 # Coming Soon
 
-**Document Version**: 1.5 | **Last Updated**: March 2026
+**Document Version**: 1.6 | **Last Updated**: March 2026
 
 The following topics will be documented in future updates:
 
@@ -11,6 +11,40 @@ The following topics will be documented in future updates:
 ## Recently Implemented
 
 The following features have been implemented and are documented elsewhere:
+
+### Projects (March 2026)
+- Dedicated project management guide with full feature coverage
+- Project types, ownership (user/observatory/organization), visibility levels
+- Granular member permissions (view, edit, manage members, delete, manage storage)
+- Ownership transfer with audit trail
+- Project settings, statistics, and lifecycle management
+
+See [Projects Guide](PROJECTS_GUIDE.md) for documentation.
+
+### Observation Lifecycle (March 2026)
+- Complete state machine reference with all 11 observation statuses
+- Transition rules and who causes each transition
+- Automated monitors (heartbeat, stale observation, time limit, reconciliation)
+- Special monitoring observation behavior
+- Troubleshooting FAQ for stuck observations
+
+See [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) for documentation.
+
+### Repetitive Observations (March 2026)
+- Creating recurring observation series with precise intervals
+- Rise-to-set mode with dynamic window recalculation
+- Execution windows, series statistics, and history tracking
+- Pause/resume control and mid-series configuration changes
+
+See [Repetitive Observations](REPETITIVE_OBSERVATIONS.md) for documentation.
+
+### System Administration (March 2026)
+- Database integrity scanning with severity-based issue classification
+- Individual and bulk repair of detected issues
+- Backup management (create, restore, retention policies)
+- System analytics, error tracking, and observation data cleanup
+
+See [System Administration](SYSTEM_ADMINISTRATION.md) for documentation.
 
 ### Image Calibration System (March 2026)
 - Automated flat, dark, and bias frame capture and management
@@ -48,12 +82,6 @@ See [Target Library](TARGET_LIBRARY.md) for documentation.
 
 See [Observation Files](OBSERVATION_FILES.md) for documentation.
 
-### System Administration (February 2026)
-- Database integrity tools with automated repair
-- System health monitoring
-- Performance metrics and analytics
-- Docker log viewer with regex search
-
 ### Reporting & Analytics (February 2026)
 - Target observation reports with search
 - Observatory utilization and grouping
@@ -61,16 +89,22 @@ See [Observation Files](OBSERVATION_FILES.md) for documentation.
 - Failed observations in utilization reports
 - CSV data export
 
+See [Reporting Guide](REPORTING_GUIDE.md) for documentation.
+
 ### User Roles & Access Management (February 2026)
 - Server admin (`serverAdmin`) and organization admin (`organizationAdmin`) roles
 - Role-based access control for all features
 - Organization-scoped administration
+
+See [Organizations](ORGANIZATIONS.md) and [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for documentation.
 
 ### Advanced Observatory Management (February 2026)
 - NINA Equipment Options dialog (admin-mode only)
 - Observatory History logging (online/offline, equipment changes, goodbye events)
 - Operations and Dispatch enabled/disabled controls
 - Weather snapshots and safety event monitoring
+
+See [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for documentation.
 
 ### Observation Files (February 2026)
 - Dedicated Observation Files page with file grid and thumbnails
@@ -79,15 +113,6 @@ See [Observation Files](OBSERVATION_FILES.md) for documentation.
 - Project multi-ownership support for file access
 
 See [Observation Files](OBSERVATION_FILES.md) for documentation.
-
-### Project Collaboration (January 2026)
-- Creating and managing projects
-- Project types (research, education, outreach, personal)
-- **Multi-ownership with permissions** (view, edit, manage members, delete)
-- Member management and ownership transfer
-- Project-based file access and downloads
-
-See [Creating Observations - Projects](CREATING_OBSERVATIONS.md#projects) for documentation.
 
 ---
 

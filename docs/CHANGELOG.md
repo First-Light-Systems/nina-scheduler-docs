@@ -6,6 +6,69 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.12] - 2026-03-12
+
+### Added
+
+- **Projects Guide** (PROJECTS_GUIDE.md) — dedicated guide covering:
+    - Project types (research, education, outreach, personal, testing)
+    - Creating projects with required and optional fields
+    - Ownership models (user, observatory, organization) and ownership transfer
+    - Visibility levels (private, institution, public)
+    - Granular member permissions (can_view, can_edit, can_manage_members, can_delete, can_manage_storage)
+    - Project settings (default priority, auto-approve, notifications, scheduling preferences)
+    - Project status lifecycle (active, paused, completed, archived)
+    - Statistics and progress tracking
+    - Force delete with cascading observations
+
+- **Observation Lifecycle** (OBSERVATION_LIFECYCLE.md) — complete status reference covering:
+    - Mermaid state diagram of all transitions
+    - All 11 observation statuses explained (pending, assigned, in_progress, acquisition_complete, completed, failed, cancelled, paused, suspended, aborted, partially_completed)
+    - Actor types (scheduler, plugin, user, system) and which transitions each triggers
+    - Automated monitors: plugin heartbeat, stale observation (24h/48h thresholds), time limit, reconciliation
+    - Special monitoring observation behavior (auto-reset to pending)
+    - FAQ for common stuck-observation scenarios
+
+- **Repetitive Observations** (REPETITIVE_OBSERVATIONS.md) — recurring observation series guide covering:
+    - Repetitive vs monitoring comparison
+    - Repetition configuration (interval, window, max executions)
+    - Rise-to-set mode with dynamic recalculation
+    - Execution windows and scheduling behavior
+    - Series statistics (planned, completed, failed, skipped, success rate)
+    - Pause/resume control and mid-series updates
+    - Execution history and upcoming execution views
+
+- **System Administration** (SYSTEM_ADMINISTRATION.md) — server admin tools guide covering:
+    - Database integrity scanning (quick scan, full scan with MinIO check)
+    - Issue severity levels (critical, warning, info) and issue types
+    - Individual and bulk issue repair
+    - Backup management (create, list, restore, delete, retention policies)
+    - System analytics dashboard
+    - Error tracking with acknowledgment
+    - Observation data cleanup tool
+
+### Changed
+
+- **Navigation restructured** with grouped sections:
+    - Observations group (Creating, Scheduler Features, Lifecycle, Repetitive, Files)
+    - Imaging group (Autofocus, Guiding, Calibration)
+    - Projects elevated to top level
+    - System Administration added to Administration section
+- **Renamed files** for consistency:
+    - USER_GUIDE_SCHEDULER_FEATURES.md → SCHEDULER_FEATURES.md
+    - USER_GUIDE_PRACTICAL.md → PRACTICAL_GUIDE.md
+- Updated index page to v2.12 with new docs in Quick Start, learning paths, and What's New
+- Updated CREATING_OBSERVATIONS.md: trimmed Projects section to summary with link to dedicated guide, added cross-refs to Observation Lifecycle and Repetitive Observations
+- Updated GETTING_STARTED.md with project creation step and lifecycle link
+- Updated OVERVIEW.md with Project Organization feature section
+- Updated REPORTING_GUIDE.md with usage-tracking-only note on Billing Summary
+- Updated TROUBLESHOOTING.md with cross-refs to Observation Lifecycle and System Administration
+- Updated OBSERVATION_FILES.md with Projects Guide cross-reference
+- Updated COMING_SOON.md with new documentation entries and cross-reference links
+- Fixed 8 broken references across 6 files from file renames
+
+---
+
 ## [2.11] - 2026-03-08
 
 ### Added
@@ -363,6 +426,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.12 | 3.6.0 | 3.6.0.0 | Projects guide, observation lifecycle, repetitive observations, system administration, nav restructure |
 | 2.10 | 3.5.0 | 3.4.1.0 | AI log analysis guide |
 | 2.9 | 3.5.0 | 3.4.1.0 | Guiding guide, reporting guide, quality metrics, search, logs, constraints |
 | 2.5 | 3.4.1 | 3.2.19.0 | Custom Observatory Page documentation |

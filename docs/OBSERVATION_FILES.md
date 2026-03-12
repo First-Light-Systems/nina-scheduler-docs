@@ -194,5 +194,6 @@ When an observation belongs to a project with multiple owners, all project owner
 ## Related Documentation
 
 - **[Creating Observations](CREATING_OBSERVATIONS.md)** - How to create observations
-- **[Practical User Guide](USER_GUIDE_PRACTICAL.md)** - General usage guide
+- **[Projects Guide](PROJECTS_GUIDE.md)** - Organizing observations and managing project file access
+- **[Practical Guide](PRACTICAL_GUIDE.md)** - General usage guide
 - **[Troubleshooting](TROUBLESHOOTING.md)** - Help with common issues
