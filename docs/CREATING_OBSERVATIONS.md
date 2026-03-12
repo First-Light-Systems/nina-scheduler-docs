@@ -78,7 +78,9 @@ Instead of entering coordinates manually, you can use the **target lookup** feat
 |-------------|----------|---------------|
 | Deep-sky objects | M31, NGC 7000, IC 1396 | SIMBAD |
 | Stars | Vega, Betelgeuse, HD 209458 | SIMBAD |
+| Double/multiple stars | WDS J00491+5749, CCDM J14396-6050 | SIMBAD |
 | Galaxies | NGC 4565, Andromeda | SIMBAD, NED |
+| Variable stars | RR Lyrae, Delta Cephei | SIMBAD |
 | Minor planets | 433 Eros, (1) Ceres, MP Vesta | JPL Horizons |
 | Comets | C/2020 F3, 1P/Halley | JPL Horizons |
 | Planets | Mars, Jupiter, Saturn | JPL Horizons |
@@ -92,9 +94,38 @@ Instead of entering coordinates manually, you can use the **target lookup** feat
 
 **Tips for successful lookups:**
 - Use standard catalog names (M31, NGC 224, HD numbers)
+- For WDS double stars, use the full designation (e.g., "WDS J00491+5749")
 - For asteroids, use the number and name (e.g., "433 Eros") or just the number
 - For comets, use the designation (e.g., "C/2020 F3" or "1P/Halley")
 - Planet names work directly (e.g., "Jupiter", "Mars")
+
+#### Object Information Chips
+
+After a successful lookup, the system displays information chips next to the coordinates:
+
+**Object type chip** (blue) — identifies the type of object from SIMBAD's classification:
+
+| Chip Label | Meaning |
+|------------|---------|
+| `**` | Double or multiple star system |
+| `PM*` | High proper-motion star |
+| `SB*` | Spectroscopic binary star |
+| `V*` | Variable star |
+| `*` | Star (generic) |
+| `HII` | HII region (emission nebula) |
+| `PN` | Planetary nebula |
+| `SNR` | Supernova remnant |
+| `GlC` | Globular cluster |
+| `OpC` | Open cluster |
+| `G` | Galaxy |
+| `AGN` | Active galactic nucleus |
+| `QSO` | Quasar |
+| `planet` | Solar system planet |
+| `asteroid` | Minor planet / asteroid |
+
+**Magnitude chip** (purple) — the visual (V-band) magnitude of the object, or B-band if V is unavailable.
+
+**Spectral type chip** (light blue) — the stellar spectral classification (e.g., "G2V", "K1V", "M5.5Ve") when available.
 
 **Tip**: See [Target Library](TARGET_LIBRARY.md) for managing saved targets, templates, CSV import, and automation.
 

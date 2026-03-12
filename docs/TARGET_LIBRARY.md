@@ -22,7 +22,9 @@ Library targets are saved astronomical objects with coordinates, constraints, an
 2. On the **Targets** tab, click **Add Target**
 3. Fill in the target details and click **Add Target**
 
-You can also use the **coordinate lookup** feature — enter a target name (e.g., "M31", "NGC 7000") and click the search icon to automatically retrieve coordinates from SIMBAD, VizieR, NED, or JPL Horizons.
+You can also use the **coordinate lookup** feature — enter a target name (e.g., "M31", "NGC 7000", "WDS J00491+5749") and click the search icon to automatically retrieve coordinates from SIMBAD, VizieR, NED, or JPL Horizons. The lookup supports standard catalog designations including Messier, NGC, IC, HD, WDS (Washington Double Star), CCDM, and many others.
+
+After a successful lookup, information chips appear showing the object type, magnitude, and spectral classification when available. See [Creating Observations — Object Information Chips](CREATING_OBSERVATIONS.md#object-information-chips) for details on what each chip means.
 
 ### Target Fields
 
