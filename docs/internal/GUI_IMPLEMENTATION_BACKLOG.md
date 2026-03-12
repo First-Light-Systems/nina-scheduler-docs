@@ -92,9 +92,9 @@ Server model fields with no create/edit form UI:
 ## Calibration Administration
 
 **Source**: CALIBRATION_ADMINISTRATION.md, audit item #24
-**Note**: Being addressed by separate Claude instance.
+**Status**: RESOLVED (2026-03-12)
 
-Observatory admin access to calibration routes (currently server-admin-only via `requireAdmin`).
+Calibration routes updated. Observatory admins (`can_admin`) can now manage calibration for their observatories: upload/create masters, delete frames, manage policy, view/retry jobs. Server admin retains exclusive access to cache, maintenance, health, and failed job cleanup. Doc permission table needs minor update to reflect the two-tier model.
 
 ---
 
