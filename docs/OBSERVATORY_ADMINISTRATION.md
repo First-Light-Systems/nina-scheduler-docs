@@ -1,6 +1,6 @@
 # Observatory Administration
 
-**Document Version**: 2.4 | **Last Updated**: February 2026
+**Document Version**: 2.5 | **Last Updated**: March 2026
 
 > **What's New in v2.4** (February 2026):
 > - Autofocus configuration section with link to dedicated guide
@@ -452,6 +452,71 @@ Embed a live camera feed, YouTube stream, or other embeddable content on your ob
 | **Feed Height** | Height of the embedded feed in pixels. Range: 100–2,000px. Default: 480px. |
 
 A live preview of the feed is shown in the dialog after entering a URL.
+
+## Pushover Configuration (Server Administrators)
+
+To enable Pushover push notifications for your users, server administrators must configure the Pushover application token.
+
+### Obtaining a Pushover App Token
+
+1. Register an application at [pushover.net](https://pushover.net)
+2. Copy the **API Token/Key** from your application dashboard
+
+### Docker Compose Configuration
+
+Add the token to the `nina-scheduler-api` service in your Docker Compose file:
+
+```yaml
+nina-scheduler-api:
+  environment:
+    - PUSHOVER_APP_TOKEN=${PUSHOVER_APP_TOKEN:-}
+```
+
+Add to your `.env.prod` file:
+
+```
+PUSHOVER_APP_TOKEN=<YOUR_PUSHOVER_APP_TOKEN>
+```
+
+### FITS Processor Configuration
+
+The FITS processor service requires these environment variables for service-to-service communication:
+
+| Variable | Description |
+|----------|-------------|
+| `SCHEDULER_API_URL` | URL of the scheduler API server |
+| `INTERNAL_API_KEY` | Shared key for internal service authentication |
+| `CONTAINER_NAME` | Name of the FITS processor container |
+
+!!! note "Pushover is optional"
+    Email notifications work without any Pushover configuration. If `PUSHOVER_APP_TOKEN` is not set, only email notifications will function and admins will receive a warning on server startup.
+
+## System Notifications
+
+The server sends automated notifications to administrators for important system events.
+
+### Server Start Notification
+
+When the server starts, all server admins receive a notification (email + Pushover) with:
+
+- Server IP address
+- Server version
+- Start timestamp
+
+### Pushover Not Configured Warning
+
+If `PUSHOVER_APP_TOKEN` is not set, an email-only warning is sent to admins on startup indicating that Pushover notifications are unavailable.
+
+### Missing Star Database Alert
+
+If the FITS processor cannot find ASTAP star catalogs (`.290` or `.1476` files in `/usr/share/astap/data`), an error notification is sent to all server admins. The notification includes a download link to [hnsky.org](https://www.hnsky.org) for obtaining the catalogs.
+
+!!! warning "Plate solving requires star catalogs"
+    Without the ASTAP star catalogs, plate solving will fail for all uploaded FITS files.
+
+### Controlling System Notifications
+
+Admins can toggle the **System Events** category in their [Notification Preferences](NOTIFICATIONS.md#category-toggles) to control whether they receive these alerts.
 
 ## API Access
 

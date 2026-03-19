@@ -25,6 +25,7 @@ If you're submitting observation requests through the web interface:
 4. Click **New Observation** to submit your first request
 5. Fill in target coordinates, exposure settings, and constraints
 6. Submit and monitor progress in **My Observations**
+7. (Optional) Set up **[Notifications](NOTIFICATIONS.md)** to receive alerts when observations change state
 
 **Next step**: See [Creating Observations](CREATING_OBSERVATIONS.md) for detailed instructions, and [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) to understand what each status means.
 

@@ -127,6 +127,12 @@ See [Coming Soon](COMING_SOON.md) for details.
 - **Live status**: See observation progress in real-time
 - **Automatic reconnection**: Handles network interruptions gracefully
 
+### Observation Notifications
+
+- **Email notifications**: Receive email alerts when observations change state
+- **Pushover push notifications**: Get mobile push notifications via Pushover
+- **Per-observation configuration**: Choose which channels and state transitions trigger notifications for each observation
+
 ### REST API
 
 The Science Scheduler Server provides a REST API for programmatic access:
@@ -153,9 +159,10 @@ Contact your system administrator for API documentation and access credentials.
 2. **Set target** (enter coordinates or use target lookup)
 3. **Configure exposures** (filters, duration, count)
 4. **Set priority and constraints**
-5. **Submit** - observation enters the queue
-6. **Monitor** - watch progress in real-time
-7. **Download** - retrieve FITS files when complete
+5. **Configure notifications** (optional) - choose email/Pushover alerts for state changes
+6. **Submit** - observation enters the queue
+7. **Monitor** - watch progress in real-time
+8. **Download** - retrieve FITS files when complete
 
 ### For Observatory Operators
 

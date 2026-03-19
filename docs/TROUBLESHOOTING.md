@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-**Document Version**: 1.4 | **Last Updated**: February 2026
+**Document Version**: 1.5 | **Last Updated**: March 2026
 
 > **What's New in v1.3** (February 2026):
 > - Updated connection troubleshooting for single-owner communications model
@@ -401,6 +401,46 @@ For autofocus-specific troubleshooting (unexpected AF behavior, triggers not fir
 
 ---
 
+## Notification Issues
+
+### Not Receiving Email Notifications
+
+**Symptoms:**
+- Observation changed state but no email received
+
+**Solutions:**
+
+1. **Check email is verified** — unverified emails cannot receive notifications
+2. **Check spam/junk folder** — notification emails may be filtered
+3. **Verify email notifications are enabled** in your Profile → Notification Preferences
+4. **Check per-observation settings** — ensure email is checked and the relevant state is selected for the observation
+5. **Use Test Notifications** in your profile to verify email delivery works
+
+### Not Receiving Pushover Notifications
+
+**Symptoms:**
+- Observation changed state but no Pushover notification received
+
+**Solutions:**
+
+1. **Verify Pushover User Key** is correct in Profile → Notification Preferences
+2. **Check device names** — if specified, ensure they match your Pushover device names exactly
+3. **Verify Pushover app is installed** and configured on your device
+4. **Use Test Notifications** in your profile to verify Pushover delivery
+5. **Contact administrator** — the server may not have Pushover configured (`PUSHOVER_APP_TOKEN`)
+
+### Notification Section Not Showing on Observation Form
+
+**Symptoms:**
+- No notification options visible when creating an observation
+
+**Solution:**
+
+- You must enable at least one notification channel (Email or Pushover) in your **Profile → Notification Preferences** first
+- The notification section only appears when you have at least one channel enabled
+
+---
+
 ## Advanced Troubleshooting
 
 ### Database Integrity (Administrators)
@@ -510,3 +550,5 @@ Gather this information:
 | Observation won't start | Check constraint violations on detail page |
 | Safety/weather issue | Check safety device, review history |
 | Equipment changed | Review observatory history events |
+| No notification emails | Check profile preferences, verify email |
+| No Pushover alerts | Check user key, test from profile |

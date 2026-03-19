@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.12 | **Last Updated**: March 2026
+**Documentation Version**: 2.13 | **Last Updated**: March 2026
 **Server v3.6.0 | Plugin v3.6.0.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
@@ -20,6 +20,8 @@ Welcome to the Science Scheduler documentation. This system provides automated o
 | Manage calibration frames | [Calibration Guide](CALIBRATION_GUIDE.md) |
 | View my observation files | [Observation Files](OBSERVATION_FILES.md) |
 | Set up cloud storage | [External Storage](EXTERNAL_STORAGE.md) |
+| Set up notifications | [Notifications](NOTIFICATIONS.md) |
+| Manage my profile | [User Profile](USER_PROFILE.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
 | View reports | [Reporting Guide](REPORTING_GUIDE.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
@@ -42,6 +44,7 @@ If you're using the web interface to submit observation requests:
 3. **[Projects Guide](PROJECTS_GUIDE.md)** - Organize observations into projects
 4. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
 5. **[Practical Guide](PRACTICAL_GUIDE.md)** - Detailed procedures
+6. **[Notifications](NOTIFICATIONS.md)** - Get alerts when observations change state
 
 ## For Administrators
 
@@ -53,14 +56,12 @@ If you're managing organizations, users, or the system:
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
 
-## What's New in v2.12 (March 2026)
+## What's New in v2.13 (March 2026)
 
-- **[Projects Guide](PROJECTS_GUIDE.md)** — Dedicated guide for the project system: types, membership, permissions, ownership transfer, visibility, settings, and statistics
-- **[Observation Lifecycle](OBSERVATION_LIFECYCLE.md)** — Complete reference for all 11 observation statuses, transition rules, automated monitors, and troubleshooting stuck observations
-- **[Repetitive Observations](REPETITIVE_OBSERVATIONS.md)** — Creating and managing recurring observation series with interval control, execution windows, and series statistics
-- **[System Administration](SYSTEM_ADMINISTRATION.md)** — Database integrity scanning, backups, error tracking, and system analytics
-- **Navigation restructured** — Observations, Imaging, and Administration sections grouped for easier navigation
-- **File renames** — Scheduler Features and Practical Guide renamed for consistency
+- **[Observation notifications](NOTIFICATIONS.md)** — Get email and Pushover push notifications when your observations change state
+- **Per-observation notification control** — Choose which channels and state transitions trigger alerts for each observation
+- **[User profile redesign](USER_PROFILE.md)** — New two-column layout with avatar support and organization membership badges
+- **Cancelled status** — User-initiated cancellations now clearly show as "Cancelled" (distinct from system "Aborted")
 
 See the [Changelog](CHANGELOG.md) for full details.
 

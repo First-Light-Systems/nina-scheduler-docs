@@ -71,11 +71,13 @@ nav:
   - Projects: PROJECTS_GUIDE.md
   - Practical Guide: PRACTICAL_GUIDE.md
   - Target Library: TARGET_LIBRARY.md
+  - Notifications: NOTIFICATIONS.md
   - Imaging:
     - Autofocus Guide: AUTOFOCUS_GUIDE.md
     - Guiding Guide: GUIDING_GUIDE.md
     - Calibration Guide: CALIBRATION_GUIDE.md
   - External Storage: EXTERNAL_STORAGE.md
+  - User Profile: USER_PROFILE.md
   - Administration:
     - Organizations: ORGANIZATIONS.md
     - Observatory Administration: OBSERVATORY_ADMINISTRATION.md

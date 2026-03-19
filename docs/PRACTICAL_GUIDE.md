@@ -1,6 +1,6 @@
 # Science Scheduler - Practical User Guide
 
-**Document Version**: 2.4 | **Last Updated**: February 2026
+**Document Version**: 2.5 | **Last Updated**: March 2026
 
 > **What's New in v2.4** (February 2026):
 > - Observatory selection is now remembered across all pages — select once, and it's pre-selected everywhere
@@ -18,9 +18,10 @@ This guide provides step-by-step instructions for common tasks in the Science Sc
 4. [Understanding Observation Types](#understanding-observation-types)
 5. [Monitoring Your Observations](#monitoring-your-observations)
 6. [Accessing Files Through Projects](#accessing-files-through-projects)
-7. [Managing Your Observatory](#managing-your-observatory)
-8. [Using the NINA Plugin](#using-the-nina-plugin)
-9. [Troubleshooting](#troubleshooting)
+7. [Setting Up Observation Notifications](#setting-up-observation-notifications)
+8. [Managing Your Observatory](#managing-your-observatory)
+9. [Using the NINA Plugin](#using-the-nina-plugin)
+10. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -292,7 +293,8 @@ The **My Observations** page shows all your observations:
 - **Suspended**: Paused (weather, equipment issues)
 - **Completed**: Successfully finished
 - **Failed**: Encountered an error
-- **Aborted**: Manually stopped or cancelled
+- **Cancelled**: User-initiated cancellation
+- **Aborted**: Safety-triggered or system abort
 
 **Special Indicators**:
 - **Fast Mover** chip: Displayed on observations marked as fast-moving objects (NEOs, asteroids). These use fine-grained 5-minute scheduling resolution for accurate tracking.
@@ -380,6 +382,37 @@ The project overview shows helpful information for managing your data:
 - End time is calculated based on start time + duration
 - May change if observation is rescheduled
 - Updates as observation progresses
+
+---
+
+## Setting Up Observation Notifications
+
+The Science Scheduler can send you email and/or Pushover push notifications when your observations change state.
+
+### Step 1: Enable Notification Channels
+
+1. Navigate to your **Profile** page
+2. Scroll to **Notification Preferences**
+3. Enable **Email Notifications** (uses your account email)
+4. (Optional) Enable **Pushover Notifications**:
+   - Sign up at [pushover.net](https://pushover.net)
+   - Enter your **Pushover User Key**
+   - Optionally specify device names (comma-separated)
+   - Click **Save**
+
+### Step 2: Test Delivery
+
+Click **Test Notifications** to verify both channels work. You'll see per-channel success or error feedback.
+
+### Step 3: Configure Per-Observation Notifications
+
+When submitting observations, a notification panel appears (only if you have at least one channel enabled):
+
+1. Check which channels to use (Email / Pushover)
+2. Select which state transitions should trigger notifications
+3. All states are pre-selected by default — uncheck any you don't need
+
+For full details, see [Notifications](NOTIFICATIONS.md).
 
 ---
 

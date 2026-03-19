@@ -1,6 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.4 | **Last Updated**: March 2026
+**Document Version**: 1.5 | **Last Updated**: March 2026
 
 > **What's New in v1.4** (March 2026):
 > - Describe external storage capability
@@ -196,7 +196,18 @@ Configure how autofocus behaves during this observation:
 
 For detailed information on all autofocus options, trigger types, and recommended configurations, see the **[Autofocus Guide](AUTOFOCUS_GUIDE.md)**.
 
-### Step 6: Review & Submit
+### Step 6: Configure Notifications (Optional)
+
+If you have enabled at least one notification channel in your [Profile](USER_PROFILE.md), a **Notifications** panel appears after observatory selection and above External Storage Destinations.
+
+1. Check which channels to use: **Email** and/or **Pushover** (only enabled channels appear)
+2. Select which state changes should trigger notifications (all are selected by default):
+   - Assigned, In Progress, Suspended, Complete, Failed, Aborted, Cancelled
+3. Uncheck any states you don't need alerts for
+
+No notification channels configured? See [Notifications](NOTIFICATIONS.md) for setup instructions.
+
+### Step 7: Review & Submit
 
 1. Review your settings in the summary
 2. Click **Submit Observation**
@@ -371,7 +382,7 @@ Click any row to open the observation detail page.
 For observations in progress:
 1. Click **Cancel** on the observation
 2. Current exposure will complete
-3. Status changes to "Aborted"
+3. Status changes to "Cancelled"
 
 ### Resubmitting an Observation
 
@@ -404,6 +415,8 @@ Pending → Assigned → In Progress → Acquisition Complete → Completed
                          ↓                                    ↓
                       Suspended                             Failed
                                                               ↓
+                                                          Cancelled
+                                                              ↓
                                                            Aborted
 ```
 
@@ -416,7 +429,8 @@ Pending → Assigned → In Progress → Acquisition Complete → Completed
 | **Suspended** | Temporarily paused (e.g., weather hold) |
 | **Completed** | All exposures captured and processed successfully |
 | **Failed** | Error occurred (weather, equipment, etc.) |
-| **Aborted** | Manually canceled or safety triggered |
+| **Cancelled** | User-initiated cancellation |
+| **Aborted** | Safety-triggered or system abort |
 
 For the complete list of all 8 statuses, transition rules, automated monitors, and troubleshooting stuck observations, see the **[Observation Lifecycle](OBSERVATION_LIFECYCLE.md)** guide.
 

@@ -243,6 +243,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.13] - 2026-03-19
+
+### Added
+
+- **Observation notifications**: Per-observation email and Pushover push notifications when observations change state (assigned, in progress, suspended, complete, failed, aborted, cancelled)
+- **Notification preferences**: Enable/disable email and Pushover channels in user profile with test functionality
+- **Pushover integration**: Mobile push notifications via Pushover with device targeting and priority levels
+- **User profile redesign**: Two-column layout with avatar support (JPG/PNG/GIF, max 2MB), reorganized account information with organization membership badges
+- **User Profile documentation** (USER_PROFILE.md) — new page covering profile management and avatar
+- **Notifications documentation** (NOTIFICATIONS.md) — new page covering notification setup and per-observation configuration
+- **Pushover server configuration**: `PUSHOVER_APP_TOKEN` environment variable for administrators
+- **System start notification**: Server admins notified via email/Pushover when server starts
+- **Missing star database alert**: Error notification to admins when ASTAP star catalogs are not found in FITS processor
+- **System notification category toggle**: Users can control system event notifications separately from observation notifications
+
+### Changed
+
+- **Cancelled vs Aborted**: User-initiated cancellations now always produce "Cancelled" status (previously, in-progress observations used "Aborted")
+- Updated Creating Observations with notification panel and Cancelled state
+- Updated Practical Guide with notification setup walkthrough
+- Updated Observatory Administration with Pushover server configuration
+- Updated Troubleshooting with notification troubleshooting section
+
+### Fixed
+
+- WebSocket status updates now reliably reach the My Observations table (broadcasts without requiring observatory ID)
+- Error state display no longer causes React error #31
+- Duration formatting shows seconds for durations under 1 minute
+
+---
+
 ## [2.5] - 2026-02-12
 
 ### Added
@@ -426,6 +457,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.13 | 3.6.0 | 3.6.0.0 | Observation notifications, user profile redesign, Pushover integration |
 | 2.12 | 3.6.0 | 3.6.0.0 | Projects guide, observation lifecycle, repetitive observations, system administration, nav restructure |
 | 2.10 | 3.5.0 | 3.4.1.0 | AI log analysis guide |
 | 2.9 | 3.5.0 | 3.4.1.0 | Guiding guide, reporting guide, quality metrics, search, logs, constraints |
