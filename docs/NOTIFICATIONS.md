@@ -86,7 +86,9 @@ The notification section appears in the submission form **after observatory sele
     - Failed
     - Aborted
     - Cancelled
-    - All states are pre-selected by default
+
+!!! note
+    All states are pre-selected by default.
 
 ### Resubmission Behavior
 
