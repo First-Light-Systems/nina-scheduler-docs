@@ -75,20 +75,18 @@ The notification section appears in the submission form **after observatory sele
 
 ### Configuring Notifications
 
-1. **Channel selection** — Check which channels to use for this observation:
-   - **Email** (only shown if email is enabled in your profile)
-   - **Pushover** (only shown if Pushover is enabled in your profile)
-
-2. **State selection** — When either channel is checked, choose which state transitions trigger a notification:
-   - Assigned
-   - In Progress
-   - Suspended
-   - Complete
-   - Failed
-   - Aborted
-   - Cancelled
-
-All states are pre-selected by default.
+- **Channel selection** — Check which channels to use for this observation:
+    - **Email** (only shown if email is enabled in your profile)
+    - **Pushover** (only shown if Pushover is enabled in your profile)
+- **State selection** — When either channel is checked, choose which state transitions trigger a notification:
+    - Assigned
+    - In Progress
+    - Suspended
+    - Complete
+    - Failed
+    - Aborted
+    - Cancelled
+    - All states are pre-selected by default
 
 ### Resubmission Behavior
 
