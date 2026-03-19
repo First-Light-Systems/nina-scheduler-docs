@@ -47,14 +47,17 @@ Configure your notification channels from your **Profile** page.
 
 In view mode, your Pushover key is displayed in masked form (`*********xyz`). Click **Edit Pushover Settings** to modify your key or device names.
 
-### Category Toggles
+### Category Toggles (Server Administrators)
 
-You can control which categories of notifications you receive:
+Server administrators have additional toggles to control which categories of notifications they receive:
 
 | Category | Description |
 |----------|-------------|
 | **Observation Events** | Per-observation state changes (assigned, in progress, completed, failed, etc.) |
 | **System Events** | Server start notifications, missing star database alerts, and other system-level alerts |
+
+!!! note "Admin only"
+    Category toggles are only visible to users with the Server Administrator role. Regular users receive observation notifications based on their per-observation settings and do not see these toggles.
 
 ### Testing Notifications
 
@@ -160,7 +163,7 @@ System notifications can be sent to different audiences:
 System notifications respect each user's preferences:
 
 - **Channel toggles** — `email_enabled` and `pushover_enabled` control which channels deliver the notification
-- **System events toggle** — Users can disable the `system_events` category to suppress system notifications entirely
+- **System events toggle** — Server administrators can disable the `system_events` category to suppress system notifications
 - **Pushover priority** — Based on notification severity: error = high, warning = normal, info/success = quiet
 
 ---
