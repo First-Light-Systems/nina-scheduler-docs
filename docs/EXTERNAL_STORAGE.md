@@ -137,7 +137,19 @@ The **Storage Path Template** field is a freeform text field that defines how fi
 !!! tip "Recommendation"
     Using `$TARGET` as the template is recommended for most users. It keeps files grouped by astronomical object, making it easy to find all data for a specific target. Use `$PROJECT/$TARGET` if you work on multiple projects that may observe the same targets.
 
-#### Step 4: Advanced Options
+#### Step 4: File Content
+
+The **File Content** setting controls which versions of files are transferred to this destination:
+
+| Option | Description |
+|--------|-------------|
+| **Raw only** (default) | Only the original raw FITS files are transferred. Same behavior as before this setting existed. |
+| **Calibrated only** | Only calibrated versions are transferred. The transfer happens after calibration completes in the processing pipeline, so it may appear slightly after raw transfers. If calibration fails or no matching masters are available, no file is transferred. |
+| **Both raw and calibrated** | Both the raw file and the calibrated version are transferred. The raw file transfers immediately; the calibrated file follows after calibration completes. |
+
+Calibrated files are saved with `_calibrated` appended to the filename (e.g., `M31_Luminance_300s_calibrated.fits`).
+
+#### Step 5: Advanced Options
 
 | Option | Default | Description |
 |--------|---------|-------------|

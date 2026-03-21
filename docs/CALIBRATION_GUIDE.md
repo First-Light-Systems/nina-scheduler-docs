@@ -157,6 +157,33 @@ Matching considers camera, gain, offset, binning, readout mode, filter (for flat
 
 Calibrated images are cached for performance. When a new master is created, the cache is cleared so images are recalibrated with the latest masters on next access.
 
+## Calibration Status in the File Browser
+
+Each file in the file browser shows its calibration status as a colored chip:
+
+| Status | Chip | Meaning |
+|--------|------|---------|
+| Calibrated | Green | Masters were found and calibration applied successfully |
+| Cal Failed | Red | Calibration was attempted but encountered an error |
+| No Masters | Orange | No matching calibration masters were available |
+
+Files with no chip shown have either not been processed yet or have calibration disabled.
+
+### Calibration Details on File Detail Page
+
+On the file detail page, calibrated files show a **Calibration Details** section listing:
+
+- Which master frames were used (dark, flat, bias)
+- When each master was captured
+- Temperature of each master
+- Any **stale warnings** if a master is older than expected
+
+Any calibration warnings (e.g., temperature mismatch, missing flat for filter) are shown as alert banners.
+
+### Downloading Calibrated Files
+
+You can download calibrated versions of your light frames directly from the file detail page using the split Download button's dropdown menu. See [Observation Files](OBSERVATION_FILES.md#download-calibrated) for details.
+
 ## See Also
 
 - [Calibration Administration](CALIBRATION_ADMINISTRATION.md) — configure calibration settings, manage frames, trigger manual stacking

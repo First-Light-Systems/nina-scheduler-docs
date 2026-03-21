@@ -190,6 +190,19 @@ The **Download All** button downloads all files from the observation to a local 
 - Downloads continue even if you navigate to other tabs (session keep-alive is active)
 - If a download fails, you can retry individual files or restart the batch download
 
+### Download Calibrated
+
+On the **file detail page**, the Download button includes a dropdown with two options:
+
+- **Download Raw** - The original file as captured
+- **Download Calibrated** - The calibrated version with dark subtraction, flat correction, and bias removal applied
+
+The calibrated download option is only available when the file's calibration status shows **Calibrated** (a green chip). The first calibrated download may take a moment as the calibration is performed on-demand; subsequent downloads are served from cache.
+
+If calibration is not available (no matching masters, calibration disabled, or calibration failed), the "Download Calibrated" option is grayed out with a tooltip explaining why.
+
+In the **file grid**, calibrated files also show a green flask icon button for quick calibrated downloads.
+
 ---
 
 ## Project Multi-Ownership
