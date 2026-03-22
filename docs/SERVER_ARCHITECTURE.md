@@ -14,7 +14,7 @@ This page describes the server-side infrastructure. For how the server communica
                           Internet
                              |
                       +------+------+
-                      |    nginx    |  Port 5000
+                      |    nginx    |
                       |  (reverse   |  - Routes /api/ to API server
                       |   proxy)    |  - Routes / to web GUI
                       +------+------+
@@ -24,9 +24,8 @@ This page describes the server-side infrastructure. For how the server communica
         +------+------+  +---+---+   +------+------+
         |  Scheduler  |  |  Web  |   |  WebSocket  |
         |  API Server |  |  GUI  |   |   (WS)      |
-        |  (Node.js)  |  |(React)|   |  Port 8080  |
-        |  Port 3000  |  +-------+   +------+------+
-        +------+------+                     |
+        |  (Node.js)  |  |(React)|   +------+------+
+        +------+------+  +-------+          |
                |                            |
     +----------+----------+---------+       |
     |          |          |         |       |
@@ -47,7 +46,6 @@ This page describes the server-side infrastructure. For how the server communica
 
 The entry point for all external traffic. nginx routes requests to the appropriate backend service and handles TLS termination.
 
-- **Port 5000**: External access point
 - Routes `/api/` requests to the API server
 - Routes `/` to the web GUI
 - Proxies WebSocket upgrade requests for real-time communication
@@ -57,8 +55,8 @@ The entry point for all external traffic. nginx routes requests to the appropria
 
 The core application server that implements all business logic:
 
-- **Port 3000**: REST API endpoints
-- **Port 8080**: WebSocket server for observatory plugin connections
+- REST API endpoints for all client interactions
+- WebSocket server for real-time observatory plugin connections
 - Manages the observation queue, scheduling decisions, and state machine
 - Handles user authentication (JWT) and API key validation
 - Coordinates with the Python scheduler for constraint evaluation
