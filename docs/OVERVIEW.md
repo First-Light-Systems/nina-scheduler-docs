@@ -247,7 +247,7 @@ External applications can authenticate using API keys to interact with the serve
 - Data analysis workflows
 - Institutional management systems
 
-The entire API is documented with an interactive Swagger UI available at `/api/docs/swagger` on any running server instance. This includes all REST endpoints as well as the WebSocket protocol used by observatory plugins. Contact your system administrator for access credentials.
+The entire REST API is documented with an interactive Swagger UI available at `/api/docs/swagger` on any running server instance. Contact your system administrator for access credentials.
 
 ### Transient Alert Follow-Up (Coming Soon)
 

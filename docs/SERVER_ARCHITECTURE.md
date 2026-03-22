@@ -64,7 +64,7 @@ The entry point for all external traffic. nginx is a pure reverse proxy — it r
 The core application server that implements all business logic:
 
 - REST API endpoints for all client interactions, fully documented via interactive Swagger UI at `/api/docs/swagger`
-- WebSocket server for real-time observatory plugin connections (protocol also documented in Swagger)
+- WebSocket server for real-time observatory plugin connections
 - Manages the observation queue, scheduling decisions, and state machine
 - Handles user authentication (JWT) and API key validation
 - Coordinates with the Python scheduler for constraint evaluation
