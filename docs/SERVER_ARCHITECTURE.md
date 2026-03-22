@@ -143,17 +143,20 @@ All FITS files flow through a consistent pipeline:
 
 ## Deployment
 
-The entire server stack is deployed with a single command:
+Every service runs in a Docker container, making the system portable and flexible in how it is deployed:
 
-```bash
-docker compose up -d
-```
+- **Single host**: For smaller deployments, all containers can run on a single server using Docker Compose
+- **Multi-host**: Services can be distributed across multiple servers — for example, running the database and object storage on dedicated machines while keeping the API server and processing services elsewhere
+- **Container orchestration**: The containerized architecture is compatible with orchestration platforms like Kubernetes for automated scaling, rolling updates, and high availability
 
-All services are configured to restart automatically and include health checks for monitoring. Data is persisted in Docker volumes (MongoDB data, MinIO files, Redis state) that survive container restarts and upgrades.
+All services include health checks for monitoring, are configured to restart automatically on failure, and persist data in volumes that survive container restarts and upgrades.
 
-## Scalability Notes
+## Scalability
 
-- The current architecture runs all services on a single host, suitable for small to medium deployments
-- The FITS processor and Python scheduler are stateless and could be scaled horizontally if needed
-- MongoDB and MinIO support clustering for larger deployments
-- The job queue (Redis) decouples processing load from the API server, preventing slow image processing from affecting responsiveness
+The architecture is designed with separation of concerns that supports scaling at each layer:
+
+- **Stateless processing**: The FITS processor and Python scheduler are stateless — multiple instances can run in parallel to handle higher processing loads
+- **Job queue decoupling**: Redis decouples processing work from the API server, so heavy image processing doesn't affect API responsiveness. Job consumers can be scaled independently
+- **Database scaling**: MongoDB supports replica sets and sharding for larger deployments
+- **Object storage scaling**: MinIO supports distributed mode across multiple nodes for increased storage capacity and redundancy
+- **Independent service scaling**: Because each service is a separate container, you can allocate more resources to bottlenecks (e.g., more CPU for FITS processing) without over-provisioning the entire system
