@@ -249,6 +249,8 @@ External applications can authenticate using API keys to interact with the serve
 
 The entire REST API is documented with an interactive Swagger UI available at `/api/docs/swagger` on any running server instance. Contact your system administrator for access credentials.
 
+The observatory plugin protocol (WebSocket-based, 31 message types) is also fully specified and available to qualified integration partners. Contact First Light Observatory Systems for details.
+
 ### Transient Alert Follow-Up (Coming Soon)
 
 A transient alert system is under development to enable automated follow-up of astronomical transients:
