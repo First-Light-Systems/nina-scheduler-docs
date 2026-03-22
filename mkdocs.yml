@@ -86,6 +86,7 @@ nav:
     - System Administration: SYSTEM_ADMINISTRATION.md
     - Log Analysis: LOG_ANALYSIS_GUIDE.md
   - Reporting: REPORTING_GUIDE.md
+  - Server Architecture: SERVER_ARCHITECTURE.md
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md
   - Changelog: CHANGELOG.md
