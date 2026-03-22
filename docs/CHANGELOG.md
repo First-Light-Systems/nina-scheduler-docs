@@ -6,6 +6,82 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.14] - 2026-03-22
+
+### Added
+
+- **Server Architecture page** (SERVER_ARCHITECTURE.md) — new standalone page covering:
+    - Architecture diagram showing all server components and their relationships
+    - All services documented: nginx, API server, Web GUI, MongoDB, MinIO, Redis, FITS Processor (with ASTAP plate solver), Python Scheduler
+    - Data flow descriptions for observation lifecycle and file storage pipeline
+    - Deployment flexibility: runs anywhere with Docker on x86 (local, dedicated server, cloud, Kubernetes)
+    - Scalability notes for each service layer
+
+- **Technology & Resilience section** in Overview — new section covering:
+    - Loose coupling with observatories (just-in-time dispatch, independent operation, automatic reassignment)
+    - Communications resilience (heartbeat, auto-reconnect, complete-and-stop, state reconciliation, message acknowledgment, persistent file queue)
+    - Weather and safety recovery (automatic suspension/resumption, progress preservation)
+    - Crash recovery (local state persistence, automatic reconciliation, no data loss)
+
+- **Overview feature coverage** — added sections for features previously undocumented in overview:
+    - Automatic Calibration Library with dedicated subsection
+    - User-Controlled Calibrated Downloads (raw, calibrated, both, masters, component frames)
+    - External Storage (Dropbox, Google Drive, Google Cloud Storage)
+    - Target Library & Templates (saved targets, CSV import, automated cadence)
+    - Autofocus Management (5 trigger types)
+    - Guiding & Dithering
+    - Readout Mode support
+    - Organizations
+    - AI Log Analysis
+    - Swagger UI API documentation
+    - Plugin protocol specification (proprietary, available to partners)
+
+### Changed
+
+- **Overview reorganized** from flat feature list to 7 logical groups: Scheduling & Execution, Target & Observation Planning, Imaging & Calibration, Data & Storage, Monitoring & Communication, Organization & Administration, Integration
+- **Overview version** updated from 2.1 to 3.0
+- **Navigation restructured**:
+    - Target Library moved into Observations group
+    - New "Data & Storage" group containing Observation Files and External Storage
+    - Server Architecture added before Troubleshooting
+- **Plugin version** updated from v3.6.0.0 to v3.8.0.0 across index and overview
+- **.NET requirement** updated from 8.0 to 10.0 (NINA now targets net10.0-windows)
+- **Reporting section** expanded with usage dashboard, per-user/project metrics, and PDF export
+- **How It Works** updated with calibration and download steps for both users and operators
+
+---
+
+## [2.13] - 2026-03-19
+
+### Added
+
+- **Observation notifications**: Per-observation email and Pushover push notifications when observations change state (assigned, in progress, suspended, complete, failed, aborted, cancelled)
+- **Notification preferences**: Enable/disable email and Pushover channels in user profile with test functionality
+- **Pushover integration**: Mobile push notifications via Pushover with device targeting and priority levels
+- **User profile redesign**: Two-column layout with avatar support (JPG/PNG/GIF, max 2MB), reorganized account information with organization membership badges
+- **User Profile documentation** (USER_PROFILE.md) — new page covering profile management and avatar
+- **Notifications documentation** (NOTIFICATIONS.md) — new page covering notification setup and per-observation configuration
+- **Pushover server configuration**: `PUSHOVER_APP_TOKEN` environment variable for administrators
+- **System start notification**: Server admins notified via email/Pushover when server starts
+- **Missing star database alert**: Error notification to admins when ASTAP star catalogs are not found in FITS processor
+- **System notification category toggle**: Users can control system event notifications separately from observation notifications
+
+### Changed
+
+- **Cancelled vs Aborted**: User-initiated cancellations now always produce "Cancelled" status (previously, in-progress observations used "Aborted")
+- Updated Creating Observations with notification panel and Cancelled state
+- Updated Practical Guide with notification setup walkthrough
+- Updated Observatory Administration with Pushover server configuration
+- Updated Troubleshooting with notification troubleshooting section
+
+### Fixed
+
+- WebSocket status updates now reliably reach the My Observations table (broadcasts without requiring observatory ID)
+- Error state display no longer causes React error #31
+- Duration formatting shows seconds for durations under 1 minute
+
+---
+
 ## [2.12] - 2026-03-12
 
 ### Added
@@ -243,37 +319,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [2.13] - 2026-03-19
-
-### Added
-
-- **Observation notifications**: Per-observation email and Pushover push notifications when observations change state (assigned, in progress, suspended, complete, failed, aborted, cancelled)
-- **Notification preferences**: Enable/disable email and Pushover channels in user profile with test functionality
-- **Pushover integration**: Mobile push notifications via Pushover with device targeting and priority levels
-- **User profile redesign**: Two-column layout with avatar support (JPG/PNG/GIF, max 2MB), reorganized account information with organization membership badges
-- **User Profile documentation** (USER_PROFILE.md) — new page covering profile management and avatar
-- **Notifications documentation** (NOTIFICATIONS.md) — new page covering notification setup and per-observation configuration
-- **Pushover server configuration**: `PUSHOVER_APP_TOKEN` environment variable for administrators
-- **System start notification**: Server admins notified via email/Pushover when server starts
-- **Missing star database alert**: Error notification to admins when ASTAP star catalogs are not found in FITS processor
-- **System notification category toggle**: Users can control system event notifications separately from observation notifications
-
-### Changed
-
-- **Cancelled vs Aborted**: User-initiated cancellations now always produce "Cancelled" status (previously, in-progress observations used "Aborted")
-- Updated Creating Observations with notification panel and Cancelled state
-- Updated Practical Guide with notification setup walkthrough
-- Updated Observatory Administration with Pushover server configuration
-- Updated Troubleshooting with notification troubleshooting section
-
-### Fixed
-
-- WebSocket status updates now reliably reach the My Observations table (broadcasts without requiring observatory ID)
-- Error state display no longer causes React error #31
-- Duration formatting shows seconds for durations under 1 minute
-
----
-
 ## [2.5] - 2026-02-12
 
 ### Added
@@ -457,6 +502,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET 10 |
 | 2.13 | 3.6.0 | 3.6.0.0 | Observation notifications, user profile redesign, Pushover integration |
 | 2.12 | 3.6.0 | 3.6.0.0 | Projects guide, observation lifecycle, repetitive observations, system administration, nav restructure |
 | 2.10 | 3.5.0 | 3.4.1.0 | AI log analysis guide |
