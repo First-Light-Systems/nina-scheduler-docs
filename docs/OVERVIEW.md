@@ -89,16 +89,26 @@ See [Target Library](TARGET_LIBRARY.md) for setup and usage details.
 
 ## Imaging & Calibration
 
-### Automatic Calibration
+### Automatic Calibration Library
 
 The Science Scheduler automatically builds and maintains a calibration library for your observatory — you do not need to manually schedule calibration sessions.
 
 - **Dark frames**: Captured automatically during gaps between science observations using the observatory's idle time
 - **Flat frames**: Captured via a dedicated NINA calibration instruction supporting both motorized flat panels (using trained settings) and twilight sky flats (with automatic brightness search)
 - **Master frame creation**: Individual frames are automatically stacked into master darks, flats, and bias frames once enough accumulate, matched by camera, gain, binning, temperature, and readout mode
-- **Optional calibration**: When downloading light images, you can choose raw or calibrated versions — dark subtraction, flat correction, and bias removal are applied server-side on demand
-- **Downloadable calibration data**: Master frames and the individual component frames used to create them are available for download
 - **Coverage visibility**: The web interface shows calibration coverage, accumulation progress, and any uncovered filter/gain/binning configurations
+
+### User-Controlled Calibrated Downloads
+
+Calibration is never forced on your images — **you decide** what you want to download. When viewing your observation files, you can choose from:
+
+- **Raw images**: Your original, unmodified FITS files exactly as captured by the camera
+- **Calibrated images**: Server-side calibrated versions with dark subtraction, flat correction, and bias removal applied using matched master frames
+- **Both**: Download raw and calibrated versions side by side for comparison or different processing workflows
+- **Master frames**: Download the master darks, flats, and bias frames themselves for use in your own calibration pipeline
+- **Component frames**: Download the individual calibration frames that were used to build the masters
+
+This gives you full flexibility — use the server's calibration for convenience, download raw files for your own processing, or access the calibration data directly for custom workflows.
 
 See [Calibration Guide](CALIBRATION_GUIDE.md) for how calibration works and [Calibration Administration](CALIBRATION_ADMINISTRATION.md) for managing calibration settings.
 
@@ -261,7 +271,7 @@ See [Coming Soon](COMING_SOON.md) for details.
 5. **Configure notifications** (optional) - choose email/Pushover alerts for state changes
 6. **Submit** - observation enters the queue
 7. **Monitor** - watch progress in real-time
-8. **Download** - retrieve raw FITS files, or optionally calibrated versions with dark, bias, and flat corrections applied
+8. **Download** - choose what you need: raw images, calibrated versions, or both — plus access to master frames and calibration data
 
 ### For Observatory Operators
 
