@@ -11,35 +11,32 @@ This page describes the server-side infrastructure. For how the server communica
 ## Architecture Diagram
 
 ```
-              Internet                    Observatory Plugins
-                 |                               |
-          +------+------+                        |
-          |    nginx    |                        |
-          |  (reverse   |                        |
-          |   proxy)    |                        |
-          +------+------+                        |
-            |         |                          |
-     +------+    +----+----+                     |
-     |           |   Web   |                     |
-     |           |   GUI   |                     |
-     |           | (React) |                     |
-     |           +---------+                     |
-     |                                           |
-     |  +----------------------------------------+
-     |  |
-  +--+--+------------------------------------------+
-  |  Scheduler API Server  (Node.js)               |
-  |                                                |
-  |  - REST API (web interface & external clients) |
-  |  - WebSocket server (observatory plugins)      |
-  +--+--------+--------+--------+-+                |
-     |        |        |        | +----------------+
+  User's Browser              Observatory Plugins
+  (Web GUI - React)                  |
+        |                            |
+        | API calls + WebSocket      | WebSocket
+        |                            |
+        +--------+     +-------------+
+                 |     |
+          +------+-----+---+
+          |      nginx      |
+          |  (reverse proxy)|
+          +--------+--------+
+                   |
+  +----------------+---------------------------+
+  |  Scheduler API Server  (Node.js)           |
+  |                                            |
+  |  - REST API (browser & external clients)   |
+  |  - WebSocket (observatory plugins)         |
+  |  - Static file serving (Web GUI)           |
+  +--+--------+--------+--------+---+          |
+     |        |        |        |   +----------+
      |        |        |        |
-+----+--+ +---+---+ +--+----+  +-------+----------+
++----+--+ +---+---+ +--+----+  +--+---------------+
 |MongoDB| | MinIO | | Redis |  | Python Scheduler  |
 |  (DB) | |(Files)| |(Queue)|  | (Constraint       |
-+-------+ +-------+ +---+---+ |  Engine)          |
-                         |     +------------------+
++-------+ +-------+ +---+---+ |  Engine)           |
+                         |     +-------------------+
                     +----+----+
                     |  FITS   |
                     |  Proc.  |
@@ -50,12 +47,10 @@ This page describes the server-side infrastructure. For how the server communica
 
 ### nginx (Reverse Proxy)
 
-The entry point for all external traffic. nginx routes requests to the appropriate backend service and handles TLS termination.
+The entry point for all external traffic. nginx is a pure reverse proxy — it routes requests to the API server and handles TLS termination. It does not serve files directly.
 
-- Routes `/api/` requests to the API server
-- Routes `/` to the web GUI
-- Proxies WebSocket upgrade requests for real-time communication
-- Handles CORS headers
+- Routes all requests to the API server (REST API, static files, and WebSocket upgrades)
+- Handles CORS headers and TLS termination
 
 ### Scheduler API Server (Node.js/TypeScript)
 
@@ -72,12 +67,12 @@ The core application server that implements all business logic:
 
 ### Web GUI (React)
 
-The browser-based user interface served as a static single-page application:
+The web interface is a React single-page application that runs entirely in the user's browser. The server only hosts the static files — all application logic runs client-side.
 
 - Built with React and Material UI
-- Served by a lightweight Node.js static file server
-- Communicates with the API server through nginx
-- Real-time updates via WebSocket connection
+- Static files served by the API server through nginx
+- Once loaded in the browser, communicates with the API server via REST calls and WebSocket for real-time updates
+- No server-side rendering — the browser handles all UI logic
 
 ### MongoDB (Database)
 
