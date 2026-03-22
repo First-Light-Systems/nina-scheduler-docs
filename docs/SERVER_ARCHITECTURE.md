@@ -151,9 +151,13 @@ All FITS files flow through a consistent pipeline:
 
 ## Deployment
 
-Every service runs in a Docker container, making the system portable and flexible in how it is deployed:
+The server has no operating system dependency — it only requires Docker on an x86 processor. This means it can run on Linux, Windows, or macOS, and can be deployed anywhere from the same computer running the observatory to a cloud provider like AWS, Azure, or Google Cloud.
 
-- **Single host**: For smaller deployments, all containers can run on a single server using Docker Compose
+Common deployment scenarios:
+
+- **On the observatory computer**: For single-observatory setups, the server can run alongside NINA on the same Windows machine with minimal overhead
+- **Dedicated local server**: A separate Linux or Windows machine on the local network, keeping server load off the observatory computer
+- **Cloud hosted**: Run the server in the cloud for multi-observatory networks, remote access from anywhere, and offloading storage and processing
 - **Multi-host**: Services can be distributed across multiple servers — for example, running the database and object storage on dedicated machines while keeping the API server and processing services elsewhere
 - **Container orchestration**: The containerized architecture is compatible with orchestration platforms like Kubernetes for automated scaling, rolling updates, and high availability
 
