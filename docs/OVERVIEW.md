@@ -260,6 +260,49 @@ A transient alert system is under development to enable automated follow-up of a
 
 See [Coming Soon](COMING_SOON.md) for details.
 
+## Technology & Resilience
+
+The Science Scheduler is designed for unattended overnight operation where reliability is essential. The architecture ensures that network problems, weather events, and software crashes are handled gracefully without losing data or requiring manual intervention.
+
+### Loose Coupling with Observatories
+
+Observatories operate independently of the server and of each other:
+
+- **Self-registration**: Observatories register themselves with the server and connect when ready — no server-side provisioning required
+- **Just-in-time dispatch**: The server does not pre-assign observations to observatories. Instead, each observatory requests work when it is ready, and the server assigns the best available observation at that moment based on current conditions, constraints, and priority
+- **Independent operation**: Each observatory can go offline, restart, or lose network connectivity without affecting other observatories or the server's scheduling of other work
+- **Automatic reassignment**: If an observatory disconnects, any in-progress observation is detected and returned to the queue so another observatory can pick it up
+- **Clear separation of concerns**: Observatories don't make scheduling decisions — the server coordinates, the plugin executes
+
+### Communications Resilience
+
+The server and observatory plugins communicate over a persistent WebSocket connection with multiple layers of reliability:
+
+- **Heartbeat monitoring**: Ping/pong messages every 30 seconds detect connection problems quickly
+- **Automatic reconnection**: When a connection drops, the plugin reconnects automatically with exponential backoff — no manual restart needed
+- **Complete and stop**: If connection is lost mid-observation, the plugin finishes the current observation and uploads its files, then stops requesting new work until the connection is restored
+- **State reconciliation**: On reconnect, the server and plugin compare their states and resolve any mismatches automatically — no orphaned or double-counted observations
+- **Message acknowledgment**: Critical messages require explicit acknowledgment with retry, ensuring no silent message loss
+- **Persistent file queue**: FITS files are queued locally for upload and survive plugin restarts — files captured during a network outage are uploaded when connectivity returns
+
+### Weather & Safety Recovery
+
+Observatory safety is monitored continuously and the system responds automatically:
+
+- **Automatic suspension**: When NINA's safety monitors detect unsafe conditions (weather, equipment), the current observation is suspended immediately
+- **Progress preservation**: The system tracks exactly which exposures completed and which was interrupted, so nothing needs to be repeated unnecessarily
+- **Automatic resumption**: When safe conditions return, the observation resumes from where it left off
+- **Weather history logging**: Temperature, humidity, wind speed, cloud cover, rain rate, and seeing conditions are logged continuously for diagnostics and reporting
+
+### Crash Recovery
+
+Both the plugin and server are designed to recover cleanly from unexpected shutdowns:
+
+- **Local state persistence**: The plugin stores execution state in a local database (SQLite) so it can recover its position after a restart
+- **Crash detection**: The server detects plugin crashes via heartbeat timeout and automatically cleans up orphaned observations
+- **Automatic reconciliation**: On reconnect after a crash, the server and plugin determine whether the observation was completed, partially completed, or needs to be requeued — no manual cleanup required
+- **No data loss**: FITS files captured before a crash are persisted locally and uploaded when the plugin reconnects
+
 ## How It Works
 
 ### For Users Submitting Observations
