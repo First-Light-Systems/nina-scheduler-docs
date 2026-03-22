@@ -29,18 +29,25 @@ This page describes the server-side infrastructure. For how the server communica
   |  - REST API (browser & external clients)   |
   |  - WebSocket (observatory plugins)         |
   |  - Static file serving (Web GUI)           |
-  +--+--------+--------+--------+---+          |
-     |        |        |        |   +----------+
+  |  - Job queue (Redis/Bull)                  |
+  +--+--------+--------+--------+--------+     |
+     |        |        |        |        +-----+
      |        |        |        |
-+----+--+ +---+---+ +--+----+  +--+---------------+
-|MongoDB| | MinIO | | Redis |  | Python Scheduler  |
-|  (DB) | |(Files)| |(Queue)|  | (Constraint       |
-+-------+ +-------+ +---+---+ |  Engine)           |
-                         |     +-------------------+
-                    +----+----+
-                    |  FITS   |
-                    |  Proc.  |
-                    +---------+
++----+--+ +---+---+ +--+----+  |  +-----------------+
+|MongoDB| | MinIO | | Redis |  |  | Python Scheduler |
+|  (DB) | |(Files)| |(Queue)|  |  | (Constraint      |
++-------+ +--+----+ +-------+  |  |  Engine)         |
+              |                 |  +-----------------+
+              |     +-----------+
+              |     |
+         +----+-----+----------------------+
+         |  FITS Processor                  |
+         |                                  |
+         |  - Plate solving (ASTAP)         |
+         |  - Quality analysis              |
+         |  - Preview generation            |
+         |  - Calibration application       |
+         +---------------------------------+
 ```
 
 ## Services
@@ -94,22 +101,22 @@ S3-compatible object storage for binary files:
 
 ### Redis (Job Queue)
 
-In-memory data store used for background job processing:
+In-memory data store used by the API server for background job management:
 
-- Queues FITS processing jobs (plate solving, quality analysis, preview generation)
+- Backs the Bull job queue for asynchronous processing tasks
 - Manages external storage transfer jobs
 - Handles calibration stacking jobs
 - Provides reliable job retry with backoff on failure
 
 ### FITS Processor
 
-A dedicated service for computationally intensive image processing:
+A dedicated container for computationally intensive image processing, called by the API server via HTTP. It accesses MinIO and MongoDB directly for reading and writing files and metadata.
 
-- **Plate solving** via ASTAP for astrometric solutions
-- **Quality analysis** — FWHM, star count, SNR, background level, pixel scale
-- **Preview generation** — thumbnails and stretched previews for web display
-- **Calibration application** — dark subtraction, flat correction, bias removal
-- Processes jobs from the Redis queue independently of the API server
+- **Plate solving**: Astrometric solutions via the ASTAP plate solver with bundled star catalogs, determining precise sky coordinates for each image
+- **Quality analysis**: Automatic measurement of FWHM, star count, SNR, background level, and pixel scale
+- **Preview generation**: Thumbnails and stretched previews for web display
+- **Calibration application**: Dark subtraction, flat correction, and bias removal using matched master frames
+- Runs independently of the API server so heavy processing does not affect API responsiveness
 
 ### Python Scheduler (Constraint Engine)
 
