@@ -64,19 +64,20 @@ nav:
   - Observatory Registration: OBSERVATORY_REGISTRATION.md
   - Observations:
     - Creating Observations: CREATING_OBSERVATIONS.md
+    - Target Library: TARGET_LIBRARY.md
     - Scheduler Features: SCHEDULER_FEATURES.md
     - Observation Lifecycle: OBSERVATION_LIFECYCLE.md
     - Repetitive Observations: REPETITIVE_OBSERVATIONS.md
-    - Observation Files: OBSERVATION_FILES.md
   - Projects: PROJECTS_GUIDE.md
   - Practical Guide: PRACTICAL_GUIDE.md
-  - Target Library: TARGET_LIBRARY.md
   - Notifications: NOTIFICATIONS.md
   - Imaging:
     - Autofocus Guide: AUTOFOCUS_GUIDE.md
     - Guiding Guide: GUIDING_GUIDE.md
     - Calibration Guide: CALIBRATION_GUIDE.md
-  - External Storage: EXTERNAL_STORAGE.md
+  - Data & Storage:
+    - Observation Files: OBSERVATION_FILES.md
+    - External Storage: EXTERNAL_STORAGE.md
   - User Profile: USER_PROFILE.md
   - Administration:
     - Organizations: ORGANIZATIONS.md
