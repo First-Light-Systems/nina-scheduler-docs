@@ -229,6 +229,16 @@ See [Organizations](ORGANIZATIONS.md) for setup and management.
 
 See [Reporting Guide](REPORTING_GUIDE.md) for available reports.
 
+### AI Log Analysis
+
+The system automatically collects plugin and NINA logs from connected observatories and provides two levels of diagnostic analysis:
+
+- **Automatic pattern detection**: Known error patterns (equipment failures, connection issues, autofocus errors) are identified automatically using pattern matching — no configuration required
+- **AI-powered analysis**: On-demand deep analysis using Claude (Anthropic AI) that interprets log context, identifies root causes, and suggests corrective actions — requires an Anthropic API key
+- **Exportable reports**: AI analysis results can be downloaded as PDF for sharing or record-keeping
+
+See [AI Log Analysis Guide](LOG_ANALYSIS_GUIDE.md) for setup and usage.
+
 ## Integration
 
 ### REST API
