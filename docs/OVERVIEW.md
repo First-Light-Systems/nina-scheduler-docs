@@ -96,7 +96,8 @@ The Science Scheduler automatically builds and maintains a calibration library f
 - **Dark frames**: Captured automatically during gaps between science observations using the observatory's idle time
 - **Flat frames**: Captured via a dedicated NINA calibration instruction supporting both motorized flat panels (using trained settings) and twilight sky flats (with automatic brightness search)
 - **Master frame creation**: Individual frames are automatically stacked into master darks, flats, and bias frames once enough accumulate, matched by camera, gain, binning, temperature, and readout mode
-- **Automatic application**: Master frames are applied to your light images server-side — dark subtraction, flat correction, and bias removal happen without manual intervention
+- **Optional calibration**: When downloading light images, you can choose raw or calibrated versions — dark subtraction, flat correction, and bias removal are applied server-side on demand
+- **Downloadable calibration data**: Master frames and the individual component frames used to create them are available for download
 - **Coverage visibility**: The web interface shows calibration coverage, accumulation progress, and any uncovered filter/gain/binning configurations
 
 See [Calibration Guide](CALIBRATION_GUIDE.md) for how calibration works and [Calibration Administration](CALIBRATION_ADMINISTRATION.md) for managing calibration settings.
@@ -260,8 +261,7 @@ See [Coming Soon](COMING_SOON.md) for details.
 5. **Configure notifications** (optional) - choose email/Pushover alerts for state changes
 6. **Submit** - observation enters the queue
 7. **Monitor** - watch progress in real-time
-8. **Automatic calibration** - your images are calibrated server-side using matched dark, bias, and flat master frames
-9. **Download** - retrieve raw and calibrated FITS files when complete
+8. **Download** - retrieve raw FITS files, or optionally calibrated versions with dark, bias, and flat corrections applied
 
 ### For Observatory Operators
 
