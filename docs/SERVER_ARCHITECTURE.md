@@ -11,34 +11,39 @@ This page describes the server-side infrastructure. For how the server communica
 ## Architecture Diagram
 
 ```
-                            Internet
-                               |
-                        +------+------+
-                        |    nginx    |
-                        |  (reverse   |
-                        |   proxy)    |
-                        +------+------+
-                          |    |    |
-              +-----------+    |    +------------+
-              |                |                 |
-       +------+------+   +----+----+   +---------+---+
-       |  Scheduler  |   |   Web   |   |  WebSocket  |
-       |  API Server |   |   GUI   |   |   (WS)      |
-       |  (Node.js)  |   | (React) |   +-------------+
-       +--+--+--+--+-+   +---------+
-          |  |  |  |
-    +-----+  |  |  +---------------------+
-    |     +--+  +--------+               |
-    |     |              |               |
-+---+---+ +---+---+ +---+-----+ +-------+----------+
-|MongoDB| | MinIO | |  Redis  | | Python Scheduler  |
-|  (DB) | |(Files)| | (Queue) | | (Constraint       |
-+-------+ +-------+ +----+----+ |  Engine)          |
-                          |      +------------------+
-                     +----+----+
-                     |  FITS   |
-                     |  Proc.  |
-                     +---------+
+              Internet                    Observatory Plugins
+                 |                               |
+          +------+------+                        |
+          |    nginx    |                        |
+          |  (reverse   |                        |
+          |   proxy)    |                        |
+          +------+------+                        |
+            |         |                          |
+     +------+    +----+----+                     |
+     |           |   Web   |                     |
+     |           |   GUI   |                     |
+     |           | (React) |                     |
+     |           +---------+                     |
+     |                                           |
+     |  +----------------------------------------+
+     |  |
+  +--+--+------------------------------------------+
+  |  Scheduler API Server  (Node.js)               |
+  |                                                |
+  |  - REST API (web interface & external clients) |
+  |  - WebSocket server (observatory plugins)      |
+  +--+--------+--------+--------+-+                |
+     |        |        |        | +----------------+
+     |        |        |        |
++----+--+ +---+---+ +--+----+  +-------+----------+
+|MongoDB| | MinIO | | Redis |  | Python Scheduler  |
+|  (DB) | |(Files)| |(Queue)|  | (Constraint       |
++-------+ +-------+ +---+---+ |  Engine)          |
+                         |     +------------------+
+                    +----+----+
+                    |  FITS   |
+                    |  Proc.  |
+                    +---------+
 ```
 
 ## Services
