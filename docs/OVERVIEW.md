@@ -382,7 +382,7 @@ Both the plugin and server are designed to recover cleanly from unexpected shutd
 
 - Windows 10 or Windows 11
 - NINA 3.0.0.2001 or later
-- .NET 8.0 Runtime
+- .NET 10.0 Runtime
 - Network connection to the Science Scheduler Server
 
 ### For Users
