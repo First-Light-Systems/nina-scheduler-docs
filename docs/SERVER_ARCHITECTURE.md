@@ -11,33 +11,34 @@ This page describes the server-side infrastructure. For how the server communica
 ## Architecture Diagram
 
 ```
-                          Internet
-                             |
-                      +------+------+
-                      |    nginx    |
-                      |  (reverse   |  - Routes /api/ to API server
-                      |   proxy)    |  - Routes / to web GUI
-                      +------+------+
-                        |         |
-               +--------+    +---+----------+
-               |              |              |
-        +------+------+  +---+---+   +------+------+
-        |  Scheduler  |  |  Web  |   |  WebSocket  |
-        |  API Server |  |  GUI  |   |   (WS)      |
-        |  (Node.js)  |  |(React)|   +------+------+
-        +------+------+  +-------+          |
-               |                            |
-    +----------+----------+---------+       |
-    |          |          |         |       |
-+---+---+ +---+---+ +----+----+ +--+--+   |
-|MongoDB| | MinIO | |  Redis  | |FITS |   |
-|  (DB) | |(Files)| | (Queue) | |Proc.|   |
-+-------+ +-------+ +---------+ +-----+   |
-                                           |
-                              +------------+--------+
-                              |  Python Scheduler   |
-                              |  (Constraint Engine) |
-                              +---------------------+
+                            Internet
+                               |
+                        +------+------+
+                        |    nginx    |
+                        |  (reverse   |
+                        |   proxy)    |
+                        +------+------+
+                          |    |    |
+              +-----------+    |    +------------+
+              |                |                 |
+       +------+------+   +----+----+   +---------+---+
+       |  Scheduler  |   |   Web   |   |  WebSocket  |
+       |  API Server |   |   GUI   |   |   (WS)      |
+       |  (Node.js)  |   | (React) |   +-------------+
+       +--+--+--+--+-+   +---------+
+          |  |  |  |
+    +-----+  |  |  +---------------------+
+    |     +--+  +--------+               |
+    |     |              |               |
++---+---+ +---+---+ +---+-----+ +-------+----------+
+|MongoDB| | MinIO | |  Redis  | | Python Scheduler  |
+|  (DB) | |(Files)| | (Queue) | | (Constraint       |
++-------+ +-------+ +----+----+ |  Engine)          |
+                          |      +------------------+
+                     +----+----+
+                     |  FITS   |
+                     |  Proc.  |
+                     +---------+
 ```
 
 ## Services
