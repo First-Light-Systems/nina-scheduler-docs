@@ -155,7 +155,9 @@ Observations support per-exposure readout mode selection for cameras that offer 
 
 - **Automatic file upload**: FITS files uploaded to server after capture
 - **Rice compression support**: 50-70% smaller files with lossless compression
-- **Metadata extraction**: FITS headers parsed and stored
+- **Image previews**: Browse stretched preview images directly in the web interface without downloading FITS files — available on observation detail pages and in the project file views
+- **FITS header inspection**: View complete FITS headers for any image in the browser, including all standard and custom metadata, quality metrics, and astrometric solution data
+- **Quality metrics at a glance**: Each file displays FWHM, star count, SNR, and other quality indicators so you can quickly assess image quality
 - **Organized storage**: Files organized by observation and date
 
 See [Observation Files](OBSERVATION_FILES.md) for browsing, downloading, and managing your data.
@@ -326,7 +328,8 @@ Both the plugin and server are designed to recover cleanly from unexpected shutd
 5. **Configure notifications** (optional) - choose email/Pushover alerts for state changes
 6. **Submit** - observation enters the queue
 7. **Monitor** - watch progress in real-time
-8. **Download** - choose what you need: raw images, calibrated versions, or both — plus access to master frames and calibration data
+8. **Review** - browse image previews, inspect FITS headers, and check quality metrics directly in the web interface
+9. **Download** - choose what you need: raw images, calibrated versions, or both — plus access to master frames and calibration data
 
 ### For Observatory Operators
 
