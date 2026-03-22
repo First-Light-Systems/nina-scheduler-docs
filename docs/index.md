@@ -3,7 +3,7 @@
 **Documentation Version**: 2.14 | **Last Updated**: March 2026
 **Server v3.6.0 | Plugin v3.8.0.0**
 
-Welcome to the Science Scheduler documentation. This system provides automated observation scheduling for educational observatories using NINA.
+Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
 **New here?** Start with the [System Overview](OVERVIEW.md) to understand how the Science Scheduler works.
 
