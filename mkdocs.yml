@@ -58,6 +58,7 @@ exclude_docs: |
 # Navigation
 nav:
   - Home: index.md
+  - Index: INDEX.md
   - Overview: OVERVIEW.md
   - Getting Started: GETTING_STARTED.md
   - Plugin Setup: PLUGIN_SETUP.md
@@ -90,7 +91,6 @@ nav:
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md
   - Changelog: CHANGELOG.md
-  - Index: INDEX.md
 
 # Copyright
 copyright: Copyright &copy; 2025-2026 First Light Observatory Systems LLC
