@@ -115,6 +115,32 @@ Sky mode captures flats using the twilight sky. Select **Dawn** or **Dusk** to i
 
 A **Fallback** toggle is available on the instruction for testing with camera simulators. When enabled, it skips brightness optimization and captures at a fixed 1-second exposure. This is a development/testing feature and should not be used for real calibration.
 
+### Cameras with Internal Stacking and 12-Bit ADCs
+
+Some cameras — particularly certain CMOS models — perform internal stacking in hardware. They capture multiple short 12-bit sub-exposures internally and sum them to produce a 16-bit output image. This is often selectable via a readout mode (e.g., "High Conversion Gain" or a stacking-specific mode).
+
+There is typically an exposure time threshold below which internal stacking does not occur. Exposures shorter than this threshold produce raw 12-bit data, while longer exposures produce internally stacked 16-bit data. The threshold may be configurable using the camera manufacturer's utility software.
+
+This creates a problem for flat frame capture:
+
+**The issue**: NINA's Flat Wizard does not account for readout modes. It trains a single set of brightness and exposure values per filter/gain combination. If your lights are captured in a 16-bit stacking readout mode but your flats are captured without it (or vice versa), the ADU range will be completely different — a 12-bit image has a maximum value of 4,095 while a 16-bit image goes up to 65,535. Flat Wizard values trained for one bit depth will produce badly exposed flats in the other.
+
+Compounding this, **NINA resets the readout mode on every exposure**. Even if you manually set the correct readout mode before starting flat capture, NINA may revert it.
+
+!!! warning "Flat Capture with Internal Stacking Cameras"
+    If your camera uses internal stacking with a readout mode that changes the output bit depth, you must ensure flats are captured in the **same readout mode** as your light frames. Otherwise the flat field correction will be incorrect.
+
+**Workaround**: NINA has a bit depth setting in **Options** that can be used when training flats with the Flat Wizard. To train flats for a 12-bit readout mode:
+
+1. Go to NINA **Options** and set the bit depth to **12-bit**
+2. Run the Flat Wizard to train your filter/gain combinations
+3. **Important**: Set the bit depth back to **16-bit** when you are done
+
+This ensures the Flat Wizard targets the correct ADU range for the 12-bit mode. If you forget to reset the bit depth afterwards, your light frame histogram display and other NINA features that depend on bit depth will be affected.
+
+!!! note "Future Improvement"
+    NINA's Flat Wizard does not currently support per-readout-mode training. This is a known limitation — trained flat settings are stored per filter/gain combination only, with no readout mode awareness. The Science Scheduler plugin sets the correct readout mode before each exposure block (v3.8.0+), but the underlying Flat Wizard training values must still be managed manually as described above.
+
 ## Dark and Bias Frames
 
 Dark and bias frames are captured automatically by the gap-filling system. When the server detects idle time between scheduled observations, it dispatches dark frame capture at the exposure times and temperatures your observatory has been using for light frames.
