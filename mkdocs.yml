@@ -66,6 +66,7 @@ nav:
   - Observations:
     - Creating Observations: CREATING_OBSERVATIONS.md
     - Target Library: TARGET_LIBRARY.md
+    - Exoplanet Transits: EXOPLANET_TRANSITS.md
     - Scheduler Features: SCHEDULER_FEATURES.md
     - Observation Lifecycle: OBSERVATION_LIFECYCLE.md
     - Repetitive Observations: REPETITIVE_OBSERVATIONS.md
@@ -78,6 +79,7 @@ nav:
     - Calibration Guide: CALIBRATION_GUIDE.md
   - Data & Storage:
     - Observation Files: OBSERVATION_FILES.md
+    - Image Processing: IMAGE_PROCESSING.md
     - External Storage: EXTERNAL_STORAGE.md
   - User Profile: USER_PROFILE.md
   - Administration:
@@ -88,6 +90,7 @@ nav:
     - Log Analysis: LOG_ANALYSIS_GUIDE.md
   - Reporting: REPORTING_GUIDE.md
   - Server Architecture: SERVER_ARCHITECTURE.md
+  - Contact Support: CONTACT_SUPPORT.md
   - Troubleshooting: TROUBLESHOOTING.md
   - Coming Soon: COMING_SOON.md
   - Changelog: CHANGELOG.md

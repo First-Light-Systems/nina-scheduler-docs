@@ -34,6 +34,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
     - Status chips — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-status-in-the-file-browser)
 - **Camera simulator** — [Plugin Setup](PLUGIN_SETUP.md)
 - **Cancelled status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Notifications](NOTIFICATIONS.md)
+- **Contact support** — [Contact Support](CONTACT_SUPPORT.md)
 - **CCD camera** — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-application), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **CMOS camera** — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-application), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **Completed status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
@@ -55,7 +56,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 - **Email notifications** — [Notifications](NOTIFICATIONS.md#email-notifications), [User Profile](USER_PROFILE.md)
 - **Equipment options** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md), [Plugin Setup](PLUGIN_SETUP.md)
 - **Execution window** — [Repetitive Observations](REPETITIVE_OBSERVATIONS.md), [Scheduler Features](SCHEDULER_FEATURES.md)
-- **Exoplanet transit** — [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md#fixed-time-observations)
+- **Exoplanet transit** — [Exoplanet Transits](EXOPLANET_TRANSITS.md), [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md#fixed-time-observations)
 - **Expiry warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#needs-tab), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **Exposure configuration** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **External storage** — [External Storage](EXTERNAL_STORAGE.md), [Organizations](ORGANIZATIONS.md)
@@ -95,8 +96,9 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 ## I
 
+- **Image processing** — [Image Processing](IMAGE_PROCESSING.md)
 - **Individual frame** — [Calibration Guide](CALIBRATION_GUIDE.md#individual-frames-tab), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
-- **Ingress/egress** (transit) — [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md)
+- **Ingress/egress** (transit) — [Exoplanet Transits](EXOPLANET_TRANSITS.md), [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Internal stacking** (camera) — [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs)
 
 ## J
@@ -150,10 +152,11 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 - **Pending status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
 - **Permissions** — [Organizations](ORGANIZATIONS.md), [Projects Guide](PROJECTS_GUIDE.md)
-- **Plate solving** — [Practical Guide](PRACTICAL_GUIDE.md), [Plugin Setup](PLUGIN_SETUP.md)
+- **Plate solving** — [Image Processing](IMAGE_PROCESSING.md#plate-solving), [Practical Guide](PRACTICAL_GUIDE.md), [Plugin Setup](PLUGIN_SETUP.md)
 - **Plugin setup** — [Plugin Setup](PLUGIN_SETUP.md), [Getting Started](GETTING_STARTED.md)
+- **Preview images** — [Image Processing](IMAGE_PROCESSING.md#processing-modules), [Observation Files](OBSERVATION_FILES.md)
 - **Priority** — [Scheduler Features](SCHEDULER_FEATURES.md#priority-system), [Creating Observations](CREATING_OBSERVATIONS.md)
-- **Processing pipeline** — [Overview](OVERVIEW.md), [Server Architecture](SERVER_ARCHITECTURE.md)
+- **Processing pipeline** — [Image Processing](IMAGE_PROCESSING.md), [Overview](OVERVIEW.md), [Server Architecture](SERVER_ARCHITECTURE.md)
 - **Projects** — [Projects Guide](PROJECTS_GUIDE.md), [Creating Observations](CREATING_OBSERVATIONS.md)
 - **Pushover notifications** — [Notifications](NOTIFICATIONS.md#pushover-notifications)
 
@@ -188,7 +191,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 - **Stale warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-details-on-file-detail-page)
 - **Star count** — [Observation Files](OBSERVATION_FILES.md#quality-metrics)
 - **Status** — see [Observation lifecycle](#o)
-- **Support** — [Troubleshooting](TROUBLESHOOTING.md)
+- **Support requests** — [Contact Support](CONTACT_SUPPORT.md), [Troubleshooting](TROUBLESHOOTING.md)
 - **Suspend** — see [Resume/suspend](#r)
 - **System administration** — [System Administration](SYSTEM_ADMINISTRATION.md)
 
@@ -218,6 +221,10 @@ An alphabetical reference to topics, features, and concepts across the Science S
 - **Weather** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
 - **WebSocket** — [Server Architecture](SERVER_ARCHITECTURE.md), [Overview](OVERVIEW.md)
 
+## Z
+
+- **ZIP download** — [Observation Files](OBSERVATION_FILES.md#download-as-zip-archive)
+
 ---
 
-*This index covers Science Scheduler documentation v2.14 (March 2026).*
+*This index covers Science Scheduler documentation v2.15 (March 2026).*

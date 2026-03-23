@@ -176,7 +176,7 @@ The **Download All** button downloads all files from the observation to a local 
 
 1. Click **Download All**
 2. Your browser prompts you to select a destination folder (using the File System Access API)
-3. Files download in parallel for faster completion
+3. Files download in parallel (up to 4 at a time) for faster completion
 4. A progress indicator shows download status
 5. The session is kept alive during long downloads to prevent timeouts
 
@@ -186,9 +186,24 @@ The **Download All** button downloads all files from the observation to a local 
 - For browsers without File System Access API support, files download individually as a fallback
 
 **Tips**:
-- Large observations with many files may take time - the progress indicator tracks completion
+- Large observations with many files may take time — the progress indicator tracks completion
 - Downloads continue even if you navigate to other tabs (session keep-alive is active)
 - If a download fails, you can retry individual files or restart the batch download
+
+### Download as ZIP Archive
+
+The **Download ZIP** option creates a single ZIP archive containing all FITS files plus a metadata file. This is useful when you want a single downloadable package for an observation.
+
+The ZIP archive includes:
+
+- All FITS files from the observation
+- An `observation_metadata.json` file with observation details: target name, timestamps, and per-file information (size, upload time, exposure index)
+
+The ZIP filename follows the format `observation_[target_name]_[date].zip`.
+
+### Download Previews
+
+The **Download Previews** option creates a ZIP archive of all preview PNG images from the observation. Preview images are lower-resolution representations generated during processing — useful for quick visual review without downloading full FITS files.
 
 ### Download Calibrated
 
