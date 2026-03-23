@@ -78,6 +78,7 @@ nav:
     - Guiding Guide: GUIDING_GUIDE.md
     - Calibration Guide: CALIBRATION_GUIDE.md
   - Data & Storage:
+    - My Files: FILE_BROWSER.md
     - Observation Files: OBSERVATION_FILES.md
     - Image Processing: IMAGE_PROCESSING.md
     - External Storage: EXTERNAL_STORAGE.md
