@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.14 | **Last Updated**: March 2026
+**Documentation Version**: 2.15 | **Last Updated**: March 2026
 **Server v3.6.0 | Plugin v3.8.0.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
@@ -56,12 +56,12 @@ If you're managing organizations, users, or the system:
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
 
-## What's New in v2.13 (March 2026)
+## What's New in v2.15 (March 2026)
 
-- **[Observation notifications](NOTIFICATIONS.md)** — Get email and Pushover push notifications when your observations change state
-- **Per-observation notification control** — Choose which channels and state transitions trigger alerts for each observation
-- **[User profile redesign](USER_PROFILE.md)** — New two-column layout with avatar support and organization membership badges
-- **Cancelled status** — User-initiated cancellations now clearly show as "Cancelled" (distinct from system "Aborted")
+- **[Organization observatory membership](OBSERVATORY_ADMINISTRATION.md#organization-members)** — Add entire organizations as observatory members with automatic permission inheritance
+- **Permission mapping** — Organization owners and admins inherit admin + operate; regular members inherit view + observe
+- **Owner organization protection** — Owning organizations are automatically added on ownership transfer and cannot be removed
+- **New API endpoints** — Full CRUD for organization observatory membership management
 
 See the [Changelog](CHANGELOG.md) for full details.
 

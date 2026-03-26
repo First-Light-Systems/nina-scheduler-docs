@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.15] - 2026-03-26
+
+### Added
+
+- **Organization observatory membership** — organizations can now be added as first-class members of any observatory, with permission inheritance based on organization roles:
+    - Organization owners and admins inherit `can_admin` + `can_operate`
+    - Regular organization members inherit `can_view` + `can_observe`
+    - Members table shows organizations as expandable rows with lazy-loaded user lists
+    - Owner organization automatically added on ownership transfer and cannot be removed
+- **Organization member API endpoints**:
+    - `POST /observatories/{id}/members/organization` — add organization
+    - `PUT /observatories/{id}/members/organization/{orgId}` — update permissions
+    - `DELETE /observatories/{id}/members/organization/{orgId}` — remove organization
+- **Observatory history events**: `organization_added`, `organization_removed`, `organization_permissions_updated`
+
+### Changed
+
+- Updated Observatory Administration (v2.6) with Organization Members section, updated history events, and API endpoints
+- Updated Organizations (v1.3) with "Organization as Observatory Member" section and permission mapping
+- Updated index page to v2.15 with organization observatory membership highlights
+
+---
+
 ## [2.14] - 2026-03-22
 
 ### Added
@@ -502,6 +525,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.15 | 3.6.0 | 3.8.0.0 | Organization observatory membership, permission inheritance |
 | 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET 10 |
 | 2.13 | 3.6.0 | 3.6.0.0 | Observation notifications, user profile redesign, Pushover integration |
 | 2.12 | 3.6.0 | 3.6.0.0 | Projects guide, observation lifecycle, repetitive observations, system administration, nav restructure |

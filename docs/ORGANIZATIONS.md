@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: March 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 
@@ -114,6 +114,27 @@ Members of an organization observatory have separate permissions that control wh
 | `can_admin` | Configure observatory settings and manage members |
 
 See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for more details.
+
+### Organization as Observatory Member
+
+In addition to owning observatories, organizations can be added as **members** of any observatory. This allows observatory administrators to grant access to an entire organization at once, rather than adding members individually.
+
+When an organization is added as an observatory member:
+
+| Organization Role | Inherited Observatory Permissions |
+|-------------------|-----------------------------------|
+| **Owner** | `can_admin` + `can_operate` |
+| **Admin** (has `can_manage_members` or `can_manage_observatories`) | `can_admin` + `can_operate` |
+| **Regular Member** | `can_view` + `can_observe` |
+
+Key behaviors:
+
+- When observatory ownership is transferred to an organization, that organization is automatically added as a member with full permissions
+- The owning organization **cannot be removed** from the observatory's member list
+- Adding or removing users from the organization automatically updates their observatory access
+- Organization membership changes are logged in the observatory's history
+
+See [Observatory Administration — Organization Members](OBSERVATORY_ADMINISTRATION.md#organization-members) for step-by-step management instructions.
 
 ## External Storage
 

@@ -1,7 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.5 | **Last Updated**: March 2026
+**Document Version**: 2.6 | **Last Updated**: March 2026
 
+> **What's New in v2.6** (March 2026):
+> - Organization observatory membership — add organizations as observatory members with inherited permissions
+>
 > **What's New in v2.4** (February 2026):
 > - Autofocus configuration section with link to dedicated guide
 >
@@ -116,6 +119,73 @@ To add a member to your observatory (requires `can_admin`):
 !!! warning "Removing Members with Active Observations"
     When you remove a member, their pending observations remain in the queue but they can no longer manage them. Consider reassigning or canceling their observations first.
 
+## Organization Members
+
+Organizations can be added as first-class members of any observatory, not just organization-owned observatories. When an organization is added, all of its members gain access to the observatory with permissions inherited from their organization role.
+
+### Adding an Organization
+
+To add an organization as an observatory member (requires `can_admin`):
+
+1. Go to **Observatories** → Select your observatory
+2. Click the **Members** tab
+3. Click **Add Organization** (next to the Add Member button)
+4. Select the organization from the dropdown
+5. Set the organization's permissions using the checkboxes:
+   - [ ] Can View
+   - [ ] Can Observe
+   - [ ] Can Operate
+   - [ ] Can Admin
+6. Click **Add**
+
+!!! note "Owner Organization Excluded"
+    If the observatory is owned by an organization, that organization is automatically a member with full permissions and does not appear in the "Add Organization" list.
+
+### Permission Inheritance
+
+When an organization is added as an observatory member, individual users inherit permissions based on their role within the organization:
+
+| Organization Role | Observatory Permissions | Description |
+|-------------------|------------------------|-------------|
+| **Owner** | `can_admin` + `can_operate` | Full management access |
+| **Admin** (has `can_manage_members` or `can_manage_observatories`) | `can_admin` + `can_operate` | Management and operational access |
+| **Regular Member** | `can_view` + `can_observe` | View and submit observations only |
+
+### Members Table Display
+
+The members table shows both individual users and organizations:
+
+- **Individual users** display with a person icon
+- **Organizations** display with a business icon and can be expanded to show their members
+- Organization members are loaded on expand (click the organization row to see its users)
+- Each expanded user row shows their inherited permissions
+- The organization owner displays **"Owner"** and **"Org Owner"** badges
+- Organization admins display **"Admin"** and **"Operate"** badges
+
+### Updating Organization Permissions
+
+1. Go to **Observatories** → Select your observatory
+2. Click the **Members** tab
+3. Find the organization in the list
+4. Click **Edit** (pencil icon) on the organization row
+5. Adjust the permission checkboxes
+6. Click **Save**
+
+Editing an organization's permissions updates the inherited permissions for all of its members.
+
+### Removing an Organization
+
+1. Go to **Observatories** → Select your observatory
+2. Click the **Members** tab
+3. Find the organization in the list
+4. Click **Remove** (trash icon)
+5. Confirm the removal
+
+When an organization is removed, all of its members immediately lose observatory access gained through that organization.
+
+!!! warning "Cannot Remove Owner Organization"
+    If the observatory is owned by an organization, that organization cannot be removed from the members list. Transfer ownership first if you need to remove the owning organization.
+
 ## Observatory Ownership
 
 ### Individual vs Organization Ownership
@@ -145,8 +215,10 @@ For organization-owned observatories:
 - Organization members with `can_manage_observatories` permission can create observatories for the organization
 - Observatory membership is separate from organization membership
 - You can add non-organization members to an organization's observatory
+- When ownership is transferred to an organization, that organization is automatically added to `organization_members` with full permissions
+- The owning organization cannot be removed from the observatory's member list
 
-See [Organizations](ORGANIZATIONS.md) for details on organization permissions.
+See [Organizations](ORGANIZATIONS.md) for details on organization permissions and [Organization Members](#organization-members) for adding organizations as observatory members.
 
 ## Common Scenarios
 
@@ -218,6 +290,9 @@ The system automatically logs observatory lifecycle events:
 | `equipment_configuration_changed` | Equipment setup changed (camera, mount, filters) |
 | `goodbye` | Observatory sent graceful disconnect message |
 | `safety_event` | Safety device status changed (safe/unsafe) |
+| `organization_added` | Organization added as observatory member |
+| `organization_removed` | Organization removed from observatory members |
+| `organization_permissions_updated` | Organization member permissions changed |
 
 View history from the observatory detail page under the **History** tab.
 
@@ -522,10 +597,13 @@ Admins can toggle the **System Events** category in their [Notification Preferen
 
 Observatory members can also be managed via API. See the [API Reference](API_REFERENCE.md) for:
 
-- `GET /observatories/{id}/members` - List members
-- `POST /observatories/{id}/members` - Add member
-- `PUT /observatories/{id}/members/{userId}` - Update permissions
-- `DELETE /observatories/{id}/members/{userId}` - Remove member
+- `GET /observatories/{id}/members` - List members (returns both `members` and `organization_members`)
+- `POST /observatories/{id}/members` - Add individual member
+- `PUT /observatories/{id}/members/{userId}` - Update individual member permissions
+- `DELETE /observatories/{id}/members/{userId}` - Remove individual member
+- `POST /observatories/{id}/members/organization` - Add organization as member
+- `PUT /observatories/{id}/members/organization/{orgId}` - Update organization permissions
+- `DELETE /observatories/{id}/members/organization/{orgId}` - Remove organization member
 
 ## New Observatory Registration
 
