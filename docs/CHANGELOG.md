@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.16] - 2026-03-27
+
+### Added
+
+- **Announcements (MOTD)** — observatory, system, organization, and project announcements with acknowledgment tracking:
+    - Observatory owners/admins can post announcements with severity levels (info, warning, critical)
+    - System-wide announcements with flexible targeting (all users, selected users/observatories/organizations/projects)
+    - Organization and project owners/admins can send announcements to their members
+    - Email delivery with automatic acknowledgment for email recipients
+    - Acknowledgment tracking with recipient status views
+    - Cancellation with required reason
+    - Status lifecycle: active → acknowledged / expired / cancelled
+    - Login interception — system announcements block navigation until acknowledged
+    - Dashboard integration with announcement banners and observatory card icons
+    - Scoped admin dashboard for observatory owners/admins
+- **Announcement API endpoints**:
+    - Observatory: `POST/GET/DELETE /observatories/{id}/motd`, acknowledge, recipients, history
+    - System: `POST/GET/DELETE /api/v1/system/motd`, acknowledge, recipients
+    - User: `GET /api/v1/user/motd/pending` for all pending announcements
+
+### Changed
+
+- Updated Observatory Administration (v2.7) with Announcements (MOTD) section
+- Updated System Administration (v1.1) with System Announcements section
+- Updated Organizations (v1.4) with organization announcements
+- Updated Projects Guide (v1.1) with project announcements
+- Updated index page to v2.16 with announcements highlights
+
+---
+
 ## [2.15] - 2026-03-26
 
 ### Added
@@ -525,6 +555,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.16 | 3.6.0 | 3.8.0.0 | Announcements (MOTD) — observatory, system, organization, project |
 | 2.15 | 3.6.0 | 3.8.0.0 | Organization observatory membership, permission inheritance |
 | 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET 10 |
 | 2.13 | 3.6.0 | 3.6.0.0 | Observation notifications, user profile redesign, Pushover integration |

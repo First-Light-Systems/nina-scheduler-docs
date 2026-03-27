@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.3 | **Last Updated**: March 2026
+**Document Version**: 1.4 | **Last Updated**: March 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 
@@ -154,6 +154,14 @@ Only the current owner can transfer ownership:
 
 !!! danger "Ownership Transfer is Permanent"
     Once transferred, you will lose owner privileges unless the new owner grants them back to you.
+
+## Announcements
+
+Organization owners and admins can send announcements to all organization members. Click the **announcement button** on the Organization Management page to create an announcement with a title, message, severity level, and optional expiration date.
+
+Announcements support email delivery and require member acknowledgment. Organization members with indirect access to observatories or projects through the organization will also receive relevant announcements.
+
+For full details on announcement features (severity levels, acknowledgment tracking, cancellation, status lifecycle), see [Observatory Administration — Announcements](OBSERVATORY_ADMINISTRATION.md#announcements-motd).
 
 ## Multi-Organization Membership
 

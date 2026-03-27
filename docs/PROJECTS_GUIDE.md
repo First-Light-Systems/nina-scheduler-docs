@@ -1,6 +1,6 @@
 # Projects Guide
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: March 2026
 
 Projects are the primary way to organize, track, and collaborate on observation programs in the Science Scheduler. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
 
@@ -163,6 +163,14 @@ To delete a project:
 2. Navigate to the **Management** tab
 3. Click **Delete Project**
 4. If observations exist, confirm force deletion
+
+## Announcements
+
+Project owners and admins can send announcements to all project members. Click the **announcement button** on the My Projects page to create an announcement with a title, message, severity level, and optional expiration date.
+
+For organization-owned projects, all organization members automatically receive project announcements (organization membership grants indirect project access).
+
+For full details on announcement features, see [Observatory Administration — Announcements](OBSERVATORY_ADMINISTRATION.md#announcements-motd).
 
 ## Working with Projects
 

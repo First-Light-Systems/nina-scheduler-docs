@@ -1,7 +1,10 @@
 # Observatory Administration
 
-**Document Version**: 2.6 | **Last Updated**: March 2026
+**Document Version**: 2.7 | **Last Updated**: March 2026
 
+> **What's New in v2.7** (March 2026):
+> - Announcements (MOTD) — observatory owners and admins can post announcements with acknowledgment tracking
+>
 > **What's New in v2.6** (March 2026):
 > - Organization observatory membership — add organizations as observatory members with inherited permissions
 >
@@ -592,6 +595,77 @@ If the FITS processor cannot find ASTAP star catalogs (`.290` or `.1476` files i
 ### Controlling System Notifications
 
 Admins can toggle the **System Events** category in their [Notification Preferences](NOTIFICATIONS.md#category-toggles) to control whether they receive these alerts.
+
+## Announcements (MOTD)
+
+Observatory owners and admins can post announcements (Message of the Day) to communicate important information to observatory members — planned downtime, power outages, maintenance windows, weather closures, or general notices.
+
+### Creating an Announcement
+
+1. Go to **Observatories** → Select your observatory
+2. Click **New MOTD** on the observatory details page
+3. Fill in the announcement details:
+
+| Field | Description | Required |
+|-------|-------------|----------|
+| **Title** | Short headline for the announcement | Yes |
+| **Message** | Full announcement text | Yes |
+| **Severity** | `info`, `warning`, or `critical` — controls the alert banner color | Yes |
+| **Expiration Date** | When the announcement automatically expires | No |
+| **Delivery Type** | `message` (in-app only), `email` (email only), or `both` | Yes |
+
+4. Click **Create**
+
+The announcement appears as an alert banner on the observatory details page. Members must acknowledge the banner to dismiss it.
+
+!!! note "Creator Auto-Acknowledge"
+    The announcement creator is automatically marked as acknowledged and will not see their own announcement banner.
+
+### Email Delivery
+
+When delivery type is set to `email` or `both`, the announcement is sent via email to all observatory members (including organization members with indirect access). Email recipients are automatically marked as acknowledged. The reply-to address is set to the creator's email.
+
+### Severity Levels
+
+| Severity | Use For | Display |
+|----------|---------|---------|
+| **Info** | General notices, minor updates | Blue banner |
+| **Warning** | Upcoming maintenance, potential issues | Yellow/orange banner |
+| **Critical** | Immediate outages, safety issues, urgent notices | Red banner |
+
+### Acknowledgment Tracking
+
+Each announcement tracks which recipients have acknowledged it:
+
+- Click the **eye icon** on an announcement to view the recipients list with their acknowledgment status
+- Recipients are listed with status filter and sortable columns
+- The announcement status automatically transitions:
+  - **Active** — created, pending acknowledgments
+  - **Acknowledged** — all targeted recipients have acknowledged
+  - **Expired** — past expiration date without full acknowledgment
+
+### Cancelling an Announcement
+
+To cancel an active announcement:
+
+1. Click the **cancel icon** on the announcement
+2. Enter a reason for cancellation (required)
+3. Confirm the cancellation
+
+Cancelled announcements store the cancellation reason, who cancelled it, and when. The recipients view shows cancellation details for cancelled announcements.
+
+### Viewing Announcement History
+
+Observatory owners and admins can view all past announcements (active, acknowledged, expired, and cancelled) from the observatory announcements management table.
+
+### API Endpoints
+
+- `POST /observatories/{id}/motd` — Create announcement (owner/admin)
+- `GET /observatories/{id}/motd` — List active announcements (excludes acknowledged)
+- `GET /observatories/{id}/motd/history` — All announcements including past (owner/admin)
+- `DELETE /observatories/{id}/motd/{motdId}` — Cancel announcement
+- `POST /observatories/{id}/motd/{motdId}/acknowledge` — Acknowledge announcement
+- `GET /observatories/{id}/motd/{motdId}/recipients` — View recipients with acknowledgment status
 
 ## API Access
 

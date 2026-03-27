@@ -1,8 +1,11 @@
 # System Administration
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: March 2026
 
-This guide covers server-level administration tools for maintaining the Science Scheduler system — database integrity, backups, and system analytics.
+> **What's New in v1.1** (March 2026):
+> - System Announcements (MOTD) with flexible targeting, cancellation, and login interception
+
+This guide covers server-level administration tools for maintaining the Science Scheduler system — database integrity, backups, system analytics, and system-wide announcements.
 
 !!! note "Access Required"
     All features in this guide require **server administrator** access. Observatory administrators should see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for observatory-level management.
@@ -207,6 +210,97 @@ The system health endpoint (`/api/health`) reports:
 - Review server logs for error patterns after deployments
 - Review backup list to ensure recent backups exist
 - Watch storage usage trends to plan capacity
+
+---
+
+## System Announcements (MOTD)
+
+Server administrators can create system-wide announcements (Message of the Day) to communicate with users across the entire platform. The announcements page is available at **System** → **Announcements** (`/admin/announcements`).
+
+### Creating a System Announcement
+
+1. Navigate to **System** → **Announcements**
+2. Click **Create Announcement**
+3. Fill in the announcement details:
+
+| Field | Description | Required |
+|-------|-------------|----------|
+| **Title** | Short headline | Yes |
+| **Message** | Full announcement text | Yes |
+| **Severity** | `info`, `warning`, or `critical` | Yes |
+| **Expiration Date** | When the announcement expires | No |
+| **Delivery Type** | `message`, `email`, or `both` | Yes |
+| **Targets** | Who receives the announcement (see below) | Yes |
+
+### Flexible Targeting
+
+System announcements support flexible targeting — choose one or more recipient groups:
+
+| Target | Description |
+|--------|-------------|
+| **All Users** | Every registered user receives the announcement |
+| **Selected Users** | Specific individual users |
+| **Selected Observatories** | All members of selected observatories |
+| **Selected Organizations** | All members of selected organizations |
+| **Selected Projects** | All members of selected projects |
+
+Each target type has a multi-select picker and an "all" checkbox for convenience. Targets can be combined — for example, target a specific organization and a specific observatory in a single announcement.
+
+### Login Interception
+
+System announcements with pending acknowledgments are displayed in a modal dialog that blocks navigation when a user logs in. Users must acknowledge all pending system announcements before they can proceed to use the application.
+
+### Announcements Page
+
+The System Announcements page displays announcements in four categorized tables:
+
+- **System** — system-wide announcements
+- **Organization** — organization-scoped announcements
+- **Observatory** — observatory-scoped announcements
+- **Project** — project-scoped announcements
+
+Each table supports status filtering with toggle buttons: All, Active, Acknowledged, Expired, and Cancelled.
+
+### Dashboard Integration
+
+- System announcement banners appear on the main dashboard
+- Observatory cards display an announcement icon when active observatory MOTDs exist
+
+### Email Delivery
+
+When delivery type includes email, announcements are sent to all resolved recipients (including users with indirect access through organizations). Email recipients are automatically marked as acknowledged. System-wide announcement emails use the `SUPPORT_EMAIL` environment variable as the reply-to address.
+
+### Cancellation
+
+To cancel an active announcement:
+
+1. Click the **cancel icon** on the announcement
+2. Enter a cancellation reason (required — the dialog is disabled until a reason is entered)
+3. Confirm the cancellation
+
+Cancelled announcements display the cancellation reason and timestamp in the recipients view.
+
+### Status Lifecycle
+
+| Status | Description |
+|--------|-------------|
+| **Active** | Created and pending acknowledgments |
+| **Acknowledged** | All targeted recipients have acknowledged |
+| **Expired** | Past expiration date without full acknowledgment (auto-set on query) |
+| **Cancelled** | Manually cancelled by an administrator with a reason |
+
+### API Endpoints
+
+- `POST /api/v1/system/motd` — Create system announcement (server admin)
+- `GET /api/v1/system/motd` — List all system announcements (server admin)
+- `DELETE /api/v1/system/motd/{id}` — Cancel announcement
+- `POST /api/v1/system/motd/{id}/acknowledge` — Acknowledge announcement
+- `GET /api/v1/system/motd/{id}/recipients` — View recipients with status filter and sorting
+- `GET /api/v1/user/motd/pending` — Get all pending announcements for the current user
+
+### Scoped Admin Dashboard
+
+Observatory owners and admins see an administration section with a scoped dashboard showing only their observatories' statistics. Server admins see all observatories' MOTDs and full system statistics.
 
 ---
 
