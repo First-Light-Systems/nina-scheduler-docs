@@ -289,6 +289,8 @@ The observation detail page includes a chronological **event log** that records 
 
 Each event includes a **severity level** (DEBUG, INFO, WARNING, ERROR, or CRITICAL). The timeline view on the detail page shows important events (INFO and above), filtering out DEBUG-level entries for readability.
 
+**Hardware state snapshots:** Key events (such as execution-state changes, completed exposures, observation completion, and detected issues) carry a snapshot of the observatory's equipment at that moment — mount position and tracking, camera temperature/cooling and binning/gain, focuser position, filter, dome and shutter status, weather readings, and guider RMS. Expand one of these events to see the captured hardware state, which is invaluable for understanding what the equipment was doing when something went wrong.
+
 #### Timing Summary
 
 The observation detail page shows an estimated overhead breakdown including download time, dither time, and filter change time. The observation list shows actual duration for completed observations.

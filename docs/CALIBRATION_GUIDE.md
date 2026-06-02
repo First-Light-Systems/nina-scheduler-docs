@@ -1,7 +1,11 @@
 # Calibration Guide
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: June 2026
 
+> **What's New** (June 2026):
+> - **Shutterless camera support** — the plugin uses an opaque "dark filter" to block light when capturing darks/bias on cameras without a mechanical shutter (see [Dark and Bias Frames](#dark-and-bias-frames))
+> - **Demand-driven calibration** — the server now acquires darks and builds masters only for the camera/filter/exposure combinations your recent light frames actually need
+>
 > **New in v3.6.0** (March 2026):
 > - Image calibration system with automated flat, dark, and bias frame management
 > - Plugin-based flat capture with trained exposure settings and auto-brightness
@@ -16,8 +20,8 @@ Image calibration removes systematic noise from astronomical images. Three types
 
 | Frame Type | What It Corrects | How It's Captured |
 |------------|-----------------|-------------------|
-| **Dark** | Thermal noise (hot pixels, dark current) | Shutter closed, same exposure time and temperature as lights |
-| **Bias** | Readout noise (electronic baseline) | Shutter closed, shortest possible exposure |
+| **Dark** | Thermal noise (hot pixels, dark current) | Light blocked (shutter or opaque filter), same exposure time and temperature as lights |
+| **Bias** | Readout noise (electronic baseline) | Light blocked (shutter or opaque filter), shortest possible exposure |
 | **Flat** | Optical vignetting and dust shadows | Evenly illuminated field (flat panel or twilight sky) |
 
 Individual calibration frames are combined into **master frames** using statistical stacking (typically sigma-clipped mean). Masters are then applied to your light images automatically.
@@ -145,10 +149,20 @@ This ensures the Flat Wizard targets the correct ADU range for the 12-bit mode. 
 
 Dark and bias frames are captured automatically by the gap-filling system. When the server detects idle time between scheduled observations, it dispatches dark frame capture at the exposure times and temperatures your observatory has been using for light frames.
 
-You don't need to configure anything for this to work — the server analyzes your recent light frames and determines what dark coverage is needed.
+For most cameras you don't need to configure anything — the server analyzes your recent light frames and determines what dark coverage is needed. **Shutterless cameras are the exception** (see below).
 
 !!! note "Dark Frame Requirements"
     For CMOS cameras, dark frames must match the exact exposure time of your lights (rounded to the nearest second). For CCD cameras, dark frames can be scaled to different exposure times, so fewer darks are needed.
+
+### Demand-Driven Capture
+
+The server only acquires darks (and only builds masters) for camera/binning/gain/offset/temperature/exposure combinations that your **recent light frames actually use**. A combination with no recent matching lights is not pursued, so the system doesn't waste gap time or uplink bandwidth capturing calibration you don't need. As your imaging mix changes, the [Needs tab](#needs-tab) updates to show only the coverage that current demand requires.
+
+### Shutterless Cameras
+
+A dark or bias frame must be exposed with **no light reaching the sensor**. Cameras with a mechanical shutter do this automatically. Many CMOS cameras have **no shutter**, so the plugin must move the filter wheel to an opaque ("dark") filter before exposing — otherwise the "dark" would record sky background or whatever filter the last light frame left in the beam.
+
+If your camera is shutterless, set the plugin's **Dark Filter** option to the name of an opaque slot in your filter wheel. If no valid dark filter is configured, the plugin **refuses to capture darks** (and raises a red notification in NINA) rather than record a contaminated frame. See [Dark Filter (Shutterless Cameras)](PLUGIN_SETUP.md#dark-filter-shutterless-cameras) in the Plugin Setup guide for full details.
 
 ## Master Frame Creation
 

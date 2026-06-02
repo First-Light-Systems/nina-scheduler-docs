@@ -1,8 +1,12 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.4 | **Last Updated**: February 2026
-**Plugin Version**: v3.2.14.0
+**Document Version**: 1.5 | **Last Updated**: June 2026
+**Plugin Version**: v3.12.1.0
 
+> **What's New in v1.5** (June 2026):
+> - Plugin version updated to v3.12.1.0
+> - **Dark Filter option for shutterless cameras** — the plugin now decides locally how to capture darks and bias frames based on whether your camera has a mechanical shutter (see [Dark Filter (Shutterless Cameras)](#dark-filter-shutterless-cameras))
+>
 > **What's New in v1.4** (February 2026):
 > - Plugin version updated to v3.2.14.0
 > - **Automatic update checking** — plugin checks for updates at startup and every 4 hours
@@ -203,6 +207,33 @@ To verify/update coordinates:
 **Enable Operations:**
 - When **ON**: Observatory accepts and executes observations
 - When **OFF**: Observatory stays connected but pauses execution (useful during maintenance or weather)
+
+### Dark Filter (Shutterless Cameras)
+
+Dark and bias frames must be exposed with **no light reaching the sensor**. Cameras with a mechanical shutter close it automatically. Many CMOS cameras are **shutterless** — they have no way to block light on their own, so a dark exposed with an open light path would actually record the sky or whatever filter the last science frame left in the beam, contaminating the frame.
+
+The plugin handles this automatically based on your camera's reported capabilities, with one setting you may need to provide:
+
+| Field | When to set it |
+|-------|----------------|
+| **Dark Filter** | The name of an **opaque / blank filter slot** in your filter wheel (for example, `Dark`, `Blank`, or a parked dust-cap position). Required for shutterless cameras. Leave **empty** for cameras with a mechanical shutter. |
+
+The Dark Filter name must match a filter defined in your active NINA profile's filter wheel exactly (case-insensitive).
+
+#### How the plugin decides
+
+Before every dark or bias exposure, the plugin checks the camera's mechanical-shutter status and your Dark Filter setting:
+
+| Camera | Dark Filter set? | Behavior |
+|--------|------------------|----------|
+| Has mechanical shutter | (either) | Exposes normally; the shutter blocks light. If a Dark Filter is also configured, the plugin moves to it anyway (harmless). |
+| Shutterless | Yes, and the filter exists in the wheel | Moves the filter wheel to the opaque filter, then exposes |
+| Shutterless | No, or the configured name isn't in the wheel, or no filter wheel is connected | **Refuses to capture** rather than record a contaminated dark |
+
+!!! warning "Fail-Safe Refusal"
+    For a shutterless camera, the plugin will **refuse to capture darks/bias** if it cannot guarantee the light path is blocked — it will never silently capture a contaminated dark. When this happens, NINA raises a **red error notification** explaining the reason (for example, *"set the plugin's Dark Filter option"*), and the refusal is recorded in the NINA log. The notification is throttled so the automatic dark-capture retry loop doesn't spam pop-ups.
+
+If the server keeps requesting darks that the plugin refuses, it automatically **backs off** dark requests for that observatory after several consecutive refusals, and resumes once a successful capture occurs or the calibration configuration changes. The fix is to set a valid Dark Filter (or confirm your camera reports a shutter) and restart capture.
 
 ### Status Display
 

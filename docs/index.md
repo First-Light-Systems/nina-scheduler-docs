@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.16 | **Last Updated**: March 2026
-**Server v3.6.0 | Plugin v3.8.0.0**
+**Documentation Version**: 2.17 | **Last Updated**: June 2026
+**Server v3.9.0 | Plugin v3.12.1.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
@@ -55,6 +55,14 @@ If you're managing organizations, users, or the system:
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.17 (June 2026)
+
+- **[Shutterless camera support](PLUGIN_SETUP.md#dark-filter-shutterless-cameras)** — set a Dark Filter so cameras without a mechanical shutter capture clean darks and bias frames
+- **[Observatory Reservations](OBSERVATORY_ADMINISTRATION.md#reservations-blocking-time)** — block out observatory time; in-progress observations auto-suspend and auto-resume around the block
+- **[Observatory Map](OBSERVATORY_ADMINISTRATION.md#observatory-map)** — live geographic view of the whole fleet with status and heartbeat markers
+- **[Pipeline Performance Stats](OBSERVATORY_ADMINISTRATION.md#pipeline-performance-stats)** — see where time goes across the observation-to-archive pipeline
+- **[Demand-driven calibration](CALIBRATION_GUIDE.md#demand-driven-capture)** — darks and masters are built only for the configurations your recent lights actually need
 
 ## What's New in v2.16 (March 2026)
 

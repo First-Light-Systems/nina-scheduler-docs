@@ -145,6 +145,15 @@ The event type dropdown controls which events are shown:
 
 The Usage Explorer is particularly useful for investigating specific incidents or reviewing what happened on a particular night.
 
+### Per-Image Data Accounting
+
+Usage events now record **per-file detail** (file name, filter, exposure index, and file size) rather than only per-observation totals. This makes the **Data Volume** / **Data Stored** figures track storage precisely as files move:
+
+- When a file is transferred to [external storage](EXTERNAL_STORAGE.md), the transfer is recorded with its provider, destination, and size.
+- When a server-side copy is removed after a successful external transfer, its size is subtracted from the running data total.
+
+The result is that data-volume metrics reflect what is actually stored on the server at any time. This detail is also available in CSV exports for downstream per-image analysis.
+
 ---
 
 ## Key Metrics Explained

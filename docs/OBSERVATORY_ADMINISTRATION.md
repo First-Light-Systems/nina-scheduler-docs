@@ -1,7 +1,12 @@
 # Observatory Administration
 
-**Document Version**: 2.7 | **Last Updated**: March 2026
+**Document Version**: 2.8 | **Last Updated**: June 2026
 
+> **What's New in v2.8** (June 2026):
+> - **Reservations** — block out observatory time with auto-suspend/resume of in-progress observations
+> - **Observatory Map** — live geographic fleet view (server admins)
+> - **Pipeline Performance Stats** — per-stage timing of the observation-to-archive pipeline
+>
 > **What's New in v2.7** (March 2026):
 > - Announcements (MOTD) — observatory owners and admins can post announcements with acknowledgment tracking
 >
@@ -280,6 +285,92 @@ Disable dispatching during maintenance, testing, or when you need to run manual 
 Useful during weather holds or equipment issues when you want to maintain the connection but not execute observations.
 
 Both controls take effect immediately and their status is visible to all users viewing the observatory.
+
+## Pipeline Performance Stats
+
+The observatory operations view includes a **Performance Stats** panel that breaks the observation-to-archive pipeline into its component stages, so you can see where time is spent and spot bottlenecks (a slow uplink, a backed-up processing queue, long slews). Metrics are averaged over a selectable window (**7 / 30 / 90 days**) and refresh as observations complete.
+
+| Stage | What it measures |
+|-------|------------------|
+| **Assigned → Started** | Time from assignment until the plugin reports the observation started |
+| **Started → First image** | Setup time to the first uploaded image (slew, autofocus, first exposure) |
+| **Inter-image capture** | Average gap between consecutive captures within an observation |
+| **Captured → Uploaded** | Time from image capture to the file landing on the server (upload lag) |
+| **Link throughput** | Effective upload throughput in MB/s |
+| **Uploaded → Job created** | Server queue latency from file arrival to a processing job being created |
+| **Job created → Completed** | Processing job duration to successful completion |
+
+A footer summarizes the sample size (observations and files) and the processing **job success rate** for the period. The panel is visible to members with `can_view` on the observatory.
+
+!!! tip "Diagnosing Slow Sites"
+    A large **Captured → Uploaded** time or low **Link throughput** points to a bandwidth-limited uplink — expected at residential sites and the reason the server tolerates long calibration upload lag. A large **Uploaded → Job created** time instead points to a backlog in server-side processing.
+
+## Reservations (Blocking Time)
+
+Reservations let an observatory admin block out a window of time during which the scheduler will not use the observatory — for partner programs, guest observers, classes, outreach, or maintenance.
+
+**Who can manage reservations:** Members with `can_admin` on the observatory (and server admins).
+
+### Creating a Reservation
+
+From the **Observatories** card, click the **reservations icon** (*"Manage reservations (blocked time)"*) on the observatory's row to open the reservations page, then click **New reservation**. A reservation has these fields:
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| **Title** | Yes | Short name shown on the schedule (e.g., "Maintenance", "Guest Observer") |
+| **Purpose** | Yes | Longer description of why the time is blocked |
+| **Contact name** | Yes | Person responsible for the reservation |
+| **Contact email** | No | |
+| **Contact phone** | No | |
+| **Start time** | Yes | Entered in **UTC** |
+| **End time** | Yes | Entered in **UTC**; must be after the start |
+
+!!! note "Times Are UTC"
+    Reservation start/end times are entered and displayed in **UTC**. There is no recurrence — each reservation is a single, one-off window. Schedule recurring blocks by creating them individually.
+
+### What a Reservation Does
+
+While an observatory is inside an active reservation:
+
+- **New work is blocked** — the scheduler will not assign new observations to the observatory for the duration of the block. This is absolute; there is no override/bypass while a reservation is active.
+- **In-progress observations auto-suspend** — any observation running when the block begins is automatically **suspended** (not cancelled), with the reason "Observatory Reserved".
+- **Automatic resume** — when the reservation ends (or is cancelled early), suspended observations are automatically resumed from where they left off, within about a minute. No manual action is needed.
+- **Timeline awareness** — for observatories that bypass dark-time constraints (daytime operation), flexible proposed observations are visually shifted past the block on the schedule so they don't appear to collide with it.
+
+### Editing and Cancelling
+
+- **Scheduled** (future) reservations can be edited (pencil icon). Once a reservation has **started**, it can no longer be edited.
+- **Active** or **scheduled** reservations can be cancelled. Cancelling asks for a **cancellation reason** and an **actual end time** (UTC, defaulting to now) — useful when a maintenance window finishes early so the scheduler can resume sooner.
+- A toggle on the reservations page shows cancelled reservations alongside active ones.
+
+### How Reservations Appear
+
+- On the schedule timeline (and the Schedule Analytics pane), reservations show as **orange hashed bands**. Hovering shows the title, start/end, purpose, and contact details, with status (active / scheduled / completed / cancelled).
+- Clicking a band opens the reservations page for that observatory (admins only).
+- On an observation's constraint checks, a blocking reservation appears as a red `reserved_time` chip.
+
+Reservation changes broadcast in real time, so open schedule and analytics views refresh automatically when a reservation is created, edited, or cancelled.
+
+## Observatory Map
+
+The Observatory Map is a live, geographic view of every observatory in the fleet, plotted on a Google map. It's available to **server administrators**.
+
+### Opening the Map
+
+Click the **map icon** (*"Open observatory map (new tab)"*) in the header of the **Observatories** card. The map opens in a new browser tab.
+
+!!! note "Requires a Google Maps API Key"
+    The map button only appears when the server has been configured with a Google Maps API key (`REACT_APP_GOOGLE_MAPS_API_KEY`, built into the web GUI). If no key is configured, the entry point is hidden. Server administrators set this up in Google Cloud Console (enable the Maps JavaScript API, restrict the key by referrer to your deployment domain) and rebuild the web GUI.
+
+### What the Map Shows
+
+- A **live marker for each observatory** at its registered location. The marker icon shows whether the observatory is **idle** (dome icon) or **actively observing** (telescope icon).
+- The **marker border color** reflects heartbeat health: green (healthy, reported within ~5 min), orange (warning, 5–15 min / no session), red (critical, > 15 min), gray (never reported).
+- Observatories at the **same coordinates** (multi-telescope sites) are spread into a small ring so each stays clickable; nearby markers **cluster** with a count at lower zoom.
+- **Hovering** a marker shows the observatory name, owner, and — if observing — the current target and observer. **Clicking** a marker opens the active observation (if observing) or the observatory's detail card.
+- A collapsible **legend** explains the icons and heartbeat colors. The map defaults to the **Terrain** view; use the map-type dropdown to switch.
+
+The map refreshes automatically (every ~30 seconds and on live status events), so markers track fleet activity in near real time.
 
 ## Observatory History
 

@@ -1,7 +1,12 @@
 # Calibration Administration
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: June 2026
 
+> **What's New** (June 2026):
+> - **Demand-driven builds** — masters and dark acquisition are now gated on actual recent light-frame demand
+> - **Per-camera Default Readout Mode** setting that pre-fills the observation form
+> - Notes on shutterless-camera dark capture (now handled by the plugin)
+>
 > **New in v3.6.0** (March 2026):
 > - Calibration library management for administrators
 > - Master frame creation and stacking controls
@@ -122,6 +127,17 @@ Dark frame matching for calibration also uses this tolerance — a master dark a
 
 For observatories with rotators, flat fields can vary with rotation angle. Set this to **Required** if your optical train shows noticeable vignetting changes with rotation.
 
+### Per-Camera Settings
+
+Some calibration settings are configured per camera rather than per observatory. In the calibration settings, each detected camera has its own card:
+
+| Setting | Description |
+|---------|-------------|
+| **Default Readout Mode** | Pre-fills the readout mode on the observation submit form for this camera. Choose `— no default —` to leave the field blank (the user picks each time), or pick one of the camera's readout modes. |
+
+!!! tip "Why Set a Default Readout Mode"
+    The observation form would otherwise carry forward the readout mode of the previously submitted observation, which can silently drift to the wrong mode when duplicating or cloning observations. Setting a per-camera default ensures every new observation starts from the correct readout mode for that camera. Existing exposures keep their stored readout mode — only newly added exposure rows pick up the default.
+
 ## Managing Masters
 
 ### Manual Master Creation
@@ -156,6 +172,18 @@ Deleting a frame permanently removes it from both the database and S3 storage. T
 ## Auto-Stacking Behavior
 
 The server automatically creates masters through two mechanisms:
+
+### Demand-Driven Builds
+
+Both auto-stacking and gap-fill dark acquisition are **gated on actual light-frame demand**. The server only builds a master (and only acquires the darks feeding it) for a camera/binning/gain/offset/temperature/exposure combination when a recent light frame exists that needs fresh calibration for that combination — that is, a light whose capture time falls outside the validity window of every existing (non-expired, non-superseded) master for the combo.
+
+The practical effect:
+
+- Combinations that no recent light frames use are **not** pursued — they show a `no_demand_for_combo` reason in the Needs assessment and are excluded from the plugin's calibration work queue.
+- Expiry warnings only surface for combinations that current light frames still depend on; warnings for retired combinations disappear on their own.
+- **Manual / admin-initiated** master creation bypasses the demand gate — you can always force a build (see [Managing Masters](#managing-masters)).
+
+This keeps slow-uplink and gap-time budgets focused on calibration the observatory actually needs as its imaging mix changes.
 
 ### Registration Trigger
 
@@ -194,6 +222,8 @@ Observatory operators should review this periodically to ensure calibration cove
 | Master shows 0 source frames in accordion | Source frames were deleted | Individual frames persist independently; deleting them doesn't affect the master |
 | Light images not calibrated | No matching master for the camera/gain/filter/temperature | Check the Needs tab for uncovered configurations |
 | Duplicate filter entries in capture plan | Same filter at different gain/offset values | Expected behavior — different hardware configs need separate flat sets |
+| Configuration shows `no_demand_for_combo` | No recent light frames use that combination | Expected — calibration is built only for combinations current lights need (see [Demand-Driven Builds](#demand-driven-builds)) |
+| Darks never captured on a shutterless camera | Plugin refusing to capture (no valid dark filter) | Set the plugin's **Dark Filter** option (see [Troubleshooting](TROUBLESHOOTING.md#darks-being-skipped-or-refused-shutterless-cameras)) |
 
 ## API Reference
 

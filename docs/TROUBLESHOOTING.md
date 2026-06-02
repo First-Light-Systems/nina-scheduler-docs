@@ -301,6 +301,33 @@ For autofocus-specific troubleshooting (unexpected AF behavior, triggers not fir
 
 ---
 
+## Calibration Issues
+
+### Darks Being Skipped or Refused (Shutterless Cameras)
+
+If your observatory captures no dark or bias frames and NINA shows a **red error notification** about calibration capture, your camera is likely **shutterless** and the plugin can't guarantee the light path is blocked.
+
+A camera with no mechanical shutter must expose darks through an opaque ("dark") filter. The plugin refuses to capture rather than record a light-contaminated dark when any of these is true:
+
+- No **Dark Filter** is configured in the plugin settings
+- The configured Dark Filter name doesn't match any filter in your active NINA profile's wheel
+- No filter wheel is connected
+
+**Fix:**
+
+1. In NINA, go to **Options** > **Plugins** > **Science Scheduler**
+2. Set the **Dark Filter** option to the exact name of an opaque/blank slot in your filter wheel (case-insensitive). Leave it empty only if your camera has a mechanical shutter.
+3. Confirm that filter exists in **Options** > **Equipment** > **Filter Wheel**
+4. Restart calibration capture
+
+After repeated refusals the server automatically **backs off** dark requests for the observatory for a cooldown period; a successful capture or a calibration settings change clears the back-off immediately. See [Dark Filter (Shutterless Cameras)](PLUGIN_SETUP.md#dark-filter-shutterless-cameras) for details.
+
+### Master Frames Not Appearing
+
+For master-creation issues (not enough frames, missing master dark for flats, temperature mismatches) and an explanation of why some configurations show no calibration activity, see the [Calibration Guide](CALIBRATION_GUIDE.md#master-frame-creation) and [Calibration Administration](CALIBRATION_ADMINISTRATION.md#common-issues).
+
+---
+
 ## Web Interface Issues
 
 ### Can't Log In

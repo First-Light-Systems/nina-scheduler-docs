@@ -6,6 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.17] - 2026-06-02
+
+### Added
+
+- **Shutterless camera support** (Plugin Setup, Calibration Guide, Troubleshooting):
+    - New **Dark Filter** plugin option — for cameras without a mechanical shutter, the plugin moves the filter wheel to a configured opaque slot before exposing darks/bias
+    - Dark-filter decision is now made locally by the plugin from the camera's mechanical-shutter status (the server no longer sends a shutter hint)
+    - **Fail-safe refusal**: a shutterless camera with no valid dark filter refuses to capture rather than record a light-contaminated dark, and raises a red notification in NINA
+    - Server **backs off** gap-fill dark requests after repeated refusals and resumes after a successful capture or a settings change
+    - New Calibration Issues troubleshooting section covering refused darks
+
+- **Observatory Reservations** (Observatory Administration) — admins can block out observatory time windows (title, purpose, contact, UTC start/end); active reservations block new dispatch, auto-suspend in-progress observations, and auto-resume them when the block ends; reservations appear as orange bands on the schedule
+
+- **Observatory Map** (Observatory Administration) — live geographic view of the fleet with per-observatory status/heartbeat markers, clustering, hover/click details, and a legend (server admins; requires a Google Maps API key)
+
+- **Pipeline Performance Stats** (Observatory Administration) — per-stage timing of the observation-to-archive pipeline (assigned→started, started→first image, inter-image, capture→upload, link throughput, upload→job, job→completed) over a 7/30/90-day window, with processing job success rate
+
+- **Per-camera Default Readout Mode** (Calibration Administration) — pre-fills the readout mode on the observation form per camera, preventing drift from cloned/duplicated observations
+
+- **Hardware state snapshots in observation logs** (Creating Observations) — key events now carry a snapshot of mount, camera, focuser, filter, dome, weather, and guider state
+
+### Changed
+
+- **Calibration is now demand-driven** (Calibration Guide, Calibration Administration) — darks are acquired and masters built only for camera/filter/exposure combinations that recent light frames actually need; unused combinations show `no_demand_for_combo` in the Needs assessment
+- **Per-image data accounting** (Reporting Guide) — usage events record per-file detail (name, filter, exposure index, size) and external-transfer / local-removal events, so Data Volume metrics track what is actually stored
+- **Plugin version** updated to v3.12.1.0
+- **Server version** updated to v3.9.0
+- **User GUI version** updated to v3.3.5
+
+---
+
 ## [2.16] - 2026-03-27
 
 ### Added
@@ -555,6 +586,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 | Docs Version | Server Version | Plugin Version | Notes |
 |--------------|----------------|----------------|-------|
+| 2.17 | 3.9.0 | 3.12.1.0 | Shutterless camera dark filter, observatory reservations & map, pipeline performance stats, demand-driven calibration |
 | 2.16 | 3.6.0 | 3.8.0.0 | Announcements (MOTD) — observatory, system, organization, project |
 | 2.15 | 3.6.0 | 3.8.0.0 | Organization observatory membership, permission inheritance |
 | 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET 10 |
