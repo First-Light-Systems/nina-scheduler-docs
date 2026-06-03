@@ -98,10 +98,10 @@ To add a member to your observatory (requires `can_admin`):
 3. Click **Add Member**
 4. Search for the user by email address
 5. Set their permissions using the checkboxes:
-   - [ ] Can View
-   - [ ] Can Observe
-   - [ ] Can Operate
-   - [ ] Can Admin
+    - [ ] Can View
+    - [ ] Can Observe
+    - [ ] Can Operate
+    - [ ] Can Admin
 6. Click **Add Member**
 
 !!! tip "Permission Combinations"
@@ -140,10 +140,10 @@ To add an organization as an observatory member (requires `can_admin`):
 3. Click **Add Organization** (next to the Add Member button)
 4. Select the organization from the dropdown
 5. Set the organization's permissions using the checkboxes:
-   - [ ] Can View
-   - [ ] Can Observe
-   - [ ] Can Operate
-   - [ ] Can Admin
+    - [ ] Can View
+    - [ ] Can Observe
+    - [ ] Can Operate
+    - [ ] Can Admin
 6. Click **Add**
 
 !!! note "Owner Organization Excluded"
@@ -731,9 +731,9 @@ Each announcement tracks which recipients have acknowledged it:
 - Click the **eye icon** on an announcement to view the recipients list with their acknowledgment status
 - Recipients are listed with status filter and sortable columns
 - The announcement status automatically transitions:
-  - **Active** — created, pending acknowledgments
-  - **Acknowledged** — all targeted recipients have acknowledged
-  - **Expired** — past expiration date without full acknowledgment
+    - **Active** — created, pending acknowledgments
+    - **Acknowledged** — all targeted recipients have acknowledged
+    - **Expired** — past expiration date without full acknowledgment
 
 ### Cancelling an Announcement
 

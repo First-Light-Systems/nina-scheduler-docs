@@ -196,9 +196,9 @@ To override the defaults:
 1. In the observation form, find the **Autofocus Settings** step
 2. Turn OFF the **Use observatory defaults** toggle
 3. Configure the settings for this observation:
-   - Enable/disable plugin-managed autofocus
-   - Enable/disable initial autofocus
-   - Configure each trigger type independently
+    - Enable/disable plugin-managed autofocus
+    - Enable/disable initial autofocus
+    - Configure each trigger type independently
 
 Only the settings you change will override the observatory defaults. For example, you could keep all observatory defaults but change the time-based interval from 30 to 15 minutes for a particularly temperature-sensitive night.
 

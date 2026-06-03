@@ -85,8 +85,8 @@ Flat frames require special attention because they need an illumination source �
 
 1. In NINA's Advanced Sequencer, add the **Science Scheduler Calibration** instruction
 2. Choose the flat capture mode:
-   - **Panel** — uses a motorized flat panel (requires a connected flat device)
-   - **Sky** — uses twilight sky illumination (select Dawn or Dusk)
+    - **Panel** — uses a motorized flat panel (requires a connected flat device)
+    - **Sky** — uses twilight sky illumination (select Dawn or Dusk)
 3. Place the instruction in your sequence where flat capture should happen
 
 The instruction queries the server to determine which filters need flats and how many frames are still needed. It then captures only the frames necessary to reach the target count.

@@ -78,9 +78,9 @@ Before creating a storage configuration, you need credentials from your cloud pr
 ### Creating a Configuration
 
 1. Navigate to the external storage settings:
-   - **Personal**: Go to your profile or account settings
-   - **Organization**: Go to the organization's edit dialog, **External Storage** tab
-   - **Project**: Go to the project's edit dialog, **External Storage** tab
+    - **Personal**: Go to your profile or account settings
+    - **Organization**: Go to the organization's edit dialog, **External Storage** tab
+    - **Project**: Go to the project's edit dialog, **External Storage** tab
 2. Click **Add Storage Configuration**
 3. Fill in the configuration dialog:
 
@@ -196,28 +196,28 @@ Each destination shows:
 A researcher working on a galaxy imaging project:
 
 1. **Organization admin** creates a shared Google Drive configuration:
-   - Display name: "Research Group Archive"
-   - Destination: `/Astronomy/2026-Spring`
-   - Organization: by target
+    - Display name: "Research Group Archive"
+    - Destination: `/Astronomy/2026-Spring`
+    - Organization: by target
 2. **Researcher** also has a personal Dropbox configuration:
-   - Display name: "My Dropbox"
-   - Destination: `/fits-data`
-   - Organization: by project and target
+    - Display name: "My Dropbox"
+    - Destination: `/fits-data`
+    - Organization: by project and target
 3. When creating an observation for M31:
-   - Checks both "Research Group Archive" and "My Dropbox"
-   - After the observation completes, FITS files are automatically copied to:
-     - Google Drive: `/Astronomy/2026-Spring/M31/image_001.fits`
-     - Dropbox: `/fits-data/Galaxy_Project/M31/image_001.fits`
+    - Checks both "Research Group Archive" and "My Dropbox"
+    - After the observation completes, FITS files are automatically copied to:
+        - Google Drive: `/Astronomy/2026-Spring/M31/image_001.fits`
+        - Dropbox: `/fits-data/Galaxy_Project/M31/image_001.fits`
 
 ### Example: Educational Institution
 
 A university astronomy department:
 
 1. **Department admin** creates a Google Cloud Storage configuration:
-   - Display name: "Department GCS Bucket"
-   - Destination: `/student-observations`
-   - File organization: by project and target
-   - Delete from server: enabled (to manage server storage)
+    - Display name: "Department GCS Bucket"
+    - Destination: `/student-observations`
+    - File organization: by project and target
+    - Delete from server: enabled (to manage server storage)
 2. **Students** select this destination when submitting observations
 3. After observations complete, files appear organized in GCS:
    ```

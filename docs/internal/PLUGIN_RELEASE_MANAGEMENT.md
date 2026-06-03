@@ -20,20 +20,20 @@ The Science Scheduler server includes a built-in plugin distribution system. Ser
 ### Build and Package
 
 1. Build the plugin:
-   ```powershell
-   cd packages\plugin
-   dotnet build
-   ```
+    ```powershell
+    cd packages\plugin
+    dotnet build
+    ```
 
 2. The build automatically creates a ZIP file in the `dist/` directory:
-   ```
-   packages\plugin\dist\ScienceScheduler-3.2.14.0.zip
-   ```
+    ```
+    packages\plugin\dist\ScienceScheduler-3.2.14.0.zip
+    ```
 
-   The ZIP contains:
-   - `NINA.Plugin.ScienceScheduler.dll` — main plugin assembly
-   - `Dapper.dll` — required dependency
-   - `manifest.json` — plugin metadata
+    The ZIP contains:
+    - `NINA.Plugin.ScienceScheduler.dll` — main plugin assembly
+    - `Dapper.dll` — required dependency
+    - `manifest.json` — plugin metadata
 
 ### Version Bumping
 
@@ -52,11 +52,11 @@ Both must match. The ZIP filename and assembly version are derived from `Assembl
 2. Navigate to **Admin** > **Plugin Releases**
 3. Click **Upload New Release**
 4. Fill in the form:
-   - **ZIP File** — select the built ZIP file
-   - **Version** — the version number (e.g., `3.2.14.0`)
-   - **Release Notes** — description of changes in this version
-   - **Minimum NINA Version** — the oldest NINA version this plugin supports (e.g., `3.2.0.9001`)
-   - **Pre-release** — check this for beta/testing releases
+    - **ZIP File** — select the built ZIP file
+    - **Version** — the version number (e.g., `3.2.14.0`)
+    - **Release Notes** — description of changes in this version
+    - **Minimum NINA Version** — the oldest NINA version this plugin supports (e.g., `3.2.0.9001`)
+    - **Pre-release** — check this for beta/testing releases
 5. Click **Upload**
 
 The server computes the SHA256 checksum automatically and stores the file in MinIO.

@@ -202,7 +202,7 @@ If you have enabled at least one notification channel in your [Profile](USER_PRO
 
 1. Check which channels to use: **Email** and/or **Pushover** (only enabled channels appear)
 2. Select which state changes should trigger notifications (all are selected by default):
-   - Assigned, In Progress, Suspended, Complete, Failed, Aborted, Cancelled
+    - Assigned, In Progress, Suspended, Complete, Failed, Aborted, Cancelled
 3. Uncheck any states you don't need alerts for
 
 No notification channels configured? See [Notifications](NOTIFICATIONS.md) for setup instructions.
@@ -449,10 +449,10 @@ The **Projects** page is the primary way to view and download your observation f
 3. Look for the **folder icon** in the Files column
 4. Click the folder icon to open the **[Observation Files](OBSERVATION_FILES.md)** page
 5. From there you can:
-   - View file thumbnails and previews
-   - See file metadata (filter, exposure time, capture date)
-   - Download individual files
-   - Use **Download All** for batch download with parallel downloads
+    - View file thumbnails and previews
+    - See file metadata (filter, exposure time, capture date)
+    - Download individual files
+    - Use **Download All** for batch download with parallel downloads
 
 **Tip**: The Projects page shows observation progress and file counts, making it easy to track which observations have data ready for download.
 

@@ -49,11 +49,11 @@ Members can be granted specific permissions within an organization:
 2. Navigate to **Organizations** in the main menu
 3. Click **Create Organization**
 4. Fill in the organization details:
-   - **Name**: Full organization name (e.g., "Springfield Astronomy Club")
-   - **Short Name**: Abbreviated identifier (e.g., "SAC") - must be unique
-   - **Type**: Select the organization type
-   - **Description**: Optional description
-   - **Contact Email**: Primary contact email
+    - **Name**: Full organization name (e.g., "Springfield Astronomy Club")
+    - **Short Name**: Abbreviated identifier (e.g., "SAC") - must be unique
+    - **Type**: Select the organization type
+    - **Description**: Optional description
+    - **Contact Email**: Primary contact email
 5. Click **Create**
 
 You automatically become the owner of organizations you create.

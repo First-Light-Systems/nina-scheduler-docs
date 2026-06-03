@@ -25,30 +25,30 @@ The Science Scheduler Server uses a secure registration process to:
 If your observatory has never connected to the Science Scheduler Server:
 
 1. **Fill in plugin settings** (see [Plugin Setup](PLUGIN_SETUP.md)):
-   - Server URL
-   - Leave API Key blank
-   - Observatory ID/Code (required)
-   - Observatory Name (required)
-   - Contact Email (required)
+    - Server URL
+    - Leave API Key blank
+    - Observatory ID/Code (required)
+    - Observatory Name (required)
+    - Contact Email (required)
 
 2. **Enable the plugin**
-   - The plugin generates a hardware fingerprint
-   - Sends registration request to server
-   - Server creates a pending registration
+    - The plugin generates a hardware fingerprint
+    - Sends registration request to server
+    - Server creates a pending registration
 
 3. **Wait for administrator approval**
-   - Your registration appears in the admin panel
-   - Administrator reviews and approves
-   - Server generates an API key for your observatory
+    - Your registration appears in the admin panel
+    - Administrator reviews and approves
+    - Server generates an API key for your observatory
 
 4. **Receive API key automatically**
-   - When approved, the server notifies your plugin via WebSocket
-   - API key is automatically saved to your plugin settings
-   - No restart required - plugin continues with the new key
+    - When approved, the server notifies your plugin via WebSocket
+    - API key is automatically saved to your plugin settings
+    - No restart required - plugin continues with the new key
 
 5. **Start observing**
-   - Plugin status changes to "Ready"
-   - Your observatory now receives observation assignments
+    - Plugin status changes to "Ready"
+    - Your observatory now receives observation assignments
 
 ---
 
@@ -57,17 +57,17 @@ If your observatory has never connected to the Science Scheduler Server:
 If you already have an API key (provided by administrator or from previous setup):
 
 1. **Enter settings**:
-   - Server URL
-   - API Key (paste the provided key)
-   - Observatory information
+    - Server URL
+    - API Key (paste the provided key)
+    - Observatory information
 
 2. **Enable the plugin**
-   - Plugin connects and authenticates immediately
-   - No approval wait required
+    - Plugin connects and authenticates immediately
+    - No approval wait required
 
 3. **Start observing**
-   - Plugin shows "Ready" status
-   - Observations begin when available
+    - Plugin shows "Ready" status
+    - Observations begin when available
 
 ---
 
@@ -76,13 +76,13 @@ If you already have an API key (provided by administrator or from previous setup
 API keys may be updated by administrators for security rotation:
 
 1. **Automatic update**
-   - When administrators generate a new key, it's sent to your plugin
-   - Plugin automatically saves and uses the new key
-   - No action required from you
+    - When administrators generate a new key, it's sent to your plugin
+    - Plugin automatically saves and uses the new key
+    - No action required from you
 
 2. **Manual update**
-   - If instructed by administrator, paste new API key in settings
-   - Plugin reconnects with new key
+    - If instructed by administrator, paste new API key in settings
+    - Plugin reconnects with new key
 
 ---
 
@@ -259,9 +259,9 @@ After reset, the plugin's next connection will be accepted and the new fingerpri
 **Solution**:
 1. Contact your administrator directly
 2. Provide your:
-   - Observatory ID/Code
-   - Contact email used
-   - Approximate registration time
+    - Observatory ID/Code
+    - Contact email used
+    - Approximate registration time
 
 ### No Observations After Registration
 

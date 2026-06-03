@@ -151,7 +151,7 @@ Your administrator may set a minimum plugin version. If your plugin is below the
 
 | Field | Description | Example |
 |-------|-------------|---------|
-| **Server URL** | WebSocket URL of your scheduler server | `ws://scheduler.example.com:8080` |
+| **Server URL** | WebSocket URL of your scheduler server | `ws://scheduler.example.com` |
 | **API Key** | Authentication key for your observatory | Leave blank for new registration |
 
 **Note:** Get these values from your system administrator.
@@ -176,10 +176,10 @@ These fields identify your observatory to the scheduling system.
 The Observatory ID/Code must follow these rules:
 - **Length**: 3-20 characters
 - **Allowed characters**:
-  - Letters (A-Z, a-z)
-  - Numbers (0-9)
-  - Dashes (-)
-  - Underscores (_)
+    - Letters (A-Z, a-z)
+    - Numbers (0-9)
+    - Dashes (-)
+    - Underscores (_)
 - **Not allowed**: Spaces, special characters
 
 **Valid examples:** `PALOMAR-1`, `backyard_obs`, `MKO-2M`
@@ -197,16 +197,18 @@ To verify/update coordinates:
 
 | Setting | Description |
 |---------|-------------|
-| **Enable Plugin** | Master switch - enables/disables the plugin entirely |
-| **Enable Operations** | Controls observation execution |
-
-**Enable Plugin:**
-- When **ON**: Plugin connects to server and is ready to receive work
-- When **OFF**: Plugin disconnects and goes dormant
+| **Enable Operations** | Controls plugin requests to server for observation work. Default is ON. |
+| **Respect Dark Time Constraints** | Allows scheduler to ignore daytime constraints. Will cause scheduler to schedule observations 24x7. Default is ON |
+| **Enable Log Upload** | Controls automatic upload of NINA logs to the server. Default is ON |
+| **Upload Frequency** | How often NINA logs are uploaded to the server when Enable Log Upload is ON. Default is 24 hours |
 
 **Enable Operations:**
 - When **ON**: Observatory accepts and executes observations
 - When **OFF**: Observatory stays connected but pauses execution (useful during maintenance or weather)
+
+**Enable Log Upload:**
+- When **ON**: Observatory will automatically upload NINA logs to the server at the interval specified in Upload Frequency (default 24 hours). The size of the uploaded log will be either the entire file or the delta of the file since the last upload event.
+- When **OFF**: Logs are only uploaded on demand by the Science Scheduler server
 
 ### Dark Filter (Shutterless Cameras)
 
@@ -405,24 +407,24 @@ Before running sequences on your real observatory equipment, we strongly recomme
 ### Installing ASCOM Simulators
 
 1. **Download ASCOM Platform**
-   - Get the ASCOM Platform from: https://ascom-standards.org/
-   - Get the simulators from: https://ascom-standards.org/Downloads/DevTools.htm
+    - Get the ASCOM Platform from: https://ascom-standards.org/
+    - Get the simulators from: https://ascom-standards.org/Downloads/DevTools.htm
 
 2. **Available Simulators**
-   - **Telescope Simulator**: Simulates mount movement and tracking
-   - **Camera Simulator**: Generates test images with configurable properties
-   - **Focuser Simulator**: Simulates focus position changes
-   - **Filter Wheel Simulator**: Simulates filter changes
-   - **Dome Simulator**: Simulates dome rotation and shutter
+    - **Telescope Simulator**: Simulates mount movement and tracking
+    - **Camera Simulator**: Generates test images with configurable properties
+    - **Focuser Simulator**: Simulates focus position changes
+    - **Filter Wheel Simulator**: Simulates filter changes
+    - **Dome Simulator**: Simulates dome rotation and shutter
 
 ### Configuring NINA for Simulator Testing
 
 1. Open NINA **Options** > **Equipment**
 2. For each device type, select the ASCOM Simulator:
-   - Telescope: "ASCOM Telescope Simulator"
-   - Camera: "ASCOM Camera Simulator"
-   - Focuser: "ASCOM Focuser Simulator"
-   - Filter Wheel: "ASCOM FilterWheel Simulator"
+    - Telescope: "ASCOM Telescope Simulator"
+    - Camera: "ASCOM Camera Simulator"
+    - Focuser: "ASCOM Focuser Simulator"
+    - Filter Wheel: "ASCOM FilterWheel Simulator"
 
 3. Connect to simulators and verify they respond
 
@@ -432,12 +434,12 @@ Before running sequences on your real observatory equipment, we strongly recomme
 2. **Build your sequence** with the Science Scheduler container
 3. **Run the sequence** with simulators connected
 4. **Verify**:
-   - Plugin connects to server
-   - Observation is assigned
-   - Simulated slew occurs
-   - Exposures are taken (simulated)
-   - Files are uploaded to server
-   - Observation completes successfully
+    - Plugin connects to server
+    - Observation is assigned
+    - Simulated slew occurs
+    - Exposures are taken (simulated)
+    - Files are uploaded to server
+    - Observation completes successfully
 
 ### Tips for Effective Testing
 

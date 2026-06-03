@@ -46,26 +46,22 @@ If you're operating a telescope with the NINA plugin:
 #### First-Time Setup (10 minutes)
 
 1. **Install the Plugin**
-   - Copy plugin files to: `%LOCALAPPDATA%\NINA\Plugins\ScienceScheduler\`
-   - Restart NINA
+    - Copy plugin files to: `%LOCALAPPDATA%\NINA\Plugins\ScienceScheduler\`
+    - Restart NINA
 
 2. **Configure Plugin Settings** (in NINA Options > Plugins > Science Scheduler)
-   - Enter **Server URL** (e.g., `ws://scheduler.yourorganization.edu:8080`)
-   - Enter **API Key** if you have one, or leave blank for new registration
-   - Fill in **Observatory Information**:
-     - **ID/Code**: Short identifier (3-20 characters, letters/numbers/dashes only)
-     - **Name**: Full observatory name
-     - **Contact Email**: Required for registration
-   - Coordinates are automatically detected from NINA settings
+    - Enter **Server URL** (e.g., `ws://scheduler.yourorganization.edu`)
+    - Enter **API Key** if you have one, or leave blank for new registration
+    - Fill in **Observatory Information**:
+        - **ID/Code**: Short identifier (3-20 characters, letters/numbers/dashes only)
+        - **Name**: Full observatory name
+        - **Contact Email**: Required for registration
+    - Coordinates are automatically detected from NINA settings
 
-3. **Enable the Plugin**
-   - Check **Enable Plugin** to start connection
-   - Check **Enable Operations** to receive observations
-
-4. **Add to Sequence**
-   - Open NINA's Advanced Sequencer
-   - Drag **Science Scheduler** container from the palette
-   - Run your sequence to start receiving observations
+3. **Create the Sequence**
+    - Open NINA's Advanced Sequencer
+    - Drag **Science Scheduler** container from the palette
+    - Run your sequence to start receiving observations
 
 **Next step**: See [Plugin Setup](PLUGIN_SETUP.md) for complete installation guide.
 
