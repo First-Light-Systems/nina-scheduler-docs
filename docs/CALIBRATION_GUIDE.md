@@ -1,8 +1,9 @@
 # Calibration Guide
 
-**Document Version**: 1.1 | **Last Updated**: June 2026
+**Document Version**: 1.2 | **Last Updated**: June 2026
 
 > **What's New** (June 2026):
+> - **Sky (twilight) flats** — the calibration instruction's Sky mode now captures twilight flats by delegating to NINA's Sky Flat routine, with per-filter dusk/dawn ordering and a pointing helper on the options page (see [Sky Mode](#sky-mode))
 > - **Shutterless camera support** — the plugin uses an opaque "dark filter" to block light when capturing darks/bias on cameras without a mechanical shutter (see [Dark and Bias Frames](#dark-and-bias-frames))
 > - **Demand-driven calibration** — the server now acquires darks and builds masters only for the camera/filter/exposure combinations your recent light frames actually need
 >
@@ -113,7 +114,78 @@ In panel mode, the instruction uses NINA's flat panel integration:
 
 ### Sky Mode
 
-Sky mode captures flats using the twilight sky. Select **Dawn** or **Dusk** to indicate which twilight period to use. The exposure time adjusts dynamically as the sky brightness changes.
+Sky mode captures flats against the **twilight sky** instead of a flat panel — useful when you don't have a panel, or for wide/fast optics where panel uniformity is hard. It delegates to NINA's built-in Sky Flat routine, which automatically adjusts the exposure time as the sky brightness changes through twilight (lengthening as it darkens at dusk, shortening as it brightens at dawn).
+
+**Setting it up on the instruction:**
+
+1. Set the **mode** to **Sky**.
+2. Choose the **twilight period** — **Dusk** (evening) or **Dawn** (morning).
+3. Optionally set the **Filter Order** (see below).
+
+No flat panel is required.
+
+#### Exposure comes from your NINA Flat Wizard profile
+
+Sky mode does **not** have its own exposure settings on the instruction. It reads everything from NINA's Flat Wizard profile:
+
+| Parameter | Source |
+|-----------|--------|
+| Minimum / maximum exposure | Each filter's **Flat Wizard filter settings** (`Min`/`Max` flat exposure time) |
+| Histogram target & tolerance | The global **Flat Wizard** settings (mean target, tolerance) |
+
+Set sensible per-filter min/max exposures in NINA's Flat Wizard filter settings before using Sky mode — the **maximum exposure is what stops capture** (see "When capture stops" below).
+
+#### Filter Order
+
+At twilight the sky brightness changes quickly, so the **order** you capture filters in matters — unlike panel flats, where order is irrelevant. Broadband filters (L, R, G, B) reach the target brightness in a darker sky; narrowband filters (Ha, OIII, SII) need a brighter sky.
+
+The **Filter Order** field on the instruction takes a comma-separated list authored for **dusk** (bright sky first, darkening), for example:
+
+```
+Ha, OIII, SII, L, R, G, B
+```
+
+- For a **Dawn** run, the plugin automatically **reverses** this order (dawn is the mirror of dusk — the sky brightens instead of darkens).
+- Any filter that needs flats but isn't listed is appended at the end (ordered by filter-wheel position) so coverage is never silently dropped — but for best results, list every filter you expect to flat.
+
+#### Pointing the telescope
+
+Sky flats must point at a **uniform patch of sky** — high in the sky (near the zenith) and on the side **opposite the Sun**. The calibration instruction does **not** slew the mount; you add the slew to your sequence explicitly. To make that easy, the plugin computes the recommended pointing for you:
+
+On the plugin's options page, the **Twilight Sky Flat Pointing** panel shows the recommended **Azimuth / Altitude** for the upcoming dusk and dawn, computed from your observatory location. The azimuth always points away from the Sun:
+
+```
+Twilight Sky Flat Pointing
+  Dusk flats:  Az  90° · Alt 75°    (toward the east — the Sun sets in the west)
+  Dawn flats:  Az 270° · Alt 75°    (toward the west — the Sun rises in the east)
+  Altitude (°): [75]   [Refresh]
+```
+
+(The exact azimuths depend on your latitude and the date; the values above are illustrative.)
+
+Adjust the **Altitude** (default 75°) if your horizon is obstructed, and click **Refresh** to recompute (the values drift slowly day to day). Then build your sequence like this:
+
+```
+Sequential Container
+├── Slew to Alt/Az        ← enter the Az/Alt from the options page
+├── Set Tracking → Stopped
+├── Science Scheduler Calibration   (Sky mode)
+└── Set Tracking → On
+```
+
+!!! tip "Stop tracking — no dithering needed"
+    With tracking **off**, the sky drifts through the field and stars land on different pixels each frame, so they're removed when the frames are stacked. This is why the instruction doesn't dither. If you leave tracking **on**, stars stay fixed and can contaminate the flat.
+
+!!! note "The plugin never moves your mount"
+    The pointing panel is display-only. You enter the values into a standard NINA **Slew to Alt/Az** instruction, so you stay in full control of mount motion.
+
+#### When capture stops
+
+Sky flats end on their own — there's no fixed frame count guarantee:
+
+- At **dusk**, as the sky darkens, the required exposure for a filter eventually exceeds that filter's **maximum** Flat Wizard exposure, and capture for that filter stops. Dusk-ordered filters wind down naturally as twilight ends.
+- At **dawn**, capture stops when the required exposure drops below the filter's **minimum** exposure.
+- Capturing **fewer frames than requested** is normal — the server accumulates frames toward a master across multiple nights, so a short twilight window still makes progress.
 
 ### Fallback Mode
 
