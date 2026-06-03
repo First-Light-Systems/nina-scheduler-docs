@@ -1,7 +1,7 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.17 | **Last Updated**: June 2026
-**Server v3.9.0 | Plugin v3.12.1.0**
+**Documentation Version**: 2.18 | **Last Updated**: June 2026
+**Server v3.9.0 | Plugin v3.14.0.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
@@ -55,6 +55,10 @@ If you're managing organizations, users, or the system:
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.18 (June 2026)
+
+- **[Sky (twilight) flats](CALIBRATION_GUIDE.md#sky-mode)** — the calibration instruction's Sky mode now captures twilight flats (delegating to NINA's Sky Flat routine), with per-filter dusk/dawn ordering and a **Twilight Sky Flat Pointing** helper on the plugin options page that tells you where to point
 
 ## What's New in v2.17 (June 2026)
 
