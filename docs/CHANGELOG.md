@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.18] - 2026-06-03
+
+### Added
+
+- **Sky (twilight) flats** (Calibration Guide → Sky Mode):
+    - The Science Scheduler Calibration instruction's **Sky** mode now captures twilight flats by delegating to NINA's built-in Sky Flat routine (dynamic twilight exposure); previously a placeholder
+    - Exposure parameters are read from your **NINA Flat Wizard profile** (per-filter min/max exposure; global histogram target/tolerance) — no separate settings on the instruction
+    - **Filter Order** option — author the dusk capture order; the plugin reverses it automatically for dawn
+    - New **Twilight Sky Flat Pointing** helper on the plugin options page — shows the recommended anti-solar Azimuth/Altitude for the upcoming dusk and dawn (computed from your location), to enter into a NINA "Slew to Alt/Az" instruction. The plugin does not slew the mount.
+    - Documented the recommended sequence shape (explicit slew + stop tracking) and when sky-flat capture stops
+
+- **Plugin version** updated to v3.14.0.0
+
+---
+
 ## [2.17] - 2026-06-02
 
 ### Added
