@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.19] - 2026-06-13
+
+### Changed
+
+- **Plugin Setup (v1.6)**:
+    - Documented the **Twilight Sky Flat Pointing** helper on the plugin options page (anti-solar Az/Alt for the upcoming dusk and dawn) within the plugin configuration section
+    - Clarified the **.NET Runtime** prerequisite — **.NET 8.0, 9.0, or 10.0** are supported and installed automatically with the ASCOM Platform; no separate download needed
+    - Strengthened the **Required Updates** section — **plugin operation is prevented** below the administrator's minimum required version, and a red **UPDATE REQUIRED** banner in the plugin configuration alerts the user and identifies the minimum version needed
+
+---
+
 ## [2.18] - 2026-06-03
 
 ### Added
