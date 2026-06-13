@@ -58,7 +58,7 @@ exclude_docs: |
 # Navigation
 nav:
   - Home: index.md
-  - Index: INDEX.md
+  - Index: TOPIC_INDEX.md
   - Overview: OVERVIEW.md
   - Getting Started: GETTING_STARTED.md
   - Plugin Setup: PLUGIN_SETUP.md
