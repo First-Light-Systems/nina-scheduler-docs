@@ -1,8 +1,13 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.5 | **Last Updated**: June 2026
-**Plugin Version**: v3.12.1.0
+**Document Version**: 1.6 | **Last Updated**: June 2026
+**Plugin Version**: v3.14.0.0
 
+> **What's New in v1.6** (June 2026):
+> - Plugin version updated to v3.14.0.0
+> - **Twilight Sky Flat Pointing helper** — the plugin options page now shows the recommended anti-solar Azimuth/Altitude for the upcoming dusk and dawn, for use with a NINA "Slew to Alt/Az" instruction when capturing Sky flats (see [Twilight Sky Flat Pointing](#twilight-sky-flat-pointing))
+> - Clarified the .NET Runtime prerequisite — **.NET 8.0, 9.0, or 10.0** are supported and installed automatically with the ASCOM Platform
+>
 > **What's New in v1.5** (June 2026):
 > - Plugin version updated to v3.12.1.0
 > - **Dark Filter option for shutterless cameras** — the plugin now decides locally how to capture darks and bias frames based on whether your camera has a mechanical shutter (see [Dark Filter (Shutterless Cameras)](#dark-filter-shutterless-cameras))
@@ -43,7 +48,7 @@ Before installing the plugin, ensure you have:
 |-------------|---------|
 | **NINA Version** | 3.0.0.2001 or later - [Download NINA](https://nighttime-imaging.eu/download/) |
 | **Operating System** | Windows 10 or Windows 11 |
-| **.NET Runtime** | .NET 8.0 Runtime - [Download .NET 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| **.NET Runtime** | .NET 8.0, 9.0, or 10.0 — installed automatically with the ASCOM Platform; no separate download needed |
 | **Network Access** | Connection to your scheduler server |
 
 ## Installation
@@ -131,11 +136,11 @@ If an update is available, a green banner appears in the plugin settings showing
 
 ### Required Updates
 
-Your administrator may set a minimum plugin version. If your plugin is below the minimum:
+Your administrator may set a minimum required plugin version. If your installed plugin is below that minimum level, **plugin operation is prevented** until you update:
 
-- A red **UPDATE REQUIRED** banner appears in the plugin settings
-- The plugin will not execute observations until updated
-- Install the update and restart NINA to resume operations
+- A red **UPDATE REQUIRED** banner appears in the plugin configuration, alerting you that an update is required and identifying the minimum version needed
+- The plugin **will not execute any observations** while below the minimum level
+- Install the required update and restart NINA to resume operations
 
 ---
 
@@ -236,6 +241,21 @@ Before every dark or bias exposure, the plugin checks the camera's mechanical-sh
     For a shutterless camera, the plugin will **refuse to capture darks/bias** if it cannot guarantee the light path is blocked — it will never silently capture a contaminated dark. When this happens, NINA raises a **red error notification** explaining the reason (for example, *"set the plugin's Dark Filter option"*), and the refusal is recorded in the NINA log. The notification is throttled so the automatic dark-capture retry loop doesn't spam pop-ups.
 
 If the server keeps requesting darks that the plugin refuses, it automatically **backs off** dark requests for that observatory after several consecutive refusals, and resumes once a successful capture occurs or the calibration configuration changes. The fix is to set a valid Dark Filter (or confirm your camera reports a shutter) and restart capture.
+
+### Twilight Sky Flat Pointing
+
+When you capture **Sky (twilight) flats** with the Science Scheduler Calibration instruction, the telescope must point at a uniform patch of sky high overhead and **opposite the Sun**. The plugin does **not** slew the mount — you add the slew to your sequence yourself — but it computes the recommended pointing for you.
+
+On the plugin's options page, the **Twilight Sky Flat Pointing** panel shows the recommended **Azimuth / Altitude** for the upcoming dusk and dawn, computed from your observatory location:
+
+```
+Twilight Sky Flat Pointing
+  Dusk flats:  Az  90° · Alt 75°    (toward the east — the Sun sets in the west)
+  Dawn flats:  Az 270° · Alt 75°    (toward the west — the Sun rises in the east)
+  Altitude (°): [75]   [Refresh]
+```
+
+Adjust the **Altitude** (default 75°) if your horizon is obstructed, click **Refresh** to recompute, and enter the values into a NINA **Slew to Alt/Az** instruction ahead of the Calibration instruction. See the [Calibration Guide → Sky Mode](CALIBRATION_GUIDE.md#sky-mode) for the full sequence shape.
 
 ### Status Display
 
