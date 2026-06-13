@@ -1,6 +1,6 @@
 # Science Scheduler Documentation
 
-**Documentation Version**: 2.18 | **Last Updated**: June 2026
+**Documentation Version**: 2.19 | **Last Updated**: June 2026
 **Server v3.9.0 | Plugin v3.14.0.0**
 
 Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
@@ -55,6 +55,12 @@ If you're managing organizations, users, or the system:
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.19 (June 2026)
+
+- **[Twilight Sky Flat Pointing helper](PLUGIN_SETUP.md#twilight-sky-flat-pointing)** — the plugin options page now shows the recommended anti-solar Az/Alt for the upcoming dusk and dawn, ready to enter into a NINA "Slew to Alt/Az" instruction for Sky flats
+- **[Clearer .NET requirement](PLUGIN_SETUP.md#prerequisites)** — .NET 8.0, 9.0, or 10.0 are all supported and installed automatically with the ASCOM Platform
+- **[Required-update enforcement](PLUGIN_SETUP.md#required-updates)** — plugin operation is prevented below the administrator's minimum version, with an UPDATE REQUIRED banner in the plugin configuration
 
 ## What's New in v2.18 (June 2026)
 
