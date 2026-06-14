@@ -8,8 +8,8 @@ The Profile page is your central hub for account information, observatory access
 
 The profile page uses a two-column layout:
 
-- **Left column** — Your identity: avatar, account details, and statistics
-- **Right column** — Your access and settings: observatory memberships, external storage, and notification preferences
+- **Left column** — Your identity and notifications: avatar, account details, statistics, and notification preferences
+- **Right column** — Your access and settings: default view, observatory access, calibration defaults, default observatory, external storage, and weather forecast source
 
 ---
 
@@ -47,31 +47,52 @@ Your profile displays:
 | **Email Verified** | Whether your email address has been verified |
 | **Account Status** | Active or disabled |
 
----
-
-## Right Column
-
-### Observatory Access
-
-A summary of observatories you have access to and your permission level at each. For details on managing observatories, see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
-
-### External Storage
-
-Your configured external storage destinations for observation data delivery.
-
 ### Notification Preferences
 
 Enable and configure email and Pushover notification channels. For full setup instructions, see [Notifications](NOTIFICATIONS.md).
 
 ---
 
+## Right Column
+
+### Default View
+
+Choose the **Start View** — the page that opens by default when you log in.
+
+### Observatory Access
+
+A summary of observatories you have access to and your permission level at each. For details on managing observatories, see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
+
+### Calibration Defaults
+
+Set your default calibration behavior:
+
+- **Calibration** — whether calibration is applied by default
+- **Rotation-Matched Flats** — whether flats must match the frame's rotation to be used
+
+### Default Observatory
+
+Select the observatory used by default when creating observations.
+
+### External Storage
+
+Your configured external storage destinations for observation data delivery.
+
+### Weather Forecast Source
+
+Choose a weather forecast provider and enter the associated API key. This source supplies the forecast data shown for your observations.
+
+---
+
 ## Editing Your Profile
 
 1. Click the **Edit** button on your profile page
-2. Modify editable fields (name, avatar)
+2. Modify editable fields (name, email, username, avatar)
 3. Click **Save** to apply changes
 
-Your email, username, and system role are managed by administrators and cannot be changed from the profile page.
+You can also configure your default view, calibration defaults, default observatory, external storage, weather forecast source, and notification preferences directly from the profile page.
+
+Your **system role** (along with your permissions and email-verified status) is managed by administrators and cannot be changed from the profile page.
 
 ---
 

@@ -203,7 +203,7 @@ When automation is enabled and the template is saved, the system sets the status
 
 ### How Automation Works
 
-The automation engine checks for due templates every 5 minutes. When a template's `next_due_at` timestamp arrives:
+The automation engine checks for due templates every 5 minutes. It creates the next observation up to 24 hours before its `next_due_at` timestamp, so the observation is queued and ready ahead of time. When a template becomes due:
 
 1. The system checks if there's already a pending observation from this template (avoids duplicates)
 2. If the previous observation failed or was aborted, the execution counter is decremented

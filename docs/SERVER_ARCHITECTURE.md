@@ -28,7 +28,6 @@ This page describes the server-side infrastructure. For how the server communica
   |                                            |
   |  - REST API (browser & external clients)   |
   |  - WebSocket (observatory plugins)         |
-  |  - Static file serving (Web GUI)           |
   |  - Job queue (Redis/Bull)                  |
   +--+--------+--------+--------+--------+     |
      |        |        |        |        +-----+
@@ -54,9 +53,9 @@ This page describes the server-side infrastructure. For how the server communica
 
 ### nginx (Reverse Proxy)
 
-The entry point for all external traffic. nginx is a pure reverse proxy — it routes requests to the API server and handles TLS termination. It does not serve files directly.
+The entry point for all external traffic. nginx is a pure reverse proxy — it routes requests to the appropriate backend container and handles TLS termination. It does not serve files directly.
 
-- Routes all requests to the API server (REST API, static files, and WebSocket upgrades)
+- Routes API and WebSocket requests to the API server, and Web GUI requests to the dedicated `nina-user-gui` container
 - Handles CORS headers and TLS termination
 
 ### Scheduler API Server (Node.js/TypeScript)
@@ -74,10 +73,10 @@ The core application server that implements all business logic:
 
 ### Web GUI (React)
 
-The web interface is a React single-page application that runs entirely in the user's browser. The server only hosts the static files — all application logic runs client-side.
+The web interface is a React single-page application that runs entirely in the user's browser. It is served by its own dedicated container — all application logic runs client-side.
 
 - Built with React and Material UI
-- Static files served by the API server through nginx
+- Served by a dedicated container (`nina-user-gui`, which runs `serve` to host the built static files); nginx is a pure reverse proxy that forwards browser requests to this container — the API server does not serve the Web GUI
 - Once loaded in the browser, communicates with the API server via REST calls and WebSocket for real-time updates
 - No server-side rendering — the browser handles all UI logic
 

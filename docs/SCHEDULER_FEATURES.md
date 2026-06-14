@@ -100,6 +100,9 @@ The Science Scheduler supports five observation types:
 - Set `cadence_start_date` and `cadence_end_date`: Active period
 - Set `cadence_max_observations`: Maximum total observations (optional)
 
+!!! note
+    The `cadence_*` fields are legacy and are being superseded by the newer `repetition_config` model used by [Repetitive Observations](REPETITIVE_OBSERVATIONS.md), which offers finer interval control, execution history, and pause/resume. New campaigns should prefer repetitive observations.
+
 **Example**: Supernova follow-up every 3 days for 2 months.
 
 ---

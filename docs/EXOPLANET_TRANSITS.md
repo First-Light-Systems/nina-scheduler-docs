@@ -55,7 +55,7 @@ The page loads your observatory's telescope configuration (aperture, focal lengt
 
 ### Generating Observations
 
-Click **Generate Observation Plan** to create observations from your selected transits. The system:
+Click **Create Observations** to create observations from your selected transits. The system:
 
 1. Calculates exact start and end times including baselines
 2. Sets target coordinates from the exoplanet database

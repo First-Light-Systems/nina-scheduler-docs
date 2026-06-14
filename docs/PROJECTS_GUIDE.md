@@ -65,23 +65,24 @@ Every project has an owner. The owner type determines who controls the project:
 
 ### Ownership Transfer
 
-Project ownership can be transferred to a different user, observatory, or organization:
+Project ownership can be transferred to a different user or organization. (The backend also supports observatory owners, but the transfer dialog targets only users and organizations.)
 
 1. Open the project
-2. Navigate to the **Management** tab
+2. Open the project's **Members** page
 3. Click **Transfer Ownership**
-4. Select the new owner type and the specific user, observatory, or organization
+4. Select the new owner type — **User** or **Organization** — and the specific target
 5. Confirm the transfer
 
 All transfers are recorded in an audit trail for accountability. The previous owner retains member access unless explicitly removed.
 
 ## Member Management
 
-Projects support multi-user collaboration with five granular permissions:
+Projects support multi-user collaboration with six granular permissions:
 
 | Permission | What It Allows |
 |------------|---------------|
 | **Can View** | See the project, its observations, and files. Granted to all members by default. |
+| **Can Use** | Submit observations to this project |
 | **Can Edit** | Modify observations and project settings |
 | **Can Manage Members** | Add and remove team members, change their permissions |
 | **Can Delete** | Delete observations within the project |
@@ -90,8 +91,8 @@ Projects support multi-user collaboration with five granular permissions:
 ### Adding Members
 
 1. Open your project
-2. Navigate to the **Management** tab
-3. Click **Manage Members**
+2. Open the project's **Members** page
+3. Click **Add Member**
 4. Search for the user to add
 5. Set their permissions
 6. Click **Add**
@@ -110,11 +111,12 @@ Projects support multi-user collaboration with five granular permissions:
 
 ## Project Settings
 
-Each project has configurable settings that affect its observations:
-
 ### Default Priority
 
-Set a default priority (1–10) for new observations created in this project. Individual observations can override this value. Default: 5.
+A project carries a default priority (1–10) for new observations, with individual observations able to override it. The default is 5.
+
+!!! note
+    Default Priority is **API-only** — it exists in the project model and API but is not exposed in the web interface, so it cannot be viewed or edited there.
 
 ## Project Status
 
@@ -127,7 +129,7 @@ Projects move through a lifecycle:
 | **Completed** | All objectives met — project is finished but data remains accessible |
 | **Archived** | Project is no longer active — stored for reference |
 
-Change the status from the project's **Management** tab.
+Change the status by editing the project (via the project form on the project dashboard).
 
 ## Statistics and Progress
 
@@ -160,9 +162,8 @@ Projects with observations cannot be deleted unless you use **force delete**, wh
 To delete a project:
 
 1. Open the project
-2. Navigate to the **Management** tab
-3. Click **Delete Project**
-4. If observations exist, confirm force deletion
+2. From the project dashboard, choose **Delete Project**
+3. If observations exist, confirm force deletion
 
 ## Announcements
 

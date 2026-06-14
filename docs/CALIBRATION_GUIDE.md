@@ -46,7 +46,7 @@ Most calibration happens automatically:
 
 ## Viewing Your Calibration Library
 
-The Calibration Library page shows the current state of calibration frames for your observatory.
+The Calibration Library page (heading: **Calibration & Masters**) shows the current state of calibration frames for your observatory. It has four tabs: **Masters**, **Individual Frames**, **Needs**, and **Maintenance**.
 
 ### Masters Tab
 
@@ -77,6 +77,10 @@ The Needs tab is the most actionable view. It shows:
 
 !!! tip "Check the Needs Tab Regularly"
     The Needs tab tells you exactly what calibration work is outstanding. If you see uncovered flat configurations, schedule a flat capture session. If darks are accumulating slowly, the gap-filling system will handle them automatically during idle time.
+
+### Maintenance Tab
+
+The Maintenance tab reports calibration system health and provides maintenance operations — running health checks, rebuilding or recalibrating, cleanup, and bulk-deleting frames by type. Use it when you need to repair or reset calibration state rather than for day-to-day monitoring.
 
 ## Flat Frame Capture
 
@@ -215,7 +219,7 @@ This ensures the Flat Wizard targets the correct ADU range for the 12-bit mode. 
     Don't let perfect be the enemy of good. If managing readout modes for flat capture is too complex for your workflow, simply capture flats in the default readout mode. The flat field correction will still remove vignetting and dust shadows effectively.
 
 !!! note "Future Improvement"
-    NINA's Flat Wizard does not currently support per-readout-mode training. This is a known limitation — trained flat settings are stored per filter/gain combination only, with no readout mode awareness. The Science Scheduler plugin sets the correct readout mode before each exposure block (v3.8.0+), but the underlying Flat Wizard training values must still be managed manually as described above.
+    NINA's Flat Wizard does not currently support per-readout-mode training. This is a known limitation — trained flat settings are stored per filter/gain combination only, with no readout mode awareness. The Science Scheduler plugin sets the correct readout mode before each exposure block, but the underlying Flat Wizard training values must still be managed manually as described above.
 
 ## Dark and Bias Frames
 
@@ -273,24 +277,23 @@ Calibrated images are cached for performance. When a new master is created, the 
 
 Each file in the file browser shows its calibration status as a colored chip:
 
-| Status | Chip | Meaning |
-|--------|------|---------|
-| Calibrated | Green | Masters were found and calibration applied successfully |
-| Cal Failed | Red | Calibration was attempted but encountered an error |
-| No Masters | Orange | No matching calibration masters were available |
+| Chip | Color | Meaning |
+|------|-------|---------|
+| **Cal Ready** | Green | Matching calibration masters are available for this file |
+| **No Cal** | Orange | No matching calibration masters were available |
+| **File Missing** | Red | The raw file is missing |
 
 Files with no chip shown have either not been processed yet or have calibration disabled.
 
-### Calibration Details on File Detail Page
+### Calibration Masters on File Detail Page
 
-On the file detail page, calibrated files show a **Calibration Details** section listing:
+On the file detail page, the **Calibration Masters** section shows whether masters are available for the file — labelled **Masters Available** or **No Matching Masters**. When the file has been calibrated, a **Matching Calibration Masters** section lists:
 
 - Which master frames were used (dark, flat, bias)
 - When each master was captured
 - Temperature of each master
-- Any **stale warnings** if a master is older than expected
 
-Any calibration warnings (e.g., temperature mismatch, missing flat for filter) are shown as alert banners.
+Any calibration warnings (e.g., temperature mismatch, missing flat for filter) are shown as alert banners. (Stale-master warnings are surfaced in calibration Settings and on the observation detail page, not on the file detail page.)
 
 ### Downloading Calibrated Files
 

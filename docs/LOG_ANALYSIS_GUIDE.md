@@ -61,15 +61,17 @@ When plugin logs are uploaded, the server automatically scans them for known err
 
 ### What It Detects
 
-The system recognizes errors across several categories:
+The system recognizes errors across seven categories:
 
 | Category | Examples |
 |----------|---------|
 | **Equipment failures** | Camera disconnected, mount tracking stopped, focuser error |
 | **Connection errors** | ASCOM exceptions, socket errors, connection timeouts |
 | **Plugin errors** | NullReferenceException, ArgumentException |
+| **NINA errors** | Errors raised by the NINA application itself |
 | **Observation errors** | Plate solve failed, autofocus failed, centering failed |
 | **System errors** | OutOfMemoryException, StackOverflowException |
+| **Unknown** | Errors that don't match any of the above categories |
 
 Each detected error is classified by severity (critical, error, or warning) and includes surrounding context lines for quick diagnosis.
 
@@ -111,9 +113,9 @@ The dialog shows recent logs (last 31 days) from the same observatory. You can s
 
 | Model | Best For | Speed | Cost |
 |-------|----------|-------|------|
-| **Haiku** (default) | Most analyses — fast and cost-effective | Fast | Lowest |
-| **Sonnet** | Complex multi-session issues needing deeper reasoning | Medium | Medium |
-| **Opus** | The most challenging diagnostic puzzles | Slower | Highest |
+| **Claude Haiku 4.5** (default) | Most analyses — fast and cost-effective | Fast | Lowest |
+| **Claude Sonnet 4.5** | Complex multi-session issues needing deeper reasoning | Medium | Medium |
+| **Claude Opus 4.5** | The most challenging diagnostic puzzles | Slower | Highest |
 
 !!! tip
     Start with Haiku. It handles the vast majority of log analysis well. Only step up to Sonnet or Opus if Haiku's analysis doesn't identify the root cause.
@@ -141,6 +143,7 @@ The dialog shows filter statistics — how many lines and tokens were removed �
 |--------|-------------|
 | **HTML** (default) | Styled report viewable in browser, with colored severity indicators and formatted tables |
 | **Markdown** | Raw text output, useful for copying into other tools |
+| **PDF** | Downloadable formatted PDF document, suitable for archiving or sharing |
 
 ### Email Delivery
 

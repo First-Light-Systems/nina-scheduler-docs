@@ -14,14 +14,15 @@ This guide covers how to configure guiding and dithering settings for your obser
 
 ## Settings
 
-The Science Scheduler provides two guiding-related settings:
+The Science Scheduler provides three guiding-related settings:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
 | **Guiding Enabled** | Yes | Whether autoguiding runs during the observation |
-| **Dithering Enabled** | No | Whether the telescope dithers between exposures |
+| **Require Guiding** | No | If enabled, the observation fails when no guider is available at start time. If disabled (default), an un-guided fallback is acceptable. |
+| **Dithering Enabled** | Yes | Whether the telescope dithers between exposures (dithering is enabled by default, following NINA convention) |
 
-Both settings are simple on/off toggles.
+All three settings are simple on/off toggles. Require Guiding and Dithering apply only when guiding is enabled.
 
 ---
 
@@ -31,11 +32,11 @@ You can set guiding and dithering options in several places:
 
 ### Observation Form
 
-When creating or editing an observation, the guiding settings appear alongside the other observation options. Toggle **Guiding** and **Dithering** as needed for the specific observation.
+When creating or editing an observation, the guiding settings appear alongside the other observation options. Toggle **Guiding**, **Require Guiding**, and **Dithering** as needed for the specific observation.
 
 ### Observing Templates
 
-When creating a template in the [Target Library](TARGET_LIBRARY.md), guiding and dithering defaults are included in the template. Any observation created from the template inherits these settings.
+Guiding and dithering are set per-observation, not in the template editor — the template form has no guiding or dithering controls. A template can still carry guiding/dithering values at the data level (so observations created from it can inherit them), but you configure these options on the observation form itself.
 
 ### Library Targets
 
@@ -73,7 +74,7 @@ When guiding is disabled, the plugin skips all guiding-related commands and the 
 
 ## When to Enable Dithering
 
-Dithering is disabled by default because it adds time between exposures (the guide star must re-settle after each dither move). However, it significantly improves final image quality for most deep-sky imaging:
+Dithering is enabled by default (following NINA convention). It adds a little time between exposures (the guide star must re-settle after each dither move), but it significantly improves final image quality for most deep-sky imaging:
 
 | Scenario | Recommendation |
 |----------|----------------|

@@ -8,6 +8,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 - **ADU** (Analog-to-Digital Unit) — [Observation Files](OBSERVATION_FILES.md#quality-metrics), [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs)
 - **Airmass** — [Creating Observations](CREATING_OBSERVATIONS.md#constraints), [Scheduler Features](SCHEDULER_FEATURES.md#constraint-checking), [Troubleshooting](TROUBLESHOOTING.md)
+- **Announcements (MOTD)** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#announcements-motd), [System Administration](SYSTEM_ADMINISTRATION.md#system-announcements-motd)
 - **API key** — [Observatory Registration](OBSERVATORY_REGISTRATION.md#hardware-fingerprint), [Plugin Setup](PLUGIN_SETUP.md), [Organizations](ORGANIZATIONS.md)
 - **Assigned status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
 - **Autofocus** — [Autofocus Guide](AUTOFOCUS_GUIDE.md), [Creating Observations](CREATING_OBSERVATIONS.md)
@@ -144,7 +145,9 @@ An alphabetical reference to topics, features, and concepts across the Science S
     - Time-based — [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Observatory administration** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md)
 - **Observatory history** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md)
+- **Observatory map** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#observatory-map)
 - **Observatory registration** — [Observatory Registration](OBSERVATORY_REGISTRATION.md)
+- **Observatory reservations** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#reservations-blocking-time)
 - **Offset** (camera) — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **Organizations** — [Organizations](ORGANIZATIONS.md), [Projects Guide](PROJECTS_GUIDE.md)
 
@@ -152,6 +155,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 - **Pending status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
 - **Permissions** — [Organizations](ORGANIZATIONS.md), [Projects Guide](PROJECTS_GUIDE.md)
+- **Pipeline performance stats** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#pipeline-performance-stats)
 - **Plate solving** — [Image Processing](IMAGE_PROCESSING.md#plate-solving), [Practical Guide](PRACTICAL_GUIDE.md), [Plugin Setup](PLUGIN_SETUP.md)
 - **Plugin setup** — [Plugin Setup](PLUGIN_SETUP.md), [Getting Started](GETTING_STARTED.md)
 - **Preview images** — [Image Processing](IMAGE_PROCESSING.md#processing-modules), [Observation Files](OBSERVATION_FILES.md)
@@ -187,6 +191,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 - **Sequence repeat count** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **Server architecture** — [Server Architecture](SERVER_ARCHITECTURE.md)
 - **Sigma-clipped mean** — [Calibration Guide](CALIBRATION_GUIDE.md#master-frame-creation)
+- **Sky flats** (twilight) — [Calibration Guide](CALIBRATION_GUIDE.md#sky-mode), [Plugin Setup](PLUGIN_SETUP.md#twilight-sky-flat-pointing)
 - **Sky mode** (flat capture) — [Calibration Guide](CALIBRATION_GUIDE.md#sky-mode)
 - **Stale warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-details-on-file-detail-page)
 - **Star count** — [Observation Files](OBSERVATION_FILES.md#quality-metrics)
@@ -227,4 +232,4 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 ---
 
-*This index covers Science Scheduler documentation v2.15 (March 2026).*
+*This index covers Science Scheduler documentation v2.19 (June 2026).*

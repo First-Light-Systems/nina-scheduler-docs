@@ -17,7 +17,7 @@ The pipeline consists of several modules that run in sequence:
 | **Header Update** | Adds observation metadata to FITS headers (observer, project, target info) |
 | **Preview Generation** | Creates PNG preview images for quick visual review in the file browser |
 | **Plate Solving** | Performs astrometric solving to determine exact sky coordinates (uses ASTAP) |
-| **Quality Analysis** | Measures image quality metrics: FWHM, star count, background level, eccentricity |
+| **Quality Analysis** | Measures image quality metrics: FWHM, star count, background level, SNR |
 | **Quality Headers** | Writes quality analysis results back into the FITS headers |
 
 ### Automatic Processing
@@ -33,13 +33,13 @@ By default, files are processed automatically when uploaded. The pipeline:
 
 ### Manual Reprocessing
 
-If you need to reprocess a file — for example, after a plate solving failure or to regenerate previews — use the **Reprocess** option on the file detail page. Reprocessing runs at a higher priority than normal processing jobs.
+If you need to reprocess a file — for example, after a plate solving failure or to regenerate previews — use the **Reprocess** option on the file detail page. Manual reprocessing runs at the same priority as normal ingest processing (bulk rebuild jobs run at a lower priority).
 
 ## Processing Results
 
 ### Quality Metrics
 
-After processing, each file shows quality metrics in the file browser and on the file detail page. See [Quality Metrics](OBSERVATION_FILES.md#quality-metrics) for details on what each metric means.
+After processing, quality metrics are available in the per-file metadata dialog and on the file detail page. (The file-browser grid cards themselves do not show quality metrics.) See [Quality Metrics](OBSERVATION_FILES.md#quality-metrics) for details on what each metric means.
 
 ### Plate Solving
 
@@ -60,13 +60,16 @@ Processing jobs go through these states:
 | Status | Meaning |
 |--------|---------|
 | Pending | Queued, waiting to be processed |
-| Running | Currently being processed |
+| Processing | Currently being processed |
 | Completed | All modules finished successfully |
+| Partial | Some modules finished but others were skipped or failed |
+| Skipped | Processing was skipped (e.g., nothing to do for this file) |
 | Failed | One or more modules encountered an error |
+| Cancelled | The job was cancelled before completion |
 
 ### Cancelling Jobs
 
-You can cancel a pending or running job from the job details view. Only the job owner or an administrator can cancel a job.
+You can cancel a pending or processing job from the job details view. Only the job owner or an administrator can cancel a job.
 
 ## Related Documentation
 

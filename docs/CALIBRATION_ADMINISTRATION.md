@@ -232,7 +232,7 @@ All calibration endpoints use the `/api/v1/calibration/` prefix and require auth
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/library/:observatory_id` | Browse frames with pagination and filters |
-| GET | `/summary/:observatory_id` | Summary statistics by camera/config |
+| GET | `/library/:observatoryId/summary` | Summary statistics by camera/config |
 | GET | `/needs/:observatory_id` | Real-time needs assessment |
 | GET | `/frames/:id/download` | Download FITS file |
 | GET | `/frames/:id/components` | Get source frames for a master |
@@ -245,7 +245,7 @@ All calibration endpoints use the `/api/v1/calibration/` prefix and require auth
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `page` | number | Page number (default: 1) |
-| `limit` | number | Results per page (default: 50) |
+| `limit` | number | Results per page (default: 50, hard cap: 200) |
 | `is_master` | string | `'true'` or `'false'` to filter by master status |
 | `exclude_mastered` | string | `'true'` to hide frames already in a master |
 | `frame_type` | string | Filter by `dark`, `flat`, or `bias` |

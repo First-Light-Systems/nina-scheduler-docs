@@ -11,7 +11,7 @@ The Science Scheduler offers two ways to observe a target repeatedly:
 | Feature | Repetitive Observations | Monitoring (Cadence) |
 |---------|------------------------|---------------------|
 | **Created via** | Repetitive observation form | Standard observation with cadence settings |
-| **Interval** | Days + hours (down to 6 minutes) | Days between observations |
+| **Interval** | Days + hours | Days between observations |
 | **Execution windows** | Configurable start/end windows | Based on cadence eligibility |
 | **Series management** | Pause/resume, execution history, statistics | Basic cadence tracking |
 | **Best for** | Structured campaigns with precise timing | Simple "observe every N days" programs |
@@ -36,11 +36,11 @@ See [Creating Observations](CREATING_OBSERVATIONS.md) for details on these field
 
 | Field | Description | Constraints |
 |-------|-------------|-------------|
-| **Interval (days)** | Days between executions | Combined with hours, minimum total interval is 0.1 hours (6 minutes) |
+| **Interval (days)** | Days between executions | Combined with hours |
 | **Interval (hours)** | Hours between executions | Combined with days |
 | **Start Date** | When the series begins | Required |
-| **End Date** | When the series ends | Optional (defaults to 1 year from start) |
-| **Max Executions** | Maximum number of times to execute | Optional (default cap: 1,000) |
+| **End Date** | When the series ends | Optional — omit to run indefinitely (ongoing) |
+| **Max Executions** | Maximum number of times to execute | Optional — omit for unlimited executions |
 | **Window Hours** | How long the execution window stays open | Optional |
 
 **Example configurations:**
@@ -126,14 +126,14 @@ The execution history tab shows every iteration in the series:
 
 This history provides a complete record for data analysis — you can see exactly which nights produced data and which were missed due to weather or other factors.
 
-## Background Scheduling
+## How Series Advance
 
-A background service runs every 60 seconds to manage repetitive observation windows:
+Repetitive series are advanced on demand as part of the scheduler's normal dispatch cycle rather than by a separate timed background loop. When the scheduler evaluates observations for dispatch, it:
 
-1. Checks for observations with expired execution windows
-2. Records skipped executions when windows pass without execution
+1. Checks for execution windows that have expired
+2. Records skipped executions when a window passed without execution
 3. Calculates the next execution window using astronomy-aware scheduling (target visibility, rise/set times)
-4. Marks series as complete when max executions are reached or the end date passes
+4. Marks the series as complete when max executions are reached or the end date passes
 
 This is fully automatic — you don't need to take any action to advance the series.
 

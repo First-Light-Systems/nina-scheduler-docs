@@ -19,18 +19,30 @@ stateDiagram-v2
     in_progress --> acquisition_complete: All exposures captured
     in_progress --> failed: Execution error
     in_progress --> aborted: User terminates
+    in_progress --> cancelled: User cancels
     in_progress --> suspended: Weather / safety
+    in_progress --> partially_completed: Window closed with some data
 
     suspended --> in_progress: Conditions restored
     suspended --> acquisition_complete: Enough data captured
+    suspended --> partially_completed: Window closed with some data
     suspended --> aborted: User aborts
+    suspended --> failed: Window closed without data
 
     acquisition_complete --> completed: Files uploaded
     acquisition_complete --> failed: Upload error
 
+    pending --> cancelled: User cancels
+    assigned --> cancelled: User cancels
+
+    repetitive --> paused: User pauses series
+    paused --> pending: User resumes series
+
     completed --> [*]
     failed --> [*]
     aborted --> [*]
+    cancelled --> [*]
+    partially_completed --> [*]
 ```
 
 ## All Statuses Explained
@@ -44,6 +56,7 @@ stateDiagram-v2
 | **In Progress** | The plugin is actively executing — slewing, centering, and capturing exposures. |
 | **Acquisition Complete** | All planned exposures have been captured. The system is waiting for file uploads to finish. |
 | **Suspended** | Execution was interrupted by weather or a safety event. Will resume automatically when conditions improve. |
+| **Paused** | A repetitive observation series has been paused by the user. No new executions are scheduled until the series is resumed. |
 
 ### Terminal Statuses
 
@@ -52,8 +65,12 @@ Once an observation reaches a terminal status, it cannot transition further.
 | Status | Meaning |
 |--------|---------|
 | **Completed** | All exposures captured and all files uploaded successfully. |
+| **Partially Completed** | The observation ended with some — but not all — planned exposures captured (for example, a time-based or flexible observation whose window closed after gathering useful data). The captured data is retained. |
 | **Failed** | An error prevented the observation from completing (equipment failure, upload error, etc.). |
 | **Aborted** | The user (or system) terminated the observation during execution. Some exposures may have been captured and uploaded. |
+| **Cancelled** | A user cancelled the observation. A pending or assigned observation is cancelled before any data is captured; an in-progress one stops after the current exposure. |
+
+There are 11 observation statuses in total. A few additional internal states exist for repetitive and monitoring series — `completed_series` (the whole series has finished), `waiting_next` (waiting for the next cadence window), and `expired` (the series end date passed) — these are managed automatically and rarely need attention.
 
 ## Who Causes Transitions
 
@@ -80,13 +97,16 @@ The server expects regular heartbeat messages from connected plugins. If a plugi
 
 ### Stale Observation Monitor
 
-Detects observations stuck in a status longer than expected. A warning is issued at 1 hour, and the observation is flagged as stale at 2 hours:
+Detects observations that have been stuck in an active status with no updates for too long. There is a single threshold: after **2 hours** without any update, an active observation (assigned, in_progress, or suspended) is considered stale and is marked **failed** (with failure reason `PLUGIN_CRASH` — the plugin most likely crashed or never connected). The exception is time-based observations that have already captured enough data, which may instead be completed.
 
-| Condition | Warning | Stale Threshold | Action |
-|-----------|---------|-----------------|--------|
-| Stuck in **assigned** | 1 hour | 2 hours | Flagged for review; may be returned to pending |
-| Stuck in **in_progress** | 1 hour | 2 hours | Flagged for review; may be marked as failed |
-| Stuck in **suspended** | 1 hour | 2 hours | Flagged for review; may be marked as failed |
+| Condition | Stale Threshold | Action |
+|-----------|-----------------|--------|
+| Stuck in **assigned** | 2 hours | Marked **failed** (reason `PLUGIN_CRASH`) |
+| Stuck in **in_progress** | 2 hours | Marked **failed** (or completed if a time-based observation already has enough data) |
+| Stuck in **suspended** | 2 hours | Marked **failed** (reason `PLUGIN_CRASH`) |
+
+!!! note
+    A separate health report flags observations as *potentially stale* once they pass 50% of the threshold (about 1 hour). This is only a reporting heuristic to surface observations worth watching — it does not change an observation's status or take any action on its own.
 
 ### Time Limit Monitor
 
@@ -134,7 +154,7 @@ The observatory was assigned the observation but hasn't started executing:
 - **Observatory busy** — finishing another observation before starting yours
 - **Plugin disconnected** — network issue between plugin and server
 
-**What to do**: If stuck for more than a few minutes, contact the observatory operator. The stale observation monitor will flag it after 1 hour and mark it as stale after 2 hours, at which point it may be returned to pending.
+**What to do**: If stuck for more than a few minutes, contact the observatory operator. If it receives no updates for 2 hours, the stale observation monitor marks it as **failed** (reason `PLUGIN_CRASH`); you can then resubmit it.
 
 ### "Why was my observation Suspended?"
 
