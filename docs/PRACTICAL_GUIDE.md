@@ -99,10 +99,7 @@ After selecting a transit, configure the observation details:
     - Priority affects scheduling order, not buffer time
     - Use 9-10 for critical/rare events, 5-7 for most observations, 1-3 for low importance
 
-**Overhead Buffers**: The scheduler adds duration-based overhead buffers to account for slewing, centering, and focusing:
-    - Short observations (under 30 min): 20-minute buffer
-    - Medium observations (30-89 min): 25-minute buffer
-    - Long observations (90+ min): 30-minute buffer
+**Setup Buffer**: The scheduler reserves a setup buffer to account for slewing, centering, and focusing. This is a flat buffer of up to ~10 minutes, capped at half the exposure time (so short exposures get a smaller buffer). It is not priority-based.
 
 #### Camera Settings
 - **Binning**: Camera binning mode (1x1, 2x2, 3x3, or 4x4)
@@ -224,7 +221,7 @@ The Science Scheduler supports three observation types:
 - Continuous exposures until end time
 - Cannot be interrupted or suspended
 - Highest scheduling priority
-- Protected by duration-based overhead buffers (for slewing/centering/focusing)
+- Skip the setup buffer — their baseline times before/after the event already account for slewing/centering/focusing
 
 **Example Use Cases**:
 - Exoplanet transits (as created through Exoplanet Transits page)
@@ -295,6 +292,8 @@ The **My Observations** page shows all your observations:
 - **Failed**: Encountered an error
 - **Cancelled**: User-initiated cancellation
 - **Aborted**: Safety-triggered or system abort
+
+The full status set also includes a few additional states you may occasionally see: **Completed (series)**, **Waiting (next)**, **Paused**, and **Expired**.
 
 **Special Indicators**:
 - **Fast Mover** chip: Displayed on observations marked as fast-moving objects (NEOs, asteroids). These use fine-grained 5-minute scheduling resolution for accurate tracking.
@@ -473,9 +472,9 @@ Contact the observatory owner if you need administrative access.
 ### Plugin Installation
 
 **Prerequisites**:
-- NINA 3.0.0.2001 or later
+- NINA 3.2.0.9001 or later
 - Windows 10/11
-- .NET 8.0 Runtime
+- .NET 8.0, 9.0, or 10.0 (installed automatically with the ASCOM Platform; no separate download needed)
 
 **Installation Steps**:
 1. Download the Science Scheduler plugin from your institution

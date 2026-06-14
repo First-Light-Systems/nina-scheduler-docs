@@ -19,15 +19,14 @@ Solutions for common problems with the Science Scheduler system.
 **Solutions:**
 
 1. **Check NINA version**
-    - Required: NINA 3.0.0.2001 or later
+    - Required: NINA 3.2.0.9001 or later
     - Update NINA if needed
 
 2. **Verify .NET Runtime**
-    - Required: .NET 8.0 Runtime
-    - Download from: https://dotnet.microsoft.com/download/dotnet/8.0
+    - Required: .NET 8.0, 9.0, or 10.0 — installed automatically with the ASCOM Platform; no separate download needed
 
 3. **Check file location**
-    - Files must be in: `%LOCALAPPDATA%\NINA\Plugins\ScienceScheduler\`
+    - Files must be in NINA's version-scoped plugins folder: `%LOCALAPPDATA%\NINA\Plugins\<Major>.<Minor>.<Build>\ScienceScheduler\` (for example, `...\Plugins\3.2.0\ScienceScheduler\`)
     - Not in a subfolder within that directory
 
 4. **Check for missing files**
@@ -567,7 +566,7 @@ Gather this information:
 
 | Problem | First Thing to Try |
 |---------|-------------------|
-| Plugin won't load | Check NINA version, .NET 8.0 |
+| Plugin won't load | Check NINA version (3.2.0.9001+), .NET runtime (8.0/9.0/10.0) |
 | Can't connect | Verify server URL and network |
 | Auth failed | Check API key or re-register |
 | No observations | Check "Enable Operations" is ON |

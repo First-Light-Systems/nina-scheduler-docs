@@ -93,13 +93,14 @@ Monitors the Half-Flux Radius (HFR) of stars in captured images and triggers aut
 |---------|---------|-------|-------------|
 | **Enabled** | No | — | Enable HFR-based trigger |
 | **HFR Increase** | 5% | 1–100% | Percentage increase in HFR to trigger AF |
-| **Sample Size** | 10 | 3–50 | Number of recent frames to analyze for trend |
 
-**Example**: With 5% increase and 10-frame sample size, NINA compares the current HFR trend against the baseline from the last autofocus. If star sizes have grown by 5% or more across the last 10 frames, autofocus triggers.
+The **Sample Size** (number of recent frames analyzed for the trend) is an observatory-default setting only — it defaults to 10 (range 3–50) and is not exposed as a per-observation override.
+
+**Example**: With 5% increase and a 10-frame sample size, NINA compares the current HFR trend against the baseline from the last autofocus. If star sizes have grown by 5% or more across the last 10 frames, autofocus triggers.
 
 !!! tip "HFR Trigger Tips"
     - Lower percentages (2–5%) catch focus drift early but may trigger more often
-    - Higher sample sizes (15–30) smooth out frame-to-frame noise but react more slowly
+    - A larger sample size (set in the observatory defaults) smooths out frame-to-frame noise but reacts more slowly
     - This trigger is excellent for long imaging sessions where temperature-based tracking isn't sufficient
 
 #### Filter Change Autofocus
@@ -241,11 +242,11 @@ For an 8-hour narrowband session cycling through Ha, SII, and OIII filters:
 
 The observation detail page shows autofocus events in the observation log. These events are recorded automatically during observation execution:
 
-| Event | Description |
-|-------|-------------|
-| **AF Started** | Autofocus run began (shows filter name and trigger reason) |
-| **AF Completed** | Autofocus finished successfully (shows focuser position and duration) |
-| **AF Failed** | Autofocus run failed (shows error message) |
+| Event Type | Message | Description |
+|------------|---------|-------------|
+| `autofocus_started` | "Starting autofocus with {filter} filter ({reason})" | Autofocus run began (shows filter name and trigger reason) |
+| `autofocus_completed` | "Autofocus complete: position {n}, HFR {value} ({duration}s)" | Autofocus finished successfully (shows focuser position, HFR, and duration) |
+| `autofocus_failed` | "Autofocus failed with {filter} filter: {error}" | Autofocus run failed (shows error message) |
 
 Both initial autofocus (at observation start) and periodic autofocus (from triggers during imaging) are logged. This provides a complete record of focus activity for diagnosing image quality issues.
 
@@ -254,22 +255,22 @@ Both initial autofocus (at observation start) and periodic autofocus (from trigg
 **Initial autofocus entries** show the trigger reason as "initial autofocus at observation start":
 
 ```
-AF Started  — Filter: Luminance, Reason: initial autofocus at observation start
-AF Complete — Filter: Luminance, Position: 12450, Duration: 45.2s
+autofocus_started    Starting autofocus with Luminance filter (initial autofocus at observation start)
+autofocus_completed  Autofocus complete: position 12450, HFR 2.31 (45.2s)
 ```
 
 **Periodic trigger entries** show "periodic trigger" as the reason:
 
 ```
-AF Started  — Filter: Ha, Reason: periodic trigger
-AF Complete — Filter: Ha, Position: 12380, Duration: 38.7s
+autofocus_started    Starting autofocus with Ha filter (periodic trigger)
+autofocus_completed  Autofocus complete: position 12380, HFR 2.45 (38.7s)
 ```
 
 **Failed autofocus** entries include the error:
 
 ```
-AF Started  — Filter: Luminance, Reason: initial autofocus at observation start
-AF Failed   — Filter: Luminance, Error: Autofocus failed - insufficient stars detected
+autofocus_started    Starting autofocus with Luminance filter (initial autofocus at observation start)
+autofocus_failed     Autofocus failed with Luminance filter: insufficient stars detected
 ```
 
 ---
@@ -321,9 +322,8 @@ Observations created before the autofocus configuration feature was added will u
 
 **Possible causes**:
 
-1. **Plugin version too old** — AF event logging requires plugin v3.4.1.0 or later
-2. **All AF was disabled** — Check if the observation or observatory had AF disabled
-3. **Observation was very short** — No periodic triggers fired, and initial AF was disabled
+1. **All AF was disabled** — Check if the observation or observatory had AF disabled
+2. **Observation was very short** — No periodic triggers fired, and initial AF was disabled
 
 ---
 

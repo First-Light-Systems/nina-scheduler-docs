@@ -155,7 +155,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - New "Data & Storage" group containing Observation Files and External Storage
     - Server Architecture added before Troubleshooting
 - **Plugin version** updated from v3.6.0.0 to v3.8.0.0 across index and overview
-- **.NET requirement** updated from 8.0 to 10.0 (NINA now targets net10.0-windows)
+- **.NET runtime guidance clarified** — .NET 8.0, 9.0, or 10.0 are all supported and installed automatically with the ASCOM Platform (no separate download needed); the plugin targets net8.0
 - **Reporting section** expanded with usage dashboard, per-user/project metrics, and PDF export
 - **How It Works** updated with calibration and download steps for both users and operators
 
@@ -615,7 +615,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 | 2.17 | 3.9.0 | 3.12.1.0 | Shutterless camera dark filter, observatory reservations & map, pipeline performance stats, demand-driven calibration |
 | 2.16 | 3.6.0 | 3.8.0.0 | Announcements (MOTD) — observatory, system, organization, project |
 | 2.15 | 3.6.0 | 3.8.0.0 | Organization observatory membership, permission inheritance |
-| 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET 10 |
+| 2.14 | 3.6.0 | 3.8.0.0 | Overview rewrite, server architecture page, technology & resilience, .NET runtime guidance clarified |
 | 2.13 | 3.6.0 | 3.6.0.0 | Observation notifications, user profile redesign, Pushover integration |
 | 2.12 | 3.6.0 | 3.6.0.0 | Projects guide, observation lifecycle, repetitive observations, system administration, nav restructure |
 | 2.10 | 3.5.0 | 3.4.1.0 | AI log analysis guide |

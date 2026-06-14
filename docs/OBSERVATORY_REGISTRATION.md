@@ -7,7 +7,7 @@
 >
 > **What's New in v1.2** (February 2026):
 > - Observatory History events (online/offline, equipment changes)
-> - Role-based registration management (serverAdmin, organizationAdmin)
+> - Registration management for server administrators and organization owners/observatory admins
 
 This guide explains how observatories register with the Science Scheduler Server and how API keys work.
 
@@ -123,7 +123,7 @@ Significant hardware changes (new motherboard, different computer, Windows reins
 **What happens:**
 1. Plugin generates a new fingerprint on startup
 2. Server detects a mismatch with the stored fingerprint
-3. Connection is rejected with a **"Fingerprint Mismatch"** error
+3. Connection is rejected, and you'll see an error such as a fingerprint mismatch
 
 **How to resolve:**
 1. Contact a **server administrator** and let them know your hardware changed
@@ -310,9 +310,9 @@ The reset:
 - Preserves the observatory's API key, configuration, and observation history
 - Logs a `fingerprint_reset` security event in the observatory's history with your admin email
 
-**Role-based registration management**:
-- **Server admins** can approve registrations for any organization and reset hardware fingerprints
-- **Organization admins** can approve registrations for observatories in their organization
+**Who can manage registrations**:
+- A **server administrator** can approve registrations for any organization and reset hardware fingerprints
+- Organization-admin authority comes from owning the organization or holding observatory admin permission (it is not a separate role); with that authority you can approve registrations for observatories in your organization
 
 ---
 

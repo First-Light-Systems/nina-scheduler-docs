@@ -16,20 +16,16 @@ The integrity scanner checks the database for inconsistencies, orphaned referenc
 
 ### Running a Scan
 
-Navigate to **System** → **Database Integrity** in the admin interface.
+Navigate to **System** → **Database Integrity** in the admin interface, set the scan options, and click **Scan Database**.
 
-**Quick Scan** — a fast check of observations and projects with limited scope. Good for routine monitoring.
-
-**Full Scan** — comprehensive check across all collections with configurable options:
+The scan controls are:
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| **Collections** | Which database collections to scan | All |
+| **Collections** | Which collections to scan — Observations, Observatories, Users, Institutions | All selected |
 | **Deep scan** | Cross-collection reference validation | Off |
-| **Check MinIO** | Validate files exist in storage | Off |
-| **Check system health** | Run system health checks | Off |
-| **Limit per collection** | Maximum documents to scan per collection | 100 (quick), unlimited (full) |
-| **Include test data** | Include test observations in scan | Off |
+| **Skip orphans** | Skip the orphaned-reference checks | On |
+| **Check MinIO** | Validate that referenced files exist in storage | Off |
 
 !!! tip
     Enable **Check MinIO** periodically to verify that all referenced files actually exist in storage. This is the most thorough check but takes longer to run.
@@ -148,18 +144,19 @@ The observation data cleanup tool (which removes all observations and files) off
 
 ## System Analytics
 
-The analytics dashboard provides a high-level view of system health and usage:
+The analytics dashboard (**System** → **Analytics**, `/admin/analytics`) provides a high-level view of system activity through four summary cards:
 
 | Metric | Description |
 |--------|-------------|
-| **Observatory count** | Total registered observatories |
-| **Observation count** | Total observations across all statuses |
-| **User count** | Registered users |
-| **Organization count** | Active organizations |
-| **Success rate** | System-wide observation completion rate |
-| **Storage usage** | Total file storage consumed in MinIO |
+| **Total Observations** | Total observations across all statuses |
+| **Completion Rate** | Completed observations as a percentage of completed + failed |
+| **Total Exposures** | Total number of exposures across all observations (with cumulative observation time shown beneath) |
+| **Active Observatories** | Online observatories out of the total registered |
 
-These metrics help you monitor growth, identify capacity issues, and track overall system health.
+The page also shows an observation status breakdown (pending / completed / failed) and a system health panel.
+
+!!! note "Metrics not shown here"
+    This page does not display user counts, organization counts, or storage usage. For per-user, per-project, and per-observatory usage — including data-volume figures — see the [Reporting Guide](REPORTING_GUIDE.md).
 
 ---
 
@@ -206,7 +203,7 @@ The system health endpoint (`/api/health`) reports:
 
 ### Monitoring Recommendations
 
-- Check the integrity scanner weekly (quick scan) and monthly (full scan with MinIO check)
+- Run the integrity scanner weekly, and monthly with **Check MinIO** enabled
 - Review server logs for error patterns after deployments
 - Review backup list to ensure recent backups exist
 - Watch storage usage trends to plan capacity

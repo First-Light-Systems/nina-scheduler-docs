@@ -214,7 +214,7 @@ See [Projects Guide](PROJECTS_GUIDE.md) for details.
 
 Manage teams of users with shared resources:
 
-- **Organization types**: University, college, high school, research institute, observatory, company, or nonprofit
+- **Organization types**: University, College, High School, Research Institute, Observatory, Company, Nonprofit, Department, Team, Course, or Other
 - **Membership**: Users can belong to multiple organizations with granular permission levels
 - **Shared resources**: Organization-owned observatories and external storage destinations are accessible to all members
 - **Administration**: Manage members, observatories, projects, and storage from a central interface
@@ -384,8 +384,8 @@ Both the plugin and server are designed to recover cleanly from unexpected shutd
 ### For Observatories
 
 - Windows 10 or Windows 11
-- NINA 3.0.0.2001 or later
-- .NET 10.0 Runtime
+- NINA 3.2.0.9001 or later
+- .NET 8.0, 9.0, or 10.0 — installed automatically with the ASCOM Platform; no separate download needed
 - Network connection to the Science Scheduler Server
 
 ### For Users

@@ -37,9 +37,6 @@ Files are displayed in a grid view showing:
 - **Filter** used for the exposure
 - **Exposure time** in seconds
 - **File size**
-- **File type badges** - FITS or preview indicators
-
-Use the **search field** to filter files by name or metadata.
 
 ---
 
@@ -61,7 +58,7 @@ Click on any file to open the metadata dialog, which displays:
 ### Quality Metrics
 - **ADU statistics** (mean, median, standard deviation, min, max)
 - **SNR** (Signal-to-Noise Ratio)
-- **Background level** and background noise
+- **Background level**
 
 !!! note
     HFR, FWHM, and star count values are available in FITS file headers (see [Embedded Quality Headers](#embedded-quality-headers) below) but are not displayed as named metrics on the Observation Files page.
@@ -86,7 +83,7 @@ These headers allow you to assess image quality directly in any FITS viewer with
 
 ### Understanding Quality Metrics
 
-Quality analysis runs automatically after each FITS file is plate-solved successfully. If plate solving fails or quality analysis encounters an error, the file is still saved — quality analysis is non-fatal and never blocks processing.
+Quality analysis runs automatically as part of server-side processing. It is ordered after plate solving in the pipeline but does not depend on plate solving succeeding — quality metrics are measured whether or not plate solving works. If quality analysis encounters an error, the file is still saved — quality analysis is non-fatal and never blocks processing.
 
 Here's what each metric tells you and how to interpret it:
 

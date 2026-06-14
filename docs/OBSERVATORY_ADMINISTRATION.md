@@ -151,13 +151,15 @@ To add an organization as an observatory member (requires `can_admin`):
 
 ### Permission Inheritance
 
-When an organization is added as an observatory member, individual users inherit permissions based on their role within the organization:
+When an organization is added as an observatory member, individual users inherit permissions based on their role within the organization — **but always capped by the permissions the organization itself was granted on the observatory**. A member never receives more access than the organization's own observatory-membership grant holds.
 
 | Organization Role | Observatory Permissions | Description |
 |-------------------|------------------------|-------------|
-| **Owner** | `can_admin` + `can_operate` | Full management access |
-| **Admin** (has `can_manage_members` or `can_manage_observatories`) | `can_admin` + `can_operate` | Management and operational access |
-| **Regular Member** | `can_view` + `can_observe` | View and submit observations only |
+| **Owner** | Up to `can_admin` + `can_operate` | Highest level, clamped to the organization's grant |
+| **Admin** (has `can_manage_members` or `can_manage_observatories`) | Up to `can_admin` + `can_operate` | Management/operational level, clamped to the organization's grant |
+| **Regular Member** | Up to `can_view` + `can_observe` | View and submit observations, clamped to the organization's grant |
+
+The permissions shown describe the *intended* level for each role; the effective permissions are limited to what the organization was granted on the observatory. For example, if the organization holds only `can_view` on the observatory, even an organization owner inherits only `can_view`.
 
 ### Members Table Display
 
@@ -282,9 +284,12 @@ Disable dispatching during maintenance, testing, or when you need to run manual 
 | **Operations ON** | Observatory accepts and executes observations normally |
 | **Operations OFF** | Observatory stays connected but pauses execution |
 
-Useful during weather holds or equipment issues when you want to maintain the connection but not execute observations.
+The Operations state is useful during weather holds or equipment issues when you want to maintain the connection but not execute observations.
 
-Both controls take effect immediately and their status is visible to all users viewing the observatory.
+!!! note "Operations is read-only in the web GUI"
+    Operations cannot be toggled from the web interface — it is **set in the NINA plugin** and reported to the server. The web GUI displays the current Operations state but does not change it. The only operational control you can toggle from the web is **Dispatching** (above).
+
+Dispatching changes take effect immediately and the status is visible to all users viewing the observatory.
 
 ## Pipeline Performance Stats
 
@@ -365,7 +370,7 @@ Click the **map icon** (*"Open observatory map (new tab)"*) in the header of the
 ### What the Map Shows
 
 - A **live marker for each observatory** at its registered location. The marker icon shows whether the observatory is **idle** (dome icon) or **actively observing** (telescope icon).
-- The **marker border color** reflects heartbeat health: green (healthy, reported within ~5 min), orange (warning, 5–15 min / no session), red (critical, > 15 min), gray (never reported).
+- The **marker border color** reflects heartbeat health: green (healthy, reported within ~5 min), orange (warning, 5–15 min — also shown for an observatory that has never reported or has no active session), red (critical, > 15 min), gray (a narrower "inactive" case — a known session but no heartbeat timestamp).
 - Observatories at the **same coordinates** (multi-telescope sites) are spread into a small ring so each stays clickable; nearby markers **cluster** with a count at lower zoom.
 - **Hovering** a marker shows the observatory name, owner, and — if observing — the current target and observer. **Clicking** a marker opens the active observation (if observing) or the observatory's detail card.
 - A collapsible **legend** explains the icons and heartbeat colors. The map defaults to the **Terrain** view; use the map-type dropdown to switch.
@@ -378,12 +383,11 @@ The system automatically logs observatory lifecycle events:
 
 | Event Type | Description |
 |-----------|-------------|
-| `online` | Observatory connected to server |
-| `offline` | Observatory disconnected |
+| `plugin_connected` | Observatory plugin connected to server |
+| `plugin_disconnected` | Observatory plugin disconnected |
 | `system_info_changed` | System information updated (OS, hardware, NINA version) |
 | `equipment_configuration_changed` | Equipment setup changed (camera, mount, filters) |
-| `goodbye` | Observatory sent graceful disconnect message |
-| `safety_event` | Safety device status changed (safe/unsafe) |
+| `safety_status_changed` | Safety device status changed (safe/unsafe) |
 | `organization_added` | Organization added as observatory member |
 | `organization_removed` | Organization removed from observatory members |
 | `organization_permissions_updated` | Organization member permissions changed |
@@ -702,7 +706,7 @@ Observatory owners and admins can post announcements (Message of the Day) to com
 | **Title** | Short headline for the announcement | Yes |
 | **Message** | Full announcement text | Yes |
 | **Severity** | `info`, `warning`, or `critical` — controls the alert banner color | Yes |
-| **Expiration Date** | When the announcement automatically expires | No |
+| **Expiration Date** | When the announcement automatically expires | Yes |
 | **Delivery Type** | `message` (in-app only), `email` (email only), or `both` | Yes |
 
 4. Click **Create**

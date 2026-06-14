@@ -18,7 +18,11 @@ Navigate to **My Files** from the main menu. The page opens in the **By Target**
 
 ## Browse Modes
 
-Three tabs at the top of the page control how files are organized:
+Three tabs at the top of the page control how files are organized. The tabs appear in the order **By Project**, **By Target**, **By Date**, with **By Target** selected by default:
+
+### By Project
+
+Groups files by the project they belong to. Expanding a project shows targets within it, and expanding a target shows individual observations. This view is useful when working on a specific research project that spans multiple targets.
 
 ### By Target
 
@@ -30,10 +34,6 @@ Groups all files by target name. Each target shows:
 - Expandable list of observations, each containing a file grid
 
 This is the most common view for finding all images of a specific object across multiple nights.
-
-### By Project
-
-Groups files by the project they belong to. Expanding a project shows targets within it, and expanding a target shows individual observations. This view is useful when working on a specific research project that spans multiple targets.
 
 ### By Date
 
@@ -57,7 +57,7 @@ When you expand an observation, files appear in a card grid showing:
 - **Filename** and capture timestamp
 - **Filter** and exposure time
 - **File size**
-- **Plate solve status** — Solved (green), Failed (red), Queued, Solving, or Not Attempted
+- **Plate solve status** — Solved (green), Failed (red), Queued, Solving…, or Not Attempted
 - **Calibration ready indicator** — a green "Cal Ready" chip appears when matching dark and flat master frames are available for that file's camera, gain, binning, and filter
 
 Click a thumbnail to open a full-size preview in a lightbox viewer.
@@ -91,7 +91,7 @@ You can trigger plate solving from the file browser:
 - **Individual files** — click the solve icon on any unsolved file card
 - **Bulk solve** — the "Solve Unsolved" button on a target or observation queues all unsolved files at once
 
-Plate solve status updates in real time via WebSocket — you'll see chips change from "Queued" to "Solving" to "Solved" without refreshing.
+Plate solve status updates in real time via WebSocket — you'll see chips change from "Queued" to "Solving…" to "Solved" without refreshing.
 
 ---
 

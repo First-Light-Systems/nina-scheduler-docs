@@ -111,8 +111,9 @@ Select **Dropbox**, **Google Drive**, or **Google Cloud Storage**. The provider 
 | Field | Description | Example |
 |-------|-------------|---------|
 | **Display Name** | A friendly name for this configuration | "Team Dropbox Archive" |
-| **Destination Path** | Folder path in your cloud storage | `/observatory/fits-data` |
-| **File Organization** | How files are organized in subfolders | See below |
+| **Root Path** | Base folder path in your cloud storage | `/observatory/fits-data` |
+| **Storage Path Template** | How files are organized within the root path (see below) | `$TARGET` |
+| **Compress before transfer (Rice .fz)** | Rice-compress FITS files before uploading (on by default) | On |
 | **Comment** | Optional notes about this configuration | "Shared team archive for 2026 season" |
 
 #### Storage Path Template
@@ -188,7 +189,7 @@ Check the box next to each destination where you want files copied. You can sele
 Each destination shows:
 - Display name and provider (Dropbox, Google Drive, or GCS)
 - Scope badge (Personal, Org, or Project)
-- Destination path
+- Root path
 - Warning flag if "delete from server" is enabled
 
 ### Example: Standard Research Workflow
@@ -197,12 +198,12 @@ A researcher working on a galaxy imaging project:
 
 1. **Organization admin** creates a shared Google Drive configuration:
     - Display name: "Research Group Archive"
-    - Destination: `/Astronomy/2026-Spring`
-    - Organization: by target
+    - Root path: `/Astronomy/2026-Spring`
+    - Storage path template: `$TARGET`
 2. **Researcher** also has a personal Dropbox configuration:
     - Display name: "My Dropbox"
-    - Destination: `/fits-data`
-    - Organization: by project and target
+    - Root path: `/fits-data`
+    - Storage path template: `$PROJECT/$TARGET`
 3. When creating an observation for M31:
     - Checks both "Research Group Archive" and "My Dropbox"
     - After the observation completes, FITS files are automatically copied to:
@@ -215,8 +216,8 @@ A university astronomy department:
 
 1. **Department admin** creates a Google Cloud Storage configuration:
     - Display name: "Department GCS Bucket"
-    - Destination: `/student-observations`
-    - File organization: by project and target
+    - Root path: `/student-observations`
+    - Storage path template: `$PROJECT/$TARGET`
     - Delete from server: enabled (to manage server storage)
 2. **Students** select this destination when submitting observations
 3. After observations complete, files appear organized in GCS:

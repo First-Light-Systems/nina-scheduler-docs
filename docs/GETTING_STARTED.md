@@ -22,7 +22,7 @@ If you're submitting observation requests through the web interface:
 1. **Log in** to your organization's Science Scheduler URL
 2. Navigate to **Dashboard** to see system status
 3. **Create a project** to organize your observations (see [Projects Guide](PROJECTS_GUIDE.md))
-4. Click **New Observation** to submit your first request
+4. Click **Submit Observation** to submit your first request
 5. Fill in target coordinates, exposure settings, and constraints
 6. Submit and monitor progress in **My Observations**
 7. (Optional) Set up **[Notifications](NOTIFICATIONS.md)** to receive alerts when observations change state
@@ -37,8 +37,8 @@ If you're operating a telescope with the NINA plugin:
 
 #### Quick Start Checklist
 
-- [ ] NINA 3.0+ installed on Windows
-- [ ] .NET 8.0 Runtime installed
+- [ ] NINA 3.2.0.9001 or later installed on Windows
+- [ ] .NET 8.0, 9.0, or 10.0 (installed automatically with the ASCOM Platform — no separate download needed)
 - [ ] Plugin files copied to NINA plugins folder
 - [ ] Server URL from your administrator
 - [ ] API Key (if already registered) or registration details
@@ -46,7 +46,7 @@ If you're operating a telescope with the NINA plugin:
 #### First-Time Setup (10 minutes)
 
 1. **Install the Plugin**
-    - Copy plugin files to: `%LOCALAPPDATA%\NINA\Plugins\ScienceScheduler\`
+    - Copy plugin files to the version-numbered NINA plugins folder: `%LOCALAPPDATA%\NINA\Plugins\<Major>.<Minor>.<Build>\ScienceScheduler\` (for example, `...\Plugins\3.0.0\ScienceScheduler\`). See [Plugin Setup](PLUGIN_SETUP.md#step-2-install-plugin-files) for the exact path.
     - Restart NINA
 
 2. **Configure Plugin Settings** (in NINA Options > Plugins > Science Scheduler)
@@ -79,7 +79,7 @@ Once connected, the Science Scheduler will:
 You can monitor everything in:
 - **NINA Plugin Status**: Shows connection and current observation
 - **Web Dashboard**: Shows your observations and their status
-- **Admin Panel**: (Administrators) Shows all system activity
+- **Admin Dashboard**: (Administrators) The **ADMINISTRATION** section shows all system activity
 
 ## Getting Help
 
@@ -93,9 +93,9 @@ You can monitor everything in:
 
 | Task | Where |
 |------|-------|
-| Submit observation | Web GUI > New Observation |
+| Submit observation | Web GUI > Submit Observation |
 | Check my observations | Web GUI > My Observations |
 | View queue status | Web GUI > Dashboard |
 | Configure plugin | NINA > Options > Plugins > Science Scheduler |
 | Monitor execution | NINA > Advanced Sequencer |
-| View system status | Admin Panel (administrators only) |
+| View system status | Admin Dashboard > ADMINISTRATION (administrators only) |

@@ -16,11 +16,11 @@ Report access depends on your role:
 |--------|---------------|-------|
 | **My Usage** | All users | `/my-usage` |
 | **Target Observation Report** | All users | `/reports/targets` |
-| **Usage Dashboard** | Admins only | `/reports/usage` |
-| **Usage Explorer** | Admins only | `/reports/explorer` |
-| **User Usage Report** | Admins only | `/reports/users` |
-| **Project Usage Report** | Admins only | `/reports/projects` |
-| **Observatory Utilization Report** | Admins only | `/reports/observatories` |
+| **Usage Dashboard** | Admins only | `/admin/billing/dashboard` |
+| **Usage Explorer** | Admins only | `/admin/billing/explorer` |
+| **User Usage Report** | Admins only | `/admin/billing/users` |
+| **Project Usage Report** | Admins only | `/admin/billing/projects` |
+| **Observatory Utilization Report** | Admins only | `/admin/billing/observatories` |
 
 Regular users can view their own usage via **My Usage** and access the **Target Observation Report**. The admin reports (Usage Dashboard, Usage Explorer, User/Project/Observatory reports) are restricted to observatory administrators and server administrators.
 
@@ -64,8 +64,10 @@ The **User Usage Report** shows activity broken down by individual user. This re
 | **Success Rate** | Percentage of observations completed vs total attempted |
 | **Wall-Clock Hours** | Total elapsed time from first exposure to last, including overheads |
 | **Shutter-Open Hours** | Actual cumulative exposure time (sensor collecting light) |
-| **Efficiency** | Shutter-open time as a percentage of wall-clock time |
 | **Data Volume** | Total size of FITS files generated |
+
+!!! note "Efficiency column"
+    The **Efficiency** column appears only on the **Observatory Utilization Report**, not on the User or Project reports.
 
 !!! tip "Understanding Efficiency"
     An efficiency of 70% means that 70% of the telescope's time was spent collecting photons. The remaining 30% is overhead: slewing, autofocus, filter changes, dithering settle time, file downloads, and plate solving. Typical values range from 50–80% depending on exposure length and autofocus frequency.
@@ -94,7 +96,6 @@ This is useful for:
 | **Success Rate** | Completion percentage |
 | **Wall-Clock Hours** | Total elapsed time |
 | **Shutter-Open Hours** | Actual exposure time |
-| **Efficiency** | Shutter-open as percentage of wall-clock |
 | **Data Volume** | Total FITS data generated |
 
 ---
@@ -128,7 +129,7 @@ The event type dropdown controls which events are shown:
 
 | Option | Description |
 |--------|-------------|
-| **Final Events** | Default — shows the terminal event for each observation |
+| **Final Events** | Default — shows terminal-type events (completed, failed, rejected, and terminated) across observations. This is a multi-type filter, not a single deduplicated event per observation. |
 | **All Events** | Every event in the observation lifecycle |
 | **Assigned** | Observation was assigned to an observatory |
 | **Completed** | Observation finished successfully |
@@ -192,7 +193,7 @@ Attempted observations include completed, failed, and aborted observations. Pend
 
 Most reports support **CSV export** for offline analysis or record-keeping. Click the **Export** button at the top of the report to download a CSV file suitable for spreadsheets and data analysis.
 
-The **Target Observation Report** additionally supports **PDF export**, which generates a formatted document server-side suitable for archiving and sharing.
+The **Target Observation Report** additionally provides a **PDF** button. This does not produce a server-generated PDF file — it opens a formatted, print-ready HTML report in a new browser tab, where you can use your browser's print dialog to save it as a PDF or send it to a printer.
 
 ---
 

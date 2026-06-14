@@ -46,7 +46,7 @@ Before installing the plugin, ensure you have:
 
 | Requirement | Details |
 |-------------|---------|
-| **NINA Version** | 3.0.0.2001 or later - [Download NINA](https://nighttime-imaging.eu/download/) |
+| **NINA Version** | 3.2.0.9001 or later - [Download NINA](https://nighttime-imaging.eu/download/) |
 | **Operating System** | Windows 10 or Windows 11 |
 | **.NET Runtime** | .NET 8.0, 9.0, or 10.0 — installed automatically with the ASCOM Platform; no separate download needed |
 | **Network Access** | Connection to your scheduler server |
@@ -263,11 +263,12 @@ The plugin shows real-time status:
 
 | Status | Meaning |
 |--------|---------|
-| **Disconnected** | Plugin disabled or not connected |
-| **Connecting...** | Attempting to connect to server |
-| **Ready** | Connected and waiting for observations |
-| **Executing** | Currently running an observation |
-| **Configuration Required** | Missing required settings |
+| **Connecting…** | Establishing the connection to the server |
+| **Authenticating…** | Connection established; validating the API key |
+| **Connected** | Connected and authenticated — ready to request and execute observations |
+| **Reconnecting…** | Connection dropped; the plugin is automatically reconnecting with backoff |
+| **Disconnected** | Plugin disabled or not connected to the server |
+| **Error: {reason}** | The connection failed; the message describes the reason |
 
 ---
 

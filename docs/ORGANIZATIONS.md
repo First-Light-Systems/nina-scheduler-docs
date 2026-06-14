@@ -26,6 +26,9 @@ When creating an organization, you can specify its type:
 | Observatory | Observatory organization |
 | Company | Commercial astronomy business |
 | Nonprofit | Amateur astronomy clubs, outreach organizations |
+| Department | A department within a larger institution |
+| Team | A working group or team |
+| Course | An academic course or class |
 | Other | Any other type of organization |
 
 ## Organization Permissions
@@ -119,13 +122,15 @@ See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for more details.
 
 In addition to owning observatories, organizations can be added as **members** of any observatory. This allows observatory administrators to grant access to an entire organization at once, rather than adding members individually.
 
-When an organization is added as an observatory member:
+When an organization is added as an observatory member, each member's inherited permissions are derived from their organization role **but capped by the permissions the organization itself was granted on that observatory**. A member never receives more access than the organization's own observatory-membership grant holds — for example, if the organization is granted only `can_view` + `can_observe`, even an organization owner inherits at most `can_view` + `can_observe` on that observatory.
 
 | Organization Role | Inherited Observatory Permissions |
 |-------------------|-----------------------------------|
-| **Owner** | `can_admin` + `can_operate` |
-| **Admin** (has `can_manage_members` or `can_manage_observatories`) | `can_admin` + `can_operate` |
-| **Regular Member** | `can_view` + `can_observe` |
+| **Owner** | Highest level the organization holds (up to `can_admin` + `can_operate`) |
+| **Admin** (has `can_manage_members` or `can_manage_observatories`) | Up to the organization's granted level (`can_admin` + `can_operate`) |
+| **Regular Member** | Up to the organization's granted level (typically `can_view` + `can_observe`) |
+
+In all cases, the inherited permissions are limited to what the organization was granted on the observatory — the role above describes the *intended* level, which is then clamped to the organization's edge.
 
 Key behaviors:
 
