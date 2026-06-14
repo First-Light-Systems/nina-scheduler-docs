@@ -210,7 +210,7 @@ Changes are saved immediately and available to all users of that observatory.
 
 ## Understanding Observation Types
 
-The Science Scheduler supports three observation types:
+The Science Scheduler supports five observation types. The three most commonly used are described in detail below; **Rise to Set** and **Monitoring** are summarized after them.
 
 ### Fixed-Time Observations
 
@@ -273,6 +273,24 @@ The Science Scheduler supports three observation types:
 - Photometry series (e.g., "take 50 × 120s exposures")
 - Deep imaging (e.g., "100 × 300s in each filter")
 - Traditional observing plans
+
+### Rise to Set
+
+**Best for**: Maximizing time on a target across a single night
+
+**Characteristics**:
+- Window is calculated automatically from when the target rises above the minimum altitude until it sets (respecting twilight)
+- The exposure sequence repeats continuously throughout that window
+- The window is recalculated for each night
+
+### Monitoring (Cadence)
+
+**Best for**: Re-observing a target on a regular interval (e.g. "every N days")
+
+**Characteristics**:
+- A standard observation with cadence settings; after each run it automatically becomes eligible again on its next cadence date
+- Tracks attempts against an optional maximum and end date
+- For structured recurring campaigns with precise interval/window control and pause/resume, prefer **[Repetitive Observations](REPETITIVE_OBSERVATIONS.md)**; see **[Observation Lifecycle](OBSERVATION_LIFECYCLE.md)** for how the cadence cycle behaves
 
 ---
 

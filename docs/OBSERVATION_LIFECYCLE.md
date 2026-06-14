@@ -125,12 +125,12 @@ Handles edge cases where status update messages were lost (network glitch, serve
 Monitoring (cadence-based) observations have a unique lifecycle. Instead of staying in a terminal status after completion:
 
 1. Observation completes normally → **completed**
-2. System checks if the series should continue (max observations not reached, end date not passed)
+2. System checks if the series should continue (attempt limit not reached, end date not passed)
 3. If continuing: observation resets to **pending** with an updated `cadence_next_eligible` date
-4. Scheduler waits until the next eligible date before assigning again
+4. Scheduler waits until the next eligible date before assigning again — it will **not** re-observe before `cadence_next_eligible`, so the configured interval is honored
 5. Cycle repeats until the series ends
 
-Failed monitoring observations also reset to **pending** to allow automatic retry on the next cadence window. The failure is recorded in the series history.
+Failed monitoring observations also reset to **pending** for automatic retry on the next cadence window — but a failed attempt **counts toward the series limit** (`cadence_max_observations`), the same as a successful one. Once the attempt limit is reached (or the end date passes), the series ends instead of retrying, so a target that keeps failing will not loop indefinitely. Every attempt — success or failure — is recorded in the series history.
 
 ## Common Questions
 
