@@ -1,7 +1,7 @@
 # NINA Plugin Setup Guide
 
 **Document Version**: 1.6 | **Last Updated**: June 2026
-**Plugin Version**: v3.14.0.0
+**Plugin Version**: v3.14.1.0
 
 > **What's New in v1.6** (June 2026):
 > - Plugin version updated to v3.14.0.0
@@ -269,6 +269,32 @@ The plugin shows real-time status:
 | **Reconnecting…** | Connection dropped; the plugin is automatically reconnecting with backoff |
 | **Disconnected** | Plugin disabled or not connected to the server |
 | **Error: {reason}** | The connection failed; the message describes the reason |
+
+### Operational State
+
+Separate from the *connection* status above, the plugin reports an **operational state** that describes what the observatory is actually doing. This state is shown as a coloured **chip on the web dashboard** and in the expanded **Science Scheduler Status** view in the NINA sequencer (see [Expanded Status View](#expanded-status-view)).
+
+| State | Dashboard chip | Meaning |
+|-------|----------------|---------|
+| **Ready** | Green | Connected and idle — waiting for observations. No work is currently queued for this observatory. |
+| **Observing** | Green | Actively executing an assigned observation (slewing, focusing, or capturing). |
+| **Weather Hold** | Amber | Operations paused due to a weather/safety condition. |
+| **Shutdown** | Grey | The observatory has shut down operations. |
+| **Error** | Red | A fault is preventing normal operation; the message describes the reason. |
+| **Unknown** | Grey | No operational state has been reported yet (for example, immediately after connecting, before the first dispatch). |
+
+When the plugin connects but finds no work to run, it reports **Ready** ("Waiting for observations") rather than leaving the dashboard at **Unknown**. The **Weather Hold**, **Shutdown**, and **Error** states always take precedence — an idle observatory in one of those states is not reported as Ready.
+
+### Expanded Status View
+
+Within the Science Scheduler container in the NINA sequencer, an expandable **Science Scheduler Status** panel shows live detail about the current session:
+
+| Field | Shows |
+|-------|-------|
+| **Connection Status** | The current [connection status](#status-display) (Connected, Connecting…, Reconnecting…, etc.). |
+| **Plugin Status** | A plain-language summary of what the plugin is doing — for example *"Running observation"* while observing, or *"Running sequence - waiting for work"* when idle. |
+| **Current Observation** | The target and observation type currently running. Updates when an observation is assigned and reads **"No observation running"** once it completes. |
+| **Last Contact** | When the plugin last received a message from the server. During active observing this is continuous, so a recent value is expected. |
 
 ---
 
