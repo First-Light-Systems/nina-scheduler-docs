@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.20] - 2026-06-15
+
+### Added
+
+- **Operational State** and **Expanded Status View** sections (Plugin Setup) — document the observatory's operational-state dashboard chip (Ready / Observing / Weather Hold / Shutdown / Error / Unknown) and the live fields in the NINA sequencer's expanded Science Scheduler Status panel
+
+### Fixed
+
+- **Plugin version** updated to v3.14.1.0 — status and operational-state accuracy fixes (PR #794):
+    - **Idle observatories now report "Ready"** — when connected but with no work to run, the observatory now signals **ready** ("Waiting for observations") instead of staying **Unknown**, so the dashboard shows a green **Ready** chip rather than a grey **Unknown** one
+    - **Expanded "Science Scheduler Status" view** (in the NINA sequencer container) now reflects live state:
+        - **Plugin Status** no longer sticks on "Not connected" — it tracks the real connection, operations, and observation state
+        - **Current Observation** now updates when an observation is assigned, and clears to "No observation running" once it completes (previously it stayed blank, then stale)
+        - **Last Contact** is now stamped on every inbound server message
+        - Improved readability of the Plugin Status and Current Observation text, and added a readable default for in-between connection states (Connecting… / Authenticating… / Reconnecting…)
+
+---
+
 ## [2.19] - 2026-06-13
 
 ### Changed
