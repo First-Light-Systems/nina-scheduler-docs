@@ -93,9 +93,12 @@ Projects support multi-user collaboration with six granular permissions:
 1. Open your project
 2. Open the project's **Members** page
 3. Click **Add Member**
-4. Search for the user to add
+4. Select the user from the picker
 5. Set their permissions
 6. Click **Add**
+
+!!! note "Who can add members"
+    The Add Member picker is populated from the system user directory, which is available only to **server administrators and observatory administrators**. If you own a project but are not an administrator, the picker will be empty and you won't be able to add users yourself — ask a server or observatory administrator to add the collaborator to your project. Administrators can add **any** user, regardless of organization. See the [Collaboration Guide](COLLABORATION.md#collaborating-with-other-users-using-projects) for details.
 
 ### Permission Guidelines
 
