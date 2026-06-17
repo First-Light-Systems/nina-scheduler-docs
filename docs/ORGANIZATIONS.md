@@ -194,4 +194,4 @@ Organizations can be managed programmatically via the API. The following endpoin
 
 ---
 
-*See also: [Getting Started](GETTING_STARTED.md) | [Observatory Registration](OBSERVATORY_REGISTRATION.md)*
+*See also: [Collaboration Guide](COLLABORATION.md) | [Getting Started](GETTING_STARTED.md) | [Observatory Registration](OBSERVATORY_REGISTRATION.md)*

@@ -191,6 +191,7 @@ Projects can be configured with external storage destinations so that FITS files
 
 ## Related Documentation
 
+- **[Collaboration Guide](COLLABORATION.md)** — Sharing projects with other users and collaborating across organizations
 - **[Creating Observations](CREATING_OBSERVATIONS.md)** — Observation creation workflow including project selection
 - **[Observation Files](OBSERVATION_FILES.md)** — Viewing and downloading FITS files
 - **[External Storage](EXTERNAL_STORAGE.md)** — Automatic cloud storage transfer
