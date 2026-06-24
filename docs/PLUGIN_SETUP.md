@@ -1,8 +1,12 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.6 | **Last Updated**: June 2026
-**Plugin Version**: v3.14.1.0
+**Document Version**: 1.7 | **Last Updated**: June 2026
+**Plugin Version**: v4.0.0.0
 
+> **What's New in v1.7** (June 2026):
+> - **Rebranded to Asterism** — the plugin's displayed name in NINA is now **Asterism** (formerly "Science Scheduler"). Your existing install, settings, and the `ScienceScheduler` plugin folder are unaffected — only the display name changed.
+> - Plugin version bumped to **v4.0.0.0** (server to **v4.0.0**) for the rebrand release
+>
 > **What's New in v1.6** (June 2026):
 > - Plugin version updated to v3.14.0.0
 > - **Twilight Sky Flat Pointing helper** — the plugin options page now shows the recommended anti-solar Azimuth/Altitude for the upcoming dusk and dawn, for use with a NINA "Slew to Alt/Az" instruction when capturing Sky flats (see [Twilight Sky Flat Pointing](#twilight-sky-flat-pointing))
