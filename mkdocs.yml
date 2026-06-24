@@ -1,5 +1,5 @@
-site_name: Science Scheduler Documentation
-site_description: User documentation for the Nina Science Scheduler
+site_name: Asterism Documentation
+site_description: User documentation for Asterism — observation scheduling and coordination for observatories running NINA
 site_author: First Light Observatory Systems LLC
 site_url: https://first-light-systems.github.io/nina-scheduler-docs/
 

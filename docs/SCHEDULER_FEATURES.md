@@ -9,11 +9,11 @@
 
 ## Overview
 
-This guide explains how the Science Scheduler makes decisions about when and where to execute your observations.
+This guide explains how Asterism makes decisions about when and where to execute your observations.
 
 ## Priority System
 
-The Science Scheduler uses a **1-10 numeric priority scale**:
+Asterism uses a **1-10 numeric priority scale**:
 
 | Priority | Meaning |
 |----------|---------|
@@ -33,7 +33,7 @@ When multiple observations are eligible to run, the scheduler selects the one wi
 
 ## Observation Types
 
-The Science Scheduler supports five observation types:
+Asterism supports five observation types:
 
 ### 1. Flexible (Default)
 

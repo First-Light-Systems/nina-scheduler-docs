@@ -1,12 +1,12 @@
-# Nina Science Scheduler Documentation
+# Asterism Documentation
 
-User documentation for the Nina Science Scheduler system.
+User documentation for Asterism.
 
 **View the documentation:** https://first-light-systems.github.io/nina-scheduler-docs/
 
 ## About
 
-This repository contains the user-facing documentation for the Nina Science Scheduler, a multi-observatory coordination system for astronomical observations.
+This repository contains the user-facing documentation for Asterism, a multi-observatory coordination system for astronomical observations.
 
 ## Building Locally
 

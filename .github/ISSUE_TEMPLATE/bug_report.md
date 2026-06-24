@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a problem with the Science Scheduler
+about: Report a problem with Asterism
 title: '[BUG] '
 labels: bug
 assignees: ''

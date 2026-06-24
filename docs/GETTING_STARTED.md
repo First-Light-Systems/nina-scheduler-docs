@@ -1,4 +1,4 @@
-# Getting Started with Science Scheduler
+# Getting Started with Asterism
 
 **Document Version**: 2.0 | **Last Updated**: February 2026
 
@@ -19,7 +19,7 @@ Before you begin, make sure you have:
 
 If you're submitting observation requests through the web interface:
 
-1. **Log in** to your organization's Science Scheduler URL
+1. **Log in** to your organization's Asterism URL
 2. Navigate to **Dashboard** to see system status
 3. **Create a project** to organize your observations (see [Projects Guide](PROJECTS_GUIDE.md))
 4. Click **Submit Observation** to submit your first request
@@ -49,7 +49,7 @@ If you're operating a telescope with the NINA plugin:
     - Copy plugin files to the version-numbered NINA plugins folder: `%LOCALAPPDATA%\NINA\Plugins\<Major>.<Minor>.<Build>\ScienceScheduler\` (for example, `...\Plugins\3.0.0\ScienceScheduler\`). See [Plugin Setup](PLUGIN_SETUP.md#step-2-install-plugin-files) for the exact path.
     - Restart NINA
 
-2. **Configure Plugin Settings** (in NINA Options > Plugins > Science Scheduler)
+2. **Configure Plugin Settings** (in NINA Options > Plugins > Asterism)
     - Enter **Server URL** (e.g., `ws://scheduler.yourorganization.edu`)
     - Enter **API Key** if you have one, or leave blank for new registration
     - Fill in **Observatory Information**:
@@ -60,7 +60,7 @@ If you're operating a telescope with the NINA plugin:
 
 3. **Create the Sequence**
     - Open NINA's Advanced Sequencer
-    - Drag **Science Scheduler** container from the palette
+    - Drag **Asterism** container from the palette
     - Run your sequence to start receiving observations
 
 **Next step**: See [Plugin Setup](PLUGIN_SETUP.md) for complete installation guide.
@@ -69,7 +69,7 @@ If you're operating a telescope with the NINA plugin:
 
 ## What Happens Next?
 
-Once connected, the Science Scheduler will:
+Once connected, Asterism will:
 
 1. **Assign observations** to your observatory based on priority and visibility
 2. **Execute exposures** automatically through NINA
@@ -96,6 +96,6 @@ You can monitor everything in:
 | Submit observation | Web GUI > Submit Observation |
 | Check my observations | Web GUI > My Observations |
 | View queue status | Web GUI > Dashboard |
-| Configure plugin | NINA > Options > Plugins > Science Scheduler |
+| Configure plugin | NINA > Options > Plugins > Asterism |
 | Monitor execution | NINA > Advanced Sequencer |
 | View system status | Admin Dashboard > ADMINISTRATION (administrators only) |

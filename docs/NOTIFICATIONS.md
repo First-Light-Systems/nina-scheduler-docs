@@ -2,7 +2,7 @@
 
 **Document Version**: 2.5 | **Last Updated**: March 2026
 
-The Science Scheduler can notify you when your observations change state — via **email** and/or **Pushover** push notifications.
+Asterism can notify you when your observations change state — via **email** and/or **Pushover** push notifications.
 
 ## Overview
 

@@ -4,7 +4,7 @@
 
 ## Transient Alert System
 
-A transient alert ingestion, filtering, and follow-up system is under active development in a separate repository. Once integrated with the Science Scheduler, it will enable automated and coordinated follow-up of astronomical transients across connected observatories.
+A transient alert ingestion, filtering, and follow-up system is under active development in a separate repository. Once integrated with Asterism, it will enable automated and coordinated follow-up of astronomical transients across connected observatories.
 
 ### What It Does
 
@@ -22,7 +22,7 @@ The Vera C. Rubin Observatory began issuing public alerts in February 2026, dete
 
 ### Planned Integration
 
-The transient system is designed to integrate with the Science Scheduler as an automated target source. When connected, it will be able to:
+The transient system is designed to integrate with Asterism as an automated target source. When connected, it will be able to:
 
 - Submit follow-up observations directly to the scheduler queue
 - Coordinate multi-observatory follow-up for time-critical events
@@ -30,7 +30,7 @@ The transient system is designed to integrate with the Science Scheduler as an a
 
 ### Current Status
 
-The system is in active development (Phase 6) with core broker ingestion, scoring, observation planning, and a web dashboard substantially complete. Integration with the Science Scheduler will be documented here when available.
+The system is in active development (Phase 6) with core broker ingestion, scoring, observation planning, and a web dashboard substantially complete. Integration with Asterism will be documented here when available.
 
 ---
 

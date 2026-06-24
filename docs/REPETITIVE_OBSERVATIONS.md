@@ -6,7 +6,7 @@ Repetitive observations let you schedule a series of recurring observations of t
 
 ## When to Use Repetitive vs Monitoring
 
-The Science Scheduler offers two ways to observe a target repeatedly:
+Asterism offers two ways to observe a target repeatedly:
 
 | Feature | Repetitive Observations | Monitoring (Cadence) |
 |---------|------------------------|---------------------|

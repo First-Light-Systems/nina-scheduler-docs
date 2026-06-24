@@ -9,11 +9,11 @@
 > - Observatory History events (online/offline, equipment changes)
 > - Registration management for server administrators and organization owners/observatory admins
 
-This guide explains how observatories register with the Science Scheduler Server and how API keys work.
+This guide explains how observatories register with the Asterism server and how API keys work.
 
 ## Overview
 
-The Science Scheduler Server uses a secure registration process to:
+The Asterism server uses a secure registration process to:
 - **Identify observatories** using hardware fingerprints
 - **Authenticate connections** using API keys
 - **Protect the system** from unauthorized access
@@ -22,7 +22,7 @@ The Science Scheduler Server uses a secure registration process to:
 
 ### Scenario 1: New Observatory (First-Time Registration)
 
-If your observatory has never connected to the Science Scheduler Server:
+If your observatory has never connected to the Asterism server:
 
 1. **Fill in plugin settings** (see [Plugin Setup](PLUGIN_SETUP.md)):
     - Server URL

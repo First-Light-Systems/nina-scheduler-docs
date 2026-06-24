@@ -2,11 +2,11 @@
 
 **Document Version**: 1.0 | **Last Updated**: February 2026
 
-This guide covers how administrators can use the Science Scheduler's log analysis features to diagnose observatory issues. The system provides both automatic pattern-based error detection and on-demand AI-powered analysis using Claude.
+This guide covers how administrators can use Asterism's log analysis features to diagnose observatory issues. The system provides both automatic pattern-based error detection and on-demand AI-powered analysis using Claude.
 
 ## Overview
 
-When the NINA plugin encounters problems — equipment failures, connection issues, autofocus errors — the details are captured in log files. The Science Scheduler automatically collects these logs from connected observatories and provides two levels of analysis:
+When the NINA plugin encounters problems — equipment failures, connection issues, autofocus errors — the details are captured in log files. Asterism automatically collects these logs from connected observatories and provides two levels of analysis:
 
 | Level | How It Works | Cost |
 |-------|-------------|------|

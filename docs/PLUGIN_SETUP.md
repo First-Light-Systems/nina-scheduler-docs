@@ -23,7 +23,7 @@
 
 **YOU ARE SOLELY RESPONSIBLE FOR THE SAFETY OF YOUR EQUIPMENT.**
 
-The Science Scheduler executes observations but does not implement observatory safety logic. You must ensure your sequences include appropriate safety checks, weather monitoring, horizon limits, and equipment protection.
+Asterism executes observations but does not implement observatory safety logic. You must ensure your sequences include appropriate safety checks, weather monitoring, horizon limits, and equipment protection.
 
 **First Light Observatory Systems LLC accepts no responsibility for any damage to observatory equipment.**
 
@@ -34,11 +34,11 @@ Before using with real equipment:
 - Configure NINA's safety features (weather triggers, dawn safety, equipment limits)
 - Supervise initial automated sessions to verify correct behavior
 
-The Science Scheduler does **not**: check if it's safe to open your observatory, monitor weather, know your horizon limits, manage dome/roof operations, or implement emergency shutdowns. These are your responsibility.
+Asterism does **not**: check if it's safe to open your observatory, monitor weather, know your horizon limits, manage dome/roof operations, or implement emergency shutdowns. These are your responsibility.
 
 ---
 
-Complete guide for installing and configuring the Science Scheduler plugin for NINA.
+Complete guide for installing and configuring the Asterism plugin for NINA.
 
 ## Prerequisites
 
@@ -93,7 +93,7 @@ Get the plugin files from your institution's administrator or the official distr
 
 1. Open NINA
 2. Go to **Options** (gear icon) > **Plugins**
-3. Find **Science Scheduler** in the plugin list
+3. Find **Asterism** in the plugin list
 4. Confirm it shows as loaded (green checkmark)
 
 If the plugin doesn't appear, see [Troubleshooting](TROUBLESHOOTING.md#plugin-not-loading-in-nina).
@@ -116,7 +116,7 @@ If an update is available, a green banner appears in the plugin settings showing
 
 ### Checking Manually
 
-1. Go to **Options** > **Plugins** > **Science Scheduler**
+1. Go to **Options** > **Plugins** > **Asterism**
 2. In the **Plugin Updates** section, click **Check for Updates**
 3. The plugin contacts the server and reports whether a new version is available
 
@@ -149,7 +149,7 @@ Your administrator may set a minimum required plugin version. If your installed 
 ### Accessing Plugin Settings
 
 1. In NINA, go to **Options** > **Plugins**
-2. Click on **Science Scheduler** in the list
+2. Click on **Asterism** in the list
 3. The settings panel appears on the right
 
 ### Server Configuration
@@ -213,7 +213,7 @@ To verify/update coordinates:
 
 **Enable Log Upload:**
 - When **ON**: Observatory will automatically upload NINA logs to the server at the interval specified in Upload Frequency (default 24 hours). The size of the uploaded log will be either the entire file or the delta of the file since the last upload event.
-- When **OFF**: Logs are only uploaded on demand by the Science Scheduler server
+- When **OFF**: Logs are only uploaded on demand by the Asterism server
 
 ### Dark Filter (Shutterless Cameras)
 
@@ -244,7 +244,7 @@ If the server keeps requesting darks that the plugin refuses, it automatically *
 
 ### Twilight Sky Flat Pointing
 
-When you capture **Sky (twilight) flats** with the Science Scheduler Calibration instruction, the telescope must point at a uniform patch of sky high overhead and **opposite the Sun**. The plugin does **not** slew the mount — you add the slew to your sequence yourself — but it computes the recommended pointing for you.
+When you capture **Sky (twilight) flats** with the Asterism Calibration instruction, the telescope must point at a uniform patch of sky high overhead and **opposite the Sun**. The plugin does **not** slew the mount — you add the slew to your sequence yourself — but it computes the recommended pointing for you.
 
 On the plugin's options page, the **Twilight Sky Flat Pointing** panel shows the recommended **Azimuth / Altitude** for the upcoming dusk and dawn, computed from your observatory location:
 
@@ -272,7 +272,7 @@ The plugin shows real-time status:
 
 ### Operational State
 
-Separate from the *connection* status above, the plugin reports an **operational state** that describes what the observatory is actually doing. This state is shown as a coloured **chip on the web dashboard** and in the expanded **Science Scheduler Status** view in the NINA sequencer (see [Expanded Status View](#expanded-status-view)).
+Separate from the *connection* status above, the plugin reports an **operational state** that describes what the observatory is actually doing. This state is shown as a coloured **chip on the web dashboard** and in the expanded **Asterism Status** view in the NINA sequencer (see [Expanded Status View](#expanded-status-view)).
 
 | State | Dashboard chip | Meaning |
 |-------|----------------|---------|
@@ -287,7 +287,7 @@ When the plugin connects but finds no work to run, it reports **Ready** ("Waitin
 
 ### Expanded Status View
 
-Within the Science Scheduler container in the NINA sequencer, an expandable **Science Scheduler Status** panel shows live detail about the current session:
+Within the Asterism container in the NINA sequencer, an expandable **Asterism Status** panel shows live detail about the current session:
 
 | Field | Shows |
 |-------|-------|
@@ -298,12 +298,12 @@ Within the Science Scheduler container in the NINA sequencer, an expandable **Sc
 
 ---
 
-## Using the Science Scheduler Container
+## Using the Asterism Container
 
 ### Adding to Your Sequence
 
 1. Open NINA's **Advanced Sequencer**
-2. In the left palette, find **Science Scheduler** under containers
+2. In the left palette, find **Asterism** under containers
 3. Drag it into your sequence
 
 The container can be placed:
@@ -312,7 +312,7 @@ The container can be placed:
 
 ### Container Behavior
 
-When the sequence runs, the Science Scheduler container:
+When the sequence runs, the Asterism container:
 
 1. **Connects** to the server (if not already connected)
 2. **Requests** an observation from the queue
@@ -347,7 +347,7 @@ During observation execution, the plugin displays a **time remaining countdown**
 
 ### Integration with Safety Systems
 
-The Science Scheduler works alongside NINA's safety features:
+Asterism works alongside NINA's safety features:
 
 - **Weather Safety**: NINA's safety triggers take precedence
 - **Startup/Shutdown**: Use NINA's standard sequences around the container
@@ -360,7 +360,7 @@ Startup (your standard startup sequence)
   ├── Cool Camera
   └── Unpark Mount
 
-Science Scheduler Container
+Asterism Container
   └── [Observations executed here]
 
 Shutdown (your standard shutdown sequence)
@@ -373,7 +373,7 @@ Shutdown (your standard shutdown sequence)
 
 ## Rice Compression for FITS Files
 
-The Science Scheduler supports Rice-compressed FITS files (`.fits.fz`), which can reduce file sizes by 50-70% while preserving all scientific data losslessly. This significantly reduces upload times and storage requirements.
+Asterism supports Rice-compressed FITS files (`.fits.fz`), which can reduce file sizes by 50-70% while preserving all scientific data losslessly. This significantly reduces upload times and storage requirements.
 
 ### Enabling Rice Compression in NINA
 
@@ -478,7 +478,7 @@ Before running sequences on your real observatory equipment, we strongly recomme
 ### Testing Your Sequence
 
 1. **Create a test observation** in the web interface with a visible target
-2. **Build your sequence** with the Science Scheduler container
+2. **Build your sequence** with the Asterism container
 3. **Run the sequence** with simulators connected
 4. **Verify**:
     - Plugin connects to server
@@ -539,5 +539,5 @@ See [Troubleshooting](TROUBLESHOOTING.md) for detailed solutions.
 ## Next Steps
 
 - **New observatory?** See [Observatory Registration](OBSERVATORY_REGISTRATION.md)
-- **Ready to observe?** Run your sequence with the Science Scheduler container
+- **Ready to observe?** Run your sequence with the Asterism container
 - **Problems?** See [Troubleshooting](TROUBLESHOOTING.md)

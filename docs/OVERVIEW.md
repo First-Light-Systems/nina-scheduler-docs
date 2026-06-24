@@ -1,20 +1,20 @@
-# Science Scheduler Overview
+# Asterism Overview
 
 **Document Version**: 3.0 | **Last Updated**: March 2026
 
-## What is the Science Scheduler?
+## What is Asterism?
 
-The Science Scheduler is a multi-observatory coordination system that automates the scheduling and execution of astronomical observations. It connects observatories running NINA (Nighttime Imaging 'N' Astronomy) to a central server that manages observation requests, prioritizes work, and coordinates data collection.
+Asterism is a multi-observatory coordination system that automates the scheduling and execution of astronomical observations. It connects observatories running NINA (Nighttime Imaging 'N' Astronomy) to a central server that manages observation requests, prioritizes work, and coordinates data collection.
 
 ## System Architecture
 
 ```
 +---------------------------------------------------------------------+
-|                     SCIENCE SCHEDULER SYSTEM                        |
+|                           ASTERISM SYSTEM                           |
 +---------------------------------------------------------------------+
 |                                                                     |
 |  +--------------+      +--------------------+      +--------------+ |
-|  |    Users     |      | Science Scheduler  |      | Observatory  | |
+|  |    Users     |      |      Asterism      |      | Observatory  | |
 |  |              |----->|      Server        |----->| (NINA +      | |
 |  | Web Interface|      |                    |      |  Plugin)     | |
 |  +--------------+      | - Queue Management |      +--------------+ |
@@ -32,7 +32,7 @@ The Science Scheduler is a multi-observatory coordination system that automates 
 
 | Component | Description |
 |-----------|-------------|
-| **Science Scheduler Server** | Central server that manages observations, scheduling, and data storage |
+| **Asterism server** | Central server that manages observations, scheduling, and data storage |
 | **Web Interface** | Browser-based interface for submitting observations and monitoring status |
 | **NINA Plugin** | Plugin for NINA that connects observatories to the server and executes observations |
 | **Data Storage** | Secure storage for FITS files and observation metadata |
@@ -91,7 +91,7 @@ See [Target Library](TARGET_LIBRARY.md) for setup and usage details.
 
 ### Automatic Calibration Library
 
-The Science Scheduler automatically builds and maintains a calibration library for your observatory — you do not need to manually schedule calibration sessions.
+Asterism automatically builds and maintains a calibration library for your observatory — you do not need to manually schedule calibration sessions.
 
 - **Dark frames**: Captured automatically during gaps between science observations using the observatory's idle time
 - **Flat frames**: Captured via a dedicated NINA calibration instruction supporting both motorized flat panels (using trained settings) and twilight sky flats (with automatic brightness search)
@@ -245,7 +245,7 @@ See [AI Log Analysis Guide](LOG_ANALYSIS_GUIDE.md) for setup and usage.
 
 ### REST API
 
-The Science Scheduler Server provides a REST API for programmatic access:
+The Asterism server provides a REST API for programmatic access:
 
 - **Create observations**: Submit observation requests from external applications
 - **Query status**: Check observation and queue status
@@ -276,7 +276,7 @@ See [Coming Soon](COMING_SOON.md) for details.
 
 ## Technology & Resilience
 
-The Science Scheduler is designed for unattended overnight operation where reliability is essential. The architecture ensures that network problems, weather events, and software crashes are handled gracefully without losing data or requiring manual intervention.
+Asterism is designed for unattended overnight operation where reliability is essential. The architecture ensures that network problems, weather events, and software crashes are handled gracefully without losing data or requiring manual intervention.
 
 ### Loose Coupling with Observatories
 
@@ -335,7 +335,7 @@ Both the plugin and server are designed to recover cleanly from unexpected shutd
 
 1. **Install plugin** in NINA
 2. **Register observatory** with the server
-3. **Build sequence** with Science Scheduler container
+3. **Build sequence** with Asterism container
 4. **Run sequence** - plugin requests and executes observations automatically
 5. **Files upload** to server automatically
 6. **Calibration frames** are captured automatically during idle gaps between observations
@@ -386,9 +386,9 @@ Both the plugin and server are designed to recover cleanly from unexpected shutd
 - Windows 10 or Windows 11
 - NINA 3.2.0.9001 or later
 - .NET 8.0, 9.0, or 10.0 — installed automatically with the ASCOM Platform; no separate download needed
-- Network connection to the Science Scheduler Server
+- Network connection to the Asterism server
 
 ### For Users
 
 - Modern web browser (Chrome, Firefox, Edge, Safari)
-- Account on the Science Scheduler system
+- Account on Asterism

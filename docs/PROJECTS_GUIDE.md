@@ -2,7 +2,7 @@
 
 **Document Version**: 1.1 | **Last Updated**: March 2026
 
-Projects are the primary way to organize, track, and collaborate on observation programs in the Science Scheduler. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
+Projects are the primary way to organize, track, and collaborate on observation programs in Asterism. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
 
 ## What Are Projects?
 
