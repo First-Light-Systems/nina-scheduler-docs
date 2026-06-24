@@ -5,7 +5,7 @@
 > **What's New in v1.1** (March 2026):
 > - System Announcements (MOTD) with flexible targeting, cancellation, and login interception
 
-This guide covers server-level administration tools for maintaining the Science Scheduler system — database integrity, backups, system analytics, and system-wide announcements.
+This guide covers server-level administration tools for maintaining Asterism — database integrity, backups, system analytics, and system-wide announcements.
 
 !!! note "Access Required"
     All features in this guide require **server administrator** access. Observatory administrators should see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for observatory-level management.

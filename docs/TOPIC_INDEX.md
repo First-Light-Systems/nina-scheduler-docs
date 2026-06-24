@@ -1,6 +1,6 @@
 # Index
 
-An alphabetical reference to topics, features, and concepts across the Science Scheduler documentation.
+An alphabetical reference to topics, features, and concepts across the Asterism documentation.
 
 ---
 
@@ -186,7 +186,7 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 - **Safety** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
 - **Scheduler features** — [Scheduler Features](SCHEDULER_FEATURES.md)
-- **Science Scheduler container** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
+- **Asterism container** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
 - **Seeing** — [Observation Files](OBSERVATION_FILES.md#quality-metrics)
 - **Sequence repeat count** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **Server architecture** — [Server Architecture](SERVER_ARCHITECTURE.md)
@@ -232,4 +232,4 @@ An alphabetical reference to topics, features, and concepts across the Science S
 
 ---
 
-*This index covers Science Scheduler documentation v2.19 (June 2026).*
+*This index covers Asterism documentation v2.19 (June 2026).*

@@ -2,11 +2,11 @@
 
 **Document Version**: 1.0 | **Last Updated**: February 2026
 
-This guide covers how to configure guiding and dithering settings for your observations in the Science Scheduler.
+This guide covers how to configure guiding and dithering settings for your observations in Asterism.
 
 ## Overview
 
-**Autoguiding** keeps your mount tracking accurately during long exposures by locking onto a guide star and making real-time corrections. Without guiding, stars drift during exposures due to periodic error, atmospheric refraction, and other tracking imperfections. The Science Scheduler assumes your observatory has a guide camera and PHD2 (or equivalent) configured in NINA.
+**Autoguiding** keeps your mount tracking accurately during long exposures by locking onto a guide star and making real-time corrections. Without guiding, stars drift during exposures due to periodic error, atmospheric refraction, and other tracking imperfections. Asterism assumes your observatory has a guide camera and PHD2 (or equivalent) configured in NINA.
 
 **Dithering** shifts the telescope pointing slightly between exposures. This randomizes the position of hot pixels, walking noise patterns, and satellite trails across your frames, making them easy to remove during stacking. Dithering requires an active guiding connection — the guide software applies the offset between exposures.
 
@@ -14,7 +14,7 @@ This guide covers how to configure guiding and dithering settings for your obser
 
 ## Settings
 
-The Science Scheduler provides three guiding-related settings:
+Asterism provides three guiding-related settings:
 
 | Setting | Default | Description |
 |---------|---------|-------------|

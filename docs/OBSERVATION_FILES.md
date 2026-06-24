@@ -2,7 +2,7 @@
 
 **Document Version**: 1.2 | **Last Updated**: February 2026
 
-This guide explains how to view, browse, and download observation files (FITS images) from the Science Scheduler.
+This guide explains how to view, browse, and download observation files (FITS images) from Asterism.
 
 ## Overview
 

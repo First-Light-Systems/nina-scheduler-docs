@@ -48,7 +48,7 @@ Members can be granted specific permissions within an organization:
 
 ## Creating an Organization
 
-1. Log in to the Science Scheduler web interface
+1. Log in to the Asterism web interface
 2. Navigate to **Organizations** in the main menu
 3. Click **Create Organization**
 4. Fill in the organization details:

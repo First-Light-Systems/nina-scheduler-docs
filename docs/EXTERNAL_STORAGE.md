@@ -8,7 +8,7 @@ This guide covers how to set up external storage destinations, attach them to ob
 
 ## Overview
 
-By default, captured FITS files are stored on the Science Scheduler server (in MinIO object storage). External storage lets you automatically copy those files to your own cloud storage account after an observation completes.
+By default, captured FITS files are stored on the Asterism server (in MinIO object storage). External storage lets you automatically copy those files to your own cloud storage account after an observation completes.
 
 **Supported providers:**
 
@@ -52,9 +52,9 @@ Before creating a storage configuration, you need credentials from your cloud pr
 1. Go to the [Dropbox App Console](https://www.dropbox.com/developers/apps)
 2. Click **Create App**
 3. Choose **Scoped access** and **Full Dropbox** (or **App folder** for restricted access)
-4. Name your app (e.g., "Science Scheduler Uploads")
+4. Name your app (e.g., "Asterism Uploads")
 5. In the app settings, note the **App Key** and **App Secret**
-6. Under **OAuth 2**, add the redirect URI shown in the Science Scheduler dialog
+6. Under **OAuth 2**, add the redirect URI shown in the Asterism dialog
 
 #### Google Drive
 
@@ -63,7 +63,7 @@ Before creating a storage configuration, you need credentials from your cloud pr
 3. Enable the **Google Drive API**
 4. Go to **Credentials** and create an **OAuth 2.0 Client ID**
 5. Application type: **Web application**
-6. Add the redirect URI shown in the Science Scheduler dialog under **Authorized redirect URIs**
+6. Add the redirect URI shown in the Asterism dialog under **Authorized redirect URIs**
 7. Note the **Client ID** and **Client Secret**
 
 #### Google Cloud Storage
@@ -95,7 +95,7 @@ Select **Dropbox**, **Google Drive**, or **Google Cloud Storage**. The provider 
 1. Enter your App Key/Client ID and App Secret/Client Secret
 2. Click the **Authorize** button
 3. A popup window opens to the provider's authorization page
-4. Sign in and grant access to the Science Scheduler
+4. Sign in and grant access to Asterism
 5. The popup closes and the dialog shows your authorized email address
 
 !!! warning "Redirect URI Must Match"
@@ -154,7 +154,7 @@ Calibrated files are saved with `_calibrated` appended to the filename (e.g., `M
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| **Delete from server after transfer** | Off | Remove FITS files from the Science Scheduler server after all transfers complete successfully |
+| **Delete from server after transfer** | Off | Remove FITS files from the Asterism server after all transfers complete successfully |
 | **Enabled** | On | Enable or disable this configuration without deleting it |
 
 !!! warning "Delete from Server"
@@ -306,9 +306,9 @@ When you resubmit a completed or failed observation, the external storage destin
 
 **Check**:
 
-1. **Redirect URI mismatch** — The redirect URI in the Science Scheduler dialog must exactly match what's configured in your Dropbox App Console or Google Cloud Console. Copy it precisely, including the protocol and path.
+1. **Redirect URI mismatch** — The redirect URI in the Asterism dialog must exactly match what's configured in your Dropbox App Console or Google Cloud Console. Copy it precisely, including the protocol and path.
 2. **App not approved** — For Google Drive, the app may need to be published or you need to add yourself as a test user in the Google Cloud Console under **OAuth consent screen** > **Test users**.
-3. **Popup blocked** — Allow popups for the Science Scheduler site in your browser settings.
+3. **Popup blocked** — Allow popups for the Asterism site in your browser settings.
 
 ### Test Connection Fails
 
@@ -342,7 +342,7 @@ When you resubmit a completed or failed observation, the external storage destin
 
 ### Server Files Deleted Unexpectedly
 
-**Symptom**: FITS files are gone from the Science Scheduler after transfer.
+**Symptom**: FITS files are gone from Asterism after transfer.
 
 **Cause**: The storage configuration has **Delete from server after transfer** enabled. Files are deleted only after all transfers for that file complete successfully.
 

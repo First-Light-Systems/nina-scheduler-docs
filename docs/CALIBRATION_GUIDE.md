@@ -13,7 +13,7 @@
 > - Automatic master frame creation from accumulated individual frames
 > - Calibration library with real-time needs tracking
 
-This guide covers how image calibration works in the Science Scheduler — from capturing calibration frames to applying master frames to your light images.
+This guide covers how image calibration works in Asterism — from capturing calibration frames to applying master frames to your light images.
 
 ## What Is Image Calibration?
 
@@ -27,7 +27,7 @@ Image calibration removes systematic noise from astronomical images. Three types
 
 Individual calibration frames are combined into **master frames** using statistical stacking (typically sigma-clipped mean). Masters are then applied to your light images automatically.
 
-## How the Science Scheduler Handles Calibration
+## How Asterism Handles Calibration
 
 The calibration system works across three components:
 
@@ -40,7 +40,7 @@ The calibration system works across three components:
 Most calibration happens automatically:
 
 - **Dark frames** are captured during gaps between observations (gap-filling). The server dispatches dark capture when it detects your observatory needs darks for the exposure times and temperatures you've been imaging at.
-- **Flat frames** are captured using the Science Scheduler Calibration instruction in your NINA sequence. You place this instruction in your sequence where flat capture should happen (typically at the start or end of a session).
+- **Flat frames** are captured using the Asterism Calibration instruction in your NINA sequence. You place this instruction in your sequence where flat capture should happen (typically at the start or end of a session).
 - **Master creation** happens automatically when enough individual frames accumulate. The server monitors frame counts and triggers stacking when the configured threshold is reached.
 - **Calibration application** is automatic. When your light images are processed through the pipeline, the server finds matching master frames and applies them.
 
@@ -84,11 +84,11 @@ The Maintenance tab reports calibration system health and provides maintenance o
 
 ## Flat Frame Capture
 
-Flat frames require special attention because they need an illumination source — either a flat panel or the twilight sky. The Science Scheduler provides a dedicated instruction for this.
+Flat frames require special attention because they need an illumination source — either a flat panel or the twilight sky. Asterism provides a dedicated instruction for this.
 
 ### Setting Up Flat Capture in NINA
 
-1. In NINA's Advanced Sequencer, add the **Science Scheduler Calibration** instruction
+1. In NINA's Advanced Sequencer, add the **Asterism Calibration** instruction
 2. Choose the flat capture mode:
     - **Panel** — uses a motorized flat panel (requires a connected flat device)
     - **Sky** — uses twilight sky illumination (select Dawn or Dusk)
@@ -173,7 +173,7 @@ Adjust the **Altitude** (default 75°) if your horizon is obstructed, and click 
 Sequential Container
 ├── Slew to Alt/Az        ← enter the Az/Alt from the options page
 ├── Set Tracking → Stopped
-├── Science Scheduler Calibration   (Sky mode)
+├── Asterism Calibration   (Sky mode)
 └── Set Tracking → On
 ```
 
@@ -219,7 +219,7 @@ This ensures the Flat Wizard targets the correct ADU range for the 12-bit mode. 
     Don't let perfect be the enemy of good. If managing readout modes for flat capture is too complex for your workflow, simply capture flats in the default readout mode. The flat field correction will still remove vignetting and dust shadows effectively.
 
 !!! note "Future Improvement"
-    NINA's Flat Wizard does not currently support per-readout-mode training. This is a known limitation — trained flat settings are stored per filter/gain combination only, with no readout mode awareness. The Science Scheduler plugin sets the correct readout mode before each exposure block, but the underlying Flat Wizard training values must still be managed manually as described above.
+    NINA's Flat Wizard does not currently support per-readout-mode training. This is a known limitation — trained flat settings are stored per filter/gain combination only, with no readout mode awareness. The Asterism plugin sets the correct readout mode before each exposure block, but the underlying Flat Wizard training values must still be managed manually as described above.
 
 ## Dark and Bias Frames
 

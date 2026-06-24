@@ -150,7 +150,7 @@ The scheduler hasn't assigned it yet. Common reasons:
 
 The observatory was assigned the observation but hasn't started executing:
 
-- **Plugin not running** — the NINA sequence with the Science Scheduler container may not be active
+- **Plugin not running** — the NINA sequence with the Asterism container may not be active
 - **Observatory busy** — finishing another observation before starting yours
 - **Plugin disconnected** — network issue between plugin and server
 

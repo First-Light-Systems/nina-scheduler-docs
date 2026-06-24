@@ -1,11 +1,11 @@
-# Science Scheduler Documentation
+# Asterism Documentation
 
 **Documentation Version**: 2.20 | **Last Updated**: June 2026
 **Server v3.9.0 | Plugin v3.14.1.0**
 
-Welcome to the Science Scheduler documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
+Welcome to the Asterism documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
-**New here?** Start with the [System Overview](OVERVIEW.md) to understand how the Science Scheduler works.
+**New here?** Start with the [System Overview](OVERVIEW.md) to understand how Asterism works.
 
 ## Quick Start
 
@@ -28,7 +28,7 @@ Welcome to the Science Scheduler documentation. This system provides automated m
 
 ## For Observatory Operators
 
-If you're setting up an observatory to connect to the Science Scheduler:
+If you're setting up an observatory to connect to Asterism:
 
 1. **[Plugin Setup](PLUGIN_SETUP.md)** - Install and configure the NINA plugin
 2. **[Observatory Registration](OBSERVATORY_REGISTRATION.md)** - Register with the server

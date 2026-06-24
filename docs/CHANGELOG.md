@@ -1,8 +1,16 @@
 # Changelog
 
-All notable changes to the Science Scheduler documentation will be documented in this file.
+All notable changes to the Asterism documentation will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
+
+## [2.21] - 2026-06-24
+
+### Changed
+
+- **Product rebranded to Asterism** — all user-facing references to "Science Scheduler" / "NINA Science Scheduler" across the documentation, site title, and navigation now use the product's name, **Asterism**. Internal identifiers (plugin install paths, the `NINA.Plugin.ScienceScheduler` assembly/identifier, Docker service names, and repository URLs) are unchanged.
 
 ---
 
@@ -10,13 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- **Operational State** and **Expanded Status View** sections (Plugin Setup) — document the observatory's operational-state dashboard chip (Ready / Observing / Weather Hold / Shutdown / Error / Unknown) and the live fields in the NINA sequencer's expanded Science Scheduler Status panel
+- **Operational State** and **Expanded Status View** sections (Plugin Setup) — document the observatory's operational-state dashboard chip (Ready / Observing / Weather Hold / Shutdown / Error / Unknown) and the live fields in the NINA sequencer's expanded Asterism Status panel
 
 ### Fixed
 
 - **Plugin version** updated to v3.14.1.0 — status and operational-state accuracy fixes (PR #794):
     - **Idle observatories now report "Ready"** — when connected but with no work to run, the observatory now signals **ready** ("Waiting for observations") instead of staying **Unknown**, so the dashboard shows a green **Ready** chip rather than a grey **Unknown** one
-    - **Expanded "Science Scheduler Status" view** (in the NINA sequencer container) now reflects live state:
+    - **Expanded "Asterism Status" view** (in the NINA sequencer container) now reflects live state:
         - **Plugin Status** no longer sticks on "Not connected" — it tracks the real connection, operations, and observation state
         - **Current Observation** now updates when an observation is assigned, and clears to "No observation running" once it completes (previously it stayed blank, then stale)
         - **Last Contact** is now stamped on every inbound server message
@@ -40,7 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - **Sky (twilight) flats** (Calibration Guide → Sky Mode):
-    - The Science Scheduler Calibration instruction's **Sky** mode now captures twilight flats by delegating to NINA's built-in Sky Flat routine (dynamic twilight exposure); previously a placeholder
+    - The Asterism Calibration instruction's **Sky** mode now captures twilight flats by delegating to NINA's built-in Sky Flat routine (dynamic twilight exposure); previously a placeholder
     - Exposure parameters are read from your **NINA Flat Wizard profile** (per-filter min/max exposure; global histogram target/tolerance) — no separate settings on the instruction
     - **Filter Order** option — author the dusk capture order; the plugin reverses it automatically for dawn
     - New **Twilight Sky Flat Pointing** helper on the plugin options page — shows the recommended anti-solar Azimuth/Altitude for the upcoming dusk and dawn (computed from your location), to enter into a NINA "Slew to Alt/Az" instruction. The plugin does not slew the mount.
@@ -279,7 +287,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - **Calibration Guide** (CALIBRATION_GUIDE.md) — user-facing guide covering:
     - Overview of image calibration (darks, bias, flats) and why it matters
-    - How the Science Scheduler automates calibration frame capture and master creation
+    - How Asterism automates calibration frame capture and master creation
     - Flat frame capture modes: panel (trained settings, auto-brightness), sky (twilight), and fallback
     - Incremental accumulation — partial sessions resume where they left off
     - Master frame creation process with temperature grouping and dark subtraction

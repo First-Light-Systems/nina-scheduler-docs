@@ -4,7 +4,7 @@
 
 ## Overview
 
-The Science Scheduler Server runs as a set of containerized services orchestrated with Docker Compose. All services run on a single host and communicate over an internal Docker network. External access is provided through an nginx reverse proxy.
+The Asterism server runs as a set of containerized services orchestrated with Docker Compose. All services run on a single host and communicate over an internal Docker network. External access is provided through an nginx reverse proxy.
 
 This page describes the server-side infrastructure. For how the server communicates with observatory plugins, see the [Technology & Resilience](OVERVIEW.md#technology--resilience) section of the overview.
 

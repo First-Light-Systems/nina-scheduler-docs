@@ -13,7 +13,7 @@
 > - Updated download section with Observation Files page reference
 > - FITS metadata quality metrics
 
-This guide covers how to create, monitor, and manage observations in the Science Scheduler.
+This guide covers how to create, monitor, and manage observations in Asterism.
 
 ## Observation Types Overview
 

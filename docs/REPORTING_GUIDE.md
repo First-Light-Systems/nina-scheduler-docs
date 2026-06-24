@@ -2,7 +2,7 @@
 
 **Document Version**: 1.1 | **Last Updated**: March 2026
 
-This guide covers the Science Scheduler's reporting and analytics features, including usage dashboards, utilization reports, and target observation reports.
+This guide covers Asterism's reporting and analytics features, including usage dashboards, utilization reports, and target observation reports.
 
 ## Overview
 

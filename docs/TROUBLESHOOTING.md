@@ -6,7 +6,7 @@
 > - Updated connection troubleshooting for single-owner communications model
 > - Automatic reconnection behavior documentation
 
-Solutions for common problems with the Science Scheduler system.
+Solutions for common problems with Asterism.
 
 ## Plugin Issues
 
@@ -196,7 +196,7 @@ Check all required fields in plugin settings:
 **Solutions:**
 
 1. **Check NINA sequence**
-    - Is the Science Scheduler container running?
+    - Is the Asterism container running?
     - Are there errors in the NINA log?
 
 2. **Clear local database**
@@ -314,7 +314,7 @@ A camera with no mechanical shutter must expose darks through an opaque ("dark")
 
 **Fix:**
 
-1. In NINA, go to **Options** > **Plugins** > **Science Scheduler**
+1. In NINA, go to **Options** > **Plugins** > **Asterism**
 2. Set the **Dark Filter** option to the exact name of an opaque/blank slot in your filter wheel (case-insensitive). Leave it empty only if your camera has a mechanical shutter.
 3. Confirm that filter exists in **Options** > **Equipment** > **Filter Wheel**
 4. Restart calibration capture

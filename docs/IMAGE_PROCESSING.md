@@ -2,7 +2,7 @@
 
 **Document Version**: 1.0 | **Last Updated**: March 2026
 
-The Science Scheduler includes an image processing pipeline that runs on uploaded FITS files. Processing extracts quality metrics, generates preview images, and performs plate solving (astrometry).
+Asterism includes an image processing pipeline that runs on uploaded FITS files. Processing extracts quality metrics, generates preview images, and performs plate solving (astrometry).
 
 ## How Processing Works
 

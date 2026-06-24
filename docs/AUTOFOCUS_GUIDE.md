@@ -2,13 +2,13 @@
 
 **Document Version**: 1.0 | **Last Updated**: February 2026
 
-> **New in v3.5.0**: The Science Scheduler now provides comprehensive autofocus management with five trigger types, per-observation overrides, and full observatory-level defaults.
+> **New in v3.5.0**: Asterism now provides comprehensive autofocus management with five trigger types, per-observation overrides, and full observatory-level defaults.
 
-This guide covers how autofocus works in the Science Scheduler, how to configure it at the observatory level, and how to customize it for individual observations.
+This guide covers how autofocus works in Asterism, how to configure it at the observatory level, and how to customize it for individual observations.
 
 ## How Autofocus Works
 
-The Science Scheduler manages autofocus in two modes:
+Asterism manages autofocus in two modes:
 
 | Mode | Description | Who Controls AF |
 |------|-------------|-----------------|
