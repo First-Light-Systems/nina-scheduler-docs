@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - **Product rebranded to Asterism** — all user-facing references to "Science Scheduler" / "NINA Science Scheduler" across the documentation, site title, and navigation now use the product's name, **Asterism**. Internal identifiers (plugin install paths, the `NINA.Plugin.ScienceScheduler` assembly/identifier, Docker service names, and repository URLs) are unchanged.
+- **Server and plugin bumped to v4.0.0 / v4.0.0.0** — major-version release marking the Asterism rebrand. Home-page and Plugin Setup version badges updated to match.
 
 ---
 

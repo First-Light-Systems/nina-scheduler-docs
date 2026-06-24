@@ -1,7 +1,7 @@
 # Asterism Documentation
 
-**Documentation Version**: 2.20 | **Last Updated**: June 2026
-**Server v3.9.0 | Plugin v3.14.1.0**
+**Documentation Version**: 2.21 | **Last Updated**: June 2026
+**Server v4.0.0 | Plugin v4.0.0.0**
 
 Welcome to the Asterism documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
