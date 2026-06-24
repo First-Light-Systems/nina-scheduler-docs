@@ -2,7 +2,7 @@
 
 **Document Version**: 1.0 | **Last Updated**: June 2026
 
-The Science Scheduler is built for teams. You can share an observation program with individual collaborators, hand an entire department access to an observatory, or work alongside people who belong to a completely different organization. This guide explains the practical ways to collaborate and how to choose the right one.
+Asterism is built for teams. You can share an observation program with individual collaborators, hand an entire department access to an observatory, or work alongside people who belong to a completely different organization. This guide explains the practical ways to collaborate and how to choose the right one.
 
 ## Choosing how to collaborate
 
