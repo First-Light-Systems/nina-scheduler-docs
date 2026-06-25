@@ -30,19 +30,19 @@ Welcome to the Asterism documentation. This system provides automated multi-obse
 
 If you're setting up an observatory to connect to Asterism:
 
-1. **[Plugin Setup](PLUGIN_SETUP.md)** - Install and configure the NINA plugin
-2. **[Observatory Registration](OBSERVATORY_REGISTRATION.md)** - Register with the server
-3. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Manage members, dispatching, and automation
-4. **[Scheduler Features](SCHEDULER_FEATURES.md)** - Understand how scheduling works
+1. **[Getting Started](GETTING_STARTED.md)** - Quick orientation
+2. **[Plugin Setup](PLUGIN_SETUP.md)** - Install and configure the NINA plugin
+3. **[Observatory Registration](OBSERVATORY_REGISTRATION.md)** - Register with the server
+4. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Manage members, dispatching, and automation
+5. **[Scheduler Features](SCHEDULER_FEATURES.md)** - Understand how scheduling works
 
 ## For Users Submitting Observations
 
 If you're using the web interface to submit observation requests:
 
-1. **[Getting Started](GETTING_STARTED.md)** - Quick orientation
-2. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
-3. **[Projects Guide](PROJECTS_GUIDE.md)** - Organize observations into projects
-4. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
+1. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
+2. **[Projects Guide](PROJECTS_GUIDE.md)** - Organize observations into projects
+3. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
 5. **[Practical Guide](PRACTICAL_GUIDE.md)** - Detailed procedures
 6. **[Notifications](NOTIFICATIONS.md)** - Get alerts when observations change state
 
