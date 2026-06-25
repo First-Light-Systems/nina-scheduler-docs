@@ -21,7 +21,7 @@ If you're submitting observation requests through the web interface:
 
 1. **Log in** to your organization's Asterism URL
 2. Your default first page will be the **Asterism User Dashboard**. **Dashboard** will be the first item in the menu on the left side of the page. The observatory you have access to will be shown under the section titled **Accessible Observatories**.
-3. Click on the available observatory card to see details about the observatory. If the details list **Dark Time Constraints Bypassed**, the observatory you were given access to is a simulator and observations can be executed immediately. If the observatory does not show the dark time bypassed, it is most likely a real observatory and observations will only be executed during dark time, and weather and other safety devices permitting.
+3. Click on the available observatory card to see details about the observatory. If the details list **Dark Time Constraints Bypassed**, the observatory you were given access to is a simulator and observations can be executed immediately. If the observatory does not show the dark time bypassed, it is a real observatory and observations will only be executed during dark time when weather and other safety devices allow.
 4. Click **Submit Observation** to submit your first request — see [Creating and Managing Observations](CREATING_OBSERVATIONS.md) for complete details on submitting an observation
 5. **Create a project** to organize your observations (see [Projects Guide](PROJECTS_GUIDE.md))
 6. (Optional) Set up **[Notifications](NOTIFICATIONS.md)** to receive alerts when observations change state

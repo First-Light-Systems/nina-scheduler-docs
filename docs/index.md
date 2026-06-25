@@ -40,9 +40,10 @@ If you're setting up an observatory to connect to Asterism:
 
 If you're using the web interface to submit observation requests:
 
-1. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
-2. **[Projects Guide](PROJECTS_GUIDE.md)** - Organize observations into projects
-3. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
+1. **[Getting Started](GETTING_STARTED.md)** - Quick orientation
+2. **[Creating Observations](CREATING_OBSERVATIONS.md)** - Submit your first observation
+3. **[Projects Guide](PROJECTS_GUIDE.md)** - Organize observations into projects
+4. **[Observation Files](OBSERVATION_FILES.md)** - View and download FITS files
 5. **[Practical Guide](PRACTICAL_GUIDE.md)** - Detailed procedures
 6. **[Notifications](NOTIFICATIONS.md)** - Get alerts when observations change state
 
@@ -55,6 +56,16 @@ If you're managing organizations, users, or the system:
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
 5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.21 (June 2026)
+
+- **Rebranded to Asterism** — the product formerly known as "Science Scheduler" / "NINA Science Scheduler" is now **Asterism**, across the app, NINA plugin, and these docs. Your existing installs and settings are unaffected — only the displayed name changed.
+- **Server v4.0.0 / Plugin v4.0.0.0** — major-version release marking the rebrand
+
+## What's New in v2.20 (June 2026)
+
+- **[Operational State](PLUGIN_SETUP.md#operational-state)** — observatories now report a live operational state (Ready / Observing / Weather Hold / Shutdown / Error / Unknown), shown as a coloured chip on the web dashboard
+- **[Expanded Status View](PLUGIN_SETUP.md#expanded-status-view)** — the NINA sequencer's expanded **Asterism Status** panel now reflects live plugin status, current observation, and last-contact time (plugin **v3.14.1.0**); idle-but-connected observatories now correctly report **Ready** instead of **Unknown**
 
 ## What's New in v2.19 (June 2026)
 
