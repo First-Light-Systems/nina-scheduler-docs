@@ -227,4 +227,4 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 ---
 
-*This index covers Asterism documentation v2.25 (September 2026).*
+*This index covers Asterism documentation v2.26 (September 2026).*
