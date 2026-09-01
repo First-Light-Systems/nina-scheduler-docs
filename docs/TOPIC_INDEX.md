@@ -8,7 +8,7 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 - **ADU** (Analog-to-Digital Unit) — [Observation Files](OBSERVATION_FILES.md#quality-metrics), [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs)
 - **Airmass** — [Creating Observations](CREATING_OBSERVATIONS.md#constraints), [Scheduler Features](SCHEDULER_FEATURES.md#constraint-checking), [Troubleshooting](TROUBLESHOOTING.md)
-- **Announcements (MOTD)** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#announcements-motd), [System Administration](SYSTEM_ADMINISTRATION.md#system-announcements-motd)
+- **Announcements (MOTD)** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#announcements-motd)
 - **API key** — [Observatory Registration](OBSERVATORY_REGISTRATION.md#hardware-fingerprint), [Plugin Setup](PLUGIN_SETUP.md), [Organizations](ORGANIZATIONS.md)
 - **Assigned status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
 - **Autofocus** — [Autofocus Guide](AUTOFOCUS_GUIDE.md), [Creating Observations](CREATING_OBSERVATIONS.md)
@@ -20,7 +20,6 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 ## B
 
-- **Backup management** — [System Administration](SYSTEM_ADMINISTRATION.md#backup-management)
 - **Baseline** (exoplanet transit) — [Practical Guide](PRACTICAL_GUIDE.md)
 - **Bias frame** — [Calibration Guide](CALIBRATION_GUIDE.md#what-is-image-calibration), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **Binning** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
@@ -47,7 +46,6 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 ## D
 
 - **Dark frame** — [Calibration Guide](CALIBRATION_GUIDE.md#dark-and-bias-frames), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
-- **Database integrity** — [System Administration](SYSTEM_ADMINISTRATION.md#database-integrity-scanning)
 - **Dispatch scheduling** — [Scheduler Features](SCHEDULER_FEATURES.md#dispatch-scheduling), [Observatory Administration](OBSERVATORY_ADMINISTRATION.md)
 - **Dithering** — [Guiding Guide](GUIDING_GUIDE.md), [Target Library](TARGET_LIBRARY.md)
 - **Dropbox** — [External Storage](EXTERNAL_STORAGE.md)
@@ -174,7 +172,6 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 - **Readout mode** — [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs), [Creating Observations](CREATING_OBSERVATIONS.md)
 - **Redis** — [Server Architecture](SERVER_ARCHITECTURE.md)
 - **Repetitive observations** — [Repetitive Observations](REPETITIVE_OBSERVATIONS.md), [Scheduler Features](SCHEDULER_FEATURES.md)
-- **Reporting** — [Reporting Guide](REPORTING_GUIDE.md)
 - **Resubmission** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Repetitive Observations](REPETITIVE_OBSERVATIONS.md)
 - **Resume/suspend** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Rice compression** — [Observation Files](OBSERVATION_FILES.md)
@@ -198,7 +195,6 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 - **Status** — see [Observation lifecycle](#o)
 - **Support requests** — [Contact Support](CONTACT_SUPPORT.md), [Troubleshooting](TROUBLESHOOTING.md)
 - **Suspend** — see [Resume/suspend](#r)
-- **System administration** — [System Administration](SYSTEM_ADMINISTRATION.md)
 
 ## T
 
@@ -215,7 +211,6 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 - **Uncovered configuration** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#needs-tab)
 - **User profile** — [User Profile](USER_PROFILE.md)
-- **Utilization** — [Reporting Guide](REPORTING_GUIDE.md)
 
 ## V
 
@@ -232,4 +227,4 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 ---
 
-*This index covers Asterism documentation v2.23 (September 2026).*
+*This index covers Asterism documentation v2.24 (September 2026).*

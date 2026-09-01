@@ -51,9 +51,13 @@ markdown_extensions:
 plugins:
   - search
 
-# Exclude internal docs from published site
+# Exclude internal / server-admin docs from the published site.
+# These remain in the repository for internal reference but are never rendered
+# to the public github.io site (server-admin tooling, commands, and APIs).
 exclude_docs: |
   internal/
+  SYSTEM_ADMINISTRATION.md
+  REPORTING_GUIDE.md
 
 # Navigation
 nav:
@@ -88,9 +92,7 @@ nav:
     - Organizations: ORGANIZATIONS.md
     - Observatory Administration: OBSERVATORY_ADMINISTRATION.md
     - Calibration Administration: CALIBRATION_ADMINISTRATION.md
-    - System Administration: SYSTEM_ADMINISTRATION.md
     - Log Analysis: LOG_ANALYSIS_GUIDE.md
-  - Reporting: REPORTING_GUIDE.md
   - Server Architecture: SERVER_ARCHITECTURE.md
   - Contact Support: CONTACT_SUPPORT.md
   - Troubleshooting: TROUBLESHOOTING.md

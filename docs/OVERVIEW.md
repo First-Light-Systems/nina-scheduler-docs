@@ -229,7 +229,7 @@ See [Organizations](ORGANIZATIONS.md) for setup and management.
 - **Target observation reports**: Search and filter observations by target
 - **Data export**: Download reports as CSV or PDF for offline analysis
 
-See [Reporting Guide](REPORTING_GUIDE.md) for available reports.
+Reporting and usage analytics are available to administrators within the web interface.
 
 ### AI Log Analysis
 

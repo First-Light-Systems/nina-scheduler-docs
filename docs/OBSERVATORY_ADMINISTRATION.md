@@ -1,6 +1,6 @@
 # Observatory Administration
 
-**Document Version**: 2.8 | **Last Updated**: June 2026
+**Document Version**: 2.9 | **Last Updated**: September 2026
 
 > **What's New in v2.8** (June 2026):
 > - **Reservations** — block out observatory time with auto-suspend/resume of in-progress observations
@@ -196,6 +196,12 @@ When an organization is removed, all of its members immediately lose observatory
 !!! warning "Cannot Remove Owner Organization"
     If the observatory is owned by an organization, that organization cannot be removed from the members list. Transfer ownership first if you need to remove the owning organization.
 
+## Membership Trees
+
+To see everyone who can reach an observatory, organization, or project — including access that arrives through nested/member organizations — open its **membership tree** from the admin Control Center (the observatory, organization, and project panes each offer one). The tree shows the root entity, its direct members, and, recursively, the members reached through member organizations, each with their **effective permission** chips. Nodes are clickable and open the corresponding Manage Members view.
+
+This is distinct from a user's **Access Tree**, which starts from a single user and shows every organization, observatory, and project *that user* can reach.
+
 ## Observatory Ownership
 
 ### Individual vs Organization Ownership
@@ -229,6 +235,12 @@ For organization-owned observatories:
 - The owning organization cannot be removed from the observatory's member list
 
 See [Organizations](ORGANIZATIONS.md) for details on organization permissions and [Organization Members](#organization-members) for adding organizations as observatory members.
+
+## Subscription
+
+When subscription limits are being enforced, the observatory details page shows a **Subscription** card in the header identifying the tier that governs the observatory — either its own plan or the one **inherited from its owning organization** (shown as "Inherited from *name*"). Select the card to open a window with the plan description and a full list of entitlements: user, observatory, project, and sub-organization caps, storage, monthly base hours, allowed observation types, API access, and more.
+
+Plan changes are recorded in the observatory's **History** as `subscription_assigned`, `subscription_changed`, or `subscription_cancelled` events. The card appears only when the server is enforcing subscriptions; it is hidden when enforcement is off or warn-only.
 
 ## Common Scenarios
 
@@ -290,6 +302,15 @@ The Operations state is useful during weather holds or equipment issues when you
     Operations cannot be toggled from the web interface — it is **set in the NINA plugin** and reported to the server. The web GUI displays the current Operations state but does not change it. The only operational control you can toggle from the web is **Dispatching** (above).
 
 Dispatching changes take effect immediately and the status is visible to all users viewing the observatory.
+
+## Schedule Workspace (Target Planning)
+
+The operator **Schedule** view is a target-planning workspace that shows the search tools side by side — **Exoplanet Transit Predictions**, **Deep Sky Predictions**, **Target Library**, and **Name Resolver** — each with its own criteria form and an explicit **Search** button, feeding a shared timeline below.
+
+- Any tool can be **popped out into its own browser tab**; the pop-out inherits your current filters, and selections you make in it **sync back** to the timeline in the main tab in real time.
+- On the Deep Sky and Target Library tools you can choose the **Project** new observations are filed under and open a **Telescope Configuration** dialog (aperture, focal length, pixel size, exposure limits, filter, binning) that is remembered per observatory.
+
+It is available to any signed-in user with access to the observatory (typically the observatory's operators).
 
 ## Pipeline Performance Stats
 
@@ -391,6 +412,9 @@ The system automatically logs observatory lifecycle events:
 | `organization_added` | Organization added as observatory member |
 | `organization_removed` | Organization removed from observatory members |
 | `organization_permissions_updated` | Organization member permissions changed |
+| `subscription_assigned` / `subscription_changed` / `subscription_cancelled` | Subscription tier assigned, changed, or cancelled for the observatory |
+| `master_frame_uploaded` / `master_archive_uploaded` | A master calibration frame (or an archive of them) was uploaded |
+| `plugin_software_downloaded` | The plugin downloaded an update package from the server |
 
 View history from the observatory detail page under the **History** tab.
 
@@ -406,6 +430,10 @@ When connected, the NINA plugin reports detailed equipment configuration to the 
 - **Plate Solving**: Solver type, configuration
 
 These are read-only in the web interface and reflect the actual NINA configuration at the observatory.
+
+### Last Reported Status
+
+When a device (mount, camera, weather, dome, or safety monitor) is disconnected, its equipment card offers a **Last Reported Status** button. Selecting it shows the last values the device sent while it was connected — position, temperature, and other readings — with the card tinted amber, a "Last reported" marker, and an "as of *time*" stamp so you can see how recent the snapshot is. These retained values are for reference only: safety checks and scheduling always use current live telemetry, never the snapshot.
 
 ## Autofocus Configuration
 
@@ -752,27 +780,6 @@ Cancelled announcements store the cancellation reason, who cancelled it, and whe
 ### Viewing Announcement History
 
 Observatory owners and admins can view all past announcements (active, acknowledged, expired, and cancelled) from the observatory announcements management table.
-
-### API Endpoints
-
-- `POST /observatories/{id}/motd` — Create announcement (owner/admin)
-- `GET /observatories/{id}/motd` — List active announcements (excludes acknowledged)
-- `GET /observatories/{id}/motd/history` — All announcements including past (owner/admin)
-- `DELETE /observatories/{id}/motd/{motdId}` — Cancel announcement
-- `POST /observatories/{id}/motd/{motdId}/acknowledge` — Acknowledge announcement
-- `GET /observatories/{id}/motd/{motdId}/recipients` — View recipients with acknowledgment status
-
-## API Access
-
-Observatory members can also be managed via API. See the [API Reference](API_REFERENCE.md) for:
-
-- `GET /observatories/{id}/members` - List members (returns both `members` and `organization_members`)
-- `POST /observatories/{id}/members` - Add individual member
-- `PUT /observatories/{id}/members/{userId}` - Update individual member permissions
-- `DELETE /observatories/{id}/members/{userId}` - Remove individual member
-- `POST /observatories/{id}/members/organization` - Add organization as member
-- `PUT /observatories/{id}/members/organization/{orgId}` - Update organization permissions
-- `DELETE /observatories/{id}/members/organization/{orgId}` - Remove organization member
 
 ## New Observatory Registration
 

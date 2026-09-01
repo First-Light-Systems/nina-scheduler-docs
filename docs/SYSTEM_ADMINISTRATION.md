@@ -1,14 +1,54 @@
 # System Administration
 
-**Document Version**: 1.1 | **Last Updated**: March 2026
+**Document Version**: 1.2 | **Last Updated**: September 2026
 
-> **What's New in v1.1** (March 2026):
-> - System Announcements (MOTD) with flexible targeting, cancellation, and login interception
+> **What's New in v1.2** (September 2026):
+> - **User Management** section — invitations, reactivation notices, login history, per-user activity logs, default-view control, "View as user", the Access Tree, and emailing selected users
+> - **Crash reports** in the Control Center; the **Image Quality Analysis** system-settings toggle; **Plugin Release Management**; and updated System Announcements details
 
-This guide covers server-level administration tools for maintaining Asterism — database integrity, backups, system analytics, and system-wide announcements.
+This guide covers server-level administration tools for maintaining Asterism — user management, database integrity, backups, system analytics, and system-wide announcements.
 
 !!! note "Access Required"
-    All features in this guide require **server administrator** access. Observatory administrators should see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) for observatory-level management.
+    The tools in this guide are server-administrator functions. A few (the Access Tree, emailing users, and announcements) are also available to observatory and organization admins in a scoped form; those are noted where relevant. Observatory administrators should also see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
+
+## User Management
+
+Server administrators manage user accounts from the **Control Center → Users** pane and the classic **User Management** page.
+
+### Adding and inviting users
+
+You can create a user with a password, or **invite** them without one. When a user is created without a password, the account is created in an *invited* state — no one, including the server, can sign in as it — and the person receives a welcome email with a secure **set-password link** valid for seven days. Beyond server administrators, organization owners and organization admins with the *manage members* permission (and observatory admins) can add accounts.
+
+!!! note "Inviting is currently API-driven"
+    The invite-without-password flow is available through the API today; the admin web dialogs for creating a user still require you to set a password.
+
+### Reactivating an account
+
+Deactivating a user is a soft-delete: the account is hidden but can be restored later (memberships are not automatically restored). When you **reactivate** a previously deactivated account (the *Activate user* action on the Users pane), the person is emailed automatically. The message explains that their account was restored, **names the administrator who did it**, and includes a fresh set-password link — deactivation does not preserve a usable password. It also advises anyone not expecting the change to contact support.
+
+### Login history
+
+The **Login History** action on a user's row opens a per-user log of sign-in attempts — success or failure, timestamp, originating IP address and browser, and the reason for any failure. Both successful and failed logins are recorded.
+
+### User activity log
+
+The **View user activity log** action opens a floating window with that person's full activity — filterable by event type, time period, and source, with summary tiles (total events, logins, files uploaded, observations created) and CSV/JSON export. It is the administrator counterpart to a user's own *My Activity* page.
+
+### Setting a user's default view
+
+When editing a user, you can set their **Default View** — the screen they land on after signing in. The available choices depend on the user's privileges (admin dashboards for administrators, the standard dashboards for regular users) and update immediately if you change their Server Administrator status.
+
+### View as user (read-only impersonation)
+
+To see exactly what a specific user sees, use **View as user** on the Users pane. It opens a separate browser tab under an **"Impersonating {user}"** banner, leaving your own admin session untouched, and expires automatically after 30 minutes. The session is **read-only** except for a small allow-list of the user's own observation actions (submit, edit, cancel, resubmit, and repetitive submit); everything else is blocked. Every impersonation session is audit-logged, and any allowed changes are attributed back to you.
+
+### Emailing selected users
+
+From the full Users view, tick a set of users, click **Email**, and compose a subject and message. The message is delivered server-side through the email service as a **separate copy to each recipient** (so no one sees the others' addresses), with you set as the Reply-To.
+
+### Access Tree
+
+The **Access Tree** (an icon on a user's row) gives a server-resolved view of everything a user can reach: the organizations they belong to and, beneath each, the observatories and projects available to them — **including access inherited through nested organizations**, shown as the inheritance path. Each entity lists the user's effective (direct plus inherited) privileges, and the page is stamped with a UTC "generated at" time so a captured tree is unambiguous. (Observatory and organization admins can reach the underlying data for their own scope.)
 
 ## Database Integrity
 
@@ -208,6 +248,18 @@ The system health endpoint (`/api/health`) reports:
 - Review backup list to ensure recent backups exist
 - Watch storage usage trends to plan capacity
 
+### Crash Reports
+
+When the API server crashes — whether an out-of-memory condition that writes a diagnostic report, or an abrupt kill (SIGKILL / container OOM / segfault) that leaves none — the crash is surfaced to administrators rather than being visible only over SSH. On restart the server **emails all server admins** (throttled and de-duplicated; this deliberately bypasses individual notification preferences, since a crash shouldn't be silenceable), and the **Recent crash reports** section of the Control Center's *Needs Attention* pane lists each report for review and one-click raw download. Crash emails are sent only in production (controlled by the `STARTUP_ADMIN_NOTIFY` environment variable).
+
+## System Settings
+
+The **System Settings** page holds server-wide toggles for the image-processing pipeline.
+
+### Image Quality Analysis
+
+Image quality analysis — star detection, FWHM, and SNR measurement — is the most CPU-intensive stage of processing each frame. The **Image Quality Analysis** toggle (under Image Processing Settings) turns it off globally; when disabled, ingested FITS frames skip quality analysis, which relieves the pipeline under heavy load. The trade-off is that per-frame quality metrics are no longer recorded and an observatory's Image Quality score falls back to an autofocus-based proxy. It is **on by default**.
+
 ---
 
 ## System Announcements (MOTD)
@@ -258,6 +310,8 @@ The System Announcements page displays announcements in four categorized tables:
 
 Each table supports status filtering with toggle buttons: All, Active, Acknowledged, Expired, and Cancelled.
 
+The Organization, Observatory, and Project tables lead with a **Target** column naming the organization, observatory, or project the announcement applies to (the System table, being platform-wide, has none). Every table also shows **Created By** (the creator) and **Created** columns, and all announcement timestamps — created, expiry, acknowledged, and cancelled — are shown in **UTC** (`YYYY-MM-DD HH:MM:SS UTC`) to avoid timezone ambiguity.
+
 ### Dashboard Integration
 
 - System announcement banners appear on the main dashboard
@@ -275,7 +329,7 @@ To cancel an active announcement:
 2. Enter a cancellation reason (required — the dialog is disabled until a reason is entered)
 3. Confirm the cancellation
 
-Cancelled announcements display the cancellation reason and timestamp in the recipients view.
+Cancelled announcements record **who** cancelled them, **when** (in UTC), and **why**: hover the "Cancelled" status chip for "Cancelled by {user} at {time} — {reason}", and the same detail appears in the recipients view.
 
 ### Status Lifecycle
 
@@ -298,6 +352,44 @@ Cancelled announcements display the cancellation reason and timestamp in the rec
 ### Scoped Admin Dashboard
 
 Observatory owners and admins see an administration section with a scoped dashboard showing only their observatories' statistics. Server admins see all observatories' MOTDs and full system statistics.
+
+---
+
+## Plugin Release Management
+
+Server administrators publish and manage NINA plugin releases from the **Plugin Manager** (in the Service Center) and the standalone Plugin Release Management page. You upload a release ZIP with Markdown release notes, a version, and a minimum NINA version, and can mark a build as a prerelease, edit its notes afterward, and hide or delete releases.
+
+Two points matter operationally:
+
+- **Minimum required plugin version is an enforcement gate**, not a label. Plugins below the configured minimum are **blocked from performing observations** until they update (leave it blank to allow all versions). This is the highest-consequence control here.
+- **Downloads are audited.** Each successful package fetch by an observatory's plugin is recorded as a `plugin_software_downloaded` event in that observatory's history (attributed via its API key). Downloads initiated from the admin GUI carry no observatory context and are not logged.
+
+The client side of updates — how a plugin checks for, downloads, and installs releases, and the update security model — is covered in [Plugin Setup](PLUGIN_SETUP.md#plugin-updates).
+
+## Advanced Observatory Controls
+
+### Dynamic Run-Until (advanced)
+
+The observatory's edit screen carries a **server-admin-only** "Dynamic Run-Until (advanced)" card (plugin-options tab) that lets a running observation adapt its end time while it executes. The switches are stored per observatory; the master switch must be on for the others to apply, and the live push additionally requires a plugin that advertises the capability.
+
+- **Dynamic run-until (relational end time)** — computes each observation's stop time relative to the next scheduled target, dawn, and its own estimated work, rather than pinning a fixed end.
+- **Live recompute + push to plugin** — pushes an updated end time to the mount in real time when conditions change (only to plugins that advertise support; a watchdog still enforces the time for any plugin).
+- **Wind-down → partially completed** — records an early-ended run as *partially completed* rather than failed.
+- **Watchdog hard-stop / reclaim** — lets the server forcibly end and reclaim a stuck or over-running observation.
+- **Interrupt for a time-critical window** — allows a running observation to yield so a fixed-time observation can start when its window opens.
+
+### Observatory Quality Score
+
+The Control Center's **Observatory Quality Score** card and pane rate how well each observatory actually performs — a 0–100 composite over a 7/30/90-day window built from five weighted pillars: **Reliability**, **Accuracy**, **Throughput**, **Image Quality**, and **Efficiency** (a sixth, Scientific Output, is planned). Each score carries a companion **Data Confidence** rating (0–100; high/medium/low) reflecting how much data backs it, whether values are measured or estimated, and whether weather came from a local sensor or a regional service.
+
+This is a *realized-performance* measure and is deliberately separate from an observatory's commercial **Class (A / B / C)**, which rates static capability. The cross-observatory leaderboard is server-admin only (the card is hidden for non-admins).
+
+## Administrative APIs
+
+Some administrative capabilities are available only through the API:
+
+- **Create a nested organization**: `POST /api/v1/organizations` accepts an optional `parent_organization_id`; when supplied, the new organization is created already nested under that parent (subject to *manage members* on the parent and its sub-organization limit). In the web UI, organizations are created top-level and then nested with **Move Under Organization**.
+- **Invite a user without a password**: `POST /api/v1/users` without a `password` creates an invited account and emails a set-password link (see [User Management](#user-management)).
 
 ---
 

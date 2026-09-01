@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.24] - 2026-09-01
+
+### Changed
+
+- **Server-admin documentation is no longer published to the public site.** `SYSTEM_ADMINISTRATION.md` and `REPORTING_GUIDE.md` are now excluded from the github.io build (via `exclude_docs`) and removed from the navigation; they remain in the repository for internal reference. Inbound links from public pages were updated so the public site has no dead links.
+- **Server-admin command/API reference removed from public pages.** The raw API-endpoint listings were dropped from Organizations, Observatory Administration, and Calibration Administration; the create-nested-organization and invite-without-password APIs are documented in the (excluded) System Administration guide instead.
+
+### Added (organization / observatory / project admin)
+
+- **Organizations** — nesting organizations (**Move Under Organization** with optional ownership hand-off, org-owned-orgs, the Control Center hierarchy view), the **Sponsored** organization type, per-member **Relationship** field, and **organization as a project member** with downward projection into owned sub-orgs.
+- **Collaboration** — org-as-project-member path, nesting how-to, and the sub-organization access projection.
+- **Projects** — a **Project History** section (permanent audit trail, live updates, membership emails).
+- **Observatory Administration** — the **Subscription** card + entitlements, **Last Reported Status** for disconnected equipment, a **Membership Trees** section, and new history events (`subscription_*`, `master_frame_uploaded`/`master_archive_uploaded`, `plugin_software_downloaded`).
+- **Calibration Administration** — the **Upload Master** workflow, including **archive (.zip/.tar) upload** with a per-file results window and audit events.
+- **Server Architecture** — documented the dedicated **pipeline worker** and **transfer worker** processes; version stamp refreshed.
+
+### Added (server admin — excluded from the public site)
+
+- **System Administration** gained a **User Management** section (invitations, reactivation notices, login history, per-user activity logs, default-view control, **View as user**, the **Access Tree**, emailing selected users), plus **crash reports**, the **Image Quality Analysis** toggle, **Plugin Release Management**, the **Dynamic Run-Until (advanced)** controls, the **Observatory Quality Score**, and administrative-API notes.
+
+---
+
 ## [2.23] - 2026-09-01
 
 ### Added
@@ -23,7 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Notifications**: documented the **Clear All** control; corrected the state label to **NINA Completed** and the default-selected states (Failed / Aborted / Cancelled).
 
 !!! note
-    The NASA EXOTIC submit action is documented as **advanced / disabled by default** (build-flag gated). Admin-only surfaces (transfer pause/resume, the transfers Errors viewer) are covered in the [Reporting Guide](REPORTING_GUIDE.md), not the user pages.
+    The NASA EXOTIC submit action is documented as **advanced / disabled by default** (build-flag gated). Admin-only surfaces (transfer pause/resume, the transfers Errors viewer) are covered in the server-admin Reporting guide, not the user pages.
 
 ---
 

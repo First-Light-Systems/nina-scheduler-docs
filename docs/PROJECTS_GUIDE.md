@@ -1,6 +1,6 @@
 # Projects Guide
 
-**Document Version**: 1.2 | **Last Updated**: September 2026
+**Document Version**: 1.3 | **Last Updated**: September 2026
 
 Projects are the primary way to organize, track, and collaborate on observation programs in Asterism. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
 
@@ -163,6 +163,19 @@ The project overview automatically tracks:
 
 Statistics update automatically as observations complete.
 
+## Project History
+
+Every project keeps a permanent **Project History** — an audit trail of who changed what and when. Open it from the **History** icon on a project row (project owners and members with view access can see their own project's history).
+
+It records:
+
+- **Lifecycle** — creation, rename, status and field changes, ownership transfers, and deletion
+- **Membership** — members and member-organizations added, changed, or removed
+- **Storage** — external-storage configuration changes
+- **Files** — uploads, transfers to external storage, and deletions
+
+The view is paginated and filterable by event type, source, date, and free-text search, and it updates live as new events occur. History is retained even after a project is deleted. Project members are also **emailed automatically** when they are added, have their role changed, or are removed.
+
 ## Deleting a Project
 
 Projects with observations cannot be deleted unless you use **force delete**, which permanently removes:
@@ -211,4 +224,3 @@ Projects can be configured with external storage destinations so that FITS files
 - **[Observation Files](OBSERVATION_FILES.md)** — Viewing and downloading FITS files
 - **[External Storage](EXTERNAL_STORAGE.md)** — Automatic cloud storage transfer
 - **[Organizations](ORGANIZATIONS.md)** — Managing organization-owned projects
-- **[Reporting Guide](REPORTING_GUIDE.md)** — Project usage reports and analytics

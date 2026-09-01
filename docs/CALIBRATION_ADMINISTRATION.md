@@ -1,6 +1,6 @@
 # Calibration Administration
 
-**Document Version**: 1.1 | **Last Updated**: June 2026
+**Document Version**: 1.2 | **Last Updated**: September 2026
 
 > **What's New** (June 2026):
 > - **Demand-driven builds** — masters and dark acquisition are now gated on actual recent light-frame demand
@@ -46,6 +46,12 @@ Browse all master frames for a selected observatory. Each row shows the frame me
 - **Expand** — view the individual source frames that were stacked to create this master
 
 Use the filters at the top to narrow by frame type (dark, flat, bias), camera, or filter.
+
+### Uploading a Master (single file or archive)
+
+The **Upload Master** tab (and the Upload Master button on the admin Calibration Library) lets you add a pre-made master frame. You can select a single FITS file (`.fits`, `.fit`, `.fts`, `.fz`) **or an archive** (`.zip`, `.tar`, `.tar.gz`, `.tgz`, `.gz`) that bundles several — every FITS inside is ingested as a master, with metadata read automatically from the FITS headers.
+
+While an archive is being unpacked, a **Processing Archive…** indicator shows; then a results window lists each file as **Added** or **Skipped** (with a reason) plus a summary of how many of how many succeeded — a bad file doesn't stop the rest. Each upload stamps the uploading user and is recorded in the observatory's History as a `master_frame_uploaded` (single) or `master_archive_uploaded` (archive) event. Uploading requires observatory-admin (`can_admin`) rights on that observatory, or server admin.
 
 ### Individual Frames Tab
 
@@ -224,34 +230,6 @@ Observatory operators should review this periodically to ensure calibration cove
 | Duplicate filter entries in capture plan | Same filter at different gain/offset values | Expected behavior — different hardware configs need separate flat sets |
 | Configuration shows `no_demand_for_combo` | No recent light frames use that combination | Expected — calibration is built only for combinations current lights need (see [Demand-Driven Builds](#demand-driven-builds)) |
 | Darks never captured on a shutterless camera | Plugin refusing to capture (no valid dark filter) | Set the plugin's **Dark Filter** option (see [Troubleshooting](TROUBLESHOOTING.md#darks-being-skipped-or-refused-shutterless-cameras)) |
-
-## API Reference
-
-All calibration endpoints use the `/api/v1/calibration/` prefix and require authentication.
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/library/:observatory_id` | Browse frames with pagination and filters |
-| GET | `/library/:observatoryId/summary` | Summary statistics by camera/config |
-| GET | `/needs/:observatory_id` | Real-time needs assessment |
-| GET | `/frames/:id/download` | Download FITS file |
-| GET | `/frames/:id/components` | Get source frames for a master |
-| POST | `/masters/create` | Trigger manual master creation |
-| POST | `/masters/upload` | Upload a pre-made master frame |
-| DELETE | `/frames/:id` | Permanently delete a frame |
-
-### Query Parameters for Library Endpoint
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `page` | number | Page number (default: 1) |
-| `limit` | number | Results per page (default: 50, hard cap: 200) |
-| `is_master` | string | `'true'` or `'false'` to filter by master status |
-| `exclude_mastered` | string | `'true'` to hide frames already in a master |
-| `frame_type` | string | Filter by `dark`, `flat`, or `bias` |
-| `camera_name` | string | Filter by camera name |
-| `filter` | string | Filter by optical filter name |
-| `status` | string | Filter by status (`active`, `superseded`, `expired`) |
 
 ## See Also
 

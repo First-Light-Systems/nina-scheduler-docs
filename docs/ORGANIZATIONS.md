@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.4 | **Last Updated**: March 2026
+**Document Version**: 1.5 | **Last Updated**: September 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 
@@ -11,7 +11,7 @@ Organizations provide:
 - **Shared Observatories**: Organization-owned observatories can be accessed by all members
 - **Multi-Membership**: Users can belong to multiple organizations simultaneously
 - **Permission-Based Access**: Granular control over what members can do
-- **Single Owner**: Each organization has one owner who can transfer ownership
+- **Flexible Ownership**: An organization is owned either by a user or by another organization, and ownership can be transferred or handed off when nesting (see [Nesting Organizations](#nesting-organizations))
 
 ## Organization Types
 
@@ -29,6 +29,7 @@ When creating an organization, you can specify its type:
 | Department | A department within a larger institution |
 | Team | A working group or team |
 | Course | An academic course or class |
+| Sponsored | An organization whose usage is sponsored or underwritten (shown with a distinct chip) |
 | Other | Any other type of organization |
 
 ## Organization Permissions
@@ -92,6 +93,10 @@ If you have `can_manage_members` permission:
 !!! warning "Cannot Remove Owner"
     The organization owner cannot be removed. To change owners, use **Transfer Ownership** instead.
 
+### Member Relationship
+
+Alongside permissions, each member can be assigned a **Relationship to Organization** describing their role. The available relationships depend on the organization type — for example Administrator / Faculty / Instructor / TA / Student for schools and courses, Researcher / Docent / Staff for observatories, or Lead / Member for teams — plus a universal **Other**. The relationship is optional, is shown in the Members table, and can be edited inline by anyone with `can_manage_members`.
+
 ## Organization Observatories
 
 Organizations can own observatories that are shared among all members with appropriate permissions.
@@ -141,6 +146,14 @@ Key behaviors:
 
 See [Observatory Administration — Organization Members](OBSERVATORY_ADMINISTRATION.md#organization-members) for step-by-step management instructions.
 
+## Organization as a Project Member
+
+Just as an organization can be a member of an observatory, an organization can be granted access to a **project**. From the project's Members page, **Add Organization** shares the project with all of that organization's members at once, each capped by the permissions the organization is granted. This is the quickest way to give a whole team access without adding people individually.
+
+Access also flows **downward through ownership**: a member's effective privileges in an organization's project extend into every sub-organization that org owns, recursively, so sub-org members inherit access without being added individually. (Ownership itself is never inherited this way.)
+
+See the [Collaboration Guide](COLLABORATION.md) for how these grants combine with a user's other access.
+
 ## External Storage
 
 Organizations can configure shared external storage destinations (Dropbox, Google Drive, Google Cloud Storage) that are available to all members when creating observations. This is managed from the organization's edit dialog under the **External Storage** tab.
@@ -160,6 +173,20 @@ Only the current owner can transfer ownership:
 !!! danger "Ownership Transfer is Permanent"
     Once transferred, you will lose owner privileges unless the new owner grants them back to you.
 
+## Nesting Organizations
+
+Organizations can be nested into a hierarchy — a parent organization with sub-organizations beneath it — which is how larger institutions model departments, courses, or partner groups.
+
+### Moving an organization under a parent
+
+From an organization's **Manage Members** view, **Move Under Organization** nests that organization beneath a parent, detaching it from any current parent. You choose which parent-level management permissions its members inherit, and can optionally check **Make the parent organization the owner**, which transfers ownership to the parent org and demotes the current owner to a regular member. A nested organization **inherits the parent's subscription tier**, and cycles are prevented.
+
+This is where the two ownership kinds arise: an organization is owned either by a **user** (the classic case) or, after a hand-off, by another **organization** — in which case there is no single owning user and the owning organization governs the child. Owner columns show org-owned organizations as "*Name* (org)".
+
+### Viewing the hierarchy
+
+In the admin Control Center's Organizations pane, organizations display as a tree: top-level organizations expand to reveal their sub-organizations, and a **Show sub-orgs** switch (off by default) expands or collapses the whole tree at once. To see who can reach an organization and how, open its **membership tree** (see [Observatory Administration — Membership Trees](OBSERVATORY_ADMINISTRATION.md#membership-trees)).
+
 ## Announcements
 
 Organization owners and admins can send announcements to all organization members. Click the **announcement button** on the Organization Management page to create an announcement with a title, message, severity level, and optional expiration date.
@@ -177,20 +204,6 @@ Users can belong to multiple organizations simultaneously. This is useful for:
 - **Educators** supporting multiple schools or clubs
 
 Each organization membership has its own set of permissions, allowing different levels of access in different organizations.
-
-## API Access
-
-Organizations can be managed programmatically via the API. The following endpoints are available:
-
-- `GET /organizations` - List your organizations
-- `POST /organizations` - Create a new organization
-- `GET /organizations/{id}` - Get organization details
-- `PUT /organizations/{id}` - Update organization settings
-- `GET /organizations/{id}/members` - List members
-- `POST /organizations/{id}/members` - Add a member
-- `PUT /organizations/{id}/members/{userId}` - Update member permissions
-- `DELETE /organizations/{id}/members/{userId}` - Remove a member
-- `POST /organizations/{id}/transfer-ownership` - Transfer ownership
 
 ---
 

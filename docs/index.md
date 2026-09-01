@@ -1,6 +1,6 @@
 # Asterism Documentation
 
-**Documentation Version**: 2.23 | **Last Updated**: September 2026
+**Documentation Version**: 2.24 | **Last Updated**: September 2026
 **Server v4.8.0 | User GUI v4.1.0 | Plugin v4.0.11.0**
 
 Welcome to the Asterism documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
@@ -23,7 +23,6 @@ Welcome to the Asterism documentation. This system provides automated multi-obse
 | Set up notifications | [Notifications](NOTIFICATIONS.md) |
 | Manage my profile | [User Profile](USER_PROFILE.md) |
 | Manage my observatory | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) |
-| View reports | [Reporting Guide](REPORTING_GUIDE.md) |
 | Fix a problem | [Troubleshooting](TROUBLESHOOTING.md) |
 
 ## For Observatory Operators
@@ -54,8 +53,7 @@ If you're managing organizations, users, or the system:
 1. **[Organizations](ORGANIZATIONS.md)** - Create and manage organizations
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
-4. **[System Administration](SYSTEM_ADMINISTRATION.md)** - Database integrity, backups, and system tools
-5. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+4. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
 
 ## What's New in v2.21 (June 2026)
 
@@ -90,7 +88,6 @@ If you're managing organizations, users, or the system:
 - **[Announcements (MOTD)](OBSERVATORY_ADMINISTRATION.md#announcements-motd)** — Observatory, system, organization, and project announcements with acknowledgment tracking
 - **Flexible targeting** — System announcements can target all users, or specific users, observatories, organizations, and projects
 - **Login interception** — Pending system announcements must be acknowledged before users can proceed
-- **[System Announcements](SYSTEM_ADMINISTRATION.md#system-announcements-motd)** — Dedicated admin page with categorized tables and status filtering
 
 See the [Changelog](CHANGELOG.md) for full details.
 
