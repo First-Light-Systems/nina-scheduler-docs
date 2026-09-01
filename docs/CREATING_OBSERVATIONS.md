@@ -1,6 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.6 | **Last Updated**: September 2026
+**Document Version**: 1.7 | **Last Updated**: September 2026
 
 > **What's New in v1.4** (March 2026):
 > - Describe external storage capability
@@ -37,6 +37,7 @@ This guide covers how to create, monitor, and manage observations in Asterism.
 - Begins at a specific start time (e.g., exoplanet transit)
 - The end time is optional — give one to pin an explicit window, or let Asterism size the window from your exposure plan
 - Protected buffer prevents scheduling conflicts
+- If the window would run past the observatory's astronomical dark time, the form warns you — live as you choose the window and again after saving — that the run will be cut short (the scheduler stops it at dark time). Shorten or move the window if you need the whole run in darkness.
 - See [Exoplanet Transits](#exoplanet-transit-observations) below
 
 ### Rise-to-Set Observations
@@ -70,6 +71,10 @@ If a user has configured external storage options, or if the selected Project ha
 
 **Notification preferences**: If you have enabled at least one notification channel in your [Profile](USER_PROFILE.md), a **Notifications** panel appears in this step. Check which channels to use (**Email** and/or **Pushover** — only enabled channels appear) and select which state changes should trigger notifications (all selected by default). Uncheck any states you don't need alerts for. No notification channels configured? See [Notifications](NOTIFICATIONS.md) for setup instructions.
 
+#### Starting from a Template
+
+The Project step has a **Use Template** button in the top-right. Click it to pre-fill the entire form from one of your saved observing templates: filter the list by observatory or project (or search by name), select a template, and click **Use Template**. The form is populated with the template's observatory, project, target list and exposure plans, and observation-level settings, which you can then adjust before continuing. Templates are created and managed in the [Target Library](TARGET_LIBRARY.md) — this picker is the quickest way to start a new observation from one.
+
 ### Step 2: Target & Exposure
 
 This step combines target details, coordinate lookup, exposure configuration, and priority setting for each target.
@@ -97,13 +102,18 @@ Instead of entering coordinates manually, you can use the **target lookup** feat
 | Minor planets | 433 Eros, (1) Ceres, MP Vesta | JPL Horizons |
 | Comets | C/2020 F3, 1P/Halley | JPL Horizons |
 | Planets | Mars, Jupiter, Saturn | JPL Horizons |
+| Survey designations (position embedded in the name) | WISE J224644.9+395839, ZTF J030941.49+405335.0, 2MASS J03294319+2717581, PNV J19450648+1822422 | Decoded locally (offline) |
+| Supernovae & transients | SN 2026zwy, AT2026abc, 2026zwy | Transient Name Server (TNS) |
 
 **How it works:**
 1. Enter the object name in the target field
 2. Click the **Lookup** button (or press Enter)
-3. The system queries SIMBAD, VizieR, NED, and JPL Horizons
+3. The system first decodes any position-embedded survey designation locally, then queries the Transient Name Server (for supernova/transient names), JPL Horizons, SIMBAD, VizieR, and NED
 4. Coordinates are automatically filled in
 5. For solar system objects, orbital elements are stored for position calculation at observation time
+
+!!! note "Survey designations and supernovae"
+    Survey designations that embed their own J2000 position (WISE, ZTF, CSS, ASAS, ASAS-SN, 2MASS, `PNV J…`) are decoded **instantly and offline**, so they resolve even when catalog services are slow or unreachable. Supernovae and unclassified transients entered by IAU name (`SN 2026zwy`, `AT2026abc`, or just `2026zwy`) are resolved through the **Transient Name Server (TNS)** — often the only source that knows a very recent discovery. TNS lookups depend on your deployment having TNS credentials configured; without them, supernova-by-name lookups may not return coordinates, but the offline survey-designation decoding always works.
 
 **Tips for successful lookups:**
 - Use standard catalog names (M31, NGC 224, HD numbers)
@@ -140,7 +150,14 @@ After a successful lookup, the system displays information chips next to the coo
 
 **Spectral type chip** (light blue) — the stellar spectral classification (e.g., "G2V", "K1V", "M5.5Ve") when available.
 
-**Tip**: See [Target Library](TARGET_LIBRARY.md) for managing saved targets, templates, CSV import, and automation.
+**Tip**: See [Target Library](TARGET_LIBRARY.md) for managing saved targets, templates, and automation.
+
+#### Import Targets from CSV
+
+To add many targets at once, click **Import Target CSV** (next to **Add Target**) in the Target & Exposure step. Choose a **CSV format** from the dropdown — or download that format's template — then select your file. Because the filter names in your file may not match the filters installed on the chosen observatory, a mapping step lets you match each source filter to one of that observatory's filters; sensible defaults are pre-filled, and you must resolve any unmatched filters before importing. Imported targets are **added to the current observation's target list**, where you can keep editing them or add more.
+
+!!! note "Two different CSV imports"
+    This in-form import fills in the targets of the observation you're creating. The [Target Library](TARGET_LIBRARY.md#csv-import) has a separate bulk CSV import that creates saved library targets and templates — use that one to build a reusable library, not to populate a single observation.
 
 #### Configure Exposures
 

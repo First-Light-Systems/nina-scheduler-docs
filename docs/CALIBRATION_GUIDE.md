@@ -1,6 +1,6 @@
 # Calibration Guide
 
-**Document Version**: 1.2 | **Last Updated**: June 2026
+**Document Version**: 1.3 | **Last Updated**: September 2026
 
 > **What's New** (June 2026):
 > - **Sky (twilight) flats** — the calibration instruction's Sky mode now captures twilight flats by delegating to NINA's Sky Flat routine, with per-filter dusk/dawn ordering and a pointing helper on the options page (see [Sky Mode](#sky-mode))
@@ -261,6 +261,7 @@ A periodic sweep also runs every 5 minutes to catch any frame groups that may ha
     - Does the frame count meet the threshold? (Check the Needs tab for accumulation progress)
     - For flats: does a matching master dark exist? (Flat stacking requires dark subtraction)
     - Are all frames at consistent temperatures? (Frames must be within the temperature tolerance)
+    - For flats: are they **underexposed**? After the master dark is subtracted, an underexposed flat's signal can drop too low to stack, and the build fails with an "underexposed flats" reason. Asterism stops retrying such a build automatically (rather than looping) — raise your flat exposure or panel brightness so the flat's median ADU sits well above the dark level, then capture fresh flats.
 
 ## Calibration Application
 

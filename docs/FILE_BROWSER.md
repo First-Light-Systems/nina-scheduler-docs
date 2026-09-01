@@ -1,6 +1,6 @@
 # My Files
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
 The My Files page lets you browse, search, preview, and download all your captured science images across every observation — organized by target, project, or date.
 
@@ -45,7 +45,13 @@ Groups files by capture date, with the most recent dates first. Within each date
 
 The search field in the upper right filters results across all browse modes. Type a target name, and the list updates to show only matching entries. The search is case-insensitive and supports partial matches — typing "M3" will match M31, M33, and M3.
 
-A summary line below the tabs shows the number of groups, observations, and files matching your current view and search.
+A summary line below the tabs shows the number of groups, observations, and files matching your current view and search, plus the **total storage** they use.
+
+---
+
+## Storage Used
+
+My Files shows how much storage your images occupy: a total on the summary line, and a size chip on each project, target, and date group. On the **By Project** view the size is broken down further, down to individual targets and observations. (The same per-project, per-target, and per-observation sizes also appear on the **My Projects** page.)
 
 ---
 
@@ -57,7 +63,7 @@ When you expand an observation, files appear in a card grid showing:
 - **Filename** and capture timestamp
 - **Filter** and exposure time
 - **File size**
-- **Plate solve status** — Solved (green), Failed (red), Queued, Solving…, or Not Attempted
+- **Plate solve status** — a labeled chip: **Solve queued**, **Solving…**, **Plate solved** (green), **Solve failed** (red), or **Not solved**. Hover any chip for a tooltip explaining the state — including, for **Solve failed**, that the solver simply found no astrometric solution (common for short, star-sparse, or simulator frames) and the image file itself is fine.
 - **Calibration ready indicator** — a green "Cal Ready" chip appears when matching dark and flat master frames are available for that file's camera, gain, binning, and filter
 
 Click a thumbnail to open a full-size preview in a lightbox viewer.
@@ -80,7 +86,20 @@ Each level of the hierarchy offers a download button:
 - **Download All** at the top of a target or project page downloads every file in that group
 - **Download per observation** using the download icon on each observation header
 
-Bulk downloads run in parallel (up to 4 files at a time) with a progress dialog showing completion status. Downloads continue even if you navigate to other tabs.
+Bulk downloads run in parallel (up to 4 files at a time) with a progress dialog showing completion status. Downloads continue even if you navigate to other tabs, and large file downloads are **resumable** if interrupted.
+
+### Push to External Storage
+
+Next to the download control on each **By Project**, **By Target**, and **By Date** group (and per observation), a cloud-upload icon runs **Push Externally** — copying that group's files to a cloud/SFTP destination you can use, without downloading them first. See [Push Externally](EXTERNAL_STORAGE.md#pushing-files-on-demand-push-externally).
+
+---
+
+## Selecting and Deleting Files
+
+You can select whole observation or target rows and delete their files in bulk. **Shift-click** a row to select a range; **ctrl/cmd-click** to toggle individual rows (which can span groups). When any rows are selected, an **"N selected"** bar appears with **Clear** and **Delete selected** actions; **Delete selected** removes every file under the selected rows after a confirmation.
+
+!!! warning "Deletion is permanent"
+    Deleting files cannot be undone. You can only delete your own files (administrators can delete any file).
 
 ---
 
@@ -91,7 +110,7 @@ You can trigger plate solving from the file browser:
 - **Individual files** — click the solve icon on any unsolved file card
 - **Bulk solve** — the "Solve Unsolved" button on a target or observation queues all unsolved files at once
 
-Plate solve status updates in real time via WebSocket — you'll see chips change from "Queued" to "Solving…" to "Solved" without refreshing.
+Plate solve status updates in real time via WebSocket — you'll see chips change from **Solve queued** to **Solving…** to **Plate solved** without refreshing.
 
 ---
 

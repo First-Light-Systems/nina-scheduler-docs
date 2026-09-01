@@ -1,6 +1,6 @@
 # External Storage Guide
 
-**Document Version**: 1.1 | **Last Updated**: September 2026
+**Document Version**: 1.2 | **Last Updated**: September 2026
 
 > Automatically copy your FITS files to external storage after observations complete. Supported destinations: **Dropbox**, **Google Drive**, **Google Cloud Storage**, **AWS S3**, and **SFTP / SCP** (your own server).
 
@@ -221,6 +221,9 @@ Each destination shows:
 - Root path
 - Warning flag if "delete from server" is enabled
 
+!!! note "A project's own storage is required"
+    If the selected project has its own external-storage destination — including storage the project inherits from its **organization**, even when you reach the project through your organization role — that destination is **automatically selected and locked on**, shown with a **Required** badge that can't be unchecked, so a project's data always lands in the project's configured storage. Only the selected project's destinations are shown; other projects' destinations are hidden, while your Personal and Organization destinations remain freely selectable.
+
 ### Example: Standard Research Workflow
 
 A researcher working on a galaxy imaging project:
@@ -264,6 +267,28 @@ A university astronomy department:
    ```
 
 ---
+
+## Pushing Files On Demand (Push Externally)
+
+Besides the automatic copy that runs after an observation completes, you can push **already-captured** files to external storage at any time with **Push Externally**. Use it to send data to a destination you added after the fact, to re-send to an additional destination, or to copy an older observation, project, target, or night's worth of data.
+
+**Where to find it:**
+
+- On an observation's file view and the observation detail page (a **Push Externally** button)
+- On the project files page (`/files/project/...`)
+- In **My Files** — a cloud-upload icon on the **By Project**, **By Target**, and **By Date** group headers (and per observation)
+
+**In the dialog**, choose one or more destinations you're eligible to use (grouped Personal / Organization / Project), optionally add a **custom sub-path** (the same `$USER`, `$PROJECT`, `$TARGET` variables apply), and choose whether to send **Raw**, **Calibrated**, or **Both** kinds of frames. You can also opt to be emailed a summary of the request and/or a notification when the transfers complete.
+
+Key behaviors:
+
+- A manual push **never deletes** the server copy (unlike the automatic copy's optional "delete from server").
+- Re-pushing is **additive** — it never cancels transfers already queued or in flight; each push is its own batch.
+- If the server copy was already removed (a delete-from-server destination), the push streams from the existing **external copy** instead of failing.
+- Pushes appear in the observation's **External Storage** panel tagged **On-demand** (versus **Initial** for the automatic copy), showing who pushed them and when.
+
+!!! tip "Cancelling a push from its email"
+    If you asked for a summary email when starting a push, that email includes a link to cancel it. The link opens a confirmation page where you can add an optional reason before confirming; cancelling stops only the transfers that haven't started yet — anything in progress or already completed is untouched — and your identity and reason are recorded in the cancellation email.
 
 ## Monitoring Transfers
 

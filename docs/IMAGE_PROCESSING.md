@@ -1,6 +1,6 @@
 # Image Processing
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
 Asterism includes an image processing pipeline that runs on uploaded FITS files. Processing extracts quality metrics, generates preview images, and performs plate solving (astrometry).
 
@@ -50,6 +50,8 @@ When plate solving succeeds, the file's exact sky coordinates are recorded. This
 - Positional accuracy assessment
 
 Plate solving requires ASTAP to be configured on the server.
+
+Each file's solve status is shown as a labeled chip (**Solve queued**, **Solving…**, **Plate solved**, **Solve failed**, **Not solved**) with a hover tooltip. A **Solve failed** result means the solver found no astrometric solution for that frame — common for short, star-sparse, or simulator images — and does **not** mean the file is corrupt; the image is still fully usable. See [My Files](FILE_BROWSER.md#file-grid).
 
 ## Monitoring Jobs
 
