@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- **Reporting and Analytics Guide rewritten (v2.0)** to match the current admin UI. The old `/admin/billing/*`-only structure is replaced with an accurate three-tier picture: per-user **My Usage**, the role-scoped **Reporting** menu (usage reports for observatory/org admins), and the server-admin-only **Service Center**. Added the Service Center's five tabs — **System Status** (Performance / WebSocket Log / Usage / External Transfers), **Subscriptions** (Users/Observatories/Organizations/Attribution/Usage Billing/Audit Usage), **Plugin Manager**, **Observatory Classification**, **Support Requests**. Renamed "Usage Dashboard" → **Usage Summary**, corrected the summary cards (the third card is **Shutter Open**, with wall-clock "On-Sky" hours as its subtitle), and expanded the export list (CSV/JSON, Excel, Email Report). Retained the still-accurate Telescope Time / wall-clock vs shutter-open / efficiency / success-rate definitions.
 - **Version badges** updated to **Server v4.8.0 / User GUI v4.1.0 / Plugin v4.0.11.0** on the home page, Plugin Setup, and Topic Index.
 
 ---
