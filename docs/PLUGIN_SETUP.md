@@ -1,7 +1,7 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.7 | **Last Updated**: June 2026
-**Plugin Version**: v4.0.0.0
+**Document Version**: 1.8 | **Last Updated**: September 2026
+**Plugin Version**: v4.0.11.0
 
 > **What's New in v1.7** (June 2026):
 > - **Rebranded to Asterism** — the plugin's displayed name in NINA is now **Asterism** (formerly "Science Scheduler"). Your existing install, settings, and the `ScienceScheduler` plugin folder are unaffected — only the display name changed.

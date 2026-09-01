@@ -1,6 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.5 | **Last Updated**: March 2026
+**Document Version**: 1.6 | **Last Updated**: September 2026
 
 > **What's New in v1.4** (March 2026):
 > - Describe external storage capability
@@ -20,7 +20,7 @@ This guide covers how to create, monitor, and manage observations in Asterism.
 | Type | Best For | Key Feature |
 |------|----------|-------------|
 | **Flexible** | Most observations | Fixed exposure count, can be interrupted and resumed |
-| **Fixed-Time** | Transits, occultations | Protected time window, must start on time |
+| **Fixed-Time** | Transits, occultations | Protected window; pin a start time (and optionally an end) |
 | **Time-Based** | Duration-limited programs | Runs for a specified time window |
 | **Monitoring** | Repeat observations | Cadence-based scheduling at regular intervals |
 | **Rise-to-Set** | Full-night coverage | Observes target from rise to set |
@@ -34,7 +34,8 @@ This guide covers how to create, monitor, and manage observations in Asterism.
 
 ### Fixed-Time Observations
 
-- Must begin at specific time (e.g., exoplanet transit)
+- Begins at a specific start time (e.g., exoplanet transit)
+- The end time is optional — give one to pin an explicit window, or let Asterism size the window from your exposure plan
 - Protected buffer prevents scheduling conflicts
 - See [Exoplanet Transits](#exoplanet-transit-observations) below
 
@@ -176,8 +177,12 @@ When multiple observations are eligible, the scheduler runs the one with the hig
 |------------|-------------|---------------|
 | **Min Altitude** | Lowest altitude to observe | 30° |
 | **Max Airmass** | Maximum airmass | 2.0 |
-| **Moon Distance** | Minimum degrees from moon | 45° |
+| **Moon Distance** | Minimum separation from the Moon (required at full moon; eases as the Moon wanes) | 60° |
+| **Max Moon Illumination** | Skip the target while the Moon is up and illuminated above this percentage (100% = no limit) | 100% |
 | **Twilight** | Latest twilight type | Nautical |
+
+!!! note "How the Moon Distance constraint works"
+    **Moon Distance** is the separation required at **full moon**. Asterism uses a smooth (Lorentzian) falloff, so the required distance shrinks as the Moon wanes and disappears entirely when the Moon is down — it is not a flat cutoff applied at every phase. When no Moon Distance is set, the default is 60°. **Max Moon Illumination** is a separate ceiling on the Moon's illuminated fraction and only applies while the Moon is above the horizon.
 
 ### Fast Mover Designation
 

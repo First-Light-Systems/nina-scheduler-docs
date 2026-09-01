@@ -1,7 +1,7 @@
 # Scheduler Features
 
-**Document Version**: 1.3
-**Last Updated**: February 2026
+**Document Version**: 1.4
+**Last Updated**: September 2026
 
 > **What's New in v1.3** (February 2026):
 > - Fixed-time observation timing fixes (correct duration, end time, and start time handling)
@@ -56,18 +56,18 @@ Asterism supports five observation types:
 
 **Best for**: Events that must happen at specific times - exoplanet transits, occultations, asteroid lightcurves with known timing.
 
-- Must start and complete within a specific time window
-- Protected from interruption once started
-- Requires both start and end times
-- Duration is automatically calculated from the time window
-- `fixed_time_end` is the authoritative end time — the observation always stops at this time
+- Starts at a specific time and is protected from interruption once started
 - The scheduled start time is always respected, even when bypass_darkness is enabled for testing
+- You can define the window two ways:
+    - **Start time only** — give `fixed_time_start` and Asterism sizes the window for you. It estimates how long your exposures (plus any autofocus) will take, then sets the end automatically with a little headroom. Use this when you know when to begin but not exactly how long the work will run.
+    - **Start and end** — give both `fixed_time_start` and `fixed_time_end` to pin an explicit window (for example, a transit from 22:00–01:00 UTC). The observation never runs past `fixed_time_end`.
+- For a fixed number of exposures, `fixed_time_end` acts as a **deadline**: the observation stops as soon as the requested frames are captured and does not hold the telescope for the rest of the window. Continuous "fill the window" observations (used for transits) instead run to the end — and for those an end time is required.
 
 **Configuration**:
-- Set `fixed_time_start`: When the observation window opens
-- Set `fixed_time_end`: When the observation must complete
+- Set `fixed_time_start`: when the observation window opens (required)
+- Optionally set `fixed_time_end`: the latest the observation may run. If you omit it, Asterism derives it from your exposure plan.
 
-**Example**: Exoplanet transit from 22:00-01:00 UTC with 30-minute baselines before and after.
+**Example**: An exoplanet transit pinned to 22:00–01:00 UTC, or a 40-minute standard-star sequence given only a 21:30 UTC start (Asterism sizes the window).
 
 ---
 

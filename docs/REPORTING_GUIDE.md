@@ -1,188 +1,191 @@
 # Reporting and Analytics Guide
 
-**Document Version**: 1.1 | **Last Updated**: March 2026
+**Document Version**: 2.0 | **Last Updated**: September 2026
 
-This guide covers Asterism's reporting and analytics features, including usage dashboards, utilization reports, and target observation reports.
+This guide covers Asterism's reporting and analytics — the usage reports available to observatory and organization administrators, and the server-admin **Service Center**, which adds subscription, performance, and operational tooling on top of the same reports.
 
 ## Overview
 
-The reporting system provides insight into how your observatory time is being used. Reports are accessible from the **Reports** section of the web interface.
+Reporting answers "how is our telescope time and storage being used, and who is using it?" There are three places reports live, depending on your role:
 
-### Access Tiers
+- **My Usage** and the **Target Observation Report** — available to every user, for their own activity.
+- The **Reporting** menu (`/admin/billing/*`) — usage reports for the observatories, projects, and organizations you administer. Open to observatory admins, organization owners/admins, and server admins.
+- The **Service Center** (`/admin/service-center`) — a server-admin-only console that embeds the same usage reports and adds subscription management, system performance, and operational tools.
 
-Report access depends on your role:
+### Who can see what
 
-| Report | Who Can Access | Route |
-|--------|---------------|-------|
-| **My Usage** | All users | `/my-usage` |
+| Area | Who can access | Where |
+|------|----------------|-------|
+| **My Usage** | All users (own activity) | `/my-usage` |
 | **Target Observation Report** | All users | `/reports/targets` |
-| **Usage Dashboard** | Admins only | `/admin/billing/dashboard` |
-| **Usage Explorer** | Admins only | `/admin/billing/explorer` |
-| **User Usage Report** | Admins only | `/admin/billing/users` |
-| **Project Usage Report** | Admins only | `/admin/billing/projects` |
-| **Observatory Utilization Report** | Admins only | `/admin/billing/observatories` |
+| **Usage reports** (Usage Summary, Usage Explorer, User / Project / Observatory reports) | Observatory admins, organization owners/admins, and server admins | **Reporting** menu → `/admin/billing/*` |
+| **Service Center** (System Status, Subscriptions, Plugin Manager, Observatory Classification, Support Requests) | **Server administrators only** | `/admin/service-center` |
 
-Regular users can view their own usage via **My Usage** and access the **Target Observation Report**. The admin reports (Usage Dashboard, Usage Explorer, User/Project/Observatory reports) are restricted to observatory administrators and server administrators.
+!!! note "Scope follows your role"
+    Non-server-admins see the usage reports scoped to what they administer (their observatories, organizations, and projects). Server administrators see everything, and can reach the same usage reports either from the Reporting menu or embedded inside the Service Center.
 
 ---
 
-## Usage Dashboard
+## Usage Reports
 
-The **Usage Dashboard** provides a high-level summary of activity through a set of summary cards.
+These reports are reached from the **Reporting** menu. Server administrators can also open them inside the Service Center under **System Status → Usage** (see below).
 
-### Summary Cards
+### Usage Summary
 
-The dashboard displays four summary cards:
+The **Usage Summary** (formerly "Usage Dashboard") is a high-level overview built from summary cards and ranking lists.
 
-- **Total Observations** — count of observations in the selected period, with success rate shown as a subtitle
-- **Active Users** — number of users with activity in the period, with project count shown as a subtitle
-- **Telescope Time** — cumulative telescope time, with shutter-open time shown as a subtitle
-- **Data Stored** — total size of captured FITS files, with file count shown as a subtitle
+**Summary cards:**
 
-### Date Range
+- **Total Observations** — count of observations in the selected period, with success rate as a subtitle
+- **Active Users** — users with activity in the period, with project count as a subtitle
+- **Shutter Open** — cumulative shutter-open (imaging) hours, with the wall-clock "On-Sky" hours as a subtitle
+- **Data Stored** — total size of captured FITS files, with file count as a subtitle
 
-Use the date range selector to view different time periods:
+Below the cards, the page ranks the **top users, projects, and organizations by telescope time**, and lists per-observatory utilization.
 
-| Preset | Period |
-|--------|--------|
-| **Last 7 days** | One-week window |
-| **Last 30 days** | Default view |
-| **Last 90 days** | Quarterly view |
-| **Last year** | 365-day window |
+**Date range presets:** Last 7 days, Last 30 days (default), Last 90 days, Last year.
 
----
+### User Usage Report
 
-## User Usage Report
-
-The **User Usage Report** shows activity broken down by individual user. This report is available to observatory administrators and server administrators.
-
-### Metrics Per User
+Activity broken down by individual user.
 
 | Metric | Description |
 |--------|-------------|
-| **Observations** | Total number of observations submitted |
-| **Success Rate** | Percentage of observations completed vs total attempted |
-| **Wall-Clock Hours** | Total elapsed time from first exposure to last, including overheads |
-| **Shutter-Open Hours** | Actual cumulative exposure time (sensor collecting light) |
-| **Data Volume** | Total size of FITS files generated |
-
-!!! note "Efficiency column"
-    The **Efficiency** column appears only on the **Observatory Utilization Report**, not on the User or Project reports.
-
-!!! tip "Understanding Efficiency"
-    An efficiency of 70% means that 70% of the telescope's time was spent collecting photons. The remaining 30% is overhead: slewing, autofocus, filter changes, dithering settle time, file downloads, and plate solving. Typical values range from 50–80% depending on exposure length and autofocus frequency.
-
-### Filtering
-
-Filter the report by **date range** to select the period to analyze.
-
----
-
-## Project Usage Report
-
-The **Project Usage Report** aggregates the same metrics as the User Usage Report, but grouped by project instead of by user.
-
-This is useful for:
-
-- Tracking time allocation across research programs
-- Comparing progress between projects
-- Identifying projects that are consuming more or fewer resources than expected
-
-### Metrics Per Project
-
-| Metric | Description |
-|--------|-------------|
-| **Observations** | Total observations in the project |
-| **Success Rate** | Completion percentage |
-| **Wall-Clock Hours** | Total elapsed time |
-| **Shutter-Open Hours** | Actual exposure time |
+| **Total Observations** | Observations submitted |
+| **Success Rate** | Completed vs total attempted |
+| **Total Telescope Time** | Cumulative wall-clock hours |
+| **Wall Clock Time** | Elapsed time from first exposure to last, including overheads |
+| **Shutter Open Time** | Cumulative exposure time (sensor collecting light) |
 | **Data Volume** | Total FITS data generated |
 
----
+Filter by **date range**. Download the table with **Export CSV**.
 
-## Observatory Utilization Report
+### Project Usage Report
 
-The **Observatory Utilization Report** shows how observatory time is being used. Available to observatory administrators and server administrators.
+The same metrics as the User Usage Report, grouped by **project** instead of user. Useful for tracking time allocation across research programs, comparing progress between projects, and spotting projects consuming more or fewer resources than expected. Filter by date range; **Export CSV**.
 
-### Metrics Per Observatory
+### Observatory Utilization
+
+How each observatory's time is being used.
 
 | Metric | Description |
 |--------|-------------|
 | **Total Observations** | Observations executed at this observatory |
 | **Success Rate** | Completion percentage |
-| **Wall-Clock Hours** | Total time the observatory spent on observations |
-| **Shutter-Open Hours** | Actual exposure time |
-| **Efficiency** | Imaging efficiency percentage |
+| **Total Telescope Time** | Cumulative wall-clock hours |
+| **Wall Clock Time** | Time the observatory spent on observations |
+| **Shutter Open Time** | Actual exposure time |
+| **Efficiency** | Shutter-open ÷ wall-clock, as a percentage |
 | **Data Volume** | Total data captured |
 
-This report helps administrators identify underutilized observatories, plan capacity, and compare performance across sites.
+The **Efficiency** column appears only on this report (not on the User or Project reports). Use it to find underutilized sites, plan capacity, and compare performance across observatories. **Export CSV**.
+
+### Usage Explorer
+
+While the reports above show aggregated metrics, the **Usage Explorer** shows individual observation events for a chosen window — useful for investigating a specific incident or reviewing a particular night.
+
+**Event type filter:**
+
+| Option | Shows |
+|--------|-------|
+| **Final Events** | Default — terminal events (completed, failed, rejected, terminated) across observations |
+| **All Events** | Every event in the observation lifecycle |
+| **Assigned** | Observation assigned to an observatory |
+| **Completed** | Observation finished successfully |
+| **Failed** | Observation encountered an error |
+| **Rejected** | Observation rejected by the observatory |
+| **Terminated** | Observation terminated (safety stop or manual cancel) |
+
+Pick a **date range**, optionally filter by **event type**, then click any event to open the full observation. Usage events record **per-file detail** (file name, filter, exposure index, size), so the **Data Volume** figures track storage precisely as files move — including subtracting a server-side copy when it is removed after a successful [external-storage](EXTERNAL_STORAGE.md) transfer. This per-file detail is included in CSV exports.
 
 ---
 
-## Usage Explorer
+## Service Center (server administrators)
 
-The **Usage Explorer** provides event-level drill-down into individual observation activity. While the other reports show aggregated metrics, the Usage Explorer shows each event.
+The **Service Center** (`/admin/service-center`) is restricted to server administrators. It has five tabs: **Support Requests**, **System Status**, **Plugin Manager**, **Subscriptions**, and **Observatory Classification**.
 
-### Event Type Filter
+### System Status
 
-The event type dropdown controls which events are shown:
+Four sub-tabs; **Performance** opens by default (the Usage sub-tab runs heavier queries, so it isn't loaded until you select it).
 
-| Option | Description |
-|--------|-------------|
-| **Final Events** | Default — shows terminal-type events (completed, failed, rejected, and terminated) across observations. This is a multi-type filter, not a single deduplicated event per observation. |
-| **All Events** | Every event in the observation lifecycle |
-| **Assigned** | Observation was assigned to an observatory |
-| **Completed** | Observation finished successfully |
-| **Failed** | Observation encountered an error |
-| **Rejected** | Observation was rejected by the observatory |
-| **Terminated** | Observation was terminated (e.g., safety stop or manual cancel) |
+#### Performance
 
-### Using the Explorer
+A live server-performance dashboard: request-timing summary cards (total requests, success rate, average and maximum response time), container CPU and memory charts, WebSocket message throughput per observatory, top endpoints by volume, top pages by views, and a table of live observatory WebSocket connections (plugin version, capabilities, connected duration, last activity). Window presets 1h / 6h / 24h / 7d plus a custom range; click a CPU point to drill into the API calls around that moment.
 
-1. Select a **date range** to define the window
-2. Optionally filter by **event type** using the dropdown
-3. Browse the event list chronologically
-4. Click any event to view the full observation details
+!!! note "Some panels need server flags"
+    Several Performance panels (request-timing, container stats, WebSocket sampling, page-view tracking) only populate when the matching server sampler is enabled. When one is off, the panel shows a short "how to enable" hint instead of data. The live observatory-connection table is always shown.
 
-The Usage Explorer is particularly useful for investigating specific incidents or reviewing what happened on a particular night.
+#### WebSocket Log
 
-### Per-Image Data Accounting
+Per-frame metadata for observatory WebSocket traffic — message type, direction, and byte counts, with **no message bodies**. Includes a per-observatory message summary and a recent-frames tail with filters (window, observatory, message type, direction). Requires the WebSocket-envelope log to be enabled on the server.
 
-Usage events now record **per-file detail** (file name, filter, exposure index, and file size) rather than only per-observation totals. This makes the **Data Volume** / **Data Stored** figures track storage precisely as files move:
+#### Usage
 
-- When a file is transferred to [external storage](EXTERNAL_STORAGE.md), the transfer is recorded with its provider, destination, and size.
-- When a server-side copy is removed after a successful external transfer, its size is subtracted from the running data total.
+The same usage reports described above, presented as a master–detail view. The left column shows summary stat cards; clicking one opens the matching report on the right:
 
-The result is that data-volume metrics reflect what is actually stored on the server at any time. This detail is also available in CSV exports for downstream per-image analysis.
+| Card | Opens |
+|------|-------|
+| **Total Observatories** | Observatory Utilization |
+| **Total Projects** | Project Usage Report |
+| **Total Organizations** | Organization Usage Report |
+| **Total Users** | User Usage Report |
+| **Total Observations** | Calibration (master-frame health) and Plate Solve panel |
+| **Total File Storage** | Storage by Organization (click an organization to drill into per-user storage) |
+
+The default panel is the **Usage Summary**. The **Organization Usage Report** and **Storage by Organization** views are only available here (they have no standalone Reporting-menu page).
+
+#### External Transfers
+
+A live view of the [external-storage](EXTERNAL_STORAGE.md) transfer queue drained by the dedicated transfer worker: queue status (running/suspended, worker mode, concurrency), Bull job counts, and a table of transfers (file, size, project, observatory, requester, status, provider, attempts). Click a row for its detail and last error. Admin controls include **Suspend/Resume** the queue, **Reap Stuck** transfers, **Delete Pending** (with a reason), and an **Errors** log. This is an operational tool rather than a report — it has no export.
+
+### Subscriptions
+
+Manage the membership **tiers** that grant each user, observatory, and organization its entitlements (limits on users, projects, observatories, sub-organizations, storage, observing hours, allowed observation types, and more). Six sub-tabs:
+
+- **Users / Observatories / Organizations** — tables joining each subject to its tier. Assign a tier inline from the row dropdown. **Inherited** tiers are shown as "— inherited —" with a tooltip naming the source (a user inherits from its org or observatory; an org-owned observatory from its owner organization; a sub-organization from its nearest subscribed ancestor). A **Custom** chip marks subjects that carry per-subject overrides. Click a row to open the **limit editor**, which edits per-subject entitlement overrides (leave a field blank to use the plan default) and shows the **history** of prior actions (assigned, tier changed, limits changed, revoked, reinstated).
+- **Attribution** — "how each entity gets its subscription." View by **tier** (count per tier, expand to see its entities) or **by entity** (effective tier plus **Direct vs Inherited** and the full hierarchy path). Click an entity to see **Limit vs Actual** for every entitlement, with over-limit values highlighted. **Export to Excel** (CSV).
+- **Usage Billing** — every tier, grouped into **Individuals / Observatories / Organizations / Sponsored**. Select holders (individually, per tier, per group, or all) and download their usage-vs-limits reports as **CSV or JSON** (selected or all).
+- **Audit Usage** — every holder's limits versus actuals, with a per-metric verdict of **OK / NEAR / OVER**. Summary chips count holders, measured limits, and over-/near-limit cases; an "Exceptions only" toggle narrows the table. Download as **CSV or JSON**, or **Email Report** to send the fresh audit to recipients (optionally exceptions-only).
+
+### Plugin Manager
+
+Publish and manage NINA plugin releases: the release list (version, minimum NINA version, status), uploading a new release with Markdown release notes, setting the minimum required plugin version, and hiding or deleting releases. See [Plugin Setup](PLUGIN_SETUP.md) for the client side of plugin updates.
+
+### Observatory Classification
+
+Score a physical observatory — sensor grade, aperture, site quality (Bortle/SQM/seeing/clear-night fraction), and infrastructure (backup power, store-and-forward, bandwidth, certification) — and Asterism computes a virtual **Class (A / B / C)** that gates which subscription tiers may book that observatory.
+
+### Support Requests
+
+The default Service Center tab: triage of user support tickets — a filterable list, a detail view, and the ability to reply and set a ticket's status. Not a report.
 
 ---
 
 ## Key Metrics Explained
 
+### Telescope Time (wall-clock)
+
+"Telescope Time" is the cumulative **wall-clock** time an observatory, user, or project spent executing observations — total elapsed time, including overheads. It is the value behind the "Total Telescope Time" figures and the "Top … by Telescope Time" rankings.
+
 ### Wall-Clock Time vs Shutter-Open Time
 
-These two time metrics capture different aspects of telescope usage:
+These capture different things:
 
-- **Wall-clock time** is the total elapsed time from when an observation starts executing to when it finishes. This includes all overheads: slewing, plate solving, autofocus, filter changes, dithering, file downloads, and guiding settle time.
-
-- **Shutter-open time** is the cumulative time the camera shutter was actually open collecting photons. For an observation with 10 x 300-second exposures, the shutter-open time is 3000 seconds (50 minutes), but the wall-clock time might be 70 minutes including overheads.
+- **Wall-clock time** is the total elapsed time from when an observation starts executing to when it finishes, including all overheads: slewing, plate solving, autofocus, filter changes, dithering, file downloads, and guiding settle time.
+- **Shutter-open time** is the cumulative time the camera was actually collecting photons. For 10 × 300-second exposures the shutter-open time is 3000 seconds (50 minutes), while the wall-clock time might be 70 minutes including overheads.
 
 ### Efficiency
 
-Efficiency is calculated as:
-
 ```
-Efficiency = (Shutter-Open Time / Wall-Clock Time) x 100%
+Efficiency = (Shutter-Open Time / Wall-Clock Time) × 100%
 ```
 
-Higher efficiency means more of the telescope's time is spent imaging. Factors that reduce efficiency include frequent autofocus runs, many filter changes, short exposures (more overhead per frame), and dithering.
+Higher efficiency means more of the telescope's time was spent imaging. Factors that reduce it: frequent autofocus runs, many filter changes, short exposures (more overhead per frame), and dithering. Typical values range from 50–80%. Efficiency appears on the **Observatory Utilization** report.
 
 ### Success Rate
 
-Success rate is calculated as:
-
 ```
-Success Rate = (Completed Observations / Total Attempted Observations) x 100%
+Success Rate = (Completed Observations / Total Attempted Observations) × 100%
 ```
 
 Attempted observations include completed, failed, and aborted observations. Pending or queued observations that haven't started execution are not counted.
@@ -191,14 +194,22 @@ Attempted observations include completed, failed, and aborted observations. Pend
 
 ## Exporting Reports
 
-Most reports support **CSV export** for offline analysis or record-keeping. Click the **Export** button at the top of the report to download a CSV file suitable for spreadsheets and data analysis.
+| Report | Export |
+|--------|--------|
+| **User / Project / Observatory Usage** | CSV (**Export CSV** button) |
+| **Usage Explorer** | CSV (includes per-file detail) |
+| **Subscriptions → Attribution** | Excel (CSV) — **Export to Excel** |
+| **Subscriptions → Usage Billing** | CSV or JSON (selected or all holders) |
+| **Subscriptions → Audit Usage** | CSV or JSON, plus **Email Report** |
+| **Target Observation Report** | PDF — opens a print-ready HTML report in a new tab; use the browser's print dialog to save as PDF |
 
-The **Target Observation Report** additionally provides a **PDF** button. This does not produce a server-generated PDF file — it opens a formatted, print-ready HTML report in a new browser tab, where you can use your browser's print dialog to save it as a PDF or send it to a printer.
+The **Usage Summary**, **Performance**, and **External Transfers** views are on-screen only and have no export.
 
 ---
 
 ## Related Documentation
 
 - **[Creating Observations](CREATING_OBSERVATIONS.md)** — Submit observations that appear in reports
+- **[External Storage](EXTERNAL_STORAGE.md)** — The transfers surfaced under System Status → External Transfers
 - **[Organizations](ORGANIZATIONS.md)** — Manage organizations referenced in reports
 - **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** — Configure observatories that generate utilization data

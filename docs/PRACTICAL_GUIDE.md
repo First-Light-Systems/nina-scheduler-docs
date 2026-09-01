@@ -1,6 +1,6 @@
 # Asterism - Practical User Guide
 
-**Document Version**: 2.5 | **Last Updated**: March 2026
+**Document Version**: 2.6 | **Last Updated**: September 2026
 
 > **What's New in v2.4** (February 2026):
 > - Observatory selection is now remembered across all pages — select once, and it's pre-selected everywhere
@@ -217,8 +217,8 @@ Asterism supports five observation types. The three most commonly used are descr
 **Best for**: Exoplanet transits, occultations, time-critical events
 
 **Characteristics**:
-- Hard start and end times (must observe during specific window)
-- Continuous exposures until end time
+- Pinned start time; the end time is optional — pin an explicit window, or let Asterism size it from your exposure plan
+- For a fixed exposure count, the end time is a deadline (stops when the frames are captured); transit-style "fill the window" observations run continuously until the end time
 - Cannot be interrupted or suspended
 - Highest scheduling priority
 - Skip the setup buffer — their baseline times before/after the event already account for slewing/centering/focusing
@@ -658,8 +658,8 @@ Asterism Container
 #### "Cannot create observation - validation error"
 
 **Common errors**:
-- "Fixed-time observations require both fixed_time_start and fixed_time_end"
-    - Ensure both start and end times are set
+- "Fixed-time observations require a start time"
+    - Ensure a `fixed_time_start` is set. An end time is optional (Asterism sizes the window from your exposure plan) — except for continuous "fill the window" observations, which do require an end time.
 - "Exposure count must be at least 1"
     - Check that exposure count calculated properly
     - Verify exposure time and duration are reasonable

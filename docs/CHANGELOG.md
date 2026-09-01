@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.22] - 2026-09-01
+
+### Fixed
+
+- **External Storage** — corrected the provider list and several stale facts:
+    - Added the two newer providers, **AWS S3** and **SFTP / SCP** (your own server), to the overview table, prerequisites, and setup steps — the guide previously listed only Dropbox, Google Drive, and Google Cloud Storage.
+    - **`$PROJECT` template variable** now correctly documented as the project **code** (short, path-stable identifier), not the display name; example paths updated accordingly.
+    - **Retry & retention** — transfers run on a dedicated transfer worker; retries use a fixed 5/10/20-minute backoff (not "exponential"), provider rate limits (HTTP 429 / Retry-After) are handled separately, and terminal transfer records are retained **7 days** (was incorrectly stated as 90).
+- **Fixed-Time observations** (Scheduler Features, Creating Observations, Practical Guide) — a fixed-time observation can now be created with a **start time only**; Asterism sizes the window from the exposure estimate. An end time is optional (required only for continuous "fill the window" observations) and, for count-based observations, acts as a deadline. Corrected the "requires both start and end times" statements and the related validation-error note.
+- **Moon constraints** (Creating Observations, Target Library) — default Moon separation is now **60°** (was 45°), documented as the full-moon peak of a smooth (Lorentzian) falloff rather than a flat cutoff; added the enforced **Max Moon Illumination** ceiling (applies only while the Moon is up).
+
+### Changed
+
+- **Reporting and Analytics Guide rewritten (v2.0)** to match the current admin UI. The old `/admin/billing/*`-only structure is replaced with an accurate three-tier picture: per-user **My Usage**, the role-scoped **Reporting** menu (usage reports for observatory/org admins), and the server-admin-only **Service Center**. Added the Service Center's five tabs — **System Status** (Performance / WebSocket Log / Usage / External Transfers), **Subscriptions** (Users/Observatories/Organizations/Attribution/Usage Billing/Audit Usage), **Plugin Manager**, **Observatory Classification**, **Support Requests**. Renamed "Usage Dashboard" → **Usage Summary**, corrected the summary cards (the third card is **Shutter Open**, with wall-clock "On-Sky" hours as its subtitle), and expanded the export list (CSV/JSON, Excel, Email Report). Retained the still-accurate Telescope Time / wall-clock vs shutter-open / efficiency / success-rate definitions.
+- **Version badges** updated to **Server v4.8.0 / User GUI v4.1.0 / Plugin v4.0.11.0** on the home page, Plugin Setup, and Topic Index.
+
+---
+
 ## [2.21] - 2026-06-24
 
 ### Changed
