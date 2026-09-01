@@ -303,6 +303,15 @@ The Operations state is useful during weather holds or equipment issues when you
 
 Dispatching changes take effect immediately and the status is visible to all users viewing the observatory.
 
+## Schedule Workspace (Target Planning)
+
+The operator **Schedule** view is a target-planning workspace that shows the search tools side by side — **Exoplanet Transit Predictions**, **Deep Sky Predictions**, **Target Library**, and **Name Resolver** — each with its own criteria form and an explicit **Search** button, feeding a shared timeline below.
+
+- Any tool can be **popped out into its own browser tab**; the pop-out inherits your current filters, and selections you make in it **sync back** to the timeline in the main tab in real time.
+- On the Deep Sky and Target Library tools you can choose the **Project** new observations are filed under and open a **Telescope Configuration** dialog (aperture, focal length, pixel size, exposure limits, filter, binning) that is remembered per observatory.
+
+It is available to any signed-in user with access to the observatory (typically the observatory's operators).
+
 ## Pipeline Performance Stats
 
 The observatory operations view includes a **Performance Stats** panel that breaks the observation-to-archive pipeline into its component stages, so you can see where time is spent and spot bottlenecks (a slow uplink, a backed-up processing queue, long slews). Metrics are averaged over a selectable window (**7 / 30 / 90 days**) and refresh as observations complete.
