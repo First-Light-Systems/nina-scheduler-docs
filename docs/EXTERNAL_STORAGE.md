@@ -1,8 +1,8 @@
 # External Storage Guide
 
-**Document Version**: 1.0 | **Last Updated**: February 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
-> **New in v3.5.0**: Automatically copy your FITS files to cloud storage providers after observations complete. Supports Dropbox, Google Drive, and Google Cloud Storage.
+> Automatically copy your FITS files to external storage after observations complete. Supported destinations: **Dropbox**, **Google Drive**, **Google Cloud Storage**, **AWS S3**, and **SFTP / SCP** (your own server).
 
 This guide covers how to set up external storage destinations, attach them to observations, and monitor file transfers.
 
@@ -17,6 +17,8 @@ By default, captured FITS files are stored on the Asterism server (in MinIO obje
 | **Dropbox** | OAuth2 (App Key + Secret) | Personal and team file sharing |
 | **Google Drive** | OAuth2 (Client ID + Secret) | Google Workspace users, easy sharing |
 | **Google Cloud Storage** | Service Account JSON | Institutional archives, large datasets |
+| **AWS S3** | Access Key ID + Secret Access Key | S3 buckets and S3-compatible object stores |
+| **SFTP / SCP** | Asterism's SSH public key (key-based) | Your own server or institutional storage |
 
 **Key features:**
 
@@ -24,7 +26,7 @@ By default, captured FITS files are stored on the Asterism server (in MinIO obje
 - Multiple destinations per observation (e.g., copy to both Dropbox and Google Drive)
 - Configurable folder organization using a freeform path template with $USER, $PROJECT, and $TARGET variables
 - Optional server cleanup after successful transfer
-- Automatic retry with exponential backoff on failure
+- Automatic retry on failure, with provider rate-limit (HTTP 429 / Retry-After) handling
 - Configurations can be shared across an organization or project
 
 ## Storage Configuration Scopes
@@ -75,6 +77,20 @@ Before creating a storage configuration, you need credentials from your cloud pr
 5. Create a JSON key for the service account
 6. Note the **Bucket Name** and keep the **Service Account JSON** file
 
+#### AWS S3
+
+1. In the AWS console, create (or choose) an **S3 bucket** and note its **Region**
+2. Create an IAM user (or role) with write access to that bucket (e.g., `s3:PutObject`, `s3:ListBucket`)
+3. Create an **access key** for that identity — note the **Access Key ID** and **Secret Access Key**
+
+#### SFTP / SCP
+
+For copying to your own SSH/SFTP server. Asterism authenticates with **its own SSH key** — you never enter or upload a password or private key.
+
+1. Make sure you have an account on the SSH server and a directory you can write to
+2. Note the **Host**, **Port** (usually 22), and **Username**
+3. During setup, Asterism shows you a **public key** — add it to that user's `~/.ssh/authorized_keys` file on your server so Asterism can connect
+
 ### Creating a Configuration
 
 1. Navigate to the external storage settings:
@@ -86,7 +102,7 @@ Before creating a storage configuration, you need credentials from your cloud pr
 
 #### Step 1: Choose Provider
 
-Select **Dropbox**, **Google Drive**, or **Google Cloud Storage**. The provider cannot be changed after creation.
+Select **Dropbox**, **Google Drive**, **Google Cloud Storage**, **AWS S3**, or **SFTP / SCP (your own server)**. The provider cannot be changed after creation.
 
 #### Step 2: Authorize Access
 
@@ -106,6 +122,16 @@ Select **Dropbox**, **Google Drive**, or **Google Cloud Storage**. The provider 
 1. Enter the **Bucket Name**
 2. Paste the **Service Account JSON** into the text field
 
+**For AWS S3:**
+
+1. Enter the **Bucket Name**, **Region**, **Access Key ID**, and **Secret Access Key**
+
+**For SFTP / SCP:**
+
+1. Enter the **Host**, **Port**, and **Username** of your server
+2. Copy the **SSH public key** shown in the dialog into `~/.ssh/authorized_keys` for that user on your server
+3. Click **Test Connection** — on the first successful connection Asterism records (pins) the server's host-key fingerprint. If the server's key later changes, connections are refused until you re-confirm it (a protection against connecting to an impostor server).
+
 #### Step 3: Configure Destination
 
 | Field | Description | Example |
@@ -123,16 +149,19 @@ The **Storage Path Template** field is a freeform text field that defines how fi
 | Variable | Expands To |
 |----------|-----------|
 | `$USER` | The username of the observation owner |
-| `$PROJECT` | The project name |
+| `$PROJECT` | The project's **code** (the short, stable project identifier — not the display name) |
 | `$TARGET` | The target name |
 
-**Example templates and resulting paths:**
+!!! note "`$PROJECT` uses the project code"
+    `$PROJECT` substitutes the project's **code** (e.g. `GAL-SRV`), not its longer display name. The code is short and path-friendly, so folder names stay stable even if the project is renamed.
+
+**Example templates and resulting paths** (for a project whose code is `GAL-SRV`):
 
 | Template | Example Result |
 |----------|---------------|
 | `$TARGET` | `/fits-data/M31/image_001.fits` |
-| `$PROJECT/$TARGET` | `/fits-data/Galaxy_Survey/M31/image_001.fits` |
-| `$USER/$PROJECT/$TARGET` | `/fits-data/jsmith/Galaxy_Survey/M31/image_001.fits` |
+| `$PROJECT/$TARGET` | `/fits-data/GAL-SRV/M31/image_001.fits` |
+| `$USER/$PROJECT/$TARGET` | `/fits-data/jsmith/GAL-SRV/M31/image_001.fits` |
 | *(empty — no template)* | `/fits-data/image_001.fits` |
 
 !!! tip "Recommendation"
@@ -187,7 +216,7 @@ Storage configurations are grouped by scope:
 Check the box next to each destination where you want files copied. You can select multiple destinations — files will be copied to all selected locations.
 
 Each destination shows:
-- Display name and provider (Dropbox, Google Drive, or GCS)
+- Display name and provider (Dropbox, Google Drive, GCS, AWS S3, or SFTP/SCP)
 - Scope badge (Personal, Org, or Project)
 - Root path
 - Warning flag if "delete from server" is enabled
@@ -204,11 +233,11 @@ A researcher working on a galaxy imaging project:
     - Display name: "My Dropbox"
     - Root path: `/fits-data`
     - Storage path template: `$PROJECT/$TARGET`
-3. When creating an observation for M31:
+3. When creating an observation for M31 (in a project whose code is `GAL-PROJ`):
     - Checks both "Research Group Archive" and "My Dropbox"
     - After the observation completes, FITS files are automatically copied to:
         - Google Drive: `/Astronomy/2026-Spring/M31/image_001.fits`
-        - Dropbox: `/fits-data/Galaxy_Project/M31/image_001.fits`
+        - Dropbox: `/fits-data/GAL-PROJ/M31/image_001.fits` (`$PROJECT` = the project code)
 
 ### Example: Educational Institution
 
@@ -220,16 +249,16 @@ A university astronomy department:
     - Storage path template: `$PROJECT/$TARGET`
     - Delete from server: enabled (to manage server storage)
 2. **Students** select this destination when submitting observations
-3. After observations complete, files appear organized in GCS:
+3. After observations complete, files appear organized in GCS (the folder under the root is the project **code** — here `ASTRO-101` and `ADV-IMG`):
    ```
    /student-observations/
-     Intro_Astro_101/
+     ASTRO-101/
        M42/
          image_001.fits
          image_002.fits
        Jupiter/
          image_001.fits
-     Advanced_Imaging/
+     ADV-IMG/
        NGC_7000/
          image_001.fits
    ```
@@ -252,14 +281,17 @@ After an observation completes, the observation detail page shows the transfer s
 
 ### Automatic Retries
 
-If a transfer fails (network error, provider timeout, etc.), the system automatically retries with exponential backoff:
+If a transfer fails (network error, provider timeout, etc.), the system automatically retries on a fixed backoff schedule:
 
 | Attempt | Retry After |
 |---------|-------------|
 | 1st failure | 5 minutes |
 | 2nd failure | 10 minutes |
 | 3rd failure | 20 minutes |
-| 4th failure | Marked as permanently failed |
+| After the last retry | Marked as permanently failed |
+
+!!! note "Rate limiting is handled separately"
+    If a provider rate-limits Asterism (HTTP 429), that attempt is **not** counted against the retries above. Asterism waits for the provider's `Retry-After` interval (or the fixed schedule if none is given) and keeps trying, up to a separate, larger throttle limit — so a busy provider doesn't burn your normal retry budget.
 
 ### Manual Retry
 
@@ -326,8 +358,8 @@ When you resubmit a completed or failed observation, the external storage destin
 
 **Possible causes**:
 
-1. **Server busy** — The retry scheduler runs every 10 minutes. Wait for the next cycle.
-2. **Configuration disabled** — Check if the storage configuration was disabled after the observation was submitted.
+1. **Server busy** — Transfers run on a dedicated transfer worker; failed ones are re-queued by a maintenance sweep that runs about every 10 minutes. Wait for the next cycle.
+2. **Configuration disabled or paused** — Check whether the storage configuration was disabled or paused after the observation was submitted (paused configs hold their pending transfers until resumed).
 3. **Server restart** — In-flight transfers are re-queued automatically on server startup.
 
 ### Files Not Appearing in Cloud Storage
@@ -389,7 +421,7 @@ Observation Completes
 
 ### Transfer Retention
 
-Completed transfer records are automatically cleaned up after 90 days. Failed transfer records are retained for troubleshooting until manually retried or cleaned up.
+Terminal transfer records — **completed, failed, and cancelled** — are automatically cleaned up after **7 days**. Retry or inspect a failed transfer within that window if you need it.
 
 ---
 

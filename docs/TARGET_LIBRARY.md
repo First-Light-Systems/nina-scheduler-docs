@@ -1,6 +1,6 @@
 # Target Library
 
-**Document Version**: 1.1 | **Last Updated**: February 2026
+**Document Version**: 1.2 | **Last Updated**: September 2026
 
 > **What's New in v1.1** (February 2026):
 > - Observation type and timing fields for templates (Time-Based, Rise to Set)
@@ -49,7 +49,8 @@ Each target can store default observing constraints:
 |------------|---------|-------------|
 | **Min Altitude** | 30° | Lowest altitude the target should be observed |
 | **Max Airmass** | 2.0 | Maximum acceptable airmass |
-| **Moon Separation** | 45° | Minimum angular distance from the Moon |
+| **Moon Separation** | 60° | Separation required at full moon; eases as the Moon wanes, and does not apply when the Moon is down |
+| **Max Moon Illumination** | 100% | Skip while the Moon is up and illuminated above this percentage (100% = no limit) |
 | **Twilight Type** | Nautical | Latest twilight type (civil, nautical, astronomical) |
 
 ### Visibility and Sharing
