@@ -1,6 +1,6 @@
 # Collaboration Guide
 
-**Document Version**: 1.0 | **Last Updated**: June 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
 Asterism is built for teams. You can share an observation program with individual collaborators, hand an entire department access to an observatory, or work alongside people who belong to a completely different organization. This guide explains the practical ways to collaborate and how to choose the right one.
 
@@ -88,19 +88,23 @@ Inherited permissions are **capped by the grant you give the organization**. If 
 
 This is configured from the observatory's member management. See **[Organizations — Organization as Observatory Member](ORGANIZATIONS.md#organization-as-observatory-member)** for the permission model and **[Observatory Administration — Organization Members](OBSERVATORY_ADMINISTRATION.md#organization-members)** for step-by-step instructions.
 
+The same idea applies to a **project**: from a project's Members page you can **Add Organization** to share that project with an entire organization at once, each member capped by the permissions you grant. See **[Organizations — Organization as a Project Member](ORGANIZATIONS.md#organization-as-a-project-member)**.
+
 ### 3. Transfer ownership to a shared organization (broadest)
 
 When a project or observatory should be owned and governed by a group going forward — for example, when a personal program becomes an institutional one — transfer its ownership to an organization. All of that organization's members then gain access according to their organization roles. Project ownership transfer is described in the **[Projects Guide](PROJECTS_GUIDE.md#ownership-transfer)**.
 
 ### A note on nested organizations
 
-Organizations can themselves be **members of other organizations**. When organization B is a member of organization A, B's members are counted and resolved as members of A, so access granted to A flows through to them. This lets a large institution model departments, teams, or partner groups as sub-organizations while managing access at the top level. Access resolution and member counts follow these nested relationships automatically.
+Organizations can themselves be **members of other organizations**. When organization B is a member of organization A, B's members are counted and resolved as members of A, so access granted to A flows through to them. This lets a large institution model departments, teams, or partner groups as sub-organizations while managing access at the top level. Access resolution and member counts follow these nested relationships automatically. To build such a hierarchy — nesting an organization under a parent, optionally handing ownership to the parent — see **[Organizations — Nesting Organizations](ORGANIZATIONS.md#nesting-organizations)**.
 
 ---
 
 ## How access combines
 
 A single person may have access to the same project or observatory through more than one path — for example, as a direct project member *and* as a member of an organization that owns the project. When paths overlap, the user receives the **most permissive** access any path grants, always subject to the organization edge-cap described above. Removing one path (for example, removing a direct membership) does not remove access that another path still provides.
+
+Access also flows **downward through organization ownership**: a member's effective privileges in an organization extend into every sub-organization that org owns, recursively along an owned chain — so sub-organization members inherit access without being added individually. (Ownership itself is never inherited this way.)
 
 ---
 

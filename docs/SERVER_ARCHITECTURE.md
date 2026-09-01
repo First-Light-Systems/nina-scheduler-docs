@@ -1,6 +1,6 @@
 # Server Architecture
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
 ## Overview
 
@@ -67,8 +67,8 @@ The core application server that implements all business logic:
 - Manages the observation queue, scheduling decisions, and state machine
 - Handles user authentication (JWT) and API key validation
 - Coordinates with the Python scheduler for constraint evaluation
-- Processes FITS file uploads and triggers the processing pipeline
-- Manages external storage transfers (Dropbox, Google Drive, Google Cloud Storage)
+- Receives FITS file uploads and enqueues them for processing (a dedicated pipeline worker performs the actual image processing)
+- Enqueues external-storage transfers, which a dedicated transfer worker executes (Dropbox, Google Drive, Google Cloud Storage, AWS S3, and SFTP/SCP)
 - Sends email and Pushover notifications
 
 ### Web GUI (React)
@@ -117,6 +117,14 @@ A dedicated container for computationally intensive image processing, called by 
 - **Calibration application**: Dark subtraction, flat correction, and bias removal using matched master frames
 - Runs independently of the API server so heavy processing does not affect API responsiveness
 
+### Pipeline Worker
+
+A dedicated container (`nina-pipeline-worker`) that is the sole consumer of the image-processing job queue. It pulls uploaded frames from MinIO, drives the FITS Processor (plate solving, quality analysis, previews, calibration), writes results back, and sends processing-complete emails — leaving the API server as a producer only. It is stateless and horizontally scalable, and reports health via a heartbeat file rather than an HTTP port.
+
+### Transfer Worker
+
+A dedicated container (`nina-transfer-worker`) that executes external-storage transfers off the API server — streaming files to the configured provider, applying retries and rate-limit handling, and reaping stale transfers. Like the pipeline worker, it is stateless, horizontally scalable, and heartbeat-monitored.
+
 ### Python Scheduler (Constraint Engine)
 
 A Python-based astronomical constraint solver that makes scheduling decisions:
@@ -134,8 +142,8 @@ A Python-based astronomical constraint solver that makes scheduling decisions:
 1. **User creates observation** → API server validates and stores in MongoDB
 2. **Observatory requests work** → API server asks Python scheduler to evaluate constraints → best observation assigned
 3. **Plugin captures images** → FITS files uploaded to API server → stored in MinIO
-4. **Processing triggered** → Job queued in Redis → FITS processor runs plate solving, quality analysis, preview generation
-5. **External storage** (if configured) → Transfer job queued → files copied to cloud provider
+4. **Processing triggered** → job queued in Redis → the **pipeline worker** drives the FITS processor (plate solving, quality analysis, preview generation, calibration) and writes results back
+5. **External storage** (if configured) → transfer job queued → the **transfer worker** copies files to the destination
 6. **Notifications** (if configured) → Email or Pushover alerts sent on state changes
 
 ### File Storage

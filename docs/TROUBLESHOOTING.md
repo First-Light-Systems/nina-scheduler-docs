@@ -471,7 +471,7 @@ For master-creation issues (not enough frames, missing master dark for flats, te
 
 ### Database Integrity (Administrators)
 
-For data issues (orphaned references, stuck statuses, missing files), administrators can run integrity scans to detect and repair problems. See the **[System Administration](SYSTEM_ADMINISTRATION.md)** guide for full details.
+For data issues (orphaned references, stuck statuses, missing files), server administrators can run integrity scans to detect and repair problems from the server-administration tools in the web interface.
 
 ### AI Log Analysis (Administrators)
 
