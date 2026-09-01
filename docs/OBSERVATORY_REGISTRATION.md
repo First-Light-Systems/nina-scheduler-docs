@@ -1,6 +1,6 @@
 # Observatory Registration and API Key Management
 
-**Document Version**: 1.3 | **Last Updated**: March 2026
+**Document Version**: 1.4 | **Last Updated**: September 2026
 
 > **What's New in v1.3** (March 2026):
 > - API fingerprint reset for hardware changes (admin feature)
@@ -83,6 +83,12 @@ API keys may be updated by administrators for security rotation:
 2. **Manual update**
     - If instructed by administrator, paste new API key in settings
     - Plugin reconnects with new key
+
+---
+
+## What Registration Creates for You
+
+When your observatory registers, the system automatically creates a **Personal project** so you have somewhere to schedule observations right away — you don't have to create one first. It's named after your observatory (with a project code ending in `-PROJECT`) and you're set as its owner; rename or reconfigure it at any time (see the [Projects Guide](PROJECTS_GUIDE.md)). This is automatic, and if the project can't be created for any reason your registration still succeeds.
 
 ---
 

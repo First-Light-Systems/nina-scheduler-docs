@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.25] - 2026-09-01
+
+### Added
+
+- **Planetarium View** (Overview; enable toggle in Observatory Administration) — an observatory's live sky-map tab (observation markers, live mount reticle, FoV slider, queued/recent tables), documented as opt-in (an owner/admin enables it per role).
+- **Activity History / My Activities** (User Profile) — the per-user activity log with summary tiles, event/period/source filters, and CSV/JSON export.
+- **Deleting an observation and its images** (Observation Files) — the "Also delete the associated image files" option on single and bulk observation deletes, and its behavior (server copies only; external copies unaffected).
+- **Auto-created Personal project** (Observatory Registration; cross-linked from Getting Started and Projects Guide) — a Personal project is created automatically when an observatory registers.
+
+### Fixed
+
+- **Removed historical API-endpoint listings from the Changelog** so no server-admin command/API reference is published to the public site (completing the policy started in 2.24).
+
+---
+
 ## [2.24] - 2026-09-01
 
 ### Changed
@@ -166,10 +181,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Login interception — system announcements block navigation until acknowledged
     - Dashboard integration with announcement banners and observatory card icons
     - Scoped admin dashboard for observatory owners/admins
-- **Announcement API endpoints**:
-    - Observatory: `POST/GET/DELETE /observatories/{id}/motd`, acknowledge, recipients, history
-    - System: `POST/GET/DELETE /api/v1/system/motd`, acknowledge, recipients
-    - User: `GET /api/v1/user/motd/pending` for all pending announcements
+- **Announcement API** — added for observatory, system, and user announcement management
 
 ### Changed
 
@@ -190,10 +202,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Regular organization members inherit `can_view` + `can_observe`
     - Members table shows organizations as expandable rows with lazy-loaded user lists
     - Owner organization automatically added on ownership transfer and cannot be removed
-- **Organization member API endpoints**:
-    - `POST /observatories/{id}/members/organization` — add organization
-    - `PUT /observatories/{id}/members/organization/{orgId}` — update permissions
-    - `DELETE /observatories/{id}/members/organization/{orgId}` — remove organization
+- **Organization member API** — added for managing organizations as observatory members
 - **Observatory history events**: `organization_added`, `organization_removed`, `organization_permissions_updated`
 
 ### Changed
@@ -660,16 +669,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `can_operate` - Manage queue and all observations
   - `can_admin` - Configure observatory and manage members
 
-- **API Endpoints**: New organization management endpoints:
-  - `POST /organizations` - Create organization
-  - `GET /organizations` - List organizations
-  - `GET /organizations/{id}` - Get organization details
-  - `PUT /organizations/{id}` - Update organization
-  - `GET /organizations/{id}/members` - List members
-  - `POST /organizations/{id}/members` - Add member
-  - `PUT /organizations/{id}/members/{userId}` - Update member permissions
-  - `DELETE /organizations/{id}/members/{userId}` - Remove member
-  - `POST /organizations/{id}/transfer-ownership` - Transfer ownership
+- **Organization management API** — added for creating and managing organizations and their members
 
 ### Updated
 
