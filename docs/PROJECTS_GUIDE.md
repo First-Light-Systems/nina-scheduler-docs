@@ -1,6 +1,6 @@
 # Projects Guide
 
-**Document Version**: 1.3 | **Last Updated**: September 2026
+**Document Version**: 1.4 | **Last Updated**: September 2026
 
 Projects are the primary way to organize, track, and collaborate on observation programs in Asterism. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
 
@@ -52,6 +52,9 @@ The project type is informational — it helps organize projects in listings and
 5. Click **Create**
 
 You can also create a project inline when submitting an observation — click **+ Create New Project** in the project selector.
+
+!!! note "A Personal project is created for you"
+    When your observatory registers, Asterism automatically creates a **Personal project** (named after your observatory) so you can start scheduling immediately — you don't have to create one first. Rename or reconfigure it like any other project.
 
 ## Plans and Limits
 

@@ -1,6 +1,6 @@
 # Observation Files
 
-**Document Version**: 1.3 | **Last Updated**: September 2026
+**Document Version**: 1.4 | **Last Updated**: September 2026
 
 This guide explains how to view, browse, and download observation files (FITS images) from Asterism.
 
@@ -232,6 +232,17 @@ In the **file grid**, calibrated files also show a green flask icon button for q
 Alongside downloading, a **Push Externally** button copies this observation's files directly to a cloud/SFTP destination you can use — handy for sending data to storage you added after the observation ran. See [Push Externally](EXTERNAL_STORAGE.md#pushing-files-on-demand-push-externally).
 
 ---
+
+## Deleting an Observation and Its Images
+
+When you delete an observation from **My Observations** — one at a time, or several at once with multi-select — the confirmation dialog offers a checkbox:
+
+> **Also delete the associated image files (frees storage; cannot be undone)**
+
+- **Left unchecked** (the default), only the observation record is removed; its captured images are **kept** and remain in [My Files](FILE_BROWSER.md), flagged as belonging to a deleted observation.
+- **Checked**, the observation's frames, previews, and thumbnails are **permanently deleted from the server** and that storage is reclaimed — the confirm button then reads **Delete + images**.
+
+Deletion is irreversible. Note that only server-stored copies are removed; any copies already sent to [external storage](EXTERNAL_STORAGE.md) are not affected.
 
 ## Project Multi-Ownership
 

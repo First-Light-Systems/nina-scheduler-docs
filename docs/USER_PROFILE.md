@@ -1,6 +1,6 @@
 # User Profile Management
 
-**Document Version**: 2.6 | **Last Updated**: September 2026
+**Document Version**: 2.7 | **Last Updated**: September 2026
 
 The Profile page is your central hub for account information, observatory access, and notification preferences.
 
@@ -113,6 +113,20 @@ Your **system role** (along with your permissions and email-verified status) is 
 Use the **Change Password** button on your profile to set a new password, or reset it through the emailed reset link if you're locked out. Both self-service changes and email-link resets are recorded in your account activity history for audit.
 
 A password must include a lowercase letter, an uppercase letter, a digit, and a special character. The accepted special characters were broadened — any non-alphanumeric character now counts, so symbols beyond the old `@ $ ! % * ? &` set are allowed.
+
+---
+
+## Activity History
+
+**My Activities** (from the main menu; page title "Activity History") gives you a running log of your own actions — logins and logouts, observations created / updated / deleted / viewed, files uploaded and downloaded, and observatory changes. Summary tiles show totals at a glance (total activities, logins in the last 30 days, files uploaded, observations created).
+
+You can filter the log by:
+
+- **Event type** — logins, observation actions, file actions, observatory changes, or all
+- **Time period** — last 24 hours, last week, or last month
+- **Source** — web interface, API, or the NINA plugin
+
+Use **Export CSV** or **Export JSON** to download your history. The page shows only your own activity.
 
 ---
 

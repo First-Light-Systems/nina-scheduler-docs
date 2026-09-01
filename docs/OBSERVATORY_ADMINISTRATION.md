@@ -1,6 +1,6 @@
 # Observatory Administration
 
-**Document Version**: 2.9 | **Last Updated**: September 2026
+**Document Version**: 2.10 | **Last Updated**: September 2026
 
 > **What's New in v2.8** (June 2026):
 > - **Reservations** — block out observatory time with auto-suspend/resume of in-progress observations
@@ -572,6 +572,7 @@ Control which sections of the observatory detail page are visible to each role. 
 | Branding | All roles | Observatory description and logo |
 | Live Feeds | All roles | Embedded live camera feed |
 | Custom Links | All roles | Custom navigation links |
+| Planetarium View | **Off (opt-in)** | Enables the observatory's [Planetarium](OVERVIEW.md#planetarium-view) sky-map tab for the selected roles (requires the observatory's location to be set) |
 
 **Equipment visibility** can be controlled at the device level. Each equipment type has its own per-role toggles:
 

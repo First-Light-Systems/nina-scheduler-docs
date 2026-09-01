@@ -1,6 +1,6 @@
 # Asterism Overview
 
-**Document Version**: 3.0 | **Last Updated**: March 2026
+**Document Version**: 3.1 | **Last Updated**: September 2026
 
 ## What is Asterism?
 
@@ -198,6 +198,13 @@ See [External Storage](EXTERNAL_STORAGE.md) for provider setup and configuration
 - **Per-observation configuration**: Choose which channels and state transitions trigger notifications for each observation
 
 See [Notifications](NOTIFICATIONS.md) for setup and configuration.
+
+### Planetarium View
+
+- **Live sky map**: An observatory's **Planetarium** tab shows a sky map (VirtualSky) centered on the observatory's location, with your observations plotted as labeled markers
+- **Live mount reticle**: When the mount is connected, a reticle tracks its current pointing; a toggle turns mount-tracking on or off, and a slider adjusts the field of view
+- **Queued and recent observations**: Side tables list upcoming and recently finished observations; click any to open its detail, or pop the map out into its own browser tab
+- **Opt-in**: The Planetarium tab is off by default — an observatory owner or admin enables it (and the observatory must have its location set), after which everyone with the granted access level can see it
 
 ## Organization & Administration
 
