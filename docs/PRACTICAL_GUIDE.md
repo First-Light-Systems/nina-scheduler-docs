@@ -1,6 +1,6 @@
 # Asterism - Practical User Guide
 
-**Document Version**: 2.6 | **Last Updated**: September 2026
+**Document Version**: 2.7 | **Last Updated**: September 2026
 
 > **What's New in v2.4** (February 2026):
 > - Observatory selection is now remembered across all pages — select once, and it's pre-selected everywhere
@@ -347,6 +347,25 @@ The interface updates automatically when:
 - Errors occur
 
 **No refresh needed** - the page updates via WebSocket connection.
+
+### Observation Timeline
+
+Each observatory has two timeline views, reachable from your **Dashboard**, **My Observatories**, and the observatory details page:
+
+- **Observation Timeline** — a single night shown graphically, as bars across the hours of the night.
+- **Multi-Day Timeline** — several nights shown as a chronological table.
+
+The timeline shows every observation the scheduler considered for the night, not just the ones that ran:
+
+- **Scheduled observations** are drawn at their scheduled time and colored by status (pending, assigned, running, completed, failed).
+- **Eligible but not scheduled** — observations the scheduler could have run in a window but didn't place appear as **ghosted, dotted-indigo** bars spanning their observable window.
+- **Eligible but expired** — observations whose window passed unused appear as **grey dashed "missed"** bars. (Observations that were never observable — for example moon-blocked — stay hidden.)
+- **Reservations** appear as **amber hashed bands** on the single-night timeline, and as a **"Reserved" row** folded into the night on the multi-day view. See [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#reservations-blocking-time) for creating reservations.
+
+!!! note "Reading the bar styles"
+    The on-screen Status Legend lists only the status colors; the ghosted (eligible-unscheduled), dashed (missed/expired), and amber-hashed (reserved) styles are explained by hovering a bar for its tooltip.
+
+Use the **previous/next** arrows, the date picker, and the **Current** button to review **past nights**. A past night is shown as a static record of what actually ran (live auto-refresh is paused while you look back).
 
 ---
 

@@ -1,6 +1,6 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.8 | **Last Updated**: September 2026
+**Document Version**: 1.9 | **Last Updated**: September 2026
 **Plugin Version**: v4.0.11.0
 
 > **What's New in v1.7** (June 2026):
@@ -137,6 +137,12 @@ If an update is available, a green banner appears in the plugin settings showing
 
 !!! warning "Restart Required"
     After installing an update, NINA must be restarted for the new version to take effect. The old plugin files are cleaned up automatically on restart.
+
+### Update Security
+
+Updates are downloaded over an **HTTPS, certificate-pinned** channel, and every downloaded package is verified against a server-supplied **SHA-256 checksum** before installation, so a tampered or corrupted update is rejected. Because pinning requires TLS, a development server with no certificate cannot serve updates by default.
+
+For that case only, the **Plugin Updates** section offers an opt-in **"Allow updates over plaintext (development servers only)"** checkbox (default off). It takes effect only when your server URL is already plaintext (`ws://` or `http://`) and never downgrades a `wss://` or `https://` server — so enabling it on a production observatory cannot produce a plaintext download — and the checksum is still verified. Leave it off unless you are testing against a local development server.
 
 ### Required Updates
 
@@ -374,6 +380,16 @@ Shutdown (your standard shutdown sequence)
 ```
 
 ---
+
+## FITS Provenance Headers
+
+Frames captured through Asterism carry provenance headers in their FITS so a file can always be traced back to its origin:
+
+- **`SOFTWARE`** — `Asterism <version>` (the acquisition software), plus a per-image **`IMAGEID`**
+- An attribution id — **`OBSID`** on science frames, or **`CALID`** on calibration frames
+- On science frames, additional keys such as **`SSASGNID`** (assignment), **`SSPROJ`**/`SSPROJID` (project), and observatory/observer identifiers
+
+Each frame self-identifies from its own image type, so calibration frames are always attributed as calibration (never mis-filed under a science observation), and multi-target observations stamp the correct per-frame target on `OBJECT`. These headers are written into the FITS you download — no configuration is needed.
 
 ## Rice Compression for FITS Files
 

@@ -1,6 +1,6 @@
 # Observation Files
 
-**Document Version**: 1.2 | **Last Updated**: February 2026
+**Document Version**: 1.3 | **Last Updated**: September 2026
 
 This guide explains how to view, browse, and download observation files (FITS images) from Asterism.
 
@@ -54,6 +54,10 @@ Click on any file to open the metadata dialog, which displays:
 - **RA/Dec** in both sexagesimal (HH:MM:SS / DD:MM:SS) and decimal formats
 - **Object name** from FITS header
 - **Epoch** (typically J2000)
+
+### Show on Sky
+
+When you open a **solved** image's details from the observation detail page (or the floating detail window), a **Show on sky** button appears — but only if the image has a recorded sky footprint (a plate-solved frame with an ObsCore `s_region`). Clicking it opens an interactive **Aladin Lite** sky view in a new browser tab, centered and zoomed on your field, with the image footprint outlined over a Digitized Sky Survey background. You can click the sky to identify objects via SIMBAD and toggle catalogs such as Gaia DR3 from the layers control — a quick way to confirm exactly where a frame landed without downloading it.
 
 ### Quality Metrics
 - **ADU statistics** (mean, median, standard deviation, min, max)
@@ -186,6 +190,14 @@ The **Download All** button downloads all files from the observation to a local 
 - Large observations with many files may take time — the progress indicator tracks completion
 - Downloads continue even if you navigate to other tabs (session keep-alive is active)
 - If a download fails, you can retry individual files or restart the batch download
+- Large downloads are **resumable**: if a big FITS download is interrupted, your browser or download tool can pick up where it left off instead of starting over (this applies to files held on the Asterism server; files served from external storage as a fallback download in full without resume)
+
+### Download Selected Images
+
+Instead of downloading everything, you can download just a subset of an observation's images. Click to select an image, **shift-click** to select a range, or **ctrl/cmd-click** to add or remove individual images. A toolbar then shows **Select all**, how many are selected, and **Download Raw** / **Download Calibrated** buttons that save only your selection to a folder you choose. (Download Calibrated applies only to the selected images that have calibration masters available.)
+
+!!! note "Chrome/Edge only"
+    Subset download uses the browser folder picker, so it's available in Chrome and Edge. In other browsers, clicking an image opens its preview as usual.
 
 ### Download as ZIP Archive
 
@@ -214,6 +226,10 @@ The calibrated download option is only available when the file's calibration sta
 If calibration is not available (no matching masters, calibration disabled, or calibration failed), the "Download Calibrated" option is grayed out with a tooltip explaining why.
 
 In the **file grid**, calibrated files also show a green flask icon button for quick calibrated downloads.
+
+### Push to External Storage
+
+Alongside downloading, a **Push Externally** button copies this observation's files directly to a cloud/SFTP destination you can use — handy for sending data to storage you added after the observation ran. See [Push Externally](EXTERNAL_STORAGE.md#pushing-files-on-demand-push-externally).
 
 ---
 

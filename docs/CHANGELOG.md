@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.23] - 2026-09-01
+
+### Added
+
+- **Observation form**: documented the **Use Template** picker (Project step) and **Import Target CSV** with its filter-mapping step (Target & Exposure step), and the **dark-time window warning** for fixed-time/transit windows (Creating Observations, Exoplanet Transits).
+- **Target lookup**: extended to cover position-embedded **survey designations** (WISE/ZTF/CSS/ASAS/ASAS-SN/2MASS/PNV, decoded offline) and **supernova/transient** names via the Transient Name Server, with the TNS-credential caveat (Creating Observations, Target Library).
+- **Repetitive Observations**: added **fixed-time (calendar-cadence) repetition** — start-only auto-sized windows, the interval-vs-width rule, and the live-edit restrictions.
+- **Practical Guide**: new **Observation Timeline** section (single-night and multi-day views; scheduled vs eligible-unscheduled vs expired bars; reservations; past-night navigation).
+- **External Storage**: new **Push Externally** (on-demand push) section, and documented that a project's own/organization-inherited storage is force-selected during observation creation.
+- **Observation Files / My Files**: **Show on sky** (Aladin footprint), **multi-select subset download** (Chrome/Edge), **resumable downloads**, **bulk delete** and **storage-used** figures, the descriptive **plate-solve chip** labels/tooltips, and **Push Externally** entry points.
+- **User Profile**: **API Keys** (HTTP Basic), a **Subscription** tier field, and a **password-management** note; corrected the Calibration Defaults (Enabled/Disabled/Inherit and Required/Preferred/Ignore).
+- **Projects**: new **Plans and Limits** section (subscription caps, storage charged to the project owner, dispatch paused when over cap; enforcement-gated).
+- **Plugin Setup**: **update security** (HTTPS/cert-pinning + checksum, with the opt-in plaintext dev bypass) and a **FITS provenance headers** note (SOFTWARE / OBSID / CALID / SSPROJ …).
+- **Calibration Guide**: added **underexposed flats** as a "master not appearing" failure cause.
+- **Notifications**: documented the **Clear All** control; corrected the state label to **NINA Completed** and the default-selected states (Failed / Aborted / Cancelled).
+
+!!! note
+    The NASA EXOTIC submit action is documented as **advanced / disabled by default** (build-flag gated). Admin-only surfaces (transfer pause/resume, the transfers Errors viewer) are covered in the [Reporting Guide](REPORTING_GUIDE.md), not the user pages.
+
+---
+
 ## [2.22] - 2026-09-01
 
 ### Fixed

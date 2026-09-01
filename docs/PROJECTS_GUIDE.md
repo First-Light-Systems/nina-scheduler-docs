@@ -1,6 +1,6 @@
 # Projects Guide
 
-**Document Version**: 1.1 | **Last Updated**: March 2026
+**Document Version**: 1.2 | **Last Updated**: September 2026
 
 Projects are the primary way to organize, track, and collaborate on observation programs in Asterism. Every observation belongs to a project, giving you a central place to monitor progress, manage team access, and access your data.
 
@@ -52,6 +52,18 @@ The project type is informational — it helps organize projects in listings and
 5. Click **Create**
 
 You can also create a project inline when submitting an observation — click **+ Create New Project** in the project selector.
+
+## Plans and Limits
+
+Your subscription tier can limit how many projects you may create (along with users, sub-organizations, and how much observation storage you may hold). These limits only apply on deployments where **subscription enforcement is turned on**; where it's off, nothing here blocks you.
+
+When enforcement is on:
+
+- **Reaching a project (or user) cap** opens a **Subscription Limit Reached** dialog that names your tier and the limit, and — if your limits come from a group — the organization or observatory they're **inherited from**. Raise the tier, add capacity, or remove something to continue.
+- **Storage is charged to the project owner** (the user or organization), not the capturing observatory. Uploads are **never blocked**: the first frame that exceeds the allowance flags the observation with a storage-limit note (visible when you open it), and later frames upload silently.
+- While an owner is **over the storage limit**, the scheduler **stops dispatching new observations** for that owner until storage is freed or the limit is raised. In-progress work is unaffected.
+
+Your current tier is shown on your [Profile](USER_PROFILE.md#account-information).
 
 ## Ownership
 

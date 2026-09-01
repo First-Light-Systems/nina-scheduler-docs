@@ -1,6 +1,6 @@
 # Target Library
 
-**Document Version**: 1.2 | **Last Updated**: September 2026
+**Document Version**: 1.3 | **Last Updated**: September 2026
 
 > **What's New in v1.1** (February 2026):
 > - Observation type and timing fields for templates (Time-Based, Rise to Set)
@@ -22,7 +22,7 @@ Library targets are saved astronomical objects with coordinates, constraints, an
 2. On the **Targets** tab, click **Add Target**
 3. Fill in the target details and click **Add Target**
 
-You can also use the **coordinate lookup** feature — enter a target name (e.g., "M31", "NGC 7000", "WDS J00491+5749") and click the search icon to automatically retrieve coordinates from SIMBAD, VizieR, NED, or JPL Horizons. The lookup supports standard catalog designations including Messier, NGC, IC, HD, WDS (Washington Double Star), CCDM, and many others.
+You can also use the **coordinate lookup** feature — enter a target name (e.g., "M31", "NGC 7000", "WDS J00491+5749") and click the search icon to automatically retrieve coordinates from SIMBAD, VizieR, NED, or JPL Horizons. The lookup supports standard catalog designations including Messier, NGC, IC, HD, WDS (Washington Double Star), CCDM, and many others. It also decodes position-embedded **survey designations** locally and offline (WISE, ZTF, CSS, ASAS, ASAS-SN, 2MASS, `PNV J…`), and resolves **supernovae and transients** by IAU name (`SN 2026zwy`, `AT2026abc`) via the Transient Name Server. See [Creating Observations — Target Name Lookup](CREATING_OBSERVATIONS.md#target-name-lookup) for the full list and the TNS credential note.
 
 After a successful lookup, information chips appear showing the object type, magnitude, and spectral classification when available. See [Creating Observations — Object Information Chips](CREATING_OBSERVATIONS.md#object-information-chips) for details on what each chip means.
 
@@ -169,6 +169,7 @@ To create an observation from a template:
 
 - **Quick Submit** — Click the play icon on the template row to instantly create an observation with the template's settings (uses observatory defaults for autofocus)
 - **Edit & Submit** — Click the edit-and-submit icon to open the observation form pre-filled with the template data, allowing you to customize autofocus, guiding, external storage, and other settings before submitting
+- **Use Template picker** — From inside a new observation form, the **Use Template** button on the Project step pulls a template in the other direction (see [Creating Observations](CREATING_OBSERVATIONS.md#starting-from-a-template))
 
 ---
 
@@ -236,6 +237,9 @@ If an automation reaches the **Completed** state (max executions reached), you c
 ## CSV Import
 
 The CSV import wizard lets you bulk-import targets — and optionally create templates with automation — from a CSV file. This is ideal for importing target lists from planning tools, catalogs, or existing observation programs.
+
+!!! note "Importing into a single observation instead"
+    This wizard builds your reusable **library** (saved targets and templates). If you instead want to load a target list straight into one observation you're creating, use the **Import Target CSV** button in the observation form's Target & Exposure step — see [Creating Observations](CREATING_OBSERVATIONS.md#import-targets-from-csv).
 
 ### Import Wizard Steps
 

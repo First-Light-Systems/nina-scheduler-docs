@@ -1,6 +1,6 @@
 # Repetitive Observations
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: September 2026
 
 Repetitive observations let you schedule a series of recurring observations of the same target — automatically creating new executions at defined intervals without manual resubmission.
 
@@ -63,6 +63,18 @@ For targets where you want to observe the entire visibility window each night, r
 - Fill-time mode is automatically enabled — the plugin takes continuous exposures throughout the window
 
 Rise-to-set repetitive observations are ideal for comprehensive lightcurve campaigns where you need maximum coverage each night.
+
+## Fixed-Time (Calendar-Cadence) Repetition
+
+Fixed-time observations can repeat on a calendar cadence. Set the observation to **Fixed Time** with a start time (see [Creating Observations](CREATING_OBSERVATIONS.md#fixed-time-observations)), then enable repetition. Each cycle, the scheduler advances the window by your interval and re-sizes it automatically, so you don't restate the window every time.
+
+A few rules apply to repeating fixed-time series:
+
+- **Leave the end time unset.** A repeating fixed-time window is auto-sized (start tolerance + duration estimate + a little grace). Supplying an explicit end is rejected — remove it to enable repetition.
+- **The interval must not overlap runs.** It must be at least the window width plus the start tolerance (and never less than 6 minutes), so consecutive occurrences never collide.
+- **The pinned time is cadence-managed.** Once the series is live, the start and end are managed by the cadence; attempts to edit them are ignored, with a note to disable repetition first if you need to move the time.
+
+This is well suited to campaigns that must begin at a set clock time on a regular schedule — for example a nightly observation pinned to a fixed UTC start.
 
 ## Execution Windows
 

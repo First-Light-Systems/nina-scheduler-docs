@@ -1,6 +1,6 @@
 # Notification Preferences & Per-Observation Notifications
 
-**Document Version**: 2.5 | **Last Updated**: March 2026
+**Document Version**: 2.6 | **Last Updated**: September 2026
 
 Asterism can notify you when your observations change state — via **email** and/or **Pushover** push notifications.
 
@@ -82,13 +82,14 @@ The notification section appears in the submission form **after observatory sele
     - Assigned
     - In Progress
     - Suspended
-    - Complete
+    - NINA Completed
     - Failed
     - Aborted
     - Cancelled
+- **Clear All** — a button next to the channel checkboxes unchecks the channels and every state at once.
 
 !!! note
-    All states are pre-selected by default.
+    The actionable outcomes — **Failed**, **Aborted**, and **Cancelled** — are pre-selected by default. Check any other states you want alerts for, or use **Clear All** to start from nothing.
 
 ### Resubmission Behavior
 
