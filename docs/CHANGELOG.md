@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.27] - 2026-09-01
+
+### Changed
+
+- **Overview** — clarified that captured data can live in **more places than the server**: files are held on the server and can also be copied to your own external storage (cloud or SFTP), automatically or on demand, with optional server cleanup. Also refreshed the External Storage summary (all five destination types, Push Externally, accurate retry wording).
+
+---
+
 ## [2.26] - 2026-09-01
 
 ### Changed

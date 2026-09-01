@@ -1,6 +1,6 @@
 # Asterism Overview
 
-**Document Version**: 3.1 | **Last Updated**: September 2026
+**Document Version**: 3.2 | **Last Updated**: September 2026
 
 ## What is Asterism?
 
@@ -151,6 +151,8 @@ Observations support per-exposure readout mode selection for cameras that offer 
 
 ## Data & Storage
 
+Your captured data doesn't have to live only on the Asterism server. Files are held on the server for browsing and download, and they can **also** be copied to your own external storage — a cloud provider or your own SFTP server — automatically after each observation or on demand, with the option to remove the server copy afterward to free space.
+
 ### Data Management
 
 - **Automatic file upload**: FITS files uploaded to server after capture
@@ -164,13 +166,15 @@ See [Observation Files](OBSERVATION_FILES.md) for browsing, downloading, and man
 
 ### External Storage
 
-Automatically copy your FITS files to cloud storage after observations complete:
+Copy your FITS files to your own external storage — automatically after observations complete, or on demand for data you've already captured:
 
-- **Supported providers**: Dropbox, Google Drive, and Google Cloud Storage
+- **Supported destinations**: Dropbox, Google Drive, Google Cloud Storage, AWS S3, and SFTP/SCP (your own server)
 - **Multiple destinations**: Attach one or more storage destinations to each observation
+- **Push Externally**: Send already-captured observations, projects, or targets to a destination on demand
+- **Optional server cleanup**: Remove files from the server after a successful transfer to free space
 - **Folder organization**: Configurable path templates using variables like `$USER`, `$PROJECT`, and `$TARGET`
 - **File options**: Transfer raw files, calibrated files, or both
-- **Automatic retry**: Failed transfers retry with exponential backoff
+- **Reliable transfers**: Automatic retry with provider rate-limit handling
 - **Shared configurations**: Storage destinations can be scoped to personal use, an organization, or a project for easy sharing
 
 See [External Storage](EXTERNAL_STORAGE.md) for provider setup and configuration.
