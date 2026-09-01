@@ -1,6 +1,6 @@
 # Asterism Documentation
 
-**Documentation Version**: 2.25 | **Last Updated**: September 2026
+**Documentation Version**: 2.26 | **Last Updated**: September 2026
 **Server v4.8.0 | User GUI v4.1.0 | Plugin v4.0.11.0**
 
 Welcome to the Asterism documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
@@ -54,6 +54,19 @@ If you're managing organizations, users, or the system:
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.22–v2.25 (September 2026)
+
+- **[More cloud destinations + Push Externally](EXTERNAL_STORAGE.md)** — AWS S3 and SFTP/SCP destinations, and on-demand "Push Externally" for data you've already captured
+- **[Fixed-start & repeating fixed-time observations](CREATING_OBSERVATIONS.md#fixed-time-observations)** — pin just a start time and Asterism sizes the window; fixed-time can now repeat on a cadence
+- **[Observation Timeline](PRACTICAL_GUIDE.md#observation-timeline)** — review past nights, and see eligible-but-unscheduled bars, expired bars, and reservations on the timeline
+- **[Smarter target lookup](CREATING_OBSERVATIONS.md#target-name-lookup)** — survey designations (WISE / ZTF / 2MASS …) decoded offline, plus supernovae and transients via TNS
+- **[Planetarium View](OVERVIEW.md#planetarium-view)** — a live sky map of your observatory's observations and mount pointing
+- **[Show on sky](OBSERVATION_FILES.md#show-on-sky)** — view a solved frame's footprint over the sky in Aladin
+- **[My Files upgrades](FILE_BROWSER.md)** — multi-select subset downloads, bulk delete, per-group storage figures, and resumable large downloads
+- **[User API keys](USER_PROFILE.md#api-keys)** and **[Activity History](USER_PROFILE.md#activity-history)** — scriptable access, and a log of your own actions with CSV/JSON export
+- **[Import Target CSV & templates](CREATING_OBSERVATIONS.md#starting-from-a-template)** — build an observation from a CSV file or a saved template
+- **[Organization nesting](ORGANIZATIONS.md#nesting-organizations)** — sub-organizations, the Sponsored type, and sharing a project with a whole organization
 
 ## What's New in v2.21 (June 2026)
 

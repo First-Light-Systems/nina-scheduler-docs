@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.26] - 2026-09-01
+
+### Changed
+
+- **Refreshed the home page "What's New"** with the user-facing highlights from the v2.22–v2.25 refresh (external-storage destinations + Push Externally, fixed-start/repeating observations, Observation Timeline, smarter target lookup, Planetarium View, Show on sky, My Files upgrades, user API keys, Activity History, CSV/template import, and organization nesting). The list had lagged at the v2.21 rebrand entry.
+
+---
+
 ## [2.25] - 2026-09-01
 
 ### Added
