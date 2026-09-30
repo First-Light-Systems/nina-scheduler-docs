@@ -72,6 +72,7 @@ nav:
     - Target Library: TARGET_LIBRARY.md
     - Exoplanet Transits: EXOPLANET_TRANSITS.md
     - Scheduler Features: SCHEDULER_FEATURES.md
+    - How Scheduling Works: SCHEDULING_EXPLAINED.md
     - Observation Lifecycle: OBSERVATION_LIFECYCLE.md
     - Repetitive Observations: REPETITIVE_OBSERVATIONS.md
   - Projects: PROJECTS_GUIDE.md
