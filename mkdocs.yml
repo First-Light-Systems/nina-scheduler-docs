@@ -84,6 +84,7 @@ nav:
     - Calibration Guide: CALIBRATION_GUIDE.md
   - Data & Storage:
     - My Files: FILE_BROWSER.md
+    - My Usage: MY_USAGE.md
     - Observation Files: OBSERVATION_FILES.md
     - Image Processing: IMAGE_PROCESSING.md
     - External Storage: EXTERNAL_STORAGE.md

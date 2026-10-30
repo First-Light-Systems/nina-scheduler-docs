@@ -267,6 +267,22 @@ Twilight Sky Flat Pointing
 
 Adjust the **Altitude** (default 75°) if your horizon is obstructed, click **Refresh** to recompute, and enter the values into a NINA **Slew to Alt/Az** instruction ahead of the Calibration instruction. See the [Calibration Guide → Sky Mode](CALIBRATION_GUIDE.md#sky-mode) for the full sequence shape.
 
+### Center After Drift
+
+Over a long imaging run a mount can slowly drift off target — from imperfect polar alignment, periodic error, or differential flexure. **Center After Drift** tells the plugin to add NINA's *Center After Drift* trigger to every target the scheduler observes, so the mount periodically **re-plate-solves and recenters** when it has drifted too far.
+
+| Field | Default | Range | Description |
+|-------|---------|-------|-------------|
+| **Enable Center After Drift** | Off | — | Turns the feature on for this observatory |
+| **Drift Threshold (arc-minutes)** | 10 | 1–120 | Recenter once the target has drifted more than this many arc-minutes from its intended position |
+| **Check Every (exposures)** | 1 | 1–50 | How often to plate-solve and measure drift. `1` checks after every frame; larger values reduce plate-solve overhead on stable mounts |
+
+!!! warning "Set it here, not in your sequence"
+    Configure Center After Drift on this options page — it applies observatory-wide — rather than dragging a *Center After Drift* instruction into your NINA sequence yourself. A manually placed instruction sits **outside** the Asterism container and can't see the scheduler's current target, so it fails with **"no target set."** Enabling it here lets the plugin attach the trigger to each scheduled target with the correct coordinates.
+
+!!! tip "Choosing values"
+    Start with the 10 arc-minute / every-exposure defaults. If your mount is well aligned and plate solves are slowing capture, raise **Check Every** to 3–5 so drift is checked less often. Lower the **Drift Threshold** only when you need tight registration (for example, narrow-field photometry) — recentering too aggressively wastes time on mounts that already track well.
+
 ### Status Display
 
 The plugin shows real-time status:
