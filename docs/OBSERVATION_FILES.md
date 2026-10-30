@@ -60,12 +60,16 @@ Click on any file to open the metadata dialog, which displays:
 When you open a **solved** image's details from the observation detail page (or the floating detail window), a **Show on sky** button appears — but only if the image has a recorded sky footprint (a plate-solved frame with an ObsCore `s_region`). Clicking it opens an interactive **Aladin Lite** sky view in a new browser tab, centered and zoomed on your field, with the image footprint outlined over a Digitized Sky Survey background. You can click the sky to identify objects via SIMBAD and toggle catalogs such as Gaia DR3 from the layers control — a quick way to confirm exactly where a frame landed without downloading it.
 
 ### Quality Metrics
-- **ADU statistics** (mean, median, standard deviation, min, max)
-- **SNR** (Signal-to-Noise Ratio)
-- **Background level**
 
-!!! note
-    HFR, FWHM, and star count values are available in FITS file headers (see [Embedded Quality Headers](#embedded-quality-headers) below) but are not displayed as named metrics on the Observation Files page.
+The file detail view and the per-file quality dialog show the metrics present on each file, most-relevant first. Older frames processed before a given metric existed simply show fewer rows.
+
+- **FWHM** — star sharpness, in arcseconds and pixels
+- **Limiting magnitude (5σ)** — faintest star reliably detected (broadband, catalog-calibrated frames only)
+- **Stars detected**
+- **Signal-to-noise** — labelled **(photometric)** or **(peak)** depending on how it was measured (see below)
+- **Zero-point (MAGZERO)** — photometric calibration constant (broadband, catalog-calibrated frames only)
+- **Background** — sky level ± noise RMS
+- **Min / Max (ADU)** — a saturation/clipping indicator
 
 ### Embedded Quality Headers
 
@@ -109,6 +113,13 @@ FWHM measures star sharpness — how spread out the star profiles are. Reported 
 
 SNR is an overall image quality indicator. Higher values mean the signal (your target) is stronger relative to background noise. These values are for **individual frames** — stacking N frames improves SNR by a factor of sqrt(N).
 
+Two kinds of SNR may be shown, and the value is labelled to say which:
+
+- **(photometric)** — the median signal-to-noise of the stars actually measured in the frame. This is the preferred value and reflects real photometric quality.
+- **(peak)** — a legacy whole-image peak-pixel estimate, shown only for older frames processed before the photometric SNR existed.
+
+The interpretation table below applies to both.
+
 | SNR | Interpretation |
 |-----|---------------|
 | > 100 | Excellent — sub-1% photometric precision, publication-quality data |
@@ -119,6 +130,16 @@ SNR is an overall image quality indicator. Higher values mean the signal (your t
 | < 3 | Below detection threshold — signal is indistinguishable from noise |
 
 These thresholds are based on standard astronomical practice. For further reading, see [ESO Signal, Noise and Detection](https://www.eso.org/~ohainaut/ccd/sn.html), [STScI SNR Estimation](https://www.stsci.edu/instruments/wfpc2/Wfpc2_hand_current/ch6_exposuretime6.html), and [Boyce Astro SNR](https://boyce-astro.org/snr/).
+
+#### Limiting Magnitude and Photometric Zero-Point
+
+When a frame is taken in a **broadband** filter and the processor can cross-match its stars against a star catalog, two photometric metrics are measured:
+
+- **Limiting magnitude (5σ)** — the faintest star that would be detected at 5σ in this frame, expressed as a real on-sky magnitude. It is the practical "depth" of the exposure: a limiting magnitude of 19.5 means stars down to roughly 19.5 mag are measurable. **Deeper (larger) is better.** It improves with exposure time, aperture, and good conditions, and degrades with clouds, moonlight, or poor focus. A sudden drop versus other frames of the same target is a good cloud/transparency indicator.
+- **Zero-point (MAGZERO)** — the photometric calibration constant that ties the image's instrumental magnitudes to the catalog's standard magnitudes. It is mainly useful for photometry and for comparing throughput between nights or filters; a sudden drop can indicate clouds, dew, or a dirty optic.
+
+!!! note "Broadband only"
+    These are reported only for broadband frames with a successful catalog cross-match. Narrowband frames, or frames the processor couldn't match, simply omit these rows — that is expected, not an error.
 
 #### Star Count
 

@@ -88,6 +88,22 @@ Calibration settings are configured per observatory. Navigate to **Observatories
     - **10–15 frames**: Good balance for most observatories.
     - **20–50 frames**: Higher quality masters at the cost of longer accumulation time.
 
+### Quality Gates (ADU)
+
+Quality gates reject incoming calibration frames whose **median ADU** falls outside the thresholds you set, before they are ever counted toward a master. Leave a field **blank to disable** that gate — all four are off by default.
+
+| Setting | Applies to | Typical value | Rejects frames that are |
+|---------|-----------|---------------|-------------------------|
+| **Flat Min ADU** | Flats | ~15,000 | underexposed (too dim) |
+| **Flat Max ADU** | Flats | ~45,000 | overexposed / near saturation |
+| **Dark Max ADU** | Darks | ~500 | too bright (light leak, excess signal) |
+| **Bias Max ADU** | Bias | ~300 | too bright |
+
+Typical flat median ADU is 20,000–40,000; darks and bias should sit near the camera's read noise.
+
+!!! warning "Rejected frames don't build masters — and the symptom is silent"
+    A frame rejected by a quality gate is recorded but never contributes to a master. If a gate is set **inside** the spread of your real frames' median ADU, frames can appear to upload and "register" while the master never builds. If flats or darks are accumulating but a master never appears, check these thresholds first and widen or clear them. Keep the gates wide (or off) until you know the actual ADU range your calibration frames produce.
+
 ### Stacking Method
 
 | Setting | Default | Description |
@@ -143,6 +159,25 @@ Some calibration settings are configured per camera rather than per observatory.
 
 !!! tip "Why Set a Default Readout Mode"
     The observation form would otherwise carry forward the readout mode of the previously submitted observation, which can silently drift to the wrong mode when duplicating or cloning observations. Setting a per-camera default ensures every new observation starts from the correct readout mode for that camera. Existing exposures keep their stored readout mode — only newly added exposure rows pick up the default.
+
+### Gap Filling
+
+Gap filling lets the observatory **capture dark and bias frames automatically during idle gaps** in the observing schedule — for example while waiting for a target to rise, or between observations — so calibration frames accumulate without dedicated calibration nights. It is **off by default**; enable it with the **Enable Gap Filling** switch.
+
+When enabled, the scheduler only fills a gap that is long enough to be useful after accounting for the overheads below, and never lets gap-fill work delay a scheduled science observation.
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **Setup Overhead (s)** | 30 | Time reserved to prepare for calibration capture (e.g. move to the dark filter) |
+| **Teardown Overhead (s)** | 60 | Time reserved to restore a science-ready state before the next observation |
+| **Safety Buffer (s)** | 60 | Extra margin left before the next observation is due |
+| **Min Useful Gap (s)** | 120 | Gaps shorter than this are skipped entirely |
+| **Per-Frame Overhead (s)** | 5 | Download/readout time counted per calibration frame |
+| **Max Frames Per Session** | 50 | Upper limit on frames captured in a single gap |
+| **Interrupt Priority** | Any observation interrupts | Which pending observations may cut a gap-fill session short — **Any observation**, **Medium+ priority only**, or **High priority only** |
+
+!!! tip "How a gap is sized"
+    The scheduler subtracts setup, teardown, and the safety buffer from the gap, then fits as many frames as the remaining time allows (per-frame overhead plus exposure time), capped at **Max Frames Per Session**. If what's left is below **Min Useful Gap**, the gap is skipped. **Interrupt Priority** controls whether a late-arriving observation can reclaim the mount mid-session — with *High priority only*, a low- or medium-priority observation waits for the gap-fill session to finish.
 
 ## Managing Masters
 

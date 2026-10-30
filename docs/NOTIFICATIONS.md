@@ -169,6 +169,34 @@ System notifications respect each user's preferences:
 
 ---
 
+## System Announcements
+
+Separate from the per-event [system notifications](#system-notifications) above, **announcements** are messages an administrator posts for people to read in the web interface. Observatory-, organization-, and project-level announcements are covered in [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) and [Organizations](ORGANIZATIONS.md). This section covers the **system-wide announcement**, which can reach every user.
+
+### How you'll see an announcement
+
+- **Acknowledgment dialog** — when you sign in, any active announcement targeted at you appears as a dialog you must read and **acknowledge** before continuing. Important notices (planned downtime, a required plugin update) use this so they can't be missed.
+- **Dashboard banner** — active announcements also appear as a banner on your dashboard, for reference after you've acknowledged them.
+
+Each announcement carries a **severity** that sets its colour and emphasis:
+
+| Severity | Use |
+|----------|-----|
+| **Info** | General news — a new feature, a tip |
+| **Warning** | Something to be aware of — an upcoming maintenance window |
+| **Critical** | Action needed or imminent disruption — downtime now, a required update |
+
+An announcement can be delivered as an **in-app message**, by **email**, or **both**, and may carry an **expiry** after which it stops appearing.
+
+### Who can send one, and to whom
+
+- **Server administrators** can send a system announcement to **everyone**, or to a selected set of users, observatories, organizations, or projects.
+- **Organization and project owners/admins** can post a system announcement **to their own organization or project members** — a convenient way to reach everyone in your group without going through a server admin.
+
+Recipients are determined by who was a member when the announcement was created, so later joiners don't retroactively receive an older announcement.
+
+---
+
 ## Important Notes
 
 - **Fire-and-forget** — Notification delivery failures do not affect observation processing. If an email or Pushover message fails to send, the observation continues normally.
