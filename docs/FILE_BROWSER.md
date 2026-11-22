@@ -1,6 +1,6 @@
 # My Files
 
-**Document Version**: 1.1 | **Last Updated**: September 2026
+**Document Version**: 1.2 | **Last Updated**: November 2026
 
 The My Files page lets you browse, search, preview, and download all your captured science images across every observation — organized by target, project, or date.
 
@@ -64,7 +64,7 @@ When you expand an observation, files appear in a card grid showing:
 - **Filter** and exposure time
 - **File size**
 - **Plate solve status** — a labeled chip: **Solve queued**, **Solving…**, **Plate solved** (green), **Solve failed** (red), or **Not solved**. Hover any chip for a tooltip explaining the state — including, for **Solve failed**, that the solver simply found no astrometric solution (common for short, star-sparse, or simulator frames) and the image file itself is fine.
-- **Calibration ready indicator** — a green "Cal Ready" chip appears when matching dark and flat master frames are available for that file's camera, gain, binning, and filter
+- **Calibration ready indicator** — an orange (outlined) **Cal Ready** chip appears on a light frame when matching dark and flat master frames are available for that file's camera, gain, binning, temperature, exposure and filter. It means the frame *can* be calibrated (**Download Calibrated** will calibrate it); it doesn't show whether it already has been — the per-observation [Observation Files](OBSERVATION_FILES.md) page shows the detailed **Cal** / **Cal Ready** / **Cal · stale** / **No Cal** chips. Calibration frames (darks, flats, bias) never show this chip.
 
 Click a thumbnail to open a full-size preview in a lightbox viewer.
 
@@ -74,7 +74,7 @@ Click a thumbnail to open a full-size preview in a lightbox viewer.
 
 ### Individual Files
 
-Each file card has a download button. If calibration masters are available, a dropdown offers:
+Each file card has a download button. If calibration masters are available (the card shows **Cal Ready**), a dropdown offers:
 
 - **Download Raw** — the original FITS file as captured
 - **Download Calibrated** — dark-subtracted, flat-corrected, and bias-removed
@@ -132,5 +132,5 @@ Click the info icon on any file card to navigate to the file detail page, where 
 
 - **[Observation Files](OBSERVATION_FILES.md)** — Per-observation file view with quality metrics reference
 - **[Image Processing](IMAGE_PROCESSING.md)** — How files are processed after capture
-- **[Calibration Guide](CALIBRATION_GUIDE.md)** — Understanding calibration frames and the "Cal Ready" indicator
+- **[Calibration Guide](CALIBRATION_GUIDE.md#calibration-status-in-the-file-browser)** — Understanding calibration frames and the calibration chips
 - **[External Storage](EXTERNAL_STORAGE.md)** — Automatically syncing files to Dropbox, Google Drive, or Google Cloud Storage

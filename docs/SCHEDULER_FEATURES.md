@@ -1,7 +1,7 @@
 # Scheduler Features
 
-**Document Version**: 1.4
-**Last Updated**: September 2026
+**Document Version**: 1.5
+**Last Updated**: November 2026
 
 > **What's New in v1.3** (February 2026):
 > - Fixed-time observation timing fixes (correct duration, end time, and start time handling)
@@ -23,7 +23,12 @@ Asterism uses a **1-10 numeric priority scale**:
 
 Higher numbers = higher priority = scheduled first.
 
-When multiple observations are eligible to run, the scheduler selects the one with the highest priority number. Observations with the same priority are scheduled by creation date (oldest first).
+When observations compete for the same time, one rule decides:
+
+- **A higher-priority observation always takes precedence** over a lower-priority one — no number of lower-priority observations adds up to outweigh it.
+- **At equal priority, a fixed-time observation takes precedence** over one that could run at another time.
+
+The nightly plan, the dispatcher, and interruptions of running work all apply this same rule.
 
 ### Choosing a Priority
 
@@ -56,7 +61,7 @@ Asterism supports five observation types:
 
 **Best for**: Events that must happen at specific times - exoplanet transits, occultations, asteroid lightcurves with known timing.
 
-- Starts at a specific time and is protected from interruption once started
+- Starts at a specific time. Its pinned start takes precedence over lower-ranked work: if a lower-priority observation (or an equal-priority one that could run at another time) is still running at the fixed start, that observation is wound down at the start time so the fixed-time observation can begin — provided the nightly plan can actually fit it. An observation that outranks it is never cut short; once running, it is not interrupted by lower-ranked work
 - The scheduled start time is always respected, even when bypass_darkness is enabled for testing
 - You can define the window two ways:
     - **Start time only** — give `fixed_time_start` and Asterism sizes the window for you. It estimates how long your exposures (plus any autofocus) will take, then sets the end automatically with a little headroom. Use this when you know when to begin but not exactly how long the work will run.
@@ -141,7 +146,7 @@ This observation will run when M31 is visible and nothing higher priority needs 
 **Fixed Time End**: 2025-03-16 02:45 UTC
 **Exposures**: Continuous 60s exposures in R filter
 
-The high priority (9) and fixed-time type ensure this observation runs during the transit window and won't be interrupted.
+The high priority (9) and fixed-time type ensure this observation runs during the transit window: lower-priority work still running at 21:30 is wound down for it, and nothing of lower rank interrupts it once it starts.
 
 ---
 
@@ -189,9 +194,11 @@ Low priority means this runs when nothing else needs the telescope. The flexible
 The scheduler makes just-in-time decisions based on current conditions:
 
 1. Checks which observations are eligible (visible, constraints met)
-2. Sorts eligible observations by priority (highest first)
-3. Assigns the top observation to the requesting observatory
+2. Builds a plan for the night that ranks them by the [precedence rule](#priority-system) above
+3. Assigns the observation the plan places next to the requesting observatory
 4. Repeats when the observation completes
+
+Only observations the plan actually places are dispatched. An observation shown on the timeline as *eligible but not scheduled* (a ghosted bar) is not started just because its window opens — for example, a long flexible observation that fits neither before nor after a fixed-time observation of equal or higher priority won't run that night.
 
 This approach responds to real-time conditions like weather or equipment status.
 
@@ -248,7 +255,7 @@ Observations marked as **Fast Mover** (for NEOs, asteroids, and other fast-movin
 - For monitoring: check if cadence requirements were satisfied
 
 **Can I change priority after submission?**
-- Yes, pending observations can be edited
+- Yes — pending, failed, suspended, expired, paused and waiting-next observations can be edited
 - Assigned or in-progress observations cannot be modified
 
 **How do I know when my monitoring observation will next run?**

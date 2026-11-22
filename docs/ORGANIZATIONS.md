@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.5 | **Last Updated**: September 2026
+**Document Version**: 1.6 | **Last Updated**: November 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 
@@ -47,6 +47,10 @@ Members can be granted specific permissions within an organization:
 !!! note "Owner Permissions"
     The organization owner automatically has all permissions and cannot be removed. Ownership can only be transferred to another member.
 
+### Plans and Billing
+
+A member with `can_manage_billing` can choose the subscription plan for their organization (an observatory's admins can likewise choose its plan). Overrides to a plan's limits, changes to a subscription's status or expiry date, and any change to a suspended subscription are made only by a server administrator — ask your server administrator if you need one.
+
 ## Creating an Organization
 
 1. Log in to the Asterism web interface
@@ -92,6 +96,16 @@ If you have `can_manage_members` permission:
 
 !!! warning "Cannot Remove Owner"
     The organization owner cannot be removed. To change owners, use **Transfer Ownership** instead.
+
+### Emailing Members
+
+The email dialogs for an organization (and for an observatory) send only to registered users who belong to an organization, observatory or project you manage — or to yourself. Addresses typed into **CC** must also belong to such members. If any address isn't permitted, **nothing is sent** and the error names the refused address. Replies go to your own email address.
+
+### Viewing Members' Observations
+
+Organization owners and admins (members with `can_manage_members`) can view the observations submitted by members of their organization **and of every sub-organization below it** — but not the other way round: a sub-organization's admin does not see the parent organization's members. Project owners and admins can likewise view every observation under their project.
+
+On **My Observations**, switch on **Everyone I manage** to list them alongside your own (the page title becomes "Observations I Manage"). The [Asterism Assistant](ASTERISM_ASSISTANT.md) can answer questions about the same observations.
 
 ### Member Relationship
 
@@ -158,6 +172,8 @@ See the [Collaboration Guide](COLLABORATION.md) for how these grants combine wit
 
 Organizations can configure shared external storage destinations (Dropbox, Google Drive, Google Cloud Storage) that are available to all members when creating observations. This is managed from the organization's edit dialog under the **External Storage** tab.
 
+An organization admin can switch on **Selected by default for new observations** for an organization destination. It then starts out checked whenever a member creates an observation, and the member can uncheck it. This affects the form only — editing an existing observation doesn't change its destinations.
+
 For setup instructions and configuration details, see the **[External Storage Guide](EXTERNAL_STORAGE.md)**.
 
 ## Transferring Ownership
@@ -180,6 +196,8 @@ Organizations can be nested into a hierarchy — a parent organization with sub-
 ### Moving an organization under a parent
 
 From an organization's **Manage Members** view, **Move Under Organization** nests that organization beneath a parent, detaching it from any current parent. You choose which parent-level management permissions its members inherit, and can optionally check **Make the parent organization the owner**, which transfers ownership to the parent org and demotes the current owner to a regular member. A nested organization **inherits the parent's subscription tier**, and cycles are prevented.
+
+To move an organization you must manage the **new parent** and also **manage or own the organization being moved** (or already manage every hierarchy it currently sits in — for example, a university admin rearranging its own departments). An organization with no parent can only be moved by its own managers or owner.
 
 This is where the two ownership kinds arise: an organization is owned either by a **user** (the classic case) or, after a hand-off, by another **organization** — in which case there is no single owning user and the owning organization governs the child. Owner columns show org-owned organizations as "*Name* (org)".
 

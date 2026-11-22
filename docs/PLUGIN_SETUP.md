@@ -1,7 +1,7 @@
 # NINA Plugin Setup Guide
 
-**Document Version**: 1.9 | **Last Updated**: September 2026
-**Plugin Version**: v4.0.11.0
+**Document Version**: 2.0 | **Last Updated**: November 2026
+**Plugin Version**: v5.8.4.0
 
 > **What's New in v1.7** (June 2026):
 > - **Rebranded to Asterism** — the plugin's displayed name in NINA is now **Asterism** (formerly "Science Scheduler"). Your existing install, settings, and the `ScienceScheduler` plugin folder are unaffected — only the display name changed.
@@ -250,11 +250,14 @@ Before every dark or bias exposure, the plugin checks the camera's mechanical-sh
 !!! warning "Fail-Safe Refusal"
     For a shutterless camera, the plugin will **refuse to capture darks/bias** if it cannot guarantee the light path is blocked — it will never silently capture a contaminated dark. When this happens, NINA raises a **red error notification** explaining the reason (for example, *"set the plugin's Dark Filter option"*), and the refusal is recorded in the NINA log. The notification is throttled so the automatic dark-capture retry loop doesn't spam pop-ups.
 
+!!! note "Gap-fill darks only"
+    The Dark Filter is applied to darks and bias the server dispatches during schedule gaps (gap-filling). The **Asterism Darks** sequence instruction does not move the filter wheel — in a dark block on a shutterless camera, add NINA's **Switch Filter** (to your opaque filter) or close a cover in the block's setup steps. See [Calibration Items](#calibration-items).
+
 If the server keeps requesting darks that the plugin refuses, it automatically **backs off** dark requests for that observatory after several consecutive refusals, and resumes once a successful capture occurs or the calibration configuration changes. The fix is to set a valid Dark Filter (or confirm your camera reports a shutter) and restart capture.
 
 ### Twilight Sky Flat Pointing
 
-When you capture **Sky (twilight) flats** with the Asterism Calibration instruction, the telescope must point at a uniform patch of sky high overhead and **opposite the Sun**. The plugin does **not** slew the mount — you add the slew to your sequence yourself — but it computes the recommended pointing for you.
+When you capture **Sky (twilight) flats** with the **Asterism Flats** instruction, the telescope must point at a uniform patch of sky high overhead and **opposite the Sun**. The plugin does **not** slew the mount — you add the slew to your sequence yourself — but it computes the recommended pointing for you.
 
 On the plugin's options page, the **Twilight Sky Flat Pointing** panel shows the recommended **Azimuth / Altitude** for the upcoming dusk and dawn, computed from your observatory location:
 
@@ -265,7 +268,23 @@ Twilight Sky Flat Pointing
   Altitude (°): [75]   [Refresh]
 ```
 
-Adjust the **Altitude** (default 75°) if your horizon is obstructed, click **Refresh** to recompute, and enter the values into a NINA **Slew to Alt/Az** instruction ahead of the Calibration instruction. See the [Calibration Guide → Sky Mode](CALIBRATION_GUIDE.md#sky-mode) for the full sequence shape.
+Adjust the **Altitude** (default 75°) if your horizon is obstructed, click **Refresh** to recompute, and enter the values into a NINA **Slew to Alt/Az** instruction ahead of the Asterism Flats instruction. See the [Calibration Guide → Sky Mode](CALIBRATION_GUIDE.md#sky-mode) for the full sequence shape.
+
+### Center After Drift
+
+Over a long imaging run a mount can slowly drift off target — from imperfect polar alignment, periodic error, or differential flexure. **Center After Drift** tells the plugin to add NINA's *Center After Drift* trigger to every target the scheduler observes, so the mount periodically **re-plate-solves and recenters** when it has drifted too far.
+
+| Field | Default | Range | Description |
+|-------|---------|-------|-------------|
+| **Enable Center After Drift** | Off | — | Turns the feature on for this observatory |
+| **Drift Threshold (arc-minutes)** | 10 | 1–120 | Recenter once the target has drifted more than this many arc-minutes from its intended position |
+| **Check Every (exposures)** | 1 | 1–50 | How often to plate-solve and measure drift. `1` checks after every frame; larger values reduce plate-solve overhead on stable mounts |
+
+!!! warning "Set it here, not in your sequence"
+    Configure Center After Drift on this options page — it applies observatory-wide — rather than dragging a *Center After Drift* instruction into your NINA sequence yourself. A manually placed instruction sits **outside** the Asterism container and can't see the scheduler's current target, so it fails with **"no target set."** Enabling it here lets the plugin attach the trigger to each scheduled target with the correct coordinates.
+
+!!! tip "Choosing values"
+    Start with the 10 arc-minute / every-exposure defaults. If your mount is well aligned and plate solves are slowing capture, raise **Check Every** to 3–5 so drift is checked less often. Lower the **Drift Threshold** only when you need tight registration (for example, narrow-field photometry) — recentering too aggressively wastes time on mounts that already track well.
 
 ### Status Display
 
@@ -331,6 +350,33 @@ When the sequence runs, the Asterism container:
 5. **Reports** completion status
 6. **Requests** the next observation
 7. **Repeats** until queue is empty or operations are paused
+
+### Calibration Items
+
+Alongside the container, the **Asterism** category in the sequencer palette has two condition/instruction pairs for capturing calibration frames at times you choose. In both cases the **server decides what to capture** — the plugin just asks and captures. Your sequence must also contain the Asterism Container, which provides the server connection.
+
+| Item | Type | Purpose |
+|------|------|---------|
+| **Flats Needed** | Condition | Runs its container **once** if the server needs flats; skips the whole block otherwise |
+| **Asterism Flats** | Instruction | Captures the flats the server needs, from a flat panel (**Panel**) or the twilight sky (**Sky**). Formerly named *Asterism Calibration* — saved sequences still load. |
+| **Darks Needed** | Condition | Keeps its container looping while dark/bias sets are outstanding at the camera's current temperature |
+| **Asterism Darks** | Instruction | Captures the dark and bias frames the server needs |
+
+Typical layouts:
+
+```
+Sequential Container   [Flats Needed]                       ← panel flats
+├── Slew to panel / open cover
+├── Asterism Flats   (Panel)
+└── Teardown
+
+Sequential Container   [Darks Needed + a time condition]    ← dusk or dawn darks
+├── Cool Camera / close cover
+├── Asterism Darks
+└── Teardown
+```
+
+Always give a **dark block** a time condition as well as Darks Needed, and give a **Sky-mode flat block** a Sun Altitude (and, if you have one, Loop While Safe) condition — these are what end the block when your twilight window closes. Asterism Darks captures a set only when the camera's live temperature matches it, and **skips any set whose readout mode the camera doesn't offer** rather than capturing at the wrong mode. Making the camera dark (cover, roof, opaque filter) is your sequence's job. See the [Calibration Guide](CALIBRATION_GUIDE.md#capturing-darks-in-a-sequence) for full details.
 
 ### Telemetry and Equipment Reporting
 

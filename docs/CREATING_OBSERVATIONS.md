@@ -1,6 +1,6 @@
 # Creating and Managing Observations
 
-**Document Version**: 1.7 | **Last Updated**: September 2026
+**Document Version**: 1.8 | **Last Updated**: November 2026
 
 > **What's New in v1.4** (March 2026):
 > - Describe external storage capability
@@ -71,6 +71,8 @@ If a user has configured external storage options, or if the selected Project ha
 
 **Notification preferences**: If you have enabled at least one notification channel in your [Profile](USER_PROFILE.md), a **Notifications** panel appears in this step. Check which channels to use (**Email** and/or **Pushover** — only enabled channels appear) and select which state changes should trigger notifications (all selected by default). Uncheck any states you don't need alerts for. No notification channels configured? See [Notifications](NOTIFICATIONS.md) for setup instructions.
 
+**Observatory and project announcements**: If the observatory or project you choose has an active **Warning** or **Critical** announcement, a dialog shows it as soon as you select it. The dialog can't be dismissed — read it and click **I Acknowledge** to continue. It appears on **every** booking, even if you've acknowledged the same announcement before (at login, for example). **Info** announcements don't interrupt booking. See [Observatory Administration — Announcements](OBSERVATORY_ADMINISTRATION.md#announcements-motd) for how announcements are posted.
+
 #### Starting from a Template
 
 The Project step has a **Use Template** button in the top-right. Click it to pre-fill the entire form from one of your saved observing templates: filter the list by observatory or project (or search by name), select a template, and click **Use Template**. The form is populated with the template's observatory, project, target list and exposure plans, and observation-level settings, which you can then adjust before continuing. Templates are created and managed in the [Target Library](TARGET_LIBRARY.md) — this picker is the quickest way to start a new observation from one.
@@ -98,22 +100,31 @@ Instead of entering coordinates manually, you can use the **target lookup** feat
 | Stars | Vega, Betelgeuse, HD 209458 | SIMBAD |
 | Double/multiple stars | WDS J00491+5749, CCDM J14396-6050 | SIMBAD |
 | Galaxies | NGC 4565, Andromeda | SIMBAD, NED |
-| Variable stars | RR Lyrae, Delta Cephei | SIMBAD |
+| Variable stars | RR Lyrae, Delta Cephei, ASASSN-26fa | SIMBAD, AAVSO VSX |
 | Minor planets | 433 Eros, (1) Ceres, MP Vesta | JPL Horizons |
 | Comets | C/2020 F3, 1P/Halley | JPL Horizons |
 | Planets | Mars, Jupiter, Saturn | JPL Horizons |
+| Spacecraft (by NAIF id) | -211 (Roman), -170 (JWST), -139479 (Gaia) | JPL Horizons |
 | Survey designations (position embedded in the name) | WISE J224644.9+395839, ZTF J030941.49+405335.0, 2MASS J03294319+2717581, PNV J19450648+1822422 | Decoded locally (offline) |
-| Supernovae & transients | SN 2026zwy, AT2026abc, 2026zwy | Transient Name Server (TNS) |
+| Supernovae & transients | SN 2026zwy, AT2026abc, 2026zwy | Transient Name Server (local copy), then Fink and Sesame |
 
 **How it works:**
 1. Enter the object name in the target field
 2. Click the **Lookup** button (or press Enter)
-3. The system first decodes any position-embedded survey designation locally, then queries the Transient Name Server (for supernova/transient names), JPL Horizons, SIMBAD, VizieR, and NED
+3. The system first decodes any position-embedded survey designation locally, then checks the Transient Name Server (for supernova/transient names), JPL Horizons, SIMBAD, AAVSO VSX, VizieR, and NED
 4. Coordinates are automatically filled in
 5. For solar system objects, orbital elements are stored for position calculation at observation time
 
 !!! note "Survey designations and supernovae"
-    Survey designations that embed their own J2000 position (WISE, ZTF, CSS, ASAS, ASAS-SN, 2MASS, `PNV J…`) are decoded **instantly and offline**, so they resolve even when catalog services are slow or unreachable. Supernovae and unclassified transients entered by IAU name (`SN 2026zwy`, `AT2026abc`, or just `2026zwy`) are resolved through the **Transient Name Server (TNS)** — often the only source that knows a very recent discovery. TNS lookups depend on your deployment having TNS credentials configured; without them, supernova-by-name lookups may not return coordinates, but the offline survey-designation decoding always works.
+    Survey designations that embed their own J2000 position (WISE, ZTF, CSS, ASAS, ASAS-SN, 2MASS, `PNV J…`) are decoded **instantly and offline**, so they resolve even when catalog services are slow or unreachable. Supernovae and unclassified transients entered by IAU name (`SN 2026zwy`, `AT2026abc`, or just `2026zwy`) are resolved through the **Transient Name Server (TNS)** — often the only source that knows a very recent discovery. Asterism keeps its own regularly updated copy of the TNS catalog and falls back to the Fink and Sesame services for anything not yet in it, so no TNS account or credentials are needed. A discovery reported in the last hour or so may not be indexed yet — try again shortly, or enter RA/Dec manually.
+
+!!! note "Spacecraft"
+    To observe a spacecraft, enter its **NAIF id** — a negative number such as `-211` (Roman Space Telescope), `-170` (JWST) or `-139479` (Gaia). Asterism resolves it through JPL Horizons and shows **Moving Object (Spacecraft) — position computed at observation time**. The position shown in the form is approximate; a fresh position for your observatory's location is computed when the observation is dispatched, so the telescope points where the spacecraft actually is.
+
+**When a lookup doesn't match exactly or fails:**
+
+- Name resolvers are forgiving of typos, so a lookup can return a *different* object from the one you meant. When the name you typed isn't one of the resolved object's catalog identifiers, a warning appears: *"'X' is not a catalog identifier for Y — this is the closest match the resolver returned."* Check that Y is the object you want before continuing.
+- If nothing matches, the message names the catalogs that were checked (for example SIMBAD, VSX, VizieR/Sesame, NED and JPL Horizons). For a very recent transient or variable, or a custom target, enter RA/Dec manually.
 
 **Tips for successful lookups:**
 - Use standard catalog names (M31, NGC 224, HD numbers)
@@ -145,10 +156,13 @@ After a successful lookup, the system displays information chips next to the coo
 | `QSO` | Quasar |
 | `planet` | Solar system planet |
 | `asteroid` | Minor planet / asteroid |
+| `spacecraft` | Spacecraft tracked by NAIF id |
 
 **Magnitude chip** (purple) — the visual (V-band) magnitude of the object, or B-band if V is unavailable.
 
 **Spectral type chip** (light blue) — the stellar spectral classification (e.g., "G2V", "K1V", "M5.5Ve") when available.
+
+**Variable-star chips** — when the object is a known variable in the AAVSO Variable Star Index (VSX), small chips show its variability type in plain English (e.g. "Dwarf nova" rather than the VSX code `UG`), its brightness range (bright → faint, e.g. "8.6–13.9 V") and its period, followed by its AAVSO **AUID**. Hover the type chip to see the raw VSX code and its full meaning; a type ending in **?** means VSX lists the classification as uncertain.
 
 **Tip**: See [Target Library](TARGET_LIBRARY.md) for managing saved targets, templates, and automation.
 
@@ -168,6 +182,8 @@ To add many targets at once, click **Import Target CSV** (next to **Add Target**
 | **Count** | Number of exposures per filter |
 | **Binning** | Camera binning (1x1, 2x2, etc.) |
 
+**Very short exposures**: For planetary and other lucky-imaging work you can enter an exposure time below 0.1 s, or **0**. A 0 is labelled **Camera minimum** and means "the camera's shortest exposure". How 0 is handled is up to the camera driver: many native drivers take their shortest exposure, but some ASCOM drivers refuse it — if yours does, enter the camera's actual minimum (for example 0.001 s) instead.
+
 **Example exposure plan:**
 ```
 L filter:  10 x 300s (1x1 binning)
@@ -186,7 +202,7 @@ Priority is set per-target within the Target & Exposure step using a numeric **1
 | **5–7** | Standard science (5 is the default) |
 | **1–4** | Fill time, surveys |
 
-When multiple observations are eligible, the scheduler runs the one with the highest priority number first. See [Scheduler Features](SCHEDULER_FEATURES.md#priority-system) for details.
+When multiple observations are eligible, the scheduler runs the one with the highest priority number first; at equal priority, a fixed-time observation takes precedence over one that could run at another time. See [Scheduler Features](SCHEDULER_FEATURES.md#priority-system) for details.
 
 ### Step 3: Constraints (Optional)
 
@@ -209,7 +225,7 @@ Fast Mover observations display a special chip indicator on the observation deta
 
 ### Step 4: Repetition
 
-Configure whether and how this observation should repeat (for monitoring or campaign-style programs).
+Configure whether and how this observation should repeat (for monitoring or campaign-style programs). See [Repetitive Observations — Repetition Configuration](REPETITIVE_OBSERVATIONS.md#repetition-configuration) for each field; note that a series whose start is well in the past, or whose end has already passed, is refused.
 
 ### Step 5: Autofocus Settings
 
@@ -234,6 +250,8 @@ For detailed information on guiding options, see the **[Guiding Guide](GUIDING_G
 1. Review your settings in the summary
 2. Click **Submit Observation**
 3. Observation enters the queue as "Pending"
+
+If the observatory or project has an active Warning or Critical announcement, the review page shows a banner — *"Be aware that you are submitting an observation for an observatory with existing Critical conditions."* (or *Warning* conditions, and the same sentence for a project) — listing the announcement titles. Announcements are also re-checked when you submit, and when you **Save** an edited observation or **Resubmit** one from the Operations view: anything you haven't acknowledged in this booking (for example, one posted while you were filling in the form) pops up for acknowledgement first.
 
 ---
 
@@ -278,6 +296,8 @@ View all your observations with filtering options:
 - Search by target name
 - Sort by date or priority
 
+By default the page shows only observations you created. If you are an owner or administrator of an organization or project, an **Everyone I manage** switch appears above the list: turn it on to include observations by members of your organizations (and their sub-organizations) and every observation in your projects — the heading changes to **Observations I Manage**. Server administrators see an **All users** switch instead (heading **All Users' Observations**). Both are off by default.
+
 ### Real-Time Updates
 
 When connected via WebSocket, the interface updates automatically:
@@ -292,7 +312,14 @@ Click on any observation to see:
 - Execution history and event log
 - Captured FITS files (for completed observations)
 - Error messages (for failed observations)
-- Constraint violations are shown on the **observation list** via the DispatchStatusIndicator tooltip on pending/waiting observations
+- Constraint violations are shown on the **observation list** via the dispatch-status indicator tooltip on pending/waiting observations
+- How the observation will run, in plain language:
+    - **Time-based observations** have an **Observation Window** panel with a one-line summary of the plan plus **Minimum Observing Time** (it must run at least this long; after that it may be interrupted for higher-priority work) and **Desired Observing Time** (it runs up to this long when the night allows). The details list adds **Fill the Time** (on or off), an **Estimated Image Count**, and the exposure plan shown as *N × Xs per cycle*.
+    - **Repeating series** show a repetition section with progress, success rate, failed and **Skipped** runs, **Next Execution**, **Execution Window**, **Skip If Delayed** and **Priority Boost**.
+    - The completion row reads **Last Run Completed** for a series that is still active, and **Completed** only once the observation itself has finished.
+- The floating detail window opened from the Schedule or a timeline shows the same details as the full page.
+
+**Dispatch status**: Pending observations show whether the scheduler can run them now — **Ready to schedule**, **Waiting for constraints**, or **Blocked**. If the scheduler is busy and doesn't answer straight away, the status reads **Checking… (retry 1 of 3)** while it asks again. Only after three tries does it show **Unknown**, which means the status couldn't be determined at that moment — *not* that the observation is blocked. A fixed-time observation booked for a later night shows a warning that it is beyond the current scheduling horizon (not an error) until its night arrives.
 
 #### Execution Log
 
@@ -376,7 +403,9 @@ Click any row to open the observation detail page.
 
 ### Access Control
 
-- **Regular users** see only their own observations
+- **Regular users** see their own observations
+- **Organization owners/administrators** can also view observations submitted by members of their organization and its sub-organizations (but not the parent organization's members)
+- **Project owners/administrators** can view every observation in their projects
 - **Observatory administrators** see all observations for their observatories
 - **Server administrators** see all observations system-wide
 
@@ -386,13 +415,19 @@ Click any row to open the observation detail page.
 
 ### When Can You Modify?
 
-| Status | Can Edit? | Can Delete? |
-|--------|-----------|-------------|
-| Pending | Yes | Yes |
-| Assigned | Limited | Yes (with warning) |
-| In Progress | No | Cancel only |
-| Completed | No | No |
-| Failed | No | Yes |
+| Status | Can Edit? | Can Cancel? | Can Resubmit? |
+|--------|-----------|-------------|---------------|
+| Pending | Yes | Yes | No |
+| Assigned | No | Yes | No |
+| In Progress | No | Yes | No |
+| Paused (repeating series) | Yes | Yes | No |
+| Waiting Next (repeating series) | Yes | No | No |
+| Suspended | Yes | No | No |
+| Failed | Yes | No | Yes |
+| Expired | Yes | No | No |
+| Completed, Partially Completed, Aborted, Cancelled | No | No | Yes |
+
+Editing is allowed while an observation is waiting or halted, and refused while it is assigned or executing (NINA may already be acquiring it). The observation detail page shows **Edit** whenever editing is allowed, even on statuses such as Failed or Suspended where **Cancel** isn't offered. Saving an edit doesn't change the status, so a Failed or Expired observation isn't re-queued by editing it — edit it, then [resubmit](#resubmitting-an-observation) it to run again. Observations can be deleted from the observation list.
 
 ### How to Edit
 
@@ -410,7 +445,7 @@ For observations in progress:
 
 ### Resubmitting an Observation
 
-You can resubmit a completed or failed observation to repeat it:
+You can resubmit a completed, partially completed, failed, aborted, or cancelled observation to repeat it:
 
 1. Find the observation in the **observation list** or **project view**
 2. Click **Resubmit**

@@ -1,7 +1,12 @@
 # Observatory Administration
 
-**Document Version**: 2.10 | **Last Updated**: September 2026
+**Document Version**: 2.11 | **Last Updated**: November 2026
 
+> **What's New in v2.11** (November 2026):
+> - **Direct Control Windows** — observers book short windows to drive a Remote Control-enabled observatory themselves
+> - **Schedule Analytics** — now shows every observatory you can access, read-only where you can't administer it
+> - Warning/Critical announcements must be acknowledged when booking observations
+>
 > **What's New in v2.8** (June 2026):
 > - **Reservations** — block out observatory time with auto-suspend/resume of in-progress observations
 > - **Observatory Map** — live geographic fleet view (server admins)
@@ -371,11 +376,66 @@ While an observatory is inside an active reservation:
 
 ### How Reservations Appear
 
-- On the schedule timeline (and the Schedule Analytics pane), reservations show as **orange hashed bands**. Hovering shows the title, start/end, purpose, and contact details, with status (active / scheduled / completed / cancelled).
+- On the schedule timeline (and the [Schedule Analytics](#schedule-analytics) pane), reservations show as **orange hashed bands** ([Direct Control windows](#direct-control-windows) show as solid blue bands). Hovering shows the title, start/end, purpose, and contact details, with status (active / scheduled / completed / cancelled).
 - Clicking a band opens the reservations page for that observatory (admins only).
 - On an observation's constraint checks, a blocking reservation appears as a red `reserved_time` chip.
 
 Reservation changes broadcast in real time, so open schedule and analytics views refresh automatically when a reservation is created, edited, or cancelled.
+
+## Direct Control Windows
+
+A **Direct Control** window is a short block of time, booked by an observer, during which they drive the observatory themselves in real time instead of the scheduler running it. It works like a [reservation](#reservations-blocking-time) that one person books for their own use.
+
+### Enabling Remote Control
+
+Direct Control is only available on observatories with Remote Control turned on. An observatory admin turns it on with the **Enable Remote Control** switch in the observatory's edit form (*"When disabled, prevents Remote Control sessions from being started."*). The **Observatory Management** list also has a **Remote Control** column showing Enabled/Disabled with a switch, and — when enabled — an **Authorized users…** button for granting real-time control to individuals beyond the observatory's owners and admins.
+
+### Booking a Window
+
+Anyone with observer access to the observatory can book a window:
+
+1. In the Operations View, open the **Obs** menu and choose **Schedule Direct Control**. (If Remote Control is off, the item is disabled with the hint *"Remote Control is not enabled for this observatory"*.)
+2. Pick a **Start (UTC)** — times are in UTC, 24-hour, on the quarter hour.
+3. Choose a **Window length** from 15 to 90 minutes, in 15-minute steps.
+4. Click **Book window**.
+
+The dialog helps you pick a valid time:
+
+- It shows that night's **dark hours** (UTC). Unless the observatory bypasses dark time, the **whole window must be in dark time**.
+- It lists everything **already booked** that UTC day. A window that overlaps another reservation or Direct Control window is refused.
+- It shows the window in the observatory's local time as well as UTC.
+
+The [Asterism Assistant](ASTERISM_ASSISTANT.md) can also draft a booking for you to confirm.
+
+### What a Window Does
+
+- **Scheduled work is held** — the scheduler doesn't start new observations during the window. An observation in progress when it begins is suspended and resumes automatically afterwards, exactly as for a [reservation](#what-a-reservation-does).
+- **Only the booker (and admins) can take control** during the window.
+- **It is visible on the schedule** — a solid blue band labelled **Direct Control: …** on the schedule timelines and in [Schedule Analytics](#schedule-analytics), and a row with a blue **Direct Control** badge on the Multi-Day Schedule.
+
+### Controller and Spectator Links
+
+After booking, the dialog shows two links, and you are emailed them as well:
+
+- **Controller (you)** — opens the real-time control page. You must be signed in to control the observatory.
+- **Spectator (shareable)** — lets others watch.
+
+The links work only during your window. Opened too early, the page shows **Not started yet**; after the window ends or is cancelled, it shows **Reservation over**. The session starts automatically when your time arrives.
+
+!!! warning "Open the controller link within 15 minutes"
+    If the controller link isn't opened within **15 minutes** of the start, the window is cancelled automatically, the rest of the time goes back to the scheduler, and you are emailed to say why. If an admin cancels your window, you are emailed the reason and who cancelled it.
+
+## Schedule Analytics
+
+The admin Control Center's **Schedule Analytics** pane stacks tonight's schedule for several observatories on one shared time axis, so you can compare them at a glance. Each observatory gets a row showing its observations (coloured by filter), its reservations and Direct Control windows, and a red line for the current time. A moon or sun icon shows whether the observatory respects dark time (tonight's twilight window) or bypasses it (a 12-hour window). Tick the observatories at the top of the pane to choose which rows appear, and click **Open in new tab** for the larger **Schedule Analytics — Expanded** page.
+
+**Who sees what:** anyone who can open the admin Control Center sees **every observatory they can access** — directly, as owner, or through an organization. Observatories you can't administer are **read-only**:
+
+- In the pane they are marked with an eye icon (*"View only — you can't change this observatory's schedule"*); on the expanded page they carry a **view only** chip.
+- A note above the rows says which schedules are read-only (*"Read-only view: you can see these schedules but not change them."* when all of them are).
+- Reservations still show their details on hover, but clicking one doesn't open the reservation editor, and fixed-time bars can't be dragged to new times.
+
+Clicking an observation still opens its details page, where the usual permissions apply.
 
 ## Observatory Map
 
@@ -718,7 +778,7 @@ If the FITS processor cannot find ASTAP star catalogs (`.290` or `.1476` files i
 
 ### Controlling System Notifications
 
-Admins can toggle the **System Events** category in their [Notification Preferences](NOTIFICATIONS.md#category-toggles) to control whether they receive these alerts.
+Admins can toggle the **System Events** category in their [Notification Preferences](NOTIFICATIONS.md#category-toggles-server-administrators) to control whether they receive these alerts.
 
 ## Announcements (MOTD)
 
@@ -741,6 +801,8 @@ Observatory owners and admins can post announcements (Message of the Day) to com
 4. Click **Create**
 
 The announcement appears as an alert banner on the observatory details page. Members must acknowledge the banner to dismiss it.
+
+**Warning** and **Critical** announcements on an observatory — and on a project — must also be acknowledged by anyone booking an observation there, every time they book, even if they acknowledged it before. See [Creating Observations](CREATING_OBSERVATIONS.md).
 
 !!! note "Creator Auto-Acknowledge"
     The announcement creator is automatically marked as acknowledged and will not see their own announcement banner.
@@ -797,4 +859,4 @@ See [Observatory Registration](OBSERVATORY_REGISTRATION.md) for details on the p
 
 ---
 
-*See also: [Organizations](ORGANIZATIONS.md) | [Observatory Registration](OBSERVATORY_REGISTRATION.md) | [API Reference](API_REFERENCE.md)*
+*See also: [Organizations](ORGANIZATIONS.md) | [Observatory Registration](OBSERVATORY_REGISTRATION.md)*

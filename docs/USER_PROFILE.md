@@ -1,6 +1,6 @@
 # User Profile Management
 
-**Document Version**: 2.7 | **Last Updated**: September 2026
+**Document Version**: 2.8 | **Last Updated**: November 2026
 
 The Profile page is your central hub for account information, observatory access, and notification preferences.
 
@@ -8,8 +8,8 @@ The Profile page is your central hub for account information, observatory access
 
 The profile page uses a two-column layout:
 
-- **Left column** — Your identity and notifications: avatar, account details, statistics, and notification preferences
-- **Right column** — Your access and settings: default view, observatory access, calibration defaults, default observatory, external storage, API keys, and weather forecast source
+- **Left column** — Your identity, notifications and access: avatar, account details, statistics, notification preferences, observatory access (with your default observatory), and calibration defaults
+- **Right column** — Your settings: default view, external storage, API keys, Claude (Asterism Assistant, when enabled for your account), and weather forecast source
 
 ---
 
@@ -54,17 +54,15 @@ Your subscription tier governs limits such as how many projects and users you ma
 
 Enable and configure email and Pushover notification channels. For full setup instructions, see [Notifications](NOTIFICATIONS.md).
 
----
-
-## Right Column
-
-### Default View
-
-Choose the **Start View** — the page that opens by default when you log in.
+The **External storage delivery problems** checkbox (on by default) tells you about files that didn't reach your external storage within a day of capture — at most one message a day, for up to 7 days. See [External Storage](EXTERNAL_STORAGE.md).
 
 ### Observatory Access
 
 A summary of observatories you have access to and your permission level at each. For details on managing observatories, see [Observatory Administration](OBSERVATORY_ADMINISTRATION.md).
+
+#### Default Observatory
+
+Below the list, select the **Default Observatory** used when creating observations.
 
 ### Calibration Defaults
 
@@ -73,9 +71,13 @@ Set your default calibration behavior:
 - **Calibration** — **Enabled**, **Disabled**, or **Inherit** (use the observatory's setting)
 - **Rotation-Matched Flats** — **Required**, **Preferred**, or **Ignore** (or **Inherit from Observatory**), controlling whether flats must match the frame's rotation to be used
 
-### Default Observatory
+---
 
-Select the observatory used by default when creating observations.
+## Right Column
+
+### Default View
+
+Choose the **Start View** — the page that opens by default when you log in.
 
 ### External Storage
 
@@ -92,9 +94,19 @@ The **API Keys** card lets you create named, revocable credentials so scripts an
 
 The key list shows each key's name, status, key id, and its created / last-used / expiry dates. (These per-user keys are distinct from the [observatory API key](OBSERVATORY_REGISTRATION.md) used by the NINA plugin.)
 
+### Claude (Asterism Assistant)
+
+This section appears only when a server administrator has enabled the [Asterism Assistant](ASTERISM_ASSISTANT.md) for your account. It holds your own Anthropic API key, which the assistant runs on; usage is billed to your Anthropic account.
+
+- **Anthropic API key** — paste a key (create one at console.anthropic.com) and click **Save**. The key is verified with Anthropic and stored encrypted; afterwards only its last four characters are shown, in a **Key on file …XXXX** chip (**No key** when none is saved). To change it, enter a new one in **Replace key**.
+- **Model** — choose which Claude model the assistant uses. The recommended model is selected by default; you can switch to a faster, cheaper one or to the most capable one.
+- **Remove key** — turns the assistant off for your account. Your saved preferences are kept.
+
+If an administrator has turned the assistant off for the whole server, a warning says so here.
+
 ### Weather Forecast Source
 
-Choose a weather forecast provider and enter the associated API key. This source supplies the forecast data shown for your observations.
+Choose a weather forecast provider and enter the associated API key. This source supplies the forecast data shown for your observations, and the forecast the [Asterism Assistant](ASTERISM_ASSISTANT.md) uses (Open-Meteo when none is set).
 
 ---
 
@@ -104,7 +116,7 @@ Choose a weather forecast provider and enter the associated API key. This source
 2. Modify editable fields (name, email, username, avatar)
 3. Click **Save** to apply changes
 
-You can also configure your default view, calibration defaults, default observatory, external storage, weather forecast source, and notification preferences directly from the profile page.
+You can also configure your default view, calibration defaults, default observatory, external storage, weather forecast source, Claude key, and notification preferences directly from the profile page.
 
 Your **system role** (along with your permissions and email-verified status) is managed by administrators and cannot be changed from the profile page.
 
@@ -130,4 +142,4 @@ Use **Export CSV** or **Export JSON** to download your history. The page shows o
 
 ---
 
-*See also: [Notifications](NOTIFICATIONS.md) | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md)*
+*See also: [Notifications](NOTIFICATIONS.md) | [Observatory Administration](OBSERVATORY_ADMINISTRATION.md) | [Asterism Assistant](ASTERISM_ASSISTANT.md)*

@@ -1,6 +1,6 @@
 # Observation Files
 
-**Document Version**: 1.4 | **Last Updated**: September 2026
+**Document Version**: 1.5 | **Last Updated**: November 2026
 
 This guide explains how to view, browse, and download observation files (FITS images) from Asterism.
 
@@ -37,6 +37,16 @@ Files are displayed in a grid view showing:
 - **Filter** used for the exposure
 - **Exposure time** in seconds
 - **File size**
+- **Calibration status chip** — **Cal**, **Cal Ready**, **Cal · stale**, or **No Cal** (see [Calibration Status](CALIBRATION_GUIDE.md#calibration-status-in-the-file-browser))
+- **External storage delivery chip** — whether the file reached your external storage, for observations that use it (see [Delivery chips](EXTERNAL_STORAGE.md#delivery-chips-on-files))
+
+### Frames Still Uploading ("Uploads paced")
+
+During busy periods the server paces how quickly each observatory's frames are taken in, so processing stays fair across observatories. While that is happening for your observatory, the Observation Files page shows a notice:
+
+> Some frames may still be uploading. This observatory's uploads are being paced so the processing pipeline stays fair across observatories — your frames are safe on the observatory and will appear here as they finish.
+
+The observatory itself shows an **Uploads paced** chip in observatory lists and on its detail page. This is **not an error** — nothing is lost. The frames are held safely at the observatory and finish uploading on their own; just check back later.
 
 ---
 
@@ -60,30 +70,43 @@ Click on any file to open the metadata dialog, which displays:
 When you open a **solved** image's details from the observation detail page (or the floating detail window), a **Show on sky** button appears — but only if the image has a recorded sky footprint (a plate-solved frame with an ObsCore `s_region`). Clicking it opens an interactive **Aladin Lite** sky view in a new browser tab, centered and zoomed on your field, with the image footprint outlined over a Digitized Sky Survey background. You can click the sky to identify objects via SIMBAD and toggle catalogs such as Gaia DR3 from the layers control — a quick way to confirm exactly where a frame landed without downloading it.
 
 ### Quality Metrics
-- **ADU statistics** (mean, median, standard deviation, min, max)
-- **SNR** (Signal-to-Noise Ratio)
-- **Background level**
 
-!!! note
-    HFR, FWHM, and star count values are available in FITS file headers (see [Embedded Quality Headers](#embedded-quality-headers) below) but are not displayed as named metrics on the Observation Files page.
+The file detail view and the per-file quality dialog show the metrics present on each file, most-relevant first. Older frames processed before a given metric existed simply show fewer rows.
+
+- **FWHM** — star sharpness, in arcseconds and pixels
+- **Limiting magnitude (5σ)** — faintest star reliably detected (supported photometric filters only — see [below](#limiting-magnitude-and-photometric-zero-point))
+- **Stars detected**
+- **Signal-to-noise** — labelled **(photometric)** or **(peak)** depending on how it was measured (see below)
+- **Zero-point (MAGZERO)** — photometric calibration constant (supported photometric filters only)
+- **Background** — sky level ± noise RMS
+- **Min / Max (ADU)** — a saturation/clipping indicator
 
 ### Embedded Quality Headers
 
-Quality metrics are automatically embedded in FITS file headers during server-side processing. When you download a FITS file, the following headers are included (when available):
+When quality analysis runs on a **light frame**, the server writes the measured metrics into that frame's FITS header, so the file you download carries them. Calibration frames (darks, flats, bias) are not quality-analyzed and get no quality keywords. A keyword is written only when it has a value — for example, a frame with no detected stars has no `FWHM`, and a narrowband frame has no `MAGZERO` or `LIMMAG`.
 
 | FITS Keyword | Description |
 |-------------|-------------|
 | `FWHM` | Median FWHM in pixels |
 | `FWHMARC` | Median FWHM in arcseconds |
 | `NSTARS` | Number of stars detected |
-| `IMGSNR` | Image signal-to-noise ratio |
-| `BGLEVEL` | Background level (ADU) |
-| `BGNOISE` | Background noise RMS (ADU) |
+| `NSTARSM` | Number of stars measured for FWHM |
+| `IMGSNR` | Median star signal-to-noise ratio |
 | `IMGMEAN` | Image mean value (ADU) |
 | `IMGMED` | Image median value (ADU) |
+| `IMGSTD` | Image standard deviation (ADU) |
+| `IMGMIN` | Image minimum value (ADU) |
+| `IMGMAX` | Image maximum value (ADU) |
+| `BGLEVEL` | Background level (ADU) |
+| `BGNOISE` | Background noise RMS (ADU) |
 | `PXSCALE` | Pixel scale (arcsec/pixel) |
+| `MAGZERO` | Photometric zero-point (mag) — [supported photometric filters](#limiting-magnitude-and-photometric-zero-point) only |
+| `LIMMAG` | 5σ limiting magnitude (mag) — supported photometric filters only |
 
 These headers allow you to assess image quality directly in any FITS viewer without needing the web interface.
+
+!!! note "Quality analysis can be turned off"
+    Your server administrator can switch quality analysis off server-wide (for example, to keep processing fast under heavy load). Frames processed while it is off have no quality metrics and no quality keywords.
 
 ### Understanding Quality Metrics
 
@@ -109,6 +132,13 @@ FWHM measures star sharpness — how spread out the star profiles are. Reported 
 
 SNR is an overall image quality indicator. Higher values mean the signal (your target) is stronger relative to background noise. These values are for **individual frames** — stacking N frames improves SNR by a factor of sqrt(N).
 
+Two kinds of SNR may be shown, and the value is labelled to say which:
+
+- **(photometric)** — the median signal-to-noise of the stars actually measured in the frame. This is the preferred value and reflects real photometric quality.
+- **(peak)** — a legacy whole-image peak-pixel estimate, shown only for older frames processed before the photometric SNR existed.
+
+The interpretation table below applies to both.
+
 | SNR | Interpretation |
 |-----|---------------|
 | > 100 | Excellent — sub-1% photometric precision, publication-quality data |
@@ -119,6 +149,16 @@ SNR is an overall image quality indicator. Higher values mean the signal (your t
 | < 3 | Below detection threshold — signal is indistinguishable from noise |
 
 These thresholds are based on standard astronomical practice. For further reading, see [ESO Signal, Noise and Detection](https://www.eso.org/~ohainaut/ccd/sn.html), [STScI SNR Estimation](https://www.stsci.edu/instruments/wfpc2/Wfpc2_hand_current/ch6_exposuretime6.html), and [Boyce Astro SNR](https://boyce-astro.org/snr/).
+
+#### Limiting Magnitude and Photometric Zero-Point
+
+When a frame is taken in a **supported photometric filter** and the processor can cross-match its stars against a star catalog, two photometric metrics are measured:
+
+- **Limiting magnitude (5σ)** — the faintest star that would be detected at 5σ in this frame, expressed as a real on-sky magnitude. It is the practical "depth" of the exposure: a limiting magnitude of 19.5 means stars down to roughly 19.5 mag are measurable. **Deeper (larger) is better.** It improves with exposure time, aperture, and good conditions, and degrades with clouds, moonlight, or poor focus. A sudden drop versus other frames of the same target is a good cloud/transparency indicator.
+- **Zero-point (MAGZERO)** — the photometric calibration constant that ties the image's instrumental magnitudes to the catalog's standard magnitudes. It is mainly useful for photometry and for comparing throughput between nights or filters; a sudden drop can indicate clouds, dew, or a dirty optic.
+
+!!! note "Which filters get photometry"
+    These are reported only for frames taken in a **Johnson-Cousins B, V, R or I** filter or a **Sloan g′, r′ or i′** filter, and only when the catalog cross-match succeeds. Frames in other filters — **luminance, clear, green, blue** (RGB imaging filters), or any **narrowband** filter — get no zero-point or limiting magnitude, and neither do frames the processor couldn't match. Those rows are simply omitted; that is expected, not an error.
 
 #### Star Count
 
@@ -171,20 +211,28 @@ Click the **download icon** on any file in the grid to download it individually.
 
 ### Download All (Batch Download)
 
-The **Download All** button downloads all files from the observation to a local folder.
+The page offers two ways to download a whole observation:
 
-**How it works**:
+| Button | Browsers | What you get |
+|--------|----------|--------------|
+| **Download All** / **Download Calibrated** | Chrome and Edge only | Each file saved separately into a folder you choose |
+| **Download All (zip)** / **Download Calibrated (zip)** | Every browser | One ZIP file (see [Download as ZIP Archive](#download-as-zip-archive)) |
 
-1. Click **Download All**
+The two calibrated buttons appear only when at least some of the observation's frames have calibration masters available.
+
+**Folder download (Chrome/Edge)**:
+
+1. Click **Download All** (or **Download Calibrated**)
 2. Your browser prompts you to select a destination folder (using the File System Access API)
 3. Files download in parallel (up to 4 at a time) for faster completion
 4. A progress indicator shows download status
 5. The session is kept alive during long downloads to prevent timeouts
 
+**Download Calibrated** saves the calibrated version of each frame that has masters, and the raw file for any frame that doesn't.
+
 **Requirements**:
-- **HTTPS connection** required for batch downloads in Chrome
-- Modern browser with File System Access API support (Chrome, Edge)
-- For browsers without File System Access API support, files download individually as a fallback
+- **HTTPS connection** required for folder downloads in Chrome
+- Browser with File System Access API support (Chrome, Edge). In other browsers the folder buttons are hidden — use the zip buttons instead.
 
 **Tips**:
 - Large observations with many files may take time — the progress indicator tracks completion
@@ -201,18 +249,15 @@ Instead of downloading everything, you can download just a subset of an observat
 
 ### Download as ZIP Archive
 
-The **Download ZIP** option creates a single ZIP archive containing all FITS files plus a metadata file. This is useful when you want a single downloadable package for an observation.
+**Download All (zip)** and **Download Calibrated (zip)** work in **every browser** (no folder picker or HTTPS needed) and sit beside the Chrome/Edge folder buttons. The ZIP is streamed to you as it is built, so the download starts straight away.
 
-The ZIP archive includes:
+- **File name**: `<target>_<date>.zip`, or `<target>_<date>_calibrated.zip` for the calibrated version
+- **Contents**: the observation's FITS frames in exposure order, plus a small `MANIFEST.json` describing the download
+- **Calibrated zip**: each frame is calibrated where matching masters exist; a frame without masters is included **raw**, with `_UNCALIBRATED` added to its name so you can tell which ones they are
+- **Size limit**: up to **500 files** or **20 GiB** per ZIP. Above that, the zip buttons are disabled — use [Push Externally](#push-to-external-storage) (or the folder download) instead
 
-- All FITS files from the observation
-- An `observation_metadata.json` file with observation details: target name, timestamps, and per-file information (size, upload time, exposure index)
-
-The ZIP filename follows the format `observation_[target_name]_[date].zip`.
-
-### Download Previews
-
-The **Download Previews** option creates a ZIP archive of all preview PNG images from the observation. Preview images are lower-resolution representations generated during processing — useful for quick visual review without downloading full FITS files.
+!!! warning "A failed ZIP is incomplete, never silently short"
+    If any frame can't be read or calibrated while the ZIP is streaming, the download is **aborted** — your browser reports it as failed or incomplete — rather than finishing with frames missing. Just retry it.
 
 ### Download Calibrated
 
@@ -221,11 +266,13 @@ On the **file detail page**, the Download button includes a dropdown with two op
 - **Download Raw** - The original file as captured
 - **Download Calibrated** - The calibrated version with dark subtraction, flat correction, and bias removal applied
 
-The calibrated download option is only available when the file's calibration status shows **Calibrated** (a green chip). The first calibrated download may take a moment as the calibration is performed on-demand; subsequent downloads are served from cache.
+**Download Calibrated** is available whenever matching calibration masters exist for the frame — that is, when its chip shows **Cal** (already calibrated) or **Cal Ready** (masters exist; the frame is calibrated on the fly when you download it). The first calibrated download may take a moment as the calibration is performed on demand; subsequent downloads are served from cache.
 
-If calibration is not available (no matching masters, calibration disabled, or calibration failed), the "Download Calibrated" option is grayed out with a tooltip explaining why.
+If no matching masters are available, the "Download Calibrated" option is grayed out with the tooltip "No matching calibration masters available".
 
-In the **file grid**, calibrated files also show a green flask icon button for quick calibrated downloads.
+Calibration frames themselves (darks, flats, bias) are never calibrated, so they don't offer **Download Calibrated** or show a Cal Ready chip.
+
+In the **file grid**, frames with matching masters also show a green flask icon button for quick calibrated downloads.
 
 ### Push to External Storage
 

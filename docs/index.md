@@ -1,7 +1,7 @@
 # Asterism Documentation
 
-**Documentation Version**: 2.27 | **Last Updated**: September 2026
-**Server v4.8.0 | User GUI v4.1.0 | Plugin v4.0.11.0**
+**Documentation Version**: 2.28 | **Last Updated**: November 2026
+**Server v4.19.0 | User GUI v4.8.2 | Plugin v5.8.4.0**
 
 Welcome to the Asterism documentation. This system provides automated multi-observatory observation scheduling and coordination for observatories using NINA — from educational programs and remote hosting facilities to professional research networks.
 
@@ -54,6 +54,20 @@ If you're managing organizations, users, or the system:
 2. **[Observatory Administration](OBSERVATORY_ADMINISTRATION.md)** - Member permissions and observatory controls
 3. **[Calibration Administration](CALIBRATION_ADMINISTRATION.md)** - Manage calibration frames and settings
 4. **[Log Analysis](LOG_ANALYSIS_GUIDE.md)** - AI-powered log diagnostics
+
+## What's New in v2.28 (November 2026)
+
+- **[Asterism Assistant](ASTERISM_ASSISTANT.md)** — plan observations by chatting with Claude: it checks visibility, weather and the schedule, then prepares a draft you confirm (uses your own Anthropic key; enabled per account)
+- **[Direct Control windows](OBSERVATORY_ADMINISTRATION.md#direct-control-windows)** — book a short dark-time window to drive a Remote Control-enabled observatory yourself; shown as blue bands on the timelines
+- **[Full-night repetition](REPETITIVE_OBSERVATIONS.md#repetition-configuration)** — repeating observations now run whenever the target is observable that night; the execution-window setting is gone
+- **[Clearer scheduling precedence](SCHEDULER_FEATURES.md#priority-system)** — higher priority always wins; at equal priority a fixed-time observation wins, and its pinned start interrupts lower-ranked work
+- **[Richer observation details](CREATING_OBSERVATIONS.md#observation-details)** — plain-language summaries of time-based, fill-the-time and repeating observations, in both the full page and the floating window opened from the Schedule
+- **[Must-acknowledge announcements](CREATING_OBSERVATIONS.md#step-1-project)** — Warning and Critical observatory or project announcements must be acknowledged when you book
+- **[Smarter target lookup](CREATING_OBSERVATIONS.md#target-name-lookup)** — AAVSO VSX variable stars with plain-English types, spacecraft by NAIF id (e.g. Roman), and supernovae without TNS credentials
+- **[Calibration in your sequence](CALIBRATION_GUIDE.md#capturing-darks-in-a-sequence)** — the **Darks Needed** condition and **Asterism Darks** instruction, the renamed **Asterism Flats** instruction, and [flat dark-subtraction modes](CALIBRATION_ADMINISTRATION.md#flat-dark-subtraction)
+- **[Image quality](OBSERVATION_FILES.md#limiting-magnitude-and-photometric-zero-point)** — limiting magnitude and photometric zero-point, written into your FITS headers
+- **[Managing others' observations](CREATING_OBSERVATIONS.md#my-observations-page)** — organization and project admins can view the observations they manage (**Everyone I manage**)
+- **[My Usage](MY_USAGE.md)**, **[System Announcements](NOTIFICATIONS.md#system-announcements)**, **[Center After Drift](PLUGIN_SETUP.md#center-after-drift)**, **[ADU quality gates](CALIBRATION_ADMINISTRATION.md#quality-gates-adu)** and **[gap filling](CALIBRATION_ADMINISTRATION.md#gap-filling)** are now documented
 
 ## What's New in v2.22–v2.25 (September 2026)
 

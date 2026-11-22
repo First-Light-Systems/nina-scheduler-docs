@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-**Document Version**: 1.5 | **Last Updated**: March 2026
+**Document Version**: 1.6 | **Last Updated**: November 2026
 
 > **What's New in v1.3** (February 2026):
 > - Updated connection troubleshooting for single-owner communications model
@@ -208,7 +208,7 @@ Check all required fields in plugin settings:
     - Plugin will reconnect and sync state
 
 4. **Understand the monitors**
-    - The server has automated monitors that detect stuck observations (24h for in_progress, 48h for assigned)
+    - The server detects stuck observations: an active observation with no updates for **2 hours** is marked failed — unless its plugin is still connected, in which case it is given up to **18 hours** (weather holds, long autofocus) before being failed
     - See [Observation Lifecycle](OBSERVATION_LIFECYCLE.md) for details on all statuses, transitions, and monitors
 
 ---
@@ -236,6 +236,34 @@ Check all required fields in plugin settings:
 4. **Check disk space**
     - Both local and server storage
     - Full storage can prevent uploads
+
+---
+
+### "Uploads paced"
+
+**Symptoms:**
+- An amber **Uploads paced** chip appears on the observatory list, the observatory's detail page, or the operator views
+- The observation's files page says *"Some frames may still be uploading…"*
+- An observation shows frames captured but fewer files on the server than expected
+
+**What it means:** This is **not an error**. When an observatory sends frames faster than its fair share of the processing pipeline, the server asks it to slow down so every observatory gets processed fairly. The frames are safe on the observatory and keep uploading automatically; the chip and notice disappear once it catches up. No action is needed — don't clear the plugin's upload queue.
+
+---
+
+### Observation Failed Immediately or Mid-Run
+
+**Symptoms:**
+- An observation fails as soon as it is dispatched, with a message about a filter
+- An observation stops partway with a camera or slew error
+- The telescope stops taking new work after several failures
+
+**What's happening:**
+
+- **Filter not in the NINA profile** — if the observation asks for a filter the observatory's filter wheel doesn't have, it fails right away with a message naming the filter (rather than being retried all night and ending as Expired). **Fix**: edit the observation to use one of that observatory's filters, then resubmit it. A *disconnected* device, by contrast, is retried automatically.
+- **Camera failure** — a camera that stops responding fails only the observation in progress (recorded as failed, not completed). After **3 consecutive** camera-failure observations, the telescope **stands down** instead of failing the rest of the queue. **Fix** (operator): reconnect the camera, then stop and restart the Asterism sequence in NINA.
+- **Recenter slew failed** — if the mount doesn't reach the target when re-centering after a weather or safety pause, the observation fails and imaging stops so no frames are taken off-target. **Fix** (operator): check the mount, then resubmit the observation.
+
+See [Observation Lifecycle — Common Questions](OBSERVATION_LIFECYCLE.md#common-questions) for more detail.
 
 ---
 

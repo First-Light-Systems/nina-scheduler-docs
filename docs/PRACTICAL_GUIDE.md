@@ -1,6 +1,6 @@
 # Asterism - Practical User Guide
 
-**Document Version**: 2.7 | **Last Updated**: September 2026
+**Document Version**: 2.8 | **Last Updated**: November 2026
 
 > **What's New in v2.4** (February 2026):
 > - Observatory selection is now remembered across all pages — select once, and it's pre-selected everywhere
@@ -219,8 +219,8 @@ Asterism supports five observation types. The three most commonly used are descr
 **Characteristics**:
 - Pinned start time; the end time is optional — pin an explicit window, or let Asterism size it from your exposure plan
 - For a fixed exposure count, the end time is a deadline (stops when the frames are captured); transit-style "fill the window" observations run continuously until the end time
-- Cannot be interrupted or suspended
-- Highest scheduling priority
+- Not interrupted by lower-ranked work once running (weather can still suspend it)
+- Precedence follows priority first: a higher-priority observation always wins; at **equal** priority, a fixed-time observation takes precedence over one that could run at another time. If lower-ranked work is still running at the pinned start, it is wound down so the fixed-time observation can begin (when the night's plan can fit it); work that outranks it is never cut. See [Scheduler Features — Priority System](SCHEDULER_FEATURES.md#priority-system)
 - Skip the setup buffer — their baseline times before/after the event already account for slewing/centering/focusing
 
 **Example Use Cases**:
@@ -336,7 +336,7 @@ For each observation, you can see:
 - **View Details**: See complete observation information
 - **View Files**: Access the [Observation Files](OBSERVATION_FILES.md) page for completed observations
 - **Delete**: Remove observation (if not in progress)
-- **Edit**: Modify observation parameters (if pending)
+- **Edit**: Modify observation parameters (when pending, failed, suspended, expired, paused, or waiting for its next run — see [When Can You Modify?](CREATING_OBSERVATIONS.md#when-can-you-modify))
 
 ### Real-Time Updates
 
@@ -347,6 +347,13 @@ The interface updates automatically when:
 - Errors occur
 
 **No refresh needed** - the page updates via WebSocket connection.
+
+### Queue and Recent Activity (Operations View)
+
+The observatory's **Operations** view lists the upcoming queue and recently run observations:
+
+- **Queue** — includes repeating series whose next window opens within the next 24 hours, so an observation scheduled for later tonight appears before its window actually opens.
+- **Past Observations** — a monitoring or repeating observation that ran and has already re-armed for its next run is shown with a green **re-queued** chip instead of its waiting status. Hover the chip to see when it ran: *"Ran … UTC — re-queued for its next cadence"* (or *interval* for a repeating series).
 
 ### Observation Timeline
 
@@ -361,9 +368,12 @@ The timeline shows every observation the scheduler considered for the night, not
 - **Eligible but not scheduled** — observations the scheduler could have run in a window but didn't place appear as **ghosted, dotted-indigo** bars spanning their observable window.
 - **Eligible but expired** — observations whose window passed unused appear as **grey dashed "missed"** bars. (Observations that were never observable — for example moon-blocked — stay hidden.)
 - **Reservations** appear as **amber hashed bands** on the single-night timeline, and as a **"Reserved" row** folded into the night on the multi-day view. See [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#reservations-blocking-time) for creating reservations.
+- **Direct Control windows** (time booked for someone to drive the telescope in real time) appear as **solid blue bands** on the single-night timeline and as a blue **Direct Control** row on the multi-day view, so they're easy to tell apart from amber reservations. See [Observatory Administration — Direct Control Windows](OBSERVATORY_ADMINISTRATION.md#direct-control-windows).
+- **Repeating and monitoring observations** are drawn on **every future night** they're planned for on the Multi-Day Timeline, at their cadence (a daily monitor every night, an every-3-days monitor every third night), until the series ends.
+- **A daily monitor pinned to this observatory that already ran tonight** is drawn with the real outcome of that run (completed, partially completed, failed…) rather than as a grey pending bar, even though it has already re-armed for its next run.
 
 !!! note "Reading the bar styles"
-    The on-screen Status Legend lists only the status colors; the ghosted (eligible-unscheduled), dashed (missed/expired), and amber-hashed (reserved) styles are explained by hovering a bar for its tooltip.
+    The on-screen Status Legend lists only the status colors; the ghosted (eligible-unscheduled), dashed (missed/expired), amber-hashed (reserved) and blue (Direct Control) styles are explained by hovering a bar for its tooltip. Ghosted *eligible but not scheduled* observations are not dispatched just because their window opens — only observations the plan places are started.
 
 Use the **previous/next** arrows, the date picker, and the **Current** button to review **past nights**. A past night is shown as a static record of what actually ran (live auto-refresh is paused while you look back).
 
