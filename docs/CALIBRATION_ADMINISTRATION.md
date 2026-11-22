@@ -1,7 +1,10 @@
 # Calibration Administration
 
-**Document Version**: 1.2 | **Last Updated**: September 2026
+**Document Version**: 1.3 | **Last Updated**: November 2026
 
+> **What's New** (November 2026):
+> - **Flat Dark Matching Mode** — choose Exact, Fixed short dark, or Per-exposure dark subtraction for flats, and see why each need exists in the new **Needed For** column (see [Flat Dark-Subtraction](#flat-dark-subtraction))
+>
 > **What's New** (June 2026):
 > - **Demand-driven builds** — masters and dark acquisition are now gated on actual recent light-frame demand
 > - **Per-camera Default Readout Mode** setting that pre-fills the observation form
@@ -140,6 +143,27 @@ Dark frame matching for calibration also uses this tolerance — a master dark a
 !!! note "Expiry vs Deletion"
     Expiry warnings don't delete masters — they flag them for replacement. An expired flat master is still used for calibration until a newer one replaces it. The warning tells the system (and the user) that fresh flats should be captured.
 
+### Flat Dark-Subtraction
+
+Before flats are stacked, each one is dark-subtracted. The **Flat Dark Matching Mode** setting (in the **Flat Dark-Subtraction** card) chooses which master dark is used. It applies to **CMOS cameras only** — CCD flats are bias-subtracted and always use the default behavior.
+
+| Mode | How flats are dark-subtracted | Use it when |
+|------|-------------------------------|-------------|
+| **Exact** (default) | The dark must match each flat's exposure | Panel flats at a steady exposure |
+| **Fixed short dark** | One short dark (set by **Fixed Dark Exposure (seconds)**, matched as a whole second, minimum 1 s) is used for all flats, matched on temperature, binning, gain and readout mode. Gap-filling captures darks at this exposure. | Sky/twilight flats, where dark current at flat exposures is negligible |
+| **Per-exposure** | Each flat is subtracted by the master dark **nearest its own exposure**, within ± **Dark Exposure Tolerance (seconds)** | Sky/twilight flats whose exposures vary through twilight |
+
+In **Per-exposure** mode, a flat with no master dark inside the tolerance is left out of the stack and appears on the Needs tab as a dark need at that exposure — so the missing dark gets captured rather than the flats silently never building a master.
+
+On the Needs tab, the **Uncovered Calibration Needs** table has a **Needed For** column that says why each configuration is listed:
+
+| Needed For | Meaning |
+|------------|---------|
+| **Light frames** | Recent light frames used this configuration |
+| **Flat dark-subtraction** | A dark needed to dark-subtract flats (not because a light used that exposure) |
+| **Sky-flat dark** | The fixed short dark for sky flats |
+| **Expiring master** | A master that light frames still depend on is expiring |
+
 ### Rotation Matching (Flats)
 
 | Setting | Default | Options | Description |
@@ -238,9 +262,11 @@ The sweep also detects when enough **new** frames have accumulated since the las
 
 ### Prerequisites for Flat Masters
 
-Flat frame stacking requires a matching master dark for dark subtraction. If individual flats have accumulated but no matching dark master exists, stacking is deferred until one becomes available. The log message "Flat auto-stacking deferred: no matching master dark available" indicates this situation.
+Flat frame stacking requires a matching master dark for dark subtraction. If individual flats have accumulated but no matching dark master exists, stacking is deferred until one becomes available. The log message "Flat auto-stacking deferred: no matching master dark available" indicates this situation, and the Needs tab shows a chip such as **Blocked — needs … master dark**.
 
-**Resolution**: Ensure dark frames are captured at the same gain, offset, binning, and temperature as your flats. The gap-filling system handles this automatically for exposure times used in your light frames, but you may need to capture darks explicitly for flat-specific exposure times.
+What counts as "matching" depends on the [Flat Dark Matching Mode](#flat-dark-subtraction): the flat's exact exposure (**Exact**), the single short dark (**Fixed short dark**), or the nearest dark within the tolerance, per flat (**Per-exposure**).
+
+**Resolution**: Ensure dark frames are captured at the same gain, offset, binning, readout mode, and temperature as your flats. The needed darks appear on the Needs tab with **Needed For: Flat dark-subtraction** (or **Sky-flat dark**), and gap-filling or the [Asterism Darks](CALIBRATION_GUIDE.md#capturing-darks-in-a-sequence) instruction captures them. For sky flats spread across many exposures, **Per-exposure** or **Fixed short dark** mode avoids needing a dark for every individual flat exposure.
 
 ## Monitoring Calibration Health
 
@@ -259,7 +285,8 @@ Observatory operators should review this periodically to ensure calibration cove
 | Symptom | Cause | Resolution |
 |---------|-------|------------|
 | Individual frames showing but no master created | Frame count below threshold | Wait for more frames or trigger manual creation |
-| Flat stacking deferred | No matching master dark | Capture darks at matching gain/offset/temperature |
+| Flat stacking deferred | No matching master dark | Capture darks at matching gain/offset/temperature, or review the [Flat Dark Matching Mode](#flat-dark-subtraction) |
+| Needs tab shows **Blocked — temperature inconsistent (N/M usable)** | The M captured frames span too wide a temperature range; only N are close enough to each other (within the temperature tolerance) to stack, and that's below the master threshold | Recapture once the cooler has settled at a stable temperature, or widen the **Temperature tolerance** if your camera's regulation is genuinely loose |
 | Master shows 0 source frames in accordion | Source frames were deleted | Individual frames persist independently; deleting them doesn't affect the master |
 | Light images not calibrated | No matching master for the camera/gain/filter/temperature | Check the Needs tab for uncovered configurations |
 | Duplicate filter entries in capture plan | Same filter at different gain/offset values | Expected behavior — different hardware configs need separate flat sets |

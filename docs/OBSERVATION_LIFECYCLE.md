@@ -1,6 +1,6 @@
 # Observation Lifecycle
 
-**Document Version**: 1.0 | **Last Updated**: March 2026
+**Document Version**: 1.1 | **Last Updated**: November 2026
 
 This guide explains the complete lifecycle of an observation — every status it can be in, what triggers transitions between statuses, and what to do when things go wrong.
 
@@ -97,7 +97,7 @@ The server expects regular heartbeat messages from connected plugins. If a plugi
 
 ### Stale Observation Monitor
 
-Detects observations that have been stuck in an active status with no updates for too long. There is a single threshold: after **2 hours** without any update, an active observation (assigned, in_progress, or suspended) is considered stale and is marked **failed** (with failure reason `PLUGIN_CRASH` — the plugin most likely crashed or never connected). The exception is time-based observations that have already captured enough data, which may instead be completed.
+Detects observations that have been stuck in an active status with no updates for too long. The main threshold: after **2 hours** without any update, an active observation (assigned, in_progress, or suspended) is considered stale and is marked **failed** (with failure reason `PLUGIN_CRASH` — the plugin most likely crashed or never connected). The exception is time-based observations that have already captured enough data, which may instead be completed. If the observation's plugin is still connected (for example during a weather hold or a long autofocus), it is left running and only failed once it has gone **18 hours** without an update.
 
 | Condition | Stale Threshold | Action |
 |-----------|-----------------|--------|
@@ -122,15 +122,17 @@ Handles edge cases where status update messages were lost (network glitch, serve
 
 ## Monitoring Observations (Special Behavior)
 
-Monitoring (cadence-based) observations have a unique lifecycle. Instead of staying in a terminal status after completion:
+Monitoring (cadence-based) observations have a unique lifecycle. Instead of staying in a terminal status after each run:
 
-1. Observation completes normally → **completed**
+1. A run ends — **completed**, **partially completed**, **aborted**, or **failed**
 2. System checks if the series should continue (attempt limit not reached, end date not passed)
-3. If continuing: observation resets to **pending** with an updated `cadence_next_eligible` date
-4. Scheduler waits until the next eligible date before assigning again — it will **not** re-observe before `cadence_next_eligible`, so the configured interval is honored
+3. If continuing: observation resets ("re-arms") to **pending** with its next eligible date
+4. Scheduler waits until the next eligible date before assigning again, so the configured interval is honored. Eligibility is tied to the **observing night**, not to the clock time of the last run: a daily monitor becomes eligible from dusk and stays eligible for that whole night, so the scheduler can place it at the best time rather than drifting later each night
 5. Cycle repeats until the series ends
 
-Failed monitoring observations also reset to **pending** for automatic retry on the next cadence window — but a failed attempt **counts toward the series limit** (`cadence_max_observations`), the same as a successful one. Once the attempt limit is reached (or the end date passes), the series ends instead of retrying, so a target that keeps failing will not loop indefinitely. Every attempt — success or failure — is recorded in the series history.
+A **cancelled** monitor does not re-arm — cancelling stops the series.
+
+A failed or aborted attempt **counts toward the series limit** (the maximum number of observations), the same as a successful one. Once the attempt limit is reached (or the end date passes), the series ends instead of retrying, so a target that keeps failing will not loop indefinitely. Every attempt — success or failure — is recorded in the series history.
 
 ## Common Questions
 
@@ -167,7 +169,24 @@ Suspended observations resume automatically when safe conditions return. If cond
 
 ### "Can I restart a failed observation?"
 
-Failed observations cannot be directly restarted, but you can **resubmit** them. This creates a new observation with the same settings, which enters the queue as pending. See [Creating Observations — Resubmitting](CREATING_OBSERVATIONS.md#resubmitting-an-observation).
+It can't be restarted in place, but you can **Edit** and **Resubmit** it:
+
+- **Edit** — failed observations are editable, so you can fix whatever caused the failure (a filter name, the time window, constraints). Saving an edit keeps the status as Failed; it doesn't put the observation back in the queue. See [Creating Observations — When Can You Modify?](CREATING_OBSERVATIONS.md#when-can-you-modify).
+- **Resubmit** — creates a new observation with the same settings (including any edits you've made), which enters the queue as pending. See [Creating Observations — Resubmitting](CREATING_OBSERVATIONS.md#resubmitting-an-observation).
+
+### "Why did my observation fail as soon as it started?"
+
+Some start failures are retried and some are not:
+
+- **A device is disconnected** (mount, camera, guider, filter wheel) — the observation goes back to the queue and is retried later, because the problem often fixes itself or is fixed by the operator.
+- **A requested filter isn't in the observatory's NINA profile** — the observation **fails immediately** with the plugin's message naming the filter. Waiting can't add a filter to the wheel, so it is no longer retried all night only to end as Expired. Edit it to use one of the observatory's filters, then resubmit it.
+- **The work no longer fits in the window** — if a start failure happens so late that the observation can't finish before its end time, it fails rather than being offered again.
+
+### "Why did my observation fail mid-run with a camera or slew error?"
+
+- **Persistent camera failure** — if the camera stops responding (for example "Camera did not set image as ready"), only that observation is stopped and it is recorded as **failed**, not completed. Other observations are unaffected.
+- **Repeated camera failures** — after **3 consecutive** observations fail because of the camera, the telescope **stands down** and stops requesting work rather than failing every observation in the queue overnight. NINA's status shows that it stood down after 3 camera failures; the operator needs to reconnect the camera and restart the Asterism sequence to resume.
+- **Failed recenter slew** — if the mount doesn't reach the target when re-centering after a weather or safety pause, the observation is marked **failed** and imaging stops, so no further frames are taken off-target.
 
 ---
 

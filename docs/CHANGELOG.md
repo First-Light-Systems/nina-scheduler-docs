@@ -6,6 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.28] - 2026-11-21
+
+Brings the docs up to date with what shipped from September to November 2026 (server 4.19.0, user GUI 4.8.2, plugin 5.8.4.0).
+
+### Added
+
+- **Asterism Assistant** — new page: enabling it, your own Anthropic key, what it can see, draft cards you confirm, skill levels, organization-admin drafts. **User Profile** gains the **Claude (Asterism Assistant)** section.
+- **Direct Control Windows** and **Schedule Analytics** (Observatory Administration) — booking a Remote Control window, controller/spectator links, the no-show rule, blue bands on the timelines; read-only Schedule Analytics for observatories you can't administer.
+- **Creating Observations** — must-acknowledge Warning/Critical announcements when booking, exposure time 0 ("Camera minimum"), the run explanation on the detail page and floating window, "Checking…" dispatch-status retries, **Everyone I manage** / **All users** on My Observations, AAVSO VSX variable stars, spacecraft by NAIF id, loose-match warnings.
+- **Calibration** — the **Darks Needed** condition and **Asterism Darks** instruction, the **Flats Needed** condition, **Flat Dark-Subtraction** modes, sub-second dark handling, and the "temperature inconsistent" accumulation block. **Plugin Setup** gains a Calibration Items section.
+- **External Storage** — "Selected by default" organization destinations, per-file delivery chips, delivery-problem notices (also in Notifications), the shared-location warning.
+- **Observation Files** — the complete embedded quality-header table (including MAGZERO/LIMMAG), and "Frames still uploading" (**Uploads paced**). **Troubleshooting** gains Uploads paced and "Observation failed immediately or mid-run".
+- **Practical Guide** — Operations queue and recent activity (**re-queued** chip); recurring observations, pinned monitor outcomes and Direct Control on the timelines.
+- **Organizations** — plans and billing, emailing members, viewing members' observations, who may move an organization.
+- From the earlier part of this release: **My Usage** page, **System Announcements**, **Center After Drift**, ADU **Quality Gates**, **Gap Filling**, and limiting magnitude / photometric zero-point.
+
+### Changed
+
+- **Repetitive Observations** — the execution-window setting is gone: runs may start whenever the target is observable that night. Field names now match the form; past-window series are refused.
+- **Scheduling precedence** (Scheduler Features, Practical Guide) — higher priority always wins; at equal priority a fixed-time observation wins and its pinned start interrupts lower-ranked work. Removed "Highest scheduling priority" for fixed-time and "oldest first" ordering.
+- **Editing** — Failed, Waiting Next, Paused, Suspended and Expired observations can be edited; Assigned cannot.
+- **Monitoring** re-arms after partially-completed, aborted and failed runs too, and is eligible from dusk.
+- **Calibration chips** — Cal (green), Cal Ready (orange), Cal · stale (blue), No Cal; the **Asterism Calibration** instruction is now **Asterism Flats**; sky flats keep retrying until the container's own condition ends them.
+- **Downloads** — **Download All (zip)** / **Download Calibrated (zip)** work in every browser (500 files / 20 GiB cap).
+- **External Storage** — personal destinations are always attached (Required); calibrated-only frames are sent late once masters exist; deleting a destination that holds the only copy is refused.
+- **Target lookup** — no TNS credentials needed for supernova names.
+- **Stale-observation monitor** — 2 hours without updates, or up to 18 hours while the plugin stays connected (was "24h / 48h" in Troubleshooting).
+- Home page versions and "What's New" refreshed; User Profile layout matches the current page.
+
+### Fixed
+
+- Seven broken links and anchors (Topic Index, Observatory Administration, Server Architecture).
+
+---
+
 ## [2.27] - 2026-09-01
 
 ### Changed

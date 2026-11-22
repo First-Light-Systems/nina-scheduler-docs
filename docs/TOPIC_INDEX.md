@@ -7,10 +7,13 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 ## A
 
 - **ADU** (Analog-to-Digital Unit) — [Observation Files](OBSERVATION_FILES.md#quality-metrics), [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs)
-- **Airmass** — [Creating Observations](CREATING_OBSERVATIONS.md#constraints), [Scheduler Features](SCHEDULER_FEATURES.md#constraint-checking), [Troubleshooting](TROUBLESHOOTING.md)
+- **Airmass** — [Creating Observations](CREATING_OBSERVATIONS.md#step-3-constraints-optional), [Scheduler Features](SCHEDULER_FEATURES.md#constraint-checking), [Troubleshooting](TROUBLESHOOTING.md)
 - **Announcements (MOTD)** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#announcements-motd)
+    - Must acknowledge when booking — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#creating-an-announcement), [Creating Observations](CREATING_OBSERVATIONS.md)
+- **Anthropic API key** — [User Profile](USER_PROFILE.md#claude-asterism-assistant), [Asterism Assistant](ASTERISM_ASSISTANT.md#before-you-start)
 - **API key** — [Observatory Registration](OBSERVATORY_REGISTRATION.md#hardware-fingerprint), [Plugin Setup](PLUGIN_SETUP.md), [Organizations](ORGANIZATIONS.md)
 - **Assigned status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
+- **Asterism Assistant** (Claude) — [Asterism Assistant](ASTERISM_ASSISTANT.md), [User Profile](USER_PROFILE.md#claude-asterism-assistant)
 - **Autofocus** — [Autofocus Guide](AUTOFOCUS_GUIDE.md), [Creating Observations](CREATING_OBSERVATIONS.md)
     - Filter change trigger — [Autofocus Guide](AUTOFOCUS_GUIDE.md#trigger-types)
     - HFR-based trigger — [Autofocus Guide](AUTOFOCUS_GUIDE.md#trigger-types)
@@ -34,6 +37,7 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
     - Status chips — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-status-in-the-file-browser)
 - **Camera simulator** — [Plugin Setup](PLUGIN_SETUP.md)
 - **Cancelled status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Notifications](NOTIFICATIONS.md)
+- **Claude** (AI assistant) — see [Asterism Assistant](#a)
 - **Contact support** — [Contact Support](CONTACT_SUPPORT.md)
 - **CCD camera** — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-application), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **CMOS camera** — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-application), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
@@ -41,24 +45,29 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 - **Complete and stop** — [Overview](OVERVIEW.md)
 - **Constraints** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md), [Troubleshooting](TROUBLESHOOTING.md)
 - **Coordinate lookup** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
-- **CSV import** — [Target Library](TARGET_LIBRARY.md#csv-import-wizard)
+- **CSV import** — [Target Library](TARGET_LIBRARY.md#csv-import)
 
 ## D
 
 - **Dark frame** — [Calibration Guide](CALIBRATION_GUIDE.md#dark-and-bias-frames), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
+- **Direct Control** (booked real-time windows) — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#direct-control-windows)
 - **Dispatch scheduling** — [Scheduler Features](SCHEDULER_FEATURES.md#dispatch-scheduling), [Observatory Administration](OBSERVATORY_ADMINISTRATION.md)
 - **Dithering** — [Guiding Guide](GUIDING_GUIDE.md), [Target Library](TARGET_LIBRARY.md)
 - **Dropbox** — [External Storage](EXTERNAL_STORAGE.md)
 
 ## E
 
+- **Email members** — [Organizations](ORGANIZATIONS.md#emailing-members)
 - **Email notifications** — [Notifications](NOTIFICATIONS.md#email-notifications), [User Profile](USER_PROFILE.md)
 - **Equipment options** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md), [Plugin Setup](PLUGIN_SETUP.md)
+- **Everyone I manage** (My Observations) — [Organizations](ORGANIZATIONS.md#viewing-members-observations)
 - **Execution window** — [Repetitive Observations](REPETITIVE_OBSERVATIONS.md), [Scheduler Features](SCHEDULER_FEATURES.md)
-- **Exoplanet transit** — [Exoplanet Transits](EXOPLANET_TRANSITS.md), [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md#fixed-time-observations)
+- **Exoplanet transit** — [Exoplanet Transits](EXOPLANET_TRANSITS.md), [Practical Guide](PRACTICAL_GUIDE.md), [Scheduler Features](SCHEDULER_FEATURES.md#2-fixed-time)
 - **Expiry warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#needs-tab), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
 - **Exposure configuration** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **External storage** — [External Storage](EXTERNAL_STORAGE.md), [Organizations](ORGANIZATIONS.md)
+    - Delivery problem notifications — [User Profile](USER_PROFILE.md#notification-preferences), [External Storage](EXTERNAL_STORAGE.md)
+    - Selected by default (organization) — [Organizations](ORGANIZATIONS.md#external-storage)
 
 ## F
 
@@ -69,7 +78,7 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 - **Fill time** — [Scheduler Features](SCHEDULER_FEATURES.md), [Target Library](TARGET_LIBRARY.md)
 - **Filter** — [Creating Observations](CREATING_OBSERVATIONS.md), [Calibration Guide](CALIBRATION_GUIDE.md)
 - **FITS file** — [Observation Files](OBSERVATION_FILES.md), [External Storage](EXTERNAL_STORAGE.md)
-- **FITS header** — [Observation Files](OBSERVATION_FILES.md#fits-metadata)
+- **FITS header** — [Observation Files](OBSERVATION_FILES.md#fits-metadata-display)
 - **FITS processor** — [Server Architecture](SERVER_ARCHITECTURE.md)
 - **Fixed-time observation** — [Scheduler Features](SCHEDULER_FEATURES.md), [Creating Observations](CREATING_OBSERVATIONS.md), [Practical Guide](PRACTICAL_GUIDE.md)
 - **Flat frame** — [Calibration Guide](CALIBRATION_GUIDE.md#flat-frame-capture), [Calibration Administration](CALIBRATION_ADMINISTRATION.md)
@@ -148,12 +157,15 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 - **Observatory reservations** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#reservations-blocking-time)
 - **Offset** (camera) — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **Organizations** — [Organizations](ORGANIZATIONS.md), [Projects Guide](PROJECTS_GUIDE.md)
+    - Moving under a parent — [Organizations](ORGANIZATIONS.md#moving-an-organization-under-a-parent)
+    - Viewing members' observations — [Organizations](ORGANIZATIONS.md#viewing-members-observations)
 
 ## P
 
 - **Pending status** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md)
 - **Permissions** — [Organizations](ORGANIZATIONS.md), [Projects Guide](PROJECTS_GUIDE.md)
 - **Pipeline performance stats** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#pipeline-performance-stats)
+- **Plans** (subscription) — [Organizations](ORGANIZATIONS.md#plans-and-billing), [Projects Guide](PROJECTS_GUIDE.md#plans-and-limits)
 - **Plate solving** — [Image Processing](IMAGE_PROCESSING.md#plate-solving), [Practical Guide](PRACTICAL_GUIDE.md), [Plugin Setup](PLUGIN_SETUP.md)
 - **Plugin setup** — [Plugin Setup](PLUGIN_SETUP.md), [Getting Started](GETTING_STARTED.md)
 - **Preview images** — [Image Processing](IMAGE_PROCESSING.md#processing-modules), [Observation Files](OBSERVATION_FILES.md)
@@ -171,6 +183,7 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 - **Readout mode** — [Calibration Guide](CALIBRATION_GUIDE.md#cameras-with-internal-stacking-and-12-bit-adcs), [Creating Observations](CREATING_OBSERVATIONS.md)
 - **Redis** — [Server Architecture](SERVER_ARCHITECTURE.md)
+- **Remote Control** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#enabling-remote-control)
 - **Repetitive observations** — [Repetitive Observations](REPETITIVE_OBSERVATIONS.md), [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Resubmission** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Repetitive Observations](REPETITIVE_OBSERVATIONS.md)
 - **Resume/suspend** — [Observation Lifecycle](OBSERVATION_LIFECYCLE.md), [Scheduler Features](SCHEDULER_FEATURES.md)
@@ -182,15 +195,18 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 ## S
 
 - **Safety** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
+- **Saved preferences** (assistant) — [Asterism Assistant](ASTERISM_ASSISTANT.md#saved-preferences)
+- **Schedule Analytics** — [Observatory Administration](OBSERVATORY_ADMINISTRATION.md#schedule-analytics)
 - **Scheduler features** — [Scheduler Features](SCHEDULER_FEATURES.md)
 - **Asterism container** — [Plugin Setup](PLUGIN_SETUP.md), [Overview](OVERVIEW.md)
 - **Seeing** — [Observation Files](OBSERVATION_FILES.md#quality-metrics)
 - **Sequence repeat count** — [Creating Observations](CREATING_OBSERVATIONS.md), [Target Library](TARGET_LIBRARY.md)
 - **Server architecture** — [Server Architecture](SERVER_ARCHITECTURE.md)
 - **Sigma-clipped mean** — [Calibration Guide](CALIBRATION_GUIDE.md#master-frame-creation)
+- **Skill level** (assistant) — [Asterism Assistant](ASTERISM_ASSISTANT.md#skill-levels)
 - **Sky flats** (twilight) — [Calibration Guide](CALIBRATION_GUIDE.md#sky-mode), [Plugin Setup](PLUGIN_SETUP.md#twilight-sky-flat-pointing)
 - **Sky mode** (flat capture) — [Calibration Guide](CALIBRATION_GUIDE.md#sky-mode)
-- **Stale warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-details-on-file-detail-page)
+- **Stale warning** (calibration) — [Calibration Guide](CALIBRATION_GUIDE.md#calibration-masters-on-file-detail-page)
 - **Star count** — [Observation Files](OBSERVATION_FILES.md#quality-metrics)
 - **Status** — see [Observation lifecycle](#o)
 - **Support requests** — [Contact Support](CONTACT_SUPPORT.md), [Troubleshooting](TROUBLESHOOTING.md)
@@ -227,4 +243,4 @@ An alphabetical reference to topics, features, and concepts across the Asterism 
 
 ---
 
-*This index covers Asterism documentation v2.27 (September 2026).*
+*This index covers Asterism documentation as of November 2026.*

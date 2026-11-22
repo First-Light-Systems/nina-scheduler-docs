@@ -1,7 +1,13 @@
 # Calibration Guide
 
-**Document Version**: 1.3 | **Last Updated**: September 2026
+**Document Version**: 1.4 | **Last Updated**: November 2026
 
+> **What's New** (November 2026):
+> - **Asterism Flats** — the flat instruction formerly called "Asterism Calibration" is now **Asterism Flats**; sequences you saved with the old name still load unchanged
+> - **Darks in your sequence** — a new **Darks Needed** condition and **Asterism Darks** instruction capture the darks and bias the server needs in a dusk/dawn block (see [Capturing Darks in a Sequence](#capturing-darks-in-a-sequence))
+> - **Sky flats keep trying** — Sky mode now retries each filter through twilight until it has its frames (see [When capture stops](#when-capture-stops))
+> - **Clearer calibration chips** — files now distinguish **Cal** (calibrated) from **Cal Ready** (masters exist) and **Cal · stale** (see [Calibration Status](#calibration-status-in-the-file-browser))
+>
 > **What's New** (June 2026):
 > - **Sky (twilight) flats** — the calibration instruction's Sky mode now captures twilight flats by delegating to NINA's Sky Flat routine, with per-filter dusk/dawn ordering and a pointing helper on the options page (see [Sky Mode](#sky-mode))
 > - **Shutterless camera support** — the plugin uses an opaque "dark filter" to block light when capturing darks/bias on cameras without a mechanical shutter (see [Dark and Bias Frames](#dark-and-bias-frames))
@@ -39,8 +45,8 @@ The calibration system works across three components:
 
 Most calibration happens automatically:
 
-- **Dark frames** are captured during gaps between observations (gap-filling). The server dispatches dark capture when it detects your observatory needs darks for the exposure times and temperatures you've been imaging at.
-- **Flat frames** are captured using the Asterism Calibration instruction in your NINA sequence. You place this instruction in your sequence where flat capture should happen (typically at the start or end of a session).
+- **Dark frames** are captured during gaps between observations (gap-filling), and/or by the **Asterism Darks** instruction in a dusk or dawn block of your NINA sequence. The server decides what to capture when it detects your observatory needs darks for the exposure times and temperatures you've been imaging at.
+- **Flat frames** are captured using the **Asterism Flats** instruction in your NINA sequence. You place this instruction in your sequence where flat capture should happen (typically at the start or end of a session).
 - **Master creation** happens automatically when enough individual frames accumulate. The server monitors frame counts and triggers stacking when the configured threshold is reached.
 - **Calibration application** is automatic. When your light images are processed through the pipeline, the server finds matching master frames and applies them.
 
@@ -88,13 +94,29 @@ Flat frames require special attention because they need an illumination source �
 
 ### Setting Up Flat Capture in NINA
 
-1. In NINA's Advanced Sequencer, add the **Asterism Calibration** instruction
+1. In NINA's Advanced Sequencer, add the **Asterism Flats** instruction (in the **Asterism** category)
 2. Choose the flat capture mode:
     - **Panel** — uses a motorized flat panel (requires a connected flat device)
     - **Sky** — uses twilight sky illumination (select Dawn or Dusk)
 3. Place the instruction in your sequence where flat capture should happen
 
 The instruction queries the server to determine which filters need flats and how many frames are still needed. It then captures only the frames necessary to reach the target count.
+
+!!! note "Formerly named Asterism Calibration"
+    This instruction used to be called **Asterism Calibration**. Only the displayed name changed — sequences saved with the old name load and run exactly as before.
+
+#### The Flats Needed condition
+
+To run your flat block (including any setup such as opening a cover, slewing to the panel, or turning on the panel) **only when the server actually needs flats**, put it in a container and add the **Flats Needed** condition (also in the **Asterism** category):
+
+```
+Sequential Container   [condition: Flats Needed]
+├── Observatory-specific setup (slew to panel, open cover, …)
+├── Asterism Flats
+└── Observatory-specific teardown
+```
+
+**Flats Needed** asks the server once when the container starts. If flats are needed, the container runs through **once**; if not, the whole block is skipped. It is a one-shot gate, not a loop — capture itself decides when it has enough frames.
 
 ### How Many Frames Are Captured?
 
@@ -137,7 +159,7 @@ Sky mode does **not** have its own exposure settings on the instruction. It read
 | Minimum / maximum exposure | Each filter's **Flat Wizard filter settings** (`Min`/`Max` flat exposure time) |
 | Histogram target & tolerance | The global **Flat Wizard** settings (mean target, tolerance) |
 
-Set sensible per-filter min/max exposures in NINA's Flat Wizard filter settings before using Sky mode — the **maximum exposure is what stops capture** (see "When capture stops" below).
+Set sensible per-filter min/max exposures in NINA's Flat Wizard filter settings before using Sky mode — they decide **when the sky is usable** for each filter (see "When capture stops" below).
 
 #### Filter Order
 
@@ -170,12 +192,14 @@ Twilight Sky Flat Pointing
 Adjust the **Altitude** (default 75°) if your horizon is obstructed, and click **Refresh** to recompute (the values drift slowly day to day). Then build your sequence like this:
 
 ```
-Sequential Container
+Sequential Container      [condition: e.g. Sun Altitude, Loop While Safe]
 ├── Slew to Alt/Az        ← enter the Az/Alt from the options page
 ├── Set Tracking → Stopped
-├── Asterism Calibration   (Sky mode)
+├── Asterism Flats        (Sky mode)
 └── Set Tracking → On
 ```
+
+Give this container its own time/safety condition — see [When capture stops](#when-capture-stops) for why.
 
 !!! tip "Stop tracking — no dithering needed"
     With tracking **off**, the sky drifts through the field and stars land on different pixels each frame, so they're removed when the frames are stacked. This is why the instruction doesn't dither. If you leave tracking **on**, stars stay fixed and can contaminate the flat.
@@ -185,11 +209,16 @@ Sequential Container
 
 #### When capture stops
 
-Sky flats end on their own — there's no fixed frame count guarantee:
+Sky mode works through the filters **one at a time, in Filter Order** (reversed for dawn), and **keeps trying** each filter until it has the frames the server asked for:
 
-- At **dusk**, as the sky darkens, the required exposure for a filter eventually exceeds that filter's **maximum** Flat Wizard exposure, and capture for that filter stops. Dusk-ordered filters wind down naturally as twilight ends.
-- At **dawn**, capture stops when the required exposure drops below the filter's **minimum** exposure.
-- Capturing **fewer frames than requested** is normal — the server accumulates frames toward a master across multiple nights, so a short twilight window still makes progress.
+- If the sky isn't right for a filter yet — too bright at dusk, still too dark at dawn, so the required exposure falls outside that filter's Flat Wizard **min/max** — the attempt captures nothing. The instruction waits about **30 seconds** and tries the **same filter** again.
+- Once a filter has its frames, it moves on to the next filter in the order.
+- The run stops when every filter is done, **or** when one of the **parent container's own loop conditions** becomes false — for example a **Sun Altitude** condition or **Loop While Safe**. Those conditions are re-checked before every attempt, so a rising Sun or an unsafe sky ends the run promptly.
+
+!!! warning "Give the sky-flat container a time or safety condition"
+    Sky mode does **not** decide on its own that twilight is over. If a filter can never reach its frames (clouds, or its twilight window has already passed), it keeps retrying until the container's conditions end the run. Always put the Asterism Flats (Sky mode) instruction inside a container with a condition such as **Sun Altitude** (and **Loop While Safe** if you use a safety monitor). The **Flats Needed** condition is ignored for this purpose — the instruction counts its own frames.
+
+Capturing **fewer frames than requested** in one twilight is still normal when the run is cut off — the server accumulates frames toward a master across multiple nights, so a short window still makes progress.
 
 ### Fallback Mode
 
@@ -223,22 +252,55 @@ This ensures the Flat Wizard targets the correct ADU range for the 12-bit mode. 
 
 ## Dark and Bias Frames
 
-Dark and bias frames are captured automatically by the gap-filling system. When the server detects idle time between scheduled observations, it dispatches dark frame capture at the exposure times and temperatures your observatory has been using for light frames.
+Dark and bias frames are captured automatically by the gap-filling system. When the server detects idle time between scheduled observations, it dispatches dark frame capture at the exposure times and temperatures your observatory has been using for light frames. You can also capture them in a dedicated dusk or dawn block of your sequence (see [Capturing Darks in a Sequence](#capturing-darks-in-a-sequence)).
 
 For most cameras you don't need to configure anything — the server analyzes your recent light frames and determines what dark coverage is needed. **Shutterless cameras are the exception** (see below).
 
 !!! note "Dark Frame Requirements"
     For CMOS cameras, dark frames must match the exact exposure time of your lights (rounded to the nearest second). For CCD cameras, dark frames can be scaled to different exposure times, so fewer darks are needed.
 
+    **Sub-second exposures** are matched and captured as whole seconds, with a **minimum of 1 second**. A 0.1 s or 0.4 s light is calibrated with a 1 s dark, and the server asks for 1 s darks to cover it — never 0 s.
+
 ### Demand-Driven Capture
 
 The server only acquires darks (and only builds masters) for camera/binning/gain/offset/temperature/exposure combinations that your **recent light frames actually use**. A combination with no recent matching lights is not pursued, so the system doesn't waste gap time or uplink bandwidth capturing calibration you don't need. As your imaging mix changes, the [Needs tab](#needs-tab) updates to show only the coverage that current demand requires.
+
+### Capturing Darks in a Sequence
+
+Gap-filling only captures darks when the schedule happens to leave a gap. To capture them at a time you choose — typically at **dusk** before observing, or at **dawn** after closing — use two items from the **Asterism** category in NINA's Advanced Sequencer:
+
+| Item | Type | What it does |
+|------|------|--------------|
+| **Darks Needed** | Condition | Asks the server whether any dark or bias sets are still outstanding **at the camera's current temperature**, and keeps its container looping while they are. It re-checks on every pass, so the loop ends once the need is met. |
+| **Asterism Darks** | Instruction | Captures the dark and bias frames the server currently needs, set by set, then returns. |
+
+Use them **together**, in a container that also has its **own time bound**:
+
+```
+Sequential Container   [conditions: Darks Needed + a time condition, e.g. Loop Until Time or Sun Altitude]
+├── Cool Camera                    ← if the sensor may not have settled yet
+├── Close cover / park / dark filter
+├── Asterism Darks
+└── Teardown
+```
+
+Key points:
+
+- **The server decides what to capture.** Neither item picks exposures, gains or counts — the server works out what your recent light frames need (the same selection gap-filling uses), and the plugin works down that list.
+- **Temperature comes from the live sensor.** A set is captured only if the camera's **current** temperature matches what that set needs; other sets are skipped (the status shows *"Skipped … wants −10.0°C, sensor …"*). Put NINA's **Cool Camera** ahead of the instruction if the block can start before the sensor has settled.
+- **Making it dark is up to your sequence.** Asterism Darks does not close covers or roofs, and unlike gap-fill darks it does **not** move to the plugin's Dark Filter. Put whatever blocks light at your site — closing a cover, parking under the roof, or a **Switch Filter** to an opaque filter on a shutterless camera — in the block's setup steps, as you would for flats.
+- **Readout mode is honoured or refused.** If a set calls for a readout mode the camera doesn't offer, Asterism Darks **skips that set** (and logs why) rather than capturing it at the wrong mode, where the frames would be useless for the lights that need them.
+- **It never overlaps science.** If a science observation is running, the instruction skips its work.
+- **Your sequence must include the Asterism Container.** Asterism Darks uses its server connection; without it, the instruction stands down with *"No scheduler container found"*.
+
+!!! tip "Why a time condition as well?"
+    **Darks Needed** stops the loop once nothing is outstanding, but a set can stay outstanding even though the instruction can't capture it (for example, one whose readout mode the camera doesn't offer). The time condition guarantees the block ends when your dusk or dawn window does.
 
 ### Shutterless Cameras
 
 A dark or bias frame must be exposed with **no light reaching the sensor**. Cameras with a mechanical shutter do this automatically. Many CMOS cameras have **no shutter**, so the plugin must move the filter wheel to an opaque ("dark") filter before exposing — otherwise the "dark" would record sky background or whatever filter the last light frame left in the beam.
 
-If your camera is shutterless, set the plugin's **Dark Filter** option to the name of an opaque slot in your filter wheel. If no valid dark filter is configured, the plugin **refuses to capture darks** (and raises a red notification in NINA) rather than record a contaminated frame. See [Dark Filter (Shutterless Cameras)](PLUGIN_SETUP.md#dark-filter-shutterless-cameras) in the Plugin Setup guide for full details.
+If your camera is shutterless, set the plugin's **Dark Filter** option to the name of an opaque slot in your filter wheel. If no valid dark filter is configured, the plugin **refuses to capture gap-fill darks** (and raises a red notification in NINA) rather than record a contaminated frame. (In an [Asterism Darks](#capturing-darks-in-a-sequence) block, add a **Switch Filter** to the opaque filter yourself — that instruction doesn't move the wheel.) See [Dark Filter (Shutterless Cameras)](PLUGIN_SETUP.md#dark-filter-shutterless-cameras) in the Plugin Setup guide for full details.
 
 ## Master Frame Creation
 
@@ -248,7 +310,7 @@ Masters are created automatically when enough individual frames accumulate. The 
 2. The server counts frames matching each configuration (camera, gain, offset, binning, filter, temperature)
 3. When the count reaches the threshold (`min_frames_for_master`), stacking is triggered
 4. Frames within the temperature tolerance band are grouped together
-5. For flat masters, a matching master dark is required (for dark subtraction during stacking)
+5. For flat masters, a matching master dark is required (for dark subtraction during stacking) — which dark counts as "matching" is set by the observatory's [Flat Dark Matching Mode](CALIBRATION_ADMINISTRATION.md#flat-dark-subtraction)
 6. The stacking method (default: sigma-clipped mean) combines the frames
 7. The new master supersedes any previous master with the same configuration
 8. Individual source frames are linked to the master
@@ -276,15 +338,20 @@ Calibrated images are cached for performance. When a new master is created, the 
 
 ## Calibration Status in the File Browser
 
-Each file in the file browser shows its calibration status as a colored chip:
+Each light frame on the Observation Files and observation detail pages shows its calibration status as a colored chip:
 
 | Chip | Color | Meaning |
 |------|-------|---------|
-| **Cal Ready** | Green | Matching calibration masters are available for this file |
-| **No Cal** | Orange | No matching calibration masters were available |
+| **Cal** | Green | The frame **has been calibrated** |
+| **Cal Ready** | Orange | Matching masters exist, but this frame hasn't been calibrated yet (for example, it was processed before the masters were built). **Download Calibrated** calibrates it on the fly. |
+| **Cal · stale** | Blue (outlined) | The only matching master has **expired** — calibration is possible, but fresh calibration frames are due. Hover for details. |
+| **No Cal** | Orange | No matching calibration masters are available. Hover to see which master (dark, flat, bias) is missing. |
 | **File Missing** | Red | The raw file is missing |
 
-Files with no chip shown have either not been processed yet or have calibration disabled.
+Files with no chip shown have either not been processed yet or have calibration disabled. Calibration frames themselves (darks, flats, bias) never show Cal Ready and don't offer Download Calibrated — they aren't calibrated.
+
+!!! note "My Files shows a simpler chip"
+    The [My Files](FILE_BROWSER.md) grid shows a single outlined orange **Cal Ready** chip whenever matching masters are available; it doesn't distinguish calibrated, not-yet-calibrated, or stale frames. Open the observation's files to see the detailed chip.
 
 ### Calibration Masters on File Detail Page
 

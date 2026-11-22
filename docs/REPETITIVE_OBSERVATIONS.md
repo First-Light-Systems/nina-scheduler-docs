@@ -12,11 +12,11 @@ Asterism offers two ways to observe a target repeatedly:
 |---------|------------------------|---------------------|
 | **Created via** | Repetitive observation form | Standard observation with cadence settings |
 | **Interval** | Days + hours | Days between observations |
-| **Execution windows** | Configurable start/end windows | Based on cadence eligibility |
+| **When each run happens** | Any time the target is observable that night | Based on cadence eligibility |
 | **Series management** | Pause/resume, execution history, statistics | Basic cadence tracking |
 | **Best for** | Structured campaigns with precise timing | Simple "observe every N days" programs |
 
-**Use repetitive observations** when you need precise interval control, execution windows, series statistics, or pause/resume capability. **Use monitoring** for simpler cadence-based programs where you just want the target re-observed periodically.
+**Use repetitive observations** when you need precise interval control, series statistics, skip/priority-boost rules, or pause/resume capability. **Use monitoring** for simpler cadence-based programs where you just want the target re-observed periodically.
 
 ## Creating a Repetitive Observation
 
@@ -34,14 +34,21 @@ See [Creating Observations](CREATING_OBSERVATIONS.md) for details on these field
 
 ### Repetition Configuration
 
+Turn on **Enable Repetitive Observation** on the Repetition step, then fill in:
+
 | Field | Description | Constraints |
 |-------|-------------|-------------|
-| **Interval (days)** | Days between executions | Combined with hours |
-| **Interval (hours)** | Hours between executions | Combined with days |
-| **Start Date** | When the series begins | Required |
-| **End Date** | When the series ends | Optional — omit to run indefinitely (ongoing) |
-| **Max Executions** | Maximum number of times to execute | Optional — omit for unlimited executions |
-| **Window Hours** | How long the execution window stays open | Optional |
+| **Start Date & Time (UTC, Optional)** | When the series begins | Leave empty to start now. A start more than about 15 minutes in the past is refused — the field warns "this is in the past; check the UTC date" |
+| **End Date & Time (UTC, Optional)** | When the series ends | Leave empty for an ongoing series. A series whose end has already passed is refused |
+| **Repetition Interval** — **Days** / **Hours** | Time between executions | Quick presets: Every 4 hours, Twice daily, Daily, Every 3 days, Weekly, Bi-weekly, Monthly |
+| **Maximum Executions (Optional)** | Maximum number of runs | Leave empty for unlimited (within the date range). The **Estimated Executions** box shows how many runs the settings allow |
+| **Skip If Delayed (Optional)** | Skip a run that is delayed by more than this many hours | Under **Advanced Settings** |
+| **Priority Boost Per Day** | Raise the run's priority for each day it is delayed | Under **Advanced Settings** |
+
+There is no execution-window setting. Each run may start **at any time the target is observable that night** ("full night"); how long it runs comes from the exposure plan, or from the minimum/desired observing time for a time-based observation. Use **Skip If Delayed** and **Priority Boost Per Day** to control what happens when a run slips.
+
+!!! note "Older series with a fixed window"
+    Series created before 17 November 2026 may still carry a fixed execution window. Their detail page shows **Execution Window: *N*h wide (±*N/2*h around the ideal time) — a run must fit inside this**, and Asterism warns when that window is shorter than one run (such a run can never be scheduled). New series show **Full night — runs whenever the target is observable (no fixed window)**.
 
 **Example configurations:**
 
@@ -78,16 +85,15 @@ This is well suited to campaigns that must begin at a set clock time on a regula
 
 ## Execution Windows
 
-Each iteration of a repetitive observation has an execution window:
+Each run of a repetitive observation has an ideal time and the night it belongs to:
 
 | Field | Description |
 |-------|-------------|
-| **Ideal Time** | The target time for execution (e.g., transit time) |
-| **Window Start** | Earliest the execution can begin |
-| **Window End** | Latest the execution can begin |
+| **Ideal Time** | The target time for the run (shown as **Next Execution** on the detail page) |
+| **Window Start / Window End** | The span the run may start in — normally the whole observable part of that night (shown on the detail page as the next run's window) |
 | **Iteration Number** | Which execution in the series this is |
 
-The scheduler will attempt to execute the observation within the window. If the window passes without execution (weather, no available observatory), the execution is recorded as **skipped** and the next window is calculated.
+The scheduler will attempt to run the observation in that span. If it passes without a run (weather, no available observatory), the run is recorded as **skipped** and the next one is calculated.
 
 ## Series Statistics
 

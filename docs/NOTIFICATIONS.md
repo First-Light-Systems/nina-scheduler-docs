@@ -1,6 +1,6 @@
 # Notification Preferences & Per-Observation Notifications
 
-**Document Version**: 2.6 | **Last Updated**: September 2026
+**Document Version**: 2.7 | **Last Updated**: November 2026
 
 Asterism can notify you when your observations change state — via **email** and/or **Pushover** push notifications.
 
@@ -58,6 +58,20 @@ Server administrators have additional toggles to control which categories of not
 
 !!! note "Admin only"
     Category toggles are only visible to users with the Server Administrator role. Regular users receive observation notifications based on their per-observation settings and do not see these toggles.
+
+### External Storage Delivery Problems
+
+Every user's notification preferences include an **External storage delivery problems** checkbox (on by default). It covers files that didn't reach your [external storage](EXTERNAL_STORAGE.md) within a day of capture:
+
+- You're told **at most once a day** per observation, for **up to 7 days**, while the problem lasts
+- If the files are delivered after you've been told, a final message confirms it
+- Messages go by **email** (unless you've turned email off) and by **Pushover** if you've enabled it
+- They're sent to the observation's submitter and the owners of the destinations involved; **observatory and project owners** are added when files were sent raw-only because calibration masters were missing
+
+Uncheck the box to stop these messages. The delivery status is still shown on each file (see [Delivery chips](EXTERNAL_STORAGE.md#delivery-chips-on-files)).
+
+!!! note "Your server administrator must enable these"
+    Delivery problem notices are **off by default** on an Asterism server. If your server administrator hasn't enabled them, you won't receive any, whatever this checkbox says.
 
 ### Testing Notifications
 

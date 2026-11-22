@@ -69,6 +69,7 @@ nav:
   - Observatory Registration: OBSERVATORY_REGISTRATION.md
   - Observations:
     - Creating Observations: CREATING_OBSERVATIONS.md
+    - Asterism Assistant: ASTERISM_ASSISTANT.md
     - Target Library: TARGET_LIBRARY.md
     - Exoplanet Transits: EXOPLANET_TRANSITS.md
     - Scheduler Features: SCHEDULER_FEATURES.md

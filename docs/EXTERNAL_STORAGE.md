@@ -1,6 +1,6 @@
 # External Storage Guide
 
-**Document Version**: 1.2 | **Last Updated**: September 2026
+**Document Version**: 1.3 | **Last Updated**: November 2026
 
 > Automatically copy your FITS files to external storage after observations complete. Supported destinations: **Dropbox**, **Google Drive**, **Google Cloud Storage**, **AWS S3**, and **SFTP / SCP** (your own server).
 
@@ -174,10 +174,13 @@ The **File Content** setting controls which versions of files are transferred to
 | Option | Description |
 |--------|-------------|
 | **Raw only** (default) | Only the original raw FITS files are transferred. Same behavior as before this setting existed. |
-| **Calibrated only** | Only calibrated versions are transferred. The transfer happens after calibration completes in the processing pipeline, so it may appear slightly after raw transfers. If calibration fails or no matching masters are available, no file is transferred. |
+| **Calibrated only** | Only calibrated versions are transferred. The transfer happens after calibration completes in the processing pipeline, so it may appear slightly after raw transfers. If no matching masters are available yet, the calibrated copy is sent **late** — see below. |
 | **Both raw and calibrated** | Both the raw file and the calibrated version are transferred. The raw file transfers immediately; the calibrated file follows after calibration completes. |
 
 Calibrated files are saved with `_calibrated` appended to the filename (e.g., `M31_Luminance_300s_calibrated.fits`).
+
+!!! note "Calibrated copies can arrive late"
+    If a frame can't be calibrated when it is processed because matching masters don't exist yet, it isn't forgotten. When a new master arrives that matches it, the frame is re-calibrated and the calibrated copy is sent then. Asterism also retries such frames once a day, for up to about **7 days**. Until then, the frame shows **Sent Raw only** (if raw was also requested) — see [Delivery chips](#delivery-chips-on-files).
 
 #### Step 5: Advanced Options
 
@@ -221,8 +224,21 @@ Each destination shows:
 - Root path
 - Warning flag if "delete from server" is enabled
 
-!!! note "A project's own storage is required"
-    If the selected project has its own external-storage destination — including storage the project inherits from its **organization**, even when you reach the project through your organization role — that destination is **automatically selected and locked on**, shown with a **Required** badge that can't be unchecked, so a project's data always lands in the project's configured storage. Only the selected project's destinations are shown; other projects' destinations are hidden, while your Personal and Organization destinations remain freely selectable.
+!!! note "Your personal storage and the project's storage are required"
+    Two kinds of destination are **always attached to a new observation**, shown **checked, locked, and marked Required**:
+
+    - **Project storage** — the selected project's own enabled destinations, including storage the project inherits from its **organization** (even when you reach the project through your organization role), so a project's data always lands in the project's configured storage.
+    - **Your personal storage** — every **enabled** personal destination you own. To stop new observations going to a personal destination, disable it (see [Disabling vs Deleting](#disabling-vs-deleting)).
+
+    This applies however the observation is created — the form, CSV import, repeats, or copying an observation. Only the selected project's destinations are shown; other projects' destinations are hidden. **Organization** destinations are opt-in, except those the organization marks as defaults (below).
+
+#### Organization defaults ("Selected by default")
+
+When an organization admin creates or edits an organization destination, they can turn on **Selected by default for new observations**. Such a destination shows a **Selected by default** chip on its card. When an organization member creates an observation, it starts **pre-checked** — but, unlike Required storage, the member **can uncheck it**. (Observations created without a form, such as CSV imports, get the organization defaults automatically.)
+
+#### Two destinations, one location
+
+If you select two destinations that actually write to the **same place** (for example, a personal and a project configuration pointing at the same bucket and folder), the form shows a notice such as *"Team Archive" and "My Archive" send to the same location — each file is sent there once.* Asterism sends each file to that location only once.
 
 ### Example: Standard Research Workflow
 
@@ -304,6 +320,34 @@ After an observation completes, the observation detail page shows the transfer s
 | **Failed** | Transfer failed after all retry attempts |
 | **Cancelled** | Transfer was cancelled |
 
+The **External Storage** card on the observation page also keeps a lasting count of what was delivered — including counts of files sent **raw only**, **not delivered**, or that **cannot be delivered** — so it stays accurate after the individual transfer records are cleaned up (see [Transfer Retention](#transfer-retention)).
+
+### Delivery Chips on Files
+
+On the **Observation Files** page, each file carries a small chip saying whether it reached your external storage. Hover it to see each location, which destinations it went through, how many times, and when.
+
+| Chip | Meaning |
+|------|---------|
+| **Sent** | Delivered to every place it should go |
+| **Sent ×N** | The same file reached the same location N times (a repeat delivery — for example after a manual re-push) |
+| **Sent Raw only** | The raw file was delivered, but the calibrated copy a destination asked for hasn't been — the tooltip gives the reason (usually *no matching calibration frames*). It may still arrive late; see [Calibrated copies can arrive late](#step-4-file-content). |
+| **Not delivered** | A destination that should have the file doesn't yet — Asterism is retrying |
+| **Cannot deliver** | Asterism has given up on delivering the file to a destination |
+| **External only** | The server copy was removed after transfer (a "delete from server" destination); the external copies are now the only ones |
+
+### Delivery Problem Notices
+
+If files haven't reached your external storage **a day after capture**, Asterism can tell you by email (and Pushover, if you've enabled it):
+
+- At most **one message a day** per observation, for up to **7 days**
+- If the problem clears after you've been notified, a final message confirms the files were delivered
+- Recipients are the person who submitted the observation and the owners of the destinations involved. When files went **raw-only because calibration masters were missing**, the observatory and project owners are added too, since they're the ones who can capture the missing calibration. Each message lists who received it and why.
+
+You can turn these off with **External storage delivery problems** in your Profile's notification settings (see [Notifications](NOTIFICATIONS.md#external-storage-delivery-problems)).
+
+!!! note "Off unless your server administrator enables them"
+    Delivery problem notices are **switched off by default** on an Asterism server. If you never receive them, your server administrator may not have enabled them — the delivery chips and the observation's External Storage card still show the same information.
+
 ### Automatic Retries
 
 If a transfer fails (network error, provider timeout, etc.), the system automatically retries on a fixed backoff schedule:
@@ -346,8 +390,16 @@ Changes apply to future observations only. Observations already submitted contin
 
 ### Disabling vs Deleting
 
-- **Disable**: Toggle the **Enabled** switch off. The configuration remains but won't appear as an option for new observations. Existing queued transfers continue.
-- **Delete**: Permanently removes the configuration. Cannot be undone. Pending transfers for this configuration may fail.
+- **Disable**: Toggle the **Enabled** switch off. The configuration remains but won't appear as an option for new observations (and, for personal or project storage, is no longer attached automatically). Existing queued transfers continue.
+- **Delete**: Removes the configuration from every list, and cancels its queued transfers that haven't started yet. This cannot be undone from the web interface.
+
+!!! warning "Deleting a destination that holds the only copy of files"
+    If some files are stored **only** at this destination — their server copy was removed after transfer by "Delete from server" — Asterism refuses a plain delete and tells you how many files (with examples) are affected. You can then:
+
+    - **Restore them to local storage first** — Asterism copies them back to the server; delete the destination again once the restore has finished; or
+    - **Delete anyway** — the destination is hidden, but its files stay downloadable through it until an administrator purges it.
+
+    Cancelling leaves the destination in place. You can also [Push Externally](#pushing-files-on-demand-push-externally) to another destination first.
 
 ### Resubmitting Observations
 
