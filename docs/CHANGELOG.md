@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.29] - 2026-11-22
+
+### Changed
+
+- **Organizations — Emailing Members**: organization admins can now email members of every sub-organization below theirs; sharing a project or observatory with an organization does not open its members to email; the refusal lists the addresses to remove.
+- **Organizations — Adding a sub-organization** (new subsection): **Add Organization** under **Member Organizations** now requires authority over both organizations — you must manage the parent and also manage or own the organization being added.
+
+---
+
 ## [2.28] - 2026-11-21
 
 Brings the docs up to date with what shipped from September to November 2026 (server 4.19.0, user GUI 4.8.2, plugin 5.8.4.0).

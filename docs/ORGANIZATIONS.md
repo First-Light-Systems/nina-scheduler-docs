@@ -1,6 +1,6 @@
 # Organizations
 
-**Document Version**: 1.6 | **Last Updated**: November 2026
+**Document Version**: 1.7 | **Last Updated**: November 2026
 
 Organizations allow groups of users to share observatories and collaborate on observations. Users can belong to multiple organizations, each with its own set of permissions.
 
@@ -99,7 +99,15 @@ If you have `can_manage_members` permission:
 
 ### Emailing Members
 
-The email dialogs for an organization (and for an observatory) send only to registered users who belong to an organization, observatory or project you manage — or to yourself. Addresses typed into **CC** must also belong to such members. If any address isn't permitted, **nothing is sent** and the error names the refused address. Replies go to your own email address.
+The email dialogs for an organization, observatory or project send only to registered people you manage, or to yourself:
+
+- members of an organization you own or administer, **including members of every sub-organization below it**;
+- members and the owner of a project you manage;
+- members of an observatory you administer.
+
+Sharing a project or observatory with an organization does **not** let you email that organization's members — a share gives them access, not you authority over them.
+
+The dialog lists the group's direct members; you can add other people you manage (for example, members of a sub-organization) in **CC**. Addresses outside the people you manage are not accepted: if any address isn't permitted, **nothing is sent** and the error lists the addresses to remove. Replies go to your own email address.
 
 ### Viewing Members' Observations
 
@@ -192,6 +200,12 @@ Only the current owner can transfer ownership:
 ## Nesting Organizations
 
 Organizations can be nested into a hierarchy — a parent organization with sub-organizations beneath it — which is how larger institutions model departments, courses, or partner groups.
+
+### Adding a sub-organization
+
+In an organization's **Manage Members** view, the **Member Organizations** section lists its sub-organizations. **Add Organization** attaches an existing organization beneath this one, and you choose which management permissions its members inherit here. Cycles and duplicates are refused.
+
+Because a sub-organization's members count as members of the parent — the parent's admins can then see their observations and email them — you need authority over **both** organizations: you must manage the parent, and also **manage or own the organization you're adding** (or it must already sit inside a hierarchy you run, for example adding one of your departments under a second parent you manage). You can't attach an organization you don't run, even beneath one you own.
 
 ### Moving an organization under a parent
 
