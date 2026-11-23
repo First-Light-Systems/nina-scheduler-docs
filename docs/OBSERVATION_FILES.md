@@ -40,7 +40,11 @@ Files are displayed in a grid view showing:
 - **Calibration status chip** — **Cal**, **Cal Ready**, **Cal · stale**, or **No Cal** (see [Calibration Status](CALIBRATION_GUIDE.md#calibration-status-in-the-file-browser))
 - **External storage delivery chip** — whether the file reached your external storage, for observations that use it (see [Delivery chips](EXTERNAL_STORAGE.md#delivery-chips-on-files))
 
-### Frames Still Uploading ("Uploads paced")
+### Frames Still Uploading
+
+An observation's frames are captured at the observatory and uploaded afterwards, so an observation can show as completed before all its frames have arrived. When that is the case, the observation page shows a notice saying how many frames this run captured, how many have been received, and where the rest are: waiting to upload at the observatory, held there after a failed upload (and retried automatically), or still being processed. It disappears once everything has arrived. See [Troubleshooting](TROUBLESHOOTING.md#frames-still-uploading-on-an-observation) for what each notice means.
+
+### "Uploads paced"
 
 During busy periods the server paces how quickly each observatory's frames are taken in, so processing stays fair across observatories. While that is happening for your observatory, the Observation Files page shows a notice:
 

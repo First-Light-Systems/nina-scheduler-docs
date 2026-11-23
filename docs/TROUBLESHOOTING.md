@@ -199,9 +199,10 @@ Check all required fields in plugin settings:
     - Is the Asterism container running?
     - Are there errors in the NINA log?
 
-2. **Clear local database**
+2. **Clear local database (last resort)**
     - Plugin Settings > Database Management > Clear Local Database
     - Removes stuck state data
+    - **Warning:** this also deletes the plugin's record of every frame that has not finished uploading. Those frames stay on the observatory's disk but will never be uploaded. Check the observation page first: if it shows frames still uploading or held at the observatory, wait for them before clearing.
 
 3. **Restart sequence**
     - Stop and restart the NINA sequence
@@ -229,13 +230,34 @@ Check all required fields in plugin settings:
     - Server must be reachable
     - Check for firewall blocking uploads
 
-3. **Clear upload queue if stuck**
-    - Use "Clear Local Database" in plugin settings
-    - Note: This clears pending uploads
+3. **Do not clear the local database to fix uploads**
+    - "Clear Local Database" deletes the plugin's record of every frame waiting to upload, including frames held after a failed upload. The files stay on disk but are never sent.
+    - Frames that failed to upload are retried automatically: by the plugin every 15 minutes while it is connected and idle, whenever it reconnects, and when the server notices frames are missing. Restarting NINA also retries them.
+    - The observation page shows how many frames are still waiting or held (see ["Frames still uploading"](#frames-still-uploading-on-an-observation)).
 
 4. **Check disk space**
     - Both local and server storage
     - Full storage can prevent uploads
+
+---
+
+### Frames still uploading on an observation
+
+**Symptoms:**
+- An observation is **Completed** but shows few or no files, previews or quality metrics
+- A notice on the observation page reads *Frames still uploading*, *Some frames are waiting to be re-sent*, *Frames still to arrive* or *Some frames have not arrived*
+
+**What it means:** The observation's frames are captured at the observatory first and uploaded afterwards. On a busy night an observation can finish long before its frames arrive. The notice says where they are:
+
+| Notice | Meaning | What to do |
+|---|---|---|
+| **Frames still uploading** | Frames are queued or uploading at the observatory. The notice gives the number waiting, and says if uploads are being slowed because the processing pipeline is busy. | Nothing. They arrive in turn. |
+| **Some frames are waiting to be re-sent** | An upload failed several times and the frame is held at the observatory. It is retried automatically. | Nothing, unless it persists for hours: then check the observatory's network and disk. |
+| **Frames still to arrive** | Fewer frames have arrived than were captured, and the observatory's plugin does not report its upload queue (an older plugin version, or the observatory is offline). | Wait; update the plugin to see the detail. |
+| **Some frames have not arrived** | The observatory reports nothing waiting or held, but frames are still missing. The server keeps asking the observatory to re-send them for 24 hours. | If it does not clear, the files may still be on the observatory computer. Contact the observatory operator. |
+| **Frames still processing** | All frames arrived; previews and metrics are still being produced. | Nothing. |
+
+The counts are for the observation's most recent run. The notice disappears when everything has arrived and been processed.
 
 ---
 
@@ -599,7 +621,7 @@ Gather this information:
 | Auth failed | Check API key or re-register |
 | No observations | Check "Enable Operations" is ON |
 | Stuck observation | Clear local database |
-| Upload failing | Check network, clear queue |
+| Upload failing | Check network; uploads are retried automatically (do not clear the local database) |
 | Can't log in | Clear browser cache |
 | Observation won't start | Check constraint violations on detail page |
 | Safety/weather issue | Check safety device, review history |
