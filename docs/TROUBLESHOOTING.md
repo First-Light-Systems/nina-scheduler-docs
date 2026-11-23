@@ -253,9 +253,11 @@ Check all required fields in plugin settings:
 |---|---|---|
 | **Frames still uploading** | Frames are queued or uploading at the observatory. The notice gives the number waiting, and says if uploads are being slowed because the processing pipeline is busy. | Nothing. They arrive in turn. |
 | **Some frames are waiting to be re-sent** | An upload failed several times and the frame is held at the observatory. It is retried automatically. | Nothing, unless it persists for hours: then check the observatory's network and disk. |
-| **Frames still to arrive** | Fewer frames have arrived than were captured, and the observatory's plugin does not report its upload queue (an older plugin version, or the observatory is offline). | Wait; update the plugin to see the detail. |
-| **Some frames have not arrived** | The observatory reports nothing waiting or held, but frames are still missing. The server keeps asking the observatory to re-send them for 24 hours. | If it does not clear, the files may still be on the observatory computer. Contact the observatory operator. |
+| **Frames still to arrive** | Fewer frames have arrived than were captured, and the observatory cannot say where the rest are: it is offline, or its plugin version does not report its upload queue or frames held after failed uploads. | Wait; update the plugin to see the detail. |
+| **Some frames have not arrived** | The observatory reports nothing waiting or held, but frames are still missing. The server asks the observatory to re-send them for 24 hours after the run. | If it does not clear, the files may still be on the observatory computer. Contact the observatory operator. |
 | **Frames still processing** | All frames arrived; previews and metrics are still being produced. | Nothing. |
+
+While an observation is still capturing, a frame or two is always on its way; the notice appears only once several frames are outstanding.
 
 The counts are for the observation's most recent run. The notice disappears when everything has arrived and been processed.
 
